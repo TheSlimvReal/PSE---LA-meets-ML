@@ -108,3 +108,5 @@ venv.bak/
 
 #Latex
 *.synctex.gz
+*.aux
+*.out

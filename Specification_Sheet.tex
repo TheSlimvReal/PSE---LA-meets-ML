@@ -111,29 +111,36 @@ additional meta-data, including labels.
 
 \section{Product use}
 \subsection{Scope of application}
-the software should be used for scientific work in the field of math and computer science
+The software will be used for scientific work in the field of math and computer science.
 \subsection{Target groups}
-mathematican and computer scientists for classification of matrices
+Mathematican and computer scientists who are working with sparse linear systems.
 \subsection{Operating conditions}
-training and test data need to be labeled
+
+\begin{itemize}
+\item Use in the field of scientific work
+\item Office environment
+\end{itemize}
 
 \section{Product enviroment}
+
+
 \subsection{Software}
+
 \begin{itemize}
-\item Python
-\item Gingko
-\item pytest
-\item Keras
-\item ssget
+\item The product will run on Windows 10 and Linux distributions 
+\item The labeling of the matricies and training of the neural network will be done with Linux
 \end{itemize}
+
 \subsection{Hardware}
-Scc server will be used to train the program. Linx and Windows PCs will be used for programming and testing.
+
+\begin{itemize}
+\item The product will run on a workstation computer
+\item The labeling of the matricies and training of the neural network will be done on a server with multiple GPUs
+\end{itemize}
 
 \subsection{Orgware}
-the documentation will be supported by doxygen
+A Documentation for the user will be generated.
 
-\subsection{Product interface}
-the interface will be the comand line
 
 \section{Functional requirements}
 \subsection{Artificial matrix generator}
@@ -154,6 +161,8 @@ the interface will be the comand line
 
 \section{System models}
 \subsection{Scenarios}
+\subsubsection{User}
+The User safes the the sparse linear matrix in any desired filepath. Afterwards the user starts our program. The command open <filepath> loads the matrix in the program. That is when the deep neural network will classify the matrix and determine the fastest iterative solver/preconditioner combination for solving the matrix. This combination will be printed to the command line. (\textbf{Optional:} After determining the fastest combination the program will solve the matrix with this combination. The solved matrix will be safed in a directory the user specifies.)
 \subsection{Use cases}
 \subsection{Object models}
 \subsection{dynamic models}

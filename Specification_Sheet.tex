@@ -136,10 +136,45 @@ the documentation will be supported by doxygen
 the interface will be the comand line
 
 \section{Functional requirements}
-\subsection{Artificial matrix generator}
-\subsection{Matrix label}
-\subsection{Matrix train and test}
-\subsection{Matrix classification }
+\subsection{Matrix Generation}
+	\begin{itemize}
+	\item /F10/ Generation of sparse matrices by a given sparsity level and size and metric
+	\item /F15/ Generation of a given amount of matrices
+	\item /F30/ Putting noise on the matrices
+ 	\item /F40/ Saving the generated matrices in a given directory
+          \end{itemize}
+\subsection{Matrix Labeling}
+	\begin{itemize}
+	\item /F50/ Choice of data origin(local or ssget tool)
+	\item /F60/ Integration of the ssget tool
+	\item /F70/ Determination of the best solving algorithm by time(fix algorithms) %optional extend algorithms
+	\item /F75/ Labeling the matrix with the determined best algorithm
+	\item /F90/ Creating a grayscale sparsity pattern image of the labeled matrix
+	\item /F100/ Saving the labeled matrix with its sparsity pattern image in a given directory 
+	\end{itemize}
+	
+	
+\subsection{DNN Training and Testing}
+	\begin{itemize}
+	\item /F110/ Input of matrix files from a given directory
+	\item /F120/ Randomization of the matrix files order
+	\item /F125/ Separation of the matrix files into a training and testing dataset
+	\item /F130/ Existence of a neural network to train
+	\item /F140/ Training of the neural network by a given training dataset(/F125/)
+	\item /F141/ Testing of the neural network by a given testing dataset(/F125/)
+	\item /F150/ Printing the accuracy(/loss) during the training and testing process of the neural network
+	\item /F151/ optional: creating of accuracy histogramms
+	\item /F160/ Saving the neural network in its current state on a given directory
+	\end{itemize}
+ 	
+\subsection{Matrix Classification}
+	\begin{itemize}
+	\item /F170/ Input of a matrix to classify
+	\item /F175/ Creating a grayscale sparsity pattern image of the input matrix
+	\item /F180/ Loading a trained neural network from a given directory
+	\item /F200/ Classification of the given pattern image by the neural network
+	\item /F201/ Printing the classification output
+	\end{itemize}
 
 \section{Product data}
 \begin{itemize}

@@ -145,9 +145,10 @@ the interface will be the comand line
           \end{itemize}
 \subsection{Matrix Labeling}
 	\begin{itemize}
-	\item /F50/ Choice of data origin(local or ssget tool)
+	\item /F50/ Choice of data origin(local or ssget tool) 
 	\item /F60/ Integration of the ssget tool
-	\item /F70/ Determination of the best solving algorithm by time(fix algorithms) %optional extend algorithms
+	\item /F70/ Determination of the best solving algorithm by time(fix algorithms)
+	\item /F71/ optional: Determination of the best solving algorithm by time with costum algorithms
 	\item /F75/ Labeling the matrix with the determined best algorithm
 	\item /F90/ Creating a grayscale sparsity pattern image of the labeled matrix
 	\item /F100/ Saving the labeled matrix with its sparsity pattern image in a given directory 
@@ -177,11 +178,19 @@ the interface will be the comand line
 	\end{itemize}
 
 \section{Product data}
-\begin{itemize}
-\item 500-1000 matrices for training, validation and test
-\end{itemize}
+	\begin{itemize}
+	\item 500-1000 matrices for training, validation and test
+	\end{itemize}
 
 \section{Nonfunctional requirements}
+	\begin{itemize}
+		\item /NF10/ All matrices are squared
+		\item /NF20/ All fixed algorithms are used within the labeling processes
+		\item /NF30/ The grayscale sparsity pattern all have the same size before training
+		\item /NF40/ The NN ouputs a distinct prediction
+		\item /NF50/ The NN is saved after every iteration
+	\end{itemize}
+	
 
 \section{Global test cases}
 \subsection{the following function sequences must be checked}

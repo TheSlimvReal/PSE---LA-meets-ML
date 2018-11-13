@@ -2,6 +2,9 @@
 \usepackage[utf8]{inputenc} % use utf8 file encoding for TeX sources
 \usepackage[T1]{fontenc}    % avoid garbled Unicode text in pdf
 \usepackage[german]{babel}  % german hyphenation, quotes, etc
+\usepackage{graphicx}
+\usepackage{rotating}
+\graphicspath{ {images/} }
 \usepackage{hyperref}       % detailed hyperlink/pdf configuration
 \hypersetup{                % ‘texdoc hyperref‘ for options
 pdftitle={PSE : DataMovementDeaon},%
@@ -158,16 +161,23 @@ A Documentation for the user will be generated.
 \section{Global test cases}
 \subsection{the following function sequences must be checked}
 \subsection{the following data consistencies must be checked}
-
+\newpage
 \section{System models}
 \subsection{Scenarios}
 \subsubsection{User}
-The User safes the the sparse linear matrix in any desired filepath. Afterwards the user starts our program. The command open <filepath> loads the matrix in the program. That is when the deep neural network will classify the matrix and determine the fastest iterative solver/preconditioner combination for solving the matrix. This combination will be printed to the command line. (\textbf{Optional:} After determining the fastest combination the program will solve the matrix with this combination. The solved matrix will be safed in a directory the user specifies.)
+\begin{samepage} 
+The User safes the sparse linear matrix in any desired filepath. Afterwards the user starts our program. The command open <filepath> loads the matrix in the program. That is when the neural network will classify the matrix and determine the fastest iterative solver/preconditioner combination for solving the matrix. This combination will be printed to the command line. (\textbf{Optional:} After determining the fastest combination the program will solve the matrix with this combination. The solved matrix will be safed in a directory the user specifies.)
+ \end{samepage}
 \subsection{Use cases}
 \subsection{Object models}
 \subsection{dynamic models}
 \subsection{Command line options}
 
+\subsection{Use of the classifier}
+\includegraphics[scale=0.6, angle=90]{ClassifierUse}
+
+\subsection{Workflow}
+\includegraphics[scale=0.5, angle=90]{workflow}
 \section{Glossar}
 
 % % Automatisch generiertes Glossar (Latex zwei mal ausführen um Glossar anzuzeigen)

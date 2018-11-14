@@ -23,6 +23,47 @@ bookmarks=true,%
 %
 %%Glossary
 %
+\newglossaryentry{generator}
+{
+	name=generator,
+	plural=generators,
+	description={The first module in the program. Responsible for generating artifical matricies and collection preexisting matricies from the suite sparse matrix collection.}
+}
+
+\newglossaryentry{labeling module}
+{
+	name=labeling module,
+	plural=labeling module,
+	description={The second module in the program. Responsible for executing a given set of matricies with all the preconditioner/iterative solvers combination specified. It will furthermore label each matrix with the fastest combination.}
+}
+
+\newglossaryentry{neural network}
+{
+	name=neural network,
+	plural=neural networks,
+	description={The third module in the program. Responsible for training a deep neural network with the set of matricies and labels given by the labeling module.}
+}
+
+\newglossaryentry{classifier}
+{
+	name=classifier,
+	plural=classifier,
+	description={The last and main module in the program.It is able to determine the fastest preconditioner/iterative solver combination for a given sparse linear system. It uses the neural network trained by the module neural network.}
+}
+
+\newglossaryentry{preconditioner}
+{
+	name=preconditioner,
+	plural=preconditioners,
+	description={WIP}
+}
+
+\newglossaryentry{iterative solver}
+{
+	name=iterative solver,
+	plural=iterative solvers,
+	description={WIP}
+}
 
 \begin{document}
 
@@ -211,6 +252,7 @@ A Documentation for the user will be generated.
 \section{System models}
 \subsection{Scenarios}
 \subsubsection{Overview}
+The product consists of four individual modules. The main module is the \glspl{classifier} . Here the user may input a sparse matrix and receive the fastest preconditioner/iterative solver combination for solving the matrix. The user may furthermore interact with the other three modules; the generator, the labeling module and the neural network.  Typical interaction with those modules will be described below.
 \begin{center}
 \includegraphics[width=\textwidth]{workflow}
 \end{center}
@@ -254,7 +296,7 @@ The user wants to find the fastest preconditioner/itererative solver combination
 \clearpage
 
 \section{Glossar}
-%generator, labeling modle, neural network, classifier, default settings
+%generator, labeling modle, neural network, classifier, default settings  \glspl{Dateiformat}
 
 % % Automatisch generiertes Glossar (Latex zwei mal ausführen um Glossar anzuzeigen)
 %

@@ -160,7 +160,7 @@ A Documentation for the user will be generated.
 	\item /F50/ Choice of data origin(local or ssget tool) 
 	\item /F60/ Integration of the ssget tool
 	\item /F70/ Determination of the best solving algorithm by time(fix algorithms)
-	\item /F71/ optional: Determination of the best solving algorithm by time with costum algorithms
+	\item /F71/ optional: Determination of the best solving algorithm by time with custom algorithms
 	\item /F75/ Labeling the matrix with the determined best algorithm
 	\item /F90/ Creating a grayscale sparsity pattern image of the labeled matrix
 	\item /F100/ Saving the labeled matrix with its sparsity pattern image in a given directory 
@@ -210,21 +210,51 @@ A Documentation for the user will be generated.
 \newpage
 \section{System models}
 \subsection{Scenarios}
-\subsubsection{User}
+\subsubsection{Overview}
+\begin{center}
+\includegraphics[width=\textwidth]{workflow}
+\end{center}
 
-The User safes the sparse linear matrix in any desired filepath. Afterwards the user starts our program. The command open <filepath> loads the matrix in the program. That is when the neural network will classify the matrix and determine the fastest iterative solver/preconditioner combination for solving the matrix. This combination will be printed to the command line. (\textbf{Optional:} After determining the fastest combination the program will solve the matrix with this combination. The solved matrix will be safed in a directory the user specifies.)
+
+\subsubsection{Use of the generator}
+\textbf{Optional:} The User wants a set of matricies for his own purposes. He likes our idee of combining the creation of matricies with the fetching of matricies from the suite sparse matrix collection. He therefore opens the module generator. With the command generate <amount> the specified amount of matricies will be created/collected. With this command the ratio will be determined by the program. With the command create <amount> the specified amount of matricies will be create.  With the command collect <amount> the specified amount of matricies will be collected. After each command the user will be asked to specify a directory to safe the matricies to.
+\begin{center}
+\includegraphics[width=\textwidth]{generator}
+\end{center}
+
+\subsubsection{Use of the labeling module}
+\textbf{Optional:} The User has a very specific problem which generates only a certain kind of sparse matricies. That is why he wants to adapt the neural network for his specific task. He furthermore only wants to use the default preconditioner/iterative solver combinations. He first of all safes all of his matricies in one directory of his choice. Then he opens the labeling module. The command label <filepath> will label all the matricies in the directory. The user may proceed with using the neural network.
+
+
+\textbf{Optional:} The User is fine with the default matricies. But he wants to use other preconditioner/iterative solver combinations which are included in the ginkgo libary. He opens the labeling module. With the command list combinations he will see all the combinations that are currently used. With the command add <preconditioner/iterative solver> a the new combinations of his choice will be added. With the command delete <precombination/iterative solver> the specified combination will be deleted. After the user made his choice he may proceed with using the neural network.
+\begin{center}
+\includegraphics[width=\textwidth]{labelingModule}
+\end{center}
+
+
+\subsubsection{Use of the neural network}
+\textbf{Optional:} The user has changed the set of matricies and/or the preconditioner/iterative solver combinations. He now wants to build the classifier. He opens the neural network module. With the command train the neural network will be trained. The user may then proceed with using the classifier.
+
+\begin{center}
+\includegraphics[width=\textwidth]{neuralNetwork}
+\end{center}
+
+\subsubsection{Use of the classifier}
+
+The user wants to find the fastest preconditioner/itererative solver combination for a sparse linear system. If he did not change anything in the previous modules the default settings will be used. He will first of all safe the sparse linear matrix in any desired filepath. Afterwards the user starts our program. The command open <filepath> loads the matrix in the program. That is when the neural network will classify the matrix and determine the fastest iterative solver/preconditioner combination for solving the matrix. This combination will be printed to the command line. (\textbf{Optional:} After determining the fastest combination the program will solve the matrix with this combination. The solved matrix will be safed in a directory the user specifies.)
+\begin{center}
+\includegraphics[width=\textwidth]{classifier}
+\end{center}
+
 
 \subsection{Use cases}
 \subsection{Object models}
 \subsection{dynamic models}
 \subsection{Command line options}
 \clearpage
-\subsection{Use of the classifier}
-\includegraphics[scale=0.6, angle=90]{ClassifierUse}
 
-\subsection{Workflow}
-\includegraphics[scale=0.5, angle=90]{workflow}
 \section{Glossar}
+%generator, labeling modle, neural network, classifier, default settings
 
 % % Automatisch generiertes Glossar (Latex zwei mal ausführen um Glossar anzuzeigen)
 %

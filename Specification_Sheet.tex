@@ -191,7 +191,7 @@ A Documentation for the user will be generated.
 \section{Functional requirements}
 \subsection{Matrix Generation}
 	\begin{itemize}
-	\item /F10/ Generation of sparse matrices by a given sparsity level and size and metric
+	\item /F10/ Generation of sparse matrices by a given sparsity level and size and noise
 	\item /F15/ Generation of a given amount of matrices
 	\item /F30/ Putting noise on the matrices
  	\item /F40/ Saving the generated matrices in a given directory
@@ -292,7 +292,90 @@ The user wants to find the fastest preconditioner/iterative solver combination f
 \subsection{Use cases}
 \subsection{Object models}
 \subsection{dynamic models}
+
+
 \subsection{Command line options}
+\begin{itemize}
+\item/B10/\textbf{generate -a <amount> -n <name> -s <size> -d <density>}:
+\newline The user is able to create a specified amount of matrices that will be saved under a given name
+
+\textbf{Arguments}
+	\begin{itemize}
+	\item[-]\textbf{-a <amount>} Absolute amount of matrices the user wants to generate
+	\item[-]\textbf{-n <name>} Name under which the matrices will be saved
+	\item[-]\textbf{-s <size>} (optional) Absolute size the generated square matrices should have. Default is 128
+	\item[-]\textbf{-d <density>} (optional) Density level of the matrices. A float between 0 and 1 where 1 means no zero values
+	\end{itemize}
+
+\textbf{Print}
+	\begin{itemize}
+	\item[-]Progress notifying about the amount of matrices that are created and still need to be created
+	\item[-]A message when process has finished with the path to the created matrices
+	\item[-]Error, in case any required arguments are missing or invalid
+	\item[-]Error, in case the specified name is already taken
+	\end{itemize}
+
+\item/B20/\textbf{label -p <path> -g -n <name>}:
+\newline The user is able to pass matrices that he wants to get labeled
+
+\textbf{Arguments}
+	\begin{itemize}
+	\item[-]\textbf{-p <path>} Absolute path to the matrices in the local storage the user wants to have labeled
+	\item[-]\textbf{-g>} (optional) (Flag) If set path will be ignored and user will be able to fetch matrices from the SuiteSparse-Collection
+	\item[-]\textbf{-n <name>} Name under which the labeled matrices will be saved
+	\end{itemize}
+
+\textbf{Print}
+	\begin{itemize}
+	\item[-]Progress notifying about the amount of matrices that are labeled and still need to be labeled
+	\item[-]A message when process has finished with the path to the labeled matrices
+	\item[-]Error, in case any required arguments are missing or invalid
+	\item[-]Error, in case matrices have wrong format
+	\item[-]Error, in case the specified name is already taken
+	\item[-]Error, in case the remote fetching of the matrices did result in an error
+	\end{itemize}
+
+\item/B30/\textbf{train -p <path> -n <name> -t <train>}:
+\newline The user is able to pass labeled matrices to a neural network, that will learn from this matrices
+
+\textbf{Arguments}
+	\begin{itemize}
+	\item[-]\textbf{-p <path>} Absolute path to the labeled matrices on the local storage
+	\item[-]\textbf{-n <name>} Name under which the neural network will be saved after training has finished
+	\item[-]\textbf{-t <train>} (optional) Float between 0 and 1. Amount of matrices used for training where 1 means all. Standard is 0.8
+	\end{itemize}
+
+\textbf{Print}
+	\begin{itemize}
+	\item[-]Progress notifying about the loss of the current state based on test data
+	\item[-]A message when process has finished with the path to the neural network and the final loss
+	\item[-]Error, in case any required arguments are missing or invalid
+	\item[-]Error, in case matrices have wrong format or are not labeled
+	\item[-]Error, in case the specified name is already taken
+	\end{itemize}
+
+\item/B40/\textbf{classify -p <path> -n <network> -s}:
+\newline The user is able to pass a matrix to a the trained neural network, which will find the best solving algorithm.
+
+\textbf{Arguments}
+	\begin{itemize}
+	\item[-]\textbf{-p <path>} Path to the matrix the user wants to classify
+	\item[-]\textbf{-n <network>} Path to the trained neural network
+	\item[-]\textbf{-s} (optional) (Flag) If set matrix will also be solved after classification.
+	\end{itemize}
+
+\textbf{Print}
+	\begin{itemize}
+	\item[-]The algorithm which will be the fastest on the given matrix
+	\item[-](optional) The solved matrix
+	\item[-]Error, in case any required arguments are missing or invalid
+	\item[-]Error, in case the matrix has a wrong format
+	\item[-]Error, in case the neural network or matrix path is wrong
+	\end{itemize}
+\end{itemize}
+
+
+
 \clearpage
 
 \section{Glossar}

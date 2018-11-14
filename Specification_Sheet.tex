@@ -27,21 +27,21 @@ bookmarks=true,%
 {
 	name=generator,
 	plural=generators,
-	description={The first module in the program. Responsible for generating artifical matricies and collection preexisting matricies from the suite sparse matrix collection.}
+	description={The first module in the program. Responsible for generating artificial matrices and collection preexisting matrices from the suite sparse matrix collection.}
 }
 
 \newglossaryentry{labeling module}
 {
 	name=labeling module,
 	plural=labeling module,
-	description={The second module in the program. Responsible for executing a given set of matricies with all the preconditioner/iterative solvers combination specified. It will furthermore label each matrix with the fastest combination.}
+	description={The second module in the program. Responsible for executing a given set of matrices with all the preconditioner/iterative solvers combination specified. It will furthermore label each matrix with the fastest combination.}
 }
 
 \newglossaryentry{neural network}
 {
 	name=neural network,
 	plural=neural networks,
-	description={The third module in the program. Responsible for training a deep neural network with the set of matricies and labels given by the labeling module.}
+	description={The third module in the program. Responsible for training a deep neural network with the set of matrices and labels given by the labeling module.}
 }
 
 \newglossaryentry{classifier}
@@ -153,13 +153,13 @@ additional meta-data, including labels.
 
 \subsection{demarcation criteria}
 \begin{itemize}
-\item no matricies other that sparse, squared matricies will be supported
+\item no matrices other that sparse, squared matrices will be supported
 \end{itemize}
 \section{Product use}
 \subsection{Scope of application}
 The software will be used for scientific work in the field of math and computer science.
 \subsection{Target groups}
-Mathematican and computer scientists who are working with sparse linear systems.
+Mathematician and computer scientists who are working with sparse linear systems.
 \subsection{Operating conditions}
 
 \begin{itemize}
@@ -167,21 +167,21 @@ Mathematican and computer scientists who are working with sparse linear systems.
 \item Office environment
 \end{itemize}
 
-\section{Product enviroment}
+\section{Product environment}
 
 
 \subsection{Software}
 
 \begin{itemize}
 \item The product will run on Windows 10 and Linux distributions 
-\item The labeling of the matricies and training of the neural network will be done with Linux
+\item The labeling of the matrices and training of the neural network will be done with Linux
 \end{itemize}
 
 \subsection{Hardware}
 
 \begin{itemize}
 \item The product will run on a workstation computer
-\item The labeling of the matricies and training of the neural network will be done on a server with multiple GPUs
+\item The labeling of the matrices and training of the neural network will be done on a server with multiple GPUs
 \end{itemize}
 
 \subsection{Orgware}
@@ -217,7 +217,7 @@ A Documentation for the user will be generated.
 	\item /F140/ Training of the neural network by a given training dataset(/F125/)
 	\item /F141/ Testing of the neural network by a given testing dataset(/F125/)
 	\item /F150/ Printing the accuracy(/loss) during the training and testing process of the neural network
-	\item /F151/ optional: creating of accuracy histogramms
+	\item /F151/ optional: creating of accuracy histograms
 	\item /F160/ Saving the neural network in its current state on a given directory
 	\end{itemize}
  	
@@ -240,7 +240,7 @@ A Documentation for the user will be generated.
 		\item /NF10/ All matrices are squared
 		\item /NF20/ All fixed algorithms are used within the labeling processes
 		\item /NF30/ The grayscale sparsity pattern all have the same size before training
-		\item /NF40/ The NN ouputs a distinct prediction
+		\item /NF40/ The NN outputs a distinct prediction
 		\item /NF50/ The NN is saved after every iteration
 	\end{itemize}
 	
@@ -259,23 +259,23 @@ The product consists of four individual modules. The main module is the \glspl{c
 
 
 \subsubsection{Use of the generator}
-\textbf{Optional:} The User wants a set of matricies for his own purposes. He likes our idee of combining the creation of matricies with the fetching of matricies from the suite sparse matrix collection. He therefore opens the module generator. With the command generate <amount> the specified amount of matricies will be created/collected. With this command the ratio will be determined by the program. With the command create <amount> the specified amount of matricies will be create.  With the command collect <amount> the specified amount of matricies will be collected. After each command the user will be asked to specify a directory to safe the matricies to.
+\textbf{Optional:} The User wants a set of matrices for his own purposes. He likes our idea of combining the creation of matrices with the fetching of matrices from the suite sparse matrix collection. He therefore opens the module generator. With the command generate <amount> the specified amount of matrices will be created/collected. With this command the ratio will be determined by the program. With the command create <amount> the specified amount of matrices will be create.  With the command collect <amount> the specified amount of matrices will be collected. After each command the user will be asked to specify a directory to safe the matrices to.
 \begin{center}
 \includegraphics[width=\textwidth]{generator}
 \end{center}
 
 \subsubsection{Use of the labeling module}
-\textbf{Optional:} The User has a very specific problem which generates only a certain kind of sparse matricies. That is why he wants to adapt the neural network for his specific task. He furthermore only wants to use the default preconditioner/iterative solver combinations. He first of all safes all of his matricies in one directory of his choice. Then he opens the labeling module. The command label <filepath> will label all the matricies in the directory. The user may proceed with using the neural network.
+\textbf{Optional:} The User has a very specific problem which generates only a certain kind of sparse matrices. That is why he wants to adapt the neural network for his specific task. He furthermore only wants to use the default preconditioner/iterative solver combinations. He first of all safes all of his matrices in one directory of his choice. Then he opens the labeling module. The command label <filepath> will label all the matrices in the directory. The user may proceed with using the neural network.
 
 
-\textbf{Optional:} The User is fine with the default matricies. But he wants to use other preconditioner/iterative solver combinations which are included in the ginkgo libary. He opens the labeling module. With the command list combinations he will see all the combinations that are currently used. With the command add <preconditioner/iterative solver> a the new combinations of his choice will be added. With the command delete <precombination/iterative solver> the specified combination will be deleted. After the user made his choice he may proceed with using the neural network.
+\textbf{Optional:} The User is fine with the default matrices. But he wants to use other preconditioner/iterative solver combinations which are included in the ginkgo libary. He opens the labeling module. With the command list combinations he will see all the combinations that are currently used. With the command add <preconditioner/iterative solver> a the new combinations of his choice will be added. With the command delete <preconditioner/iterative solver> the specified combination will be deleted. After the user made his choice he may proceed with using the neural network.
 \begin{center}
 \includegraphics[width=\textwidth]{labelingModule}
 \end{center}
 
 
 \subsubsection{Use of the neural network}
-\textbf{Optional:} The user has changed the set of matricies and/or the preconditioner/iterative solver combinations. He now wants to build the classifier. He opens the neural network module. With the command train the neural network will be trained. The user may then proceed with using the classifier.
+\textbf{Optional:} The user has changed the set of matrices and/or the preconditioner/iterative solver combinations. He now wants to build the classifier. He opens the neural network module. With the command train the neural network will be trained. The user may then proceed with using the classifier.
 
 \begin{center}
 \includegraphics[width=\textwidth]{neuralNetwork}
@@ -283,7 +283,7 @@ The product consists of four individual modules. The main module is the \glspl{c
 
 \subsubsection{Use of the classifier}
 
-The user wants to find the fastest preconditioner/itererative solver combination for a sparse linear system. If he did not change anything in the previous modules the default settings will be used. He will first of all safe the sparse linear matrix in any desired filepath. Afterwards the user starts our program. The command open <filepath> loads the matrix in the program. That is when the neural network will classify the matrix and determine the fastest iterative solver/preconditioner combination for solving the matrix. This combination will be printed to the command line. (\textbf{Optional:} After determining the fastest combination the program will solve the matrix with this combination. The solved matrix will be safed in a directory the user specifies.)
+The user wants to find the fastest preconditioner/iterative solver combination for a sparse linear system. If he did not change anything in the previous modules the default settings will be used. He will first of all safe the sparse linear matrix in any desired filepath. Afterwards the user starts our program. The command open <filepath> loads the matrix in the program. That is when the neural network will classify the matrix and determine the fastest iterative solver/preconditioner combination for solving the matrix. This combination will be printed to the command line. (\textbf{Optional:} After determining the fastest combination the program will solve the matrix with this combination. The solved matrix will be saved in a directory the user specifies.)
 \begin{center}
 \includegraphics[width=\textwidth]{classifier}
 \end{center}

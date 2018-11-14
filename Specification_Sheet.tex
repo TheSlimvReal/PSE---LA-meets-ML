@@ -111,7 +111,9 @@ additional meta-data, including labels.
 \end{itemize}
 
 \subsection{demarcation criteria}
-
+\begin{itemize}
+\item no matricies other that sparse, squared matricies will be supported
+\end{itemize}
 \section{Product use}
 \subsection{Scope of application}
 The software will be used for scientific work in the field of math and computer science.
@@ -165,14 +167,14 @@ A Documentation for the user will be generated.
 \section{System models}
 \subsection{Scenarios}
 \subsubsection{User}
-\begin{samepage} 
+
 The User safes the sparse linear matrix in any desired filepath. Afterwards the user starts our program. The command open <filepath> loads the matrix in the program. That is when the neural network will classify the matrix and determine the fastest iterative solver/preconditioner combination for solving the matrix. This combination will be printed to the command line. (\textbf{Optional:} After determining the fastest combination the program will solve the matrix with this combination. The solved matrix will be safed in a directory the user specifies.)
- \end{samepage}
+
 \subsection{Use cases}
 \subsection{Object models}
 \subsection{dynamic models}
 \subsection{Command line options}
-
+\clearpage
 \subsection{Use of the classifier}
 \includegraphics[scale=0.6, angle=90]{ClassifierUse}
 

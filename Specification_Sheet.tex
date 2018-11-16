@@ -27,21 +27,21 @@ bookmarks=true,%
 {
 	name=collector,
 	plural=collector,
-	description={The first module in the program. Responsible for generating artifical matricies and collection preexisting matricies from the suite sparse matrix collection.}
+	description={The first module in the program. Responsible for generating artifical matrices and collection preexisting matrices from the suite sparse matrix collection.}
 }
 
 \newglossaryentry{labeling module}
 {
 	name=labeling module,
 	plural=labeling module,
-	description={The second module in the program. Responsible for executing a given set of matricies with all the \glspl{preconditioner}/\glspl{iterative solver}s combination specified. It will furthermore label each matrix with the fastest combination.}
+	description={The second module in the program. Responsible for executing a given set of matrices with all the \glspl{preconditioner}/\glspl{iterative solver}s combination specified. It will furthermore label each matrix with the fastest combination.}
 }
 
 \newglossaryentry{training module}
 {
 	name=training module,
 	plural=training module,
-	description={The third module in the program. Responsible for training a deep neural network with the set of matricies and labels given by the \glspl{labeling module}.}
+	description={The third module in the program. Responsible for training a deep neural network with the set of matrices and labels given by the \glspl{labeling module}.}
 }
 
 \newglossaryentry{classifier}
@@ -153,7 +153,7 @@ additional meta-data, including labels.
 
 \subsection{demarcation criteria}
 \begin{itemize}
-\item no matricies other that sparse, squared matricies will be supported
+\item no matrices other that sparse, squared matrices will be supported
 \end{itemize}
 \section{Product use}
 \subsection{Scope of application}
@@ -189,17 +189,17 @@ A Documentation for the user will be generated.
 
 
 \section{Functional requirements}
-\subsection{Matrix Generation}
+\subsection{Matrix Collecting}
 	\begin{itemize}
 	\item /F10/ Generation of sparse matrices by a given sparsity level and size
 	\item /F15/ Generation of a given amount of matrices
 	\item /F30/ Putting noise on the matrices
  	\item /F40/ Saving the generated matrices in a given directory
+        \item /F50/ Choice to either only generate matrices or to generate some and fetch some from the suite sparse matrix collection
+	\item /F60/ Integration of the ssget tool
           \end{itemize}
 \subsection{Matrix Labeling}
 	\begin{itemize}
-	\item /F50/ Choice of data origin(local or ssget tool) 
-	\item /F60/ Integration of the ssget tool
 	\item /F70/ Determination of the best solving algorithm by time(fix algorithms)
 	\item /F71/ optional: Determination of the best solving algorithm by time with custom algorithms
 	\item /F75/ Labeling the matrix with the determined best algorithm
@@ -259,13 +259,13 @@ The product consists of four individual modules. The main module is the \glspl{c
 
 
 \subsubsection{Use of the \glspl{collector}}
-\textbf{Optional:} The user wants a set of matrices for his own purpose. He likes our idea of combining the creation of matrices with fetching matrices from the suite sparse matrix collection. He therefore opens the module \glspl{collector}. With the command generate <amount> the specified amount of matrices will be created/collected. With this command the ratio will be determined by the program. With the command create <amount> the specified amount of matrices will be created.  With the command collect <amount> the specified amount of matrices will be collected. After each command the user will be asked to specify a directory to save the matrices to.
+The user wants a set of matrices for his own purpose. He likes our idea of combining the creation of matrices with fetching matrices from the suite sparse matrix collection. He therefore opens the module \glspl{collector}. He wants to generate 300 matrices of size 64x64 with a density of 0.2 and wants to use as many matrices as possible from the suite sparse matrix collection. He wants to call his set of matrices collectedMatrices and enters the command collect -a 300 -n collectedMatrices -s 64 -d 0.2 -g. When the process finished gets notified. He navigates to the results file of the \glspl{collector} in the file manager and proceeds to using the set of matricies for his own purposes.
 \begin{center}
-\includegraphics[width=\textwidth]{generator}
+\includegraphics[width=\textwidth]{collector}
 \end{center}
 
 \subsubsection{Use of the \glspl{labeling module}}
-\textbf{Optional:} The user has a very specific problem which generates only a certain kind of sparse matrices. That is why he wants to adapt the neural network for his specific task. He furthermore only wants to use the default \glspl{preconditioner}/\glspl{iterative solver} combinations. He first of all safes all of his matrices in one directory of his choice. Then he opens the \glspl{labeling module}. The command label <filepath> will label all the matrices in the directory. The user may proceed with using the neural network.
+The user has a very specific problem which generates only a certain kind of sparse matrices. That is why he wants to adapt the neural network for his specific task. He furthermore only wants to use the default \glspl{preconditioner}/\glspl{iterative solver} combinations. He first of all safes all of his matrices in one directory x of his choice. Then he opens the \glspl{labeling module}. The command label -p x -n labeledMatrices will label all the matrices and generate their greyscale pattern image in the directory. The set of greyscale pattern images will be safed with the name labeledMatrices in the results file of the \glspl{labeling module}. The user may proceed with using the neural network.
 
 
 \textbf{Optional:} The user is fine with the default matrices, but he wants to use other \glspl{preconditioner}/\glspl{iterative solver} combinations which are included in the ginkgo libary. He opens the \glspl{labeling module}. With the command list combinations he will see all the combinations that are currently used. With the command add <\glspl{preconditioner}/\glspl{iterative solver}> a the new combinations of his choice will be added. With the command delete <\glspl{preconditioner}/\glspl{iterative solver}> the specified combination will be deleted. After the user made his choice he may proceed with using the neural network.
@@ -275,15 +275,16 @@ The product consists of four individual modules. The main module is the \glspl{c
 
 
 \subsubsection{Use of the \glspl{training module}}
-\textbf{Optional:} The user has changed the set of matrices and/or the \glspl{preconditioner}/\glspl{iterative solver} combinations. He now wants to build the classifier. He opens the \glspl{training module}. With the command train the neural network will be trained. The user may then proceed with using the classifier.
+\textbf{Optional:} The user has changed the set of matrices and/or the \glspl{preconditioner}/\glspl{iterative solver} combinations. He now wants to build the classifier. He opens the \glspl{training module}. With the command train -n myNeuralNetwork the neural network will be trained.The neural network will be saved in the results folder with the name myNeuralNetwork.  The user may then proceed with using the classifier.
 
 \begin{center}
-\includegraphics[width=\textwidth]{neuralNetwork}
+\includegraphics[width=\textwidth]{trainingModule}
 \end{center}
 
 \subsubsection{Use of the classifier}
 
-The user wants to find the fastest \glspl{preconditioner}/\glspl{iterative solver} combination for a sparse linear system. If he did not change anything in the previous modules the default settings will be used. He will first save the sparse matrix in any desired filepath. Afterwards the user starts our program. The command open <filepath> loads the matrix into the program. That is when the neural network will classify the matrix and determine the fastest \glspl{iterative solver}/\glspl{preconditioner} combination for solving the matrix. This combination will be printed to the command line. (\textbf{Optional:} After determining the fastest combination the program will solve the matrix with this combination. The solved matrix will be safed in a directory the user specifies.)
+The user wants to find the fastest \glspl{preconditioner}/\glspl{iterative solver} combination for a sparse linear system. If he did not change anything in the previous modules the default settings will be used. He will first save the sparse matrix in any desired filepath x. Afterwards the user starts the \glspl{classifier}.
+With the command classify  -p x - the neural network will classify the matrix and determine the fastest \glspl{iterative solver}/\glspl{preconditioner} combination for solving the matrix. This combination will be printed to the command line. (\textbf{Optional:} After determining the fastest combination the program will solve the matrix with this combination. The solved matrix will be safed in a directory the user specifies.)
 \begin{center}
 \includegraphics[width=\textwidth]{classifier}
 \end{center}
@@ -291,7 +292,7 @@ The user wants to find the fastest \glspl{preconditioner}/\glspl{iterative solve
 
 \subsection{Use cases}
 \subsubsection{Matrix \glspl{collector}}
-\includegraphics[width=1.3\textwidth]{useCase_generator}
+\includegraphics[width=1.3\textwidth]{useCase_collector}
 \subsubsection{Matrix labeler}
 \includegraphics[width=1.3\textwidth]{useCase_Labeler}
 \subsubsection{Neural network}
@@ -374,7 +375,7 @@ The user wants to find the fastest \glspl{preconditioner}/\glspl{iterative solve
 
 \textbf{Print}
 	\begin{itemize}
-	\item[-]The algorithm which will be the fastest on the given matrix
+	\item[-]The \glspl{preconditioner}/\glspl{iterative solver} combination which will solve the given matrix the fastest
 	\item[-](optional) The solved matrix
 	\item[-]Error, in case any required arguments are missing or invalid
 	\item[-]Error, in case the matrix has a wrong format

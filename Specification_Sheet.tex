@@ -304,7 +304,7 @@ With the command classify  -p x - the neural network will classify the matrix an
 
 \subsection{Command line options}
 \begin{itemize}
-\item/B10/\textbf{collect -a <amount> -n <name> -s <size> -d <density> -g}:
+\item/B10/\textbf{collect -a <amount> -n <name> -s <size> -d <density> -p <path> -g}:
 \newline The user is able to create a specified amount of matrices that will be saved under a given name
 
 \textbf{Arguments}
@@ -314,6 +314,7 @@ With the command classify  -p x - the neural network will classify the matrix an
 	\item[-]\textbf{-s <size>} (optional) Absolute size the generated square matrices should have. Default is 128
 	\item[-]\textbf{-d <density>} (optional) Density level of the matrices. A float between 0 and 1 where 1 means no zero values
 	\item[-]\textbf{-g}(optional) (Flag) If set it downloads as many matrices of that size as possible from the suite sparse matrix collection
+	\item[-]\textbf{-g <path>} (optional) Path where the created/downloaded matrices will be saved
 	\end{itemize}
 
 \textbf{Print}
@@ -323,15 +324,17 @@ With the command classify  -p x - the neural network will classify the matrix an
 	\item[-]Error, in case any required arguments are missing or invalid
 	\item[-]Error, in case the specified name is already taken
 	\item[-]Error, in case \textbf{-g} is set and user has no internet connection
+	\item[-]Error, in case \textbf{-p <path>} is not a valid path
 	\end{itemize}
 
-\item/B20/\textbf{label -p <path> -n <name>}:
+\item/B20/\textbf{label -p <path> -n <name> -p <path>}:
 \newline The user is able to pass matrices that he wants to get labeled
 
 \textbf{Arguments}
 	\begin{itemize}
 	\item[-]\textbf{-p <path>} Absolute path to the matrices in the local storage the user wants to have labeled
 	\item[-]\textbf{-n <name>} Name under which the labeled matrices will be saved
+	\item[-]\textbf{-g <path>} (optional) Path where the labeled matrices will be saved
 	\end{itemize}
 
 \textbf{Print}
@@ -342,9 +345,10 @@ With the command classify  -p x - the neural network will classify the matrix an
 	\item[-]Error, in case matrices have wrong format
 	\item[-]Error, in case the specified name is already taken
 	\item[-]Error, in case the remote fetching of the matrices did result in an error
+	\item[-]Error, in case \textbf{-p <path>} is not a valid path
 	\end{itemize}
 
-\item/B30/\textbf{train -p <path> -n <name> -t <train>}:
+\item/B30/\textbf{train -p <path> -n <name> -t <train> -p <path>}:
 \newline The user is able to pass labeled matrices to a neural network, that will learn from this matrices
 
 \textbf{Arguments}
@@ -352,6 +356,7 @@ With the command classify  -p x - the neural network will classify the matrix an
 	\item[-]\textbf{-p <path>} Absolute path to the labeled matrices on the local storage
 	\item[-]\textbf{-n <name>} Name under which the neural network will be saved after training has finished
 	\item[-]\textbf{-t <train>} (optional) Float between 0 and 1. Amount of matrices used for training where 1 means all. Standard is 0.8
+	\item[-]\textbf{-g <path>} (optional) Path where the neural network state will be saved
 	\end{itemize}
 
 \textbf{Print}
@@ -361,6 +366,7 @@ With the command classify  -p x - the neural network will classify the matrix an
 	\item[-]Error, in case any required arguments are missing or invalid
 	\item[-]Error, in case matrices have wrong format or are not labeled
 	\item[-]Error, in case the specified name is already taken
+	\item[-]Error, in case \textbf{-p <path>} is not a valid path
 	\end{itemize}
 
 \item/B40/\textbf{classify -p <path> -n <network> -s}:
@@ -369,7 +375,7 @@ With the command classify  -p x - the neural network will classify the matrix an
 \textbf{Arguments}
 	\begin{itemize}
 	\item[-]\textbf{-p <path>} Path to the matrix the user wants to classify
-	\item[-]\textbf{-n <network>} Path to the trained neural network
+	\item[-]\textbf{-n <network>} (optional) Path to the trained neural network, if not set, uses the neural network shipped with the program
 	\item[-]\textbf{-s} (optional) (Flag) If set matrix will also be solved after classification.
 	\end{itemize}
 

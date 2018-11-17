@@ -249,13 +249,36 @@ A Documentation for the user will be generated.
 \subsection{the following function sequences must be checked}
 	\subsubsection{Matrix Generation}
 		\begin{itemize}
-		\item /T10/ After generating a matrix, the returned matrix must have the right size and sparsity level
-		\item /T20/ After generating an amount of matrices, there must be an exact number of matrices by the given amount
-		\item /T30/ After putting noise on a matrix, the returned matrix must have noise
+		\item /T10/ When generating a matrix, the returned matrix must have the right size and sparsity level
+		\item /T15/ When generating a matrix, it must be squared
+		\item /T20/ When generating an amount of matrices, there must be an exact number of matrices by the given amount
+		\item /T30/ When putting noise on a matrix, the returned matrix must have noise
+		\item /T40/ After saving a matrix in the given directory, there must me the right file, with the right format
 		\end{itemize}
 	\subsubsection{Matrix Labeling}
+		\begin{itemize}
+		\item /T50/ When labeling a Matrix, the label must be the algorithm with the shortest time needed
+		\item /T60/ When creating a grayscale sparsity pattern image it must have the same size as
+                       the matrix and must actually be grayscale
+		\item /T70/ After saving the labeled matrix with its sparsity pattern in a given directory, their must a file including the right matrix, the corresponding sparsity pattern image and the right label
+		\end{itemize}
 	\subsubsection{DNN Training and Testing}
+		\begin{itemize}
+		\item /T80/ When a matrix is loaded from a given directory, the right matrix must be loaded
+		\item /T90/ When the matrix files are randomized they have to be in a different order after every randomization
+		\item /T100/ After separating the dataset into a training and testing dataset, the training dataset must contain more matrices than the testing dataset
+		\item /T110/ The NN has the right input dimensions for being trained by the matrices
+		\item /T120/ The NN is only trained by the training dataset
+		\item /T130/ The NN is only tested by the testing dataset
+		\item /T140/ The printed loss(/accuracy) is the actual loss of the current training(/testing) iteration 
+		\item /T150/ After saving the NN in its current state, there must be the right file in the right directory
+		\end{itemize}
 	\subsubsection{Matrix Classification}
+		\begin{itemize}
+		\item /T160/ After the input of a Matrix, the right file is loaded
+		\item /T170/ After loading a NN from a given directory, the right NN has to be in the system
+		\item /T180/ When printing the classification output, it has to be the prediction of the NN
+		\end{itemize}
 	
 \subsection{the following data consistencies must be checked}
 \newpage
@@ -266,7 +289,6 @@ The product consists of four individual modules. The main module is the \glspl{c
 \begin{center}
 \includegraphics[width=\textwidth]{workflow}
 \end{center}
-
 
 \subsubsection{Use of the \glspl{collector}}
 The user wants a set of matrices for his own purpose. He likes our idea of combining the creation of matrices with fetching matrices from the suite sparse matrix collection. He therefore opens the module \glspl{collector}. He wants to generate 300 matrices of size 64x64 with a density of 0.2 and wants to use as many matrices as possible from the suite sparse matrix collection. He wants to call his set of matrices collectedMatrices and enters the command collect -a 300 -n collectedMatrices -s 64 -d 0.2 -g. When the process finished gets notified. He navigates to the results file of the \glspl{collector} in the file manager and proceeds to using the set of matricies for his own purposes.

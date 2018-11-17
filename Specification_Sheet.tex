@@ -33,37 +33,157 @@ bookmarks=true,%
 \newglossaryentry{labeling module}
 {
 	name=labeling module,
-	plural=labeling module,
-	description={The second module in the program. Responsible for executing a given set of matrices with all the \glspl{preconditioner}/\glspl{iterative solver}s combination specified. It will furthermore label each matrix with the fastest combination.}
+	plural=labeling modules,
+	description={The second module in the program. Responsible for executing a given set of matrices with all the \gls{preconditioner}/\gls{iterative solver}s combination specified. It will furthermore label each matrix with the fastest combination.}
 }
 
 \newglossaryentry{training module}
 {
 	name=training module,
-	plural=training module,
-	description={The third module in the program. Responsible for training a deep neural network with the set of matrices and labels given by the \glspl{labeling module}.}
+	plural=training modules,
+	description={The third module in the program. Responsible for training a deep neural network with the set of matrices and labels given by the \gls{labeling module}.}
 }
 
 \newglossaryentry{classifier}
 {
 	name=classifier,
-	plural=classifier,
-	description={The last and main module in the program.It is able to determine the fastest \glspl{preconditioner}/\glspl{iterative solver} combination for a given sparse linear system. It uses the neural network trained by the module neural network.}
+	plural= classifiers,
+	description={The last and main module in the program.It is able to determine the fastest \gls{preconditioner}/\gls{iterative solver} combination for a given sparse linear system. It uses the \gls{neural network} trained by the module \gls{neural network}.}
 }
 
 \newglossaryentry{preconditioner}
 {
 	name=preconditioner,
-	plural=preconditioner,
-	description={WIP}
+	plural=preconditioners,
+	description={In mathematics, preconditioning is the application of a transformation, that conditions a given problem into a form that is more suitable for numerical solving methods.}
 }
 
 \newglossaryentry{iterative solver}
 {
 	name=iterative solver,
-	plural=iterative solver,
-	description={WIP}
+	plural=iterative solvers,
+	description={In computational mathematics, an iterative solver does a mathematical procedure that uses an initial guess to generate a sequence of improving approximate solutions for a class of problems, in which the n-th approximation is derived from the previous ones}
 }
+
+\newglossaryentry{ssget}
+{
+	name=ssget,
+	plural=ssget,
+	description={ssget is a tool from Suite Sparse, that gets matrices from Suite Sparse}
+}
+
+\newglossaryentry{Suite Sparse}
+{
+	name=Suite Sparse,
+	plural=Suite Sparse,
+	description={Suite Sparse is a suite of sparse matrix algorithms and Java interface to the Suite Sparse Matrix Collection}
+}
+
+\newglossaryentry{Keras}
+{
+	name=Keras,
+	plural=Keras,
+	description={Keras is an open source deep learning library written in Python}
+}
+
+\newglossaryentry{Python}
+{
+	name=Python,
+	plural=Python,
+	description={Python is an interpreted high-level programming language for general-purpose programming.}
+}
+
+\newglossaryentry{Pytest}
+{
+	name=Pytest,
+	plural=Pytests,
+	description={Pytest is an alternative, more python fitting way of writing tests}
+}
+
+\newglossaryentry{Linux}
+{
+	name=Linux,
+	plural=Linux,
+	description={Linux is an open-source software operating systems}
+}
+
+\newglossaryentry{Windows}
+{
+	name=Windows,
+	plural=Windows,
+	description={Microsoft Windows is a group of several graphical operating system families, all of which are developed, marketed, and sold by Microsoft.}
+}
+
+\newglossaryentry{command-line interface}
+{
+	name=command-line,
+	plural=command-lines,
+	description={is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). A program which handles the interface is called a command language interpreter}
+}
+
+\newglossaryentry{algorithm}
+{
+	name=algorithm,
+	plural=algorithms,
+	description={In mathematics and computer science, an algorithm is an unambiguous specification of how to solve a class of problems. Algorithms can perform calculation, data processing and automated reasoning tasks.}
+}
+
+\newglossaryentry{GPU}
+{
+	name=GPU,
+	plural=GPUs,
+	description={A graphics processing unit (GPU) is a specialized electronic circuit designed to rapidly manipulate and alter memory to accelerate the creation of images in a frame buffer intended for output to a display device}
+}
+
+\newglossaryentry{noise}
+{
+	name=noise,
+	plural=noises,
+	description={...}
+}
+
+\newglossaryentry{Ginkgo}
+{
+	name=Ginkgo,
+	plural=Ginkgo,
+	description={...}
+}
+
+\newglossaryentry{artificial noise}
+{
+	name=artificial noise,
+	plural=artificial noises,
+	description={...}
+}
+
+\newglossaryentry{ResNet}
+{
+	name=resNet,
+	plural=resNet,
+	description={...}
+}
+
+\newglossaryentry{gaussian noise}
+{
+	name=gaussian noise,
+	plural=gaussian noises,
+	description={...}
+}
+
+\newglossaryentry{classification}
+{
+	name=classification,
+	plural= classifications,
+	description={...}
+}
+
+\newglossaryentry{neural network}
+{
+	name=neural network,
+	plural=neural networks,
+	description={...}
+}
+
 
 \begin{document}
 
@@ -96,17 +216,17 @@ Makus G\"{o}tz
 \section{Success Criteria}
 
 Goal is the delivery of a consistent software stack that allows for employing 
-neural networks for the linear system classification. 
-The ecosystem should allow to train a neural network on selecting a suitable \glspl{iterative solver} depending on the linear system characteristics.
+\glspl{neural network} for the linear system \gls{classification}. 
+The ecosystem should allow to train a \gls{neural network} on selecting a suitable \gls{iterative solver} depending on the linear system characteristics.
 
 \subsection{Mandatory Requirements}
 \begin{itemize}
 
 \item A software that supports the described work-flow design including the embedding of external components.
 
-\item The software must be cross-platform compatible and support at least a Linux and the Windows operating system.
+\item The software must be cross-platform compatible and support at least a \gls{Linux} and the \gls{Windows} operating system.
 
-\item The software must be usable via a command-line interface (CLI).
+\item The software must be usable via a \gls{command-line interface} (CLI).
 
 \item A data exchange format design that allows to store matrices and annotate them with 
 additional meta-data, including labels.
@@ -116,22 +236,22 @@ additional meta-data, including labels.
 \item There need to be two actual realizations of these entities, which:
 
 \begin{itemize}
-    \item allow to generate artificial noise with uniform and gaussian noise as well as
+    \item allow to generate \gls{artificial noise} with uniform and \gls{gaussian noise} as well as
     
-    \item can fetch test matrices from the Suite Sparse matrix collection.
+    \item can fetch test matrices from the \gls{Suite Sparse} matrix collection.
 \end{itemize}
 
 \item A dataset of at least 500 matrices in the envisioned data format and generated by the above two entities. There smallest share of matrices of a given entity must be no less than 30\% of the total number of contained matrices.
 
-\item An extensible design that allows to solve the matrices using a configurable set of \glspl{iterative solver} algorithms using a newly developed binding to the Ginkgo linear algebra library.
+\item An extensible design that allows to solve the matrices using a configurable set of \gls{iterative solver} algorithms using a newly developed binding to the \gls{Ginkgo} linear algebra library.
 
-\item A readily implemented and trained neural network of the ResNet architecture. It must be able to predict for a given matrix (in arbitrary format), which of the \glspl{iterative solver} algorithms is the most suitable.
+\item A readily implemented and trained \gls{neural network} of the \gls{ResNet} architecture. It must be able to predict for a given matrix (in arbitrary format), which of the \gls{iterative solver} algorithms is the most suitable.
 
-\item An entity that allows to store and load the trained neural network.
+\item An entity that allows to store and load the trained \gls{neural network}.
 
-\item The software must include entities for training and re-training a neural network from scratch, respectively from a previously stored state.
+\item The software must include entities for training and re-training a \gls{neural network} from scratch, respectively from a previously stored state.
 
-\item The software must be able to show the predicted algorithm and its associated suitability probability on the standard output.
+\item The software must be able to show the predicted \gls{algorithm} and its associated suitability probability on the standard output.
 
 \item Realization of a sustainable and quality-assured software development process. This includes a software design document, in-code documentation, unit testing and a continuous integration (CI).
 
@@ -143,17 +263,26 @@ additional meta-data, including labels.
     
 \item Scalability of the work-flow including matrix generation, training, prediction in that multiple processors may be used in parallel.
 
-\item The software must be able to utilize GPU accelerators for the training and prediction capabilities of the neural network.
+\item The software must be able to utilize GPU accelerators for the training and prediction capabilities of the \gls{neural network}.
 
-\item The system must support at least five \glspl{iterative solver} algorithms.
+\item The system must support at least five \gls{iterative solver} \glspl{algorithm}.
 
-\item A web interface to the software that is able to select a single, a set or all matrices of an uploadable file for prediction by the neural network. The web interface may also be able to visualize the contained matrices, annotated labels as well as prediction results.
+\item A web interface to the software that is able to select a single, a set or all matrices of an uploadable file for prediction by the \gls{neural network}. The web interface may also be able to visualize the contained matrices, annotated labels as well as prediction results.
 
 \end{itemize}
 
 \subsection{demarcation criteria}
 \begin{itemize}
 \item no matrices other that sparse, squared matrices will be supported
+
+\item Preferably integration of existing techonologies instead of own implementation (\gls{ssget})
+
+\item Use of \gls{Keras} and \gls{Ginkgo}
+
+\item The programming language \gls{Python} 3 should be used
+
+\item Use of \gls{Pytest} for testing
+
 \end{itemize}
 \section{Product use}
 \subsection{Scope of application}
@@ -173,15 +302,15 @@ Mathematicians and computer scientists who are working with sparse linear system
 \subsection{Software}
 
 \begin{itemize}
-\item The product will run on Windows 10 and Linux distributions 
-\item The labeling of the matrices and training of the neural network will be done with Linux
+\item The product will run on \gls{Windows} 10 and \gls{Linux} distributions 
+\item The labeling of the matrices and training of the \gls{neural network} will be done with \gls{Linux}
 \end{itemize}
 
 \subsection{Hardware}
 
 \begin{itemize}
 \item The product will run on a workstation computer
-\item The labeling of the matrices and training of the neural network will be done on a server with multiple GPUs
+\item The labeling of the matrices and training of the \gls{neural network} will be done on a server with multiple \glspl{GPU}
 \end{itemize}
 
 \subsection{Orgware}
@@ -193,11 +322,11 @@ A Documentation for the user will be generated.
 	\begin{itemize}
 	\item /F10/ Generation of sparse matrices by a given sparsity level and size
 	\item /F15/ Generation of a given amount of matrices
-	\item /F30/ Putting noise on the matrices
+	\item /F30/ Putting \glspl{noise} on the matrices
  	\item /F40/ Saving the generated matrices in a given directory
         \item /F50/ Choice to either only generate matrices or to generate some and fetch some from the suite sparse matrix collection
-	\item /F60/ Integration of the ssget tool
-          \end{itemize}
+	\item /F60/ Integration of the \gls{ssget} tool
+	\end{itemize}
 \subsection{Matrix Labeling}
 	\begin{itemize}
 	\item /F70/ Determination of the best solving algorithm by time(fix algorithms)
@@ -213,26 +342,31 @@ A Documentation for the user will be generated.
 	\item /F110/ Input of matrix files from a given directory
 	\item /F120/ Randomization of the matrix files order
 	\item /F125/ Separation of the matrix files into a training and testing dataset
-	\item /F130/ Existence of a neural network to train
-	\item /F140/ Training of the neural network by a given training dataset(/F125/)
-	\item /F141/ Testing of the neural network by a given testing dataset(/F125/)
-	\item /F150/ Printing the accuracy(/loss) during the training and testing process of the neural network
+	\item /F130/ Existence of a \gls{neural network} to train
+	\item /F140/ Training of the \gls{neural network} by a given training dataset(/F125/)
+	\item /F141/ Testing of the \gls{neural network} by a given testing dataset(/F125/)
+	\item /F150/ Printing the accuracy(/loss) during the training and testing process of the \gls{neural network}
 	\item /F151/ optional: creating of accuracy histograms
-	\item /F160/ Saving the neural network in its current state on a given directory
+	\item /F160/ Saving the \gls{neural network} in its current state on a given directory
 	\end{itemize}
  	
 \subsection{Matrix Classification}
 	\begin{itemize}
 	\item /F170/ Input of a matrix to classify
 	\item /F175/ Creating a grayscale sparsity pattern image of the input matrix
-	\item /F180/ Loading a trained neural network from a given directory
-	\item /F200/ Classification of the given pattern image by the neural network
+	\item /F180/ Loading a trained \gls{neural network} from a given directory
+	\item /F200/ Classification of the given pattern image by the \gls{neural network}
 	\item /F201/ Printing the classification output
 	\end{itemize}
 
 \section{Product data}
 	\begin{itemize}
-	\item 500-1000 matrices for training, validation and test
+	\item artificial generated matrices
+	\item collected matrices by ssget
+	\item 500-1000 labled matrices for training and test
+	\item gray scale sparcity pattern images
+	\item \gls{neural network}
+
 	\end{itemize}
 
 \section{Nonfunctional requirements}
@@ -252,30 +386,30 @@ A Documentation for the user will be generated.
 \section{System models}
 \subsection{Scenarios}
 \subsubsection{Overview}
-The product consists of four individual modules. The main module is the \glspl{classifier} . Here the user may input a sparse matrix and receive the fastest \glspl{preconditioner}/\glspl{iterative solver} combination for solving the matrix. The user may furthermore interact with the other three modules; the \glspl{collector}, the \glspl{labeling module} and the neural network.  Typical interaction with those modules will be described below.
+The product consists of four individual modules. The main module is the \gls{classifier} . Here the user may input a sparse matrix and receive the fastest \gls{preconditioner}/\gls{iterative solver} combination for solving the matrix. The user may furthermore interact with the other three modules; the \gls{collector}, the \gls{labeling module} and the \gls{neural network}.  Typical interaction with those modules will be described below.
 \begin{center}
 \includegraphics[width=\textwidth]{workflow}
 \end{center}
 
 
-\subsubsection{Use of the \glspl{collector}}
-The user wants a set of matrices for his own purpose. He likes our idea of combining the creation of matrices with fetching matrices from the suite sparse matrix collection. He therefore opens the module \glspl{collector}. He wants to generate 300 matrices of size 64x64 with a density of 0.2 and wants to use as many matrices as possible from the suite sparse matrix collection. He wants to call his set of matrices collectedMatrices and enters the command collect -a 300 -n collectedMatrices -s 64 -d 0.2 -g. When the process finished gets notified. He navigates to the results file of the \glspl{collector} in the file manager and proceeds to using the set of matricies for his own purposes.
+\subsubsection{Use of the \gls{collector}}
+The user wants a set of matrices for his own purpose. He likes our idea of combining the creation of matrices with fetching matrices from the suite sparse matrix collection. He therefore opens the module \gls{collector}. He wants to generate 300 matrices of size 64x64 with a density of 0.2 and wants to use as many matrices as possible from the suite sparse matrix collection. He wants to call his set of matrices collectedMatrices and enters the command collect -a 300 -n collectedMatrices -s 64 -d 0.2 -g. When the process finished gets notified. He navigates to the results file of the \gls{collector} in the file manager and proceeds to using the set of matricies for his own purposes.
 \begin{center}
 \includegraphics[width=\textwidth]{collector}
 \end{center}
 
-\subsubsection{Use of the \glspl{labeling module}}
-The user has a very specific problem which generates only a certain kind of sparse matrices. That is why he wants to adapt the neural network for his specific task. He furthermore only wants to use the default \glspl{preconditioner}/\glspl{iterative solver} combinations. He first of all safes all of his matrices in one directory x of his choice. Then he opens the \glspl{labeling module}. The command label -p x -n labeledMatrices will label all the matrices and generate their greyscale pattern image in the directory. The set of greyscale pattern images will be safed with the name labeledMatrices in the results file of the \glspl{labeling module}. The user may proceed with using the neural network.
+\subsubsection{Use of the \gls{labeling module}}
+The user has a very specific problem which generates only a certain kind of sparse matrices. That is why he wants to adapt the \gls{neural network} for his specific task. He furthermore only wants to use the default \gls{preconditioner}/\gls{iterative solver} combinations. He first of all safes all of his matrices in one directory x of his choice. Then he opens the \gls{labeling module}. The command label -p x -n labeledMatrices will label all the matrices and generate their greyscale pattern image in the directory. The set of greyscale pattern images will be safed with the name labeledMatrices in the results file of the \gls{labeling module}. The user may proceed with using the \gls{neural network}.
 
 
-\textbf{Optional:} The user is fine with the default matrices, but he wants to use other \glspl{preconditioner}/\glspl{iterative solver} combinations which are included in the ginkgo libary. He opens the \glspl{labeling module}. With the command list combinations he will see all the combinations that are currently used. With the command add <\glspl{preconditioner}/\glspl{iterative solver}> a the new combinations of his choice will be added. With the command delete <\glspl{preconditioner}/\glspl{iterative solver}> the specified combination will be deleted. After the user made his choice he may proceed with using the neural network.
+\textbf{Optional:} The user is fine with the default matrices, but he wants to use other \gls{preconditioner}/\gls{iterative solver} combinations which are included in the ginkgo libary. He opens the \gls{labeling module}. With the command list combinations he will see all the combinations that are currently used. With the command add <\gls{preconditioner}/\gls{iterative solver}> a the new combinations of his choice will be added. With the command delete <\gls{preconditioner}/\gls{iterative solver}> the specified combination will be deleted. After the user made his choice he may proceed with using the \gls{neural network}.
 \begin{center}
 \includegraphics[width=\textwidth]{labelingModule}
 \end{center}
 
 
-\subsubsection{Use of the \glspl{training module}}
-\textbf{Optional:} The user has changed the set of matrices and/or the \glspl{preconditioner}/\glspl{iterative solver} combinations. He now wants to build the classifier. He opens the \glspl{training module}. With the command train -n myNeuralNetwork the neural network will be trained.The neural network will be saved in the results folder with the name myNeuralNetwork.  The user may then proceed with using the classifier.
+\subsubsection{Use of the \gls{training module}}
+\textbf{Optional:} The user has changed the set of matrices and/or the \gls{preconditioner}/\gls{iterative solver} combinations. He now wants to build the classifier. He opens the \gls{training module}. With the command train -n myNeuralNetwork the \gls{neural network} will be trained.The \gls{neural network} will be saved in the results folder with the name myNeuralNetwork.  The user may then proceed with using the classifier.
 
 \begin{center}
 \includegraphics[width=\textwidth]{trainingModule}
@@ -283,15 +417,15 @@ The user has a very specific problem which generates only a certain kind of spar
 
 \subsubsection{Use of the classifier}
 
-The user wants to find the fastest \glspl{preconditioner}/\glspl{iterative solver} combination for a sparse linear system. If he did not change anything in the previous modules the default settings will be used. He will first save the sparse matrix in any desired filepath x. Afterwards the user starts the \glspl{classifier}.
-With the command classify  -p x - the neural network will classify the matrix and determine the fastest \glspl{iterative solver}/\glspl{preconditioner} combination for solving the matrix. This combination will be printed to the command line. (\textbf{Optional:} After determining the fastest combination the program will solve the matrix with this combination. The solved matrix will be safed in a directory the user specifies.)
+The user wants to find the fastest \gls{preconditioner}/\gls{iterative solver} combination for a sparse linear system. If he did not change anything in the previous modules the default settings will be used. He will first save the sparse matrix in any desired filepath x. Afterwards the user starts the \gls{classifier}.
+With the command classify  -p x - the \gls{neural network} will classify the matrix and determine the fastest \gls{iterative solver}/\gls{preconditioner} combination for solving the matrix. This combination will be printed to the command line. (\textbf{Optional:} After determining the fastest combination the program will solve the matrix with this combination. The solved matrix will be safed in a directory the user specifies.)
 \begin{center}
 \includegraphics[width=\textwidth]{classifier}
 \end{center}
 
 
 \subsection{Use cases}
-\subsubsection{Matrix \glspl{collector}}
+\subsubsection{Matrix \gls{collector}}
 \includegraphics[width=1.3\textwidth]{useCase_collector}
 \subsubsection{Matrix labeler}
 \includegraphics[width=1.3\textwidth]{useCase_Labeler}
@@ -349,20 +483,20 @@ With the command classify  -p x - the neural network will classify the matrix an
 	\end{itemize}
 
 \item/B30/\textbf{train -p <path> -n <name> -t <train> -p <path>}:
-\newline The user is able to pass labeled matrices to a neural network, that will learn from this matrices
+\newline The user is able to pass labeled matrices to a \gls{neural network}, that will learn from this matrices
 
 \textbf{Arguments}
 	\begin{itemize}
 	\item[-]\textbf{-p <path>} Absolute path to the labeled matrices on the local storage
-	\item[-]\textbf{-n <name>} Name under which the neural network will be saved after training has finished
+	\item[-]\textbf{-n <name>} Name under which the \glspl{neural network} will be saved after training has finished
 	\item[-]\textbf{-t <train>} (optional) Float between 0 and 1. Amount of matrices used for training where 1 means all. Standard is 0.8
-	\item[-]\textbf{-g <path>} (optional) Path where the neural network state will be saved
+	\item[-]\textbf{-g <path>} (optional) Path where the \gls{neural network] state will be saved
 	\end{itemize}
 
 \textbf{Print}
 	\begin{itemize}
 	\item[-]Progress notifying about the loss of the current state based on test data
-	\item[-]A message when process has finished with the path to the neural network and the final loss
+	\item[-]A message when process has finished with the path to the \gls{neural network} and the final loss
 	\item[-]Error, in case any required arguments are missing or invalid
 	\item[-]Error, in case matrices have wrong format or are not labeled
 	\item[-]Error, in case the specified name is already taken
@@ -370,22 +504,22 @@ With the command classify  -p x - the neural network will classify the matrix an
 	\end{itemize}
 
 \item/B40/\textbf{classify -p <path> -n <network> -s}:
-\newline The user is able to pass a matrix to a the trained neural network, which will find the best solving algorithm.
+\newline The user is able to pass a matrix to a the trained \gls{neural network}, which will find the best solving algorithm.
 
 \textbf{Arguments}
 	\begin{itemize}
 	\item[-]\textbf{-p <path>} Path to the matrix the user wants to classify
-	\item[-]\textbf{-n <network>} (optional) Path to the trained neural network, if not set, uses the neural network shipped with the program
+	\item[-]\textbf{-n <network>} (optional) Path to the trained \glspl{neural network}, if not set, uses the \gls{neural network} shipped with the program
 	\item[-]\textbf{-s} (optional) (Flag) If set matrix will also be solved after classification.
 	\end{itemize}
 
 \textbf{Print}
 	\begin{itemize}
-	\item[-]The \glspl{preconditioner}/\glspl{iterative solver} combination which will solve the given matrix the fastest
+	\item[-]The \gls{preconditioner}/\gls{iterative solver} combination which will solve the given matrix the fastest
 	\item[-](optional) The solved matrix
 	\item[-]Error, in case any required arguments are missing or invalid
 	\item[-]Error, in case the matrix has a wrong format
-	\item[-]Error, in case the neural network or matrix path is wrong
+	\item[-]Error, in case the \gls{neural network} or matrix path is wrong
 	\end{itemize}
 \end{itemize}
 \clearpage

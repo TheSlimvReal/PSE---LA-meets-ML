@@ -105,7 +105,7 @@ bookmarks=true,%
 {
 	name=neural network,
 	plural=neural networks,
-	description={neural networks itself is not an gls{algorithm}, but rather a framework for many different machine learning glspl{algorithm} to work together and process complex data inputs. Such systems "learn" to perform tasks by considering examples, generally without being programmed with any task-specific rules.}
+	description={neural networks itself is not an\gls{algorithm}, but rather a framework for many different machine learning glspl{algorithm} to work together and process complex data inputs. Such systems "learn" to perform tasks by considering examples, generally without being programmed with any task-specific rules.}
 }
 
 \newglossaryentry{preconditioner}
@@ -314,10 +314,10 @@ A Documentation for the user will be generated.
 	\end{itemize}
 \subsection{Matrix Labeling}
 	\begin{itemize}
-	\item /F70/ Determination of the best solving gls{algorithm]} by time(fix glspl{algorithm})
-	\item /F71/ optional: Determination of the best solving gls{algorithm} by time with custom glspl{algorithm}
+	\item /F70/ Determination of the best solving \gls{algorithm} by time(fix \glspl{algorithm})
+	\item /F71/ optional: Determination of the best solving \gls{algorithm} by time with custom \glspl{algorithm}
 	\item /F75/ Labeling the matrix with the determined best algorithm
-	\item /F90/ Creating a grayscale gls{sparsity pattern image} of the labeled matrix
+	\item /F90/ Creating a grayscale \gls{sparsity pattern image} of the labeled matrix
 	\item /F100/ Saving the labeled matrix with its \gls{sparsity pattern image} in a given directory 
 	\end{itemize}
 	
@@ -338,7 +338,7 @@ A Documentation for the user will be generated.
 \subsection{Matrix Classification}
 	\begin{itemize}
 	\item /F170/ Input of a matrix to classify
-	\item /F175/ Creating a grayscale gls{sparsity pattern image} of the input matrix
+	\item /F175/ Creating a grayscale \gls{sparsity pattern image} of the input matrix
 	\item /F180/ Loading a trained \gls{neural network} from a given directory
 	\item /F200/ Classification of the given pattern image by the \gls{neural network}
 	\item /F201/ Printing the classification output
@@ -347,9 +347,9 @@ A Documentation for the user will be generated.
 \section{Product data}
 	\begin{itemize}
 	\item artificial generated matrices
-	\item collected matrices by ssget
+	\item collected matrices by \gls{ssget}
 	\item 500-1000 labled matrices for training and test
-	\item gray scale sparcity pattern images
+	\item gray scale \gls{sparsity pattern image}
 	\item \gls{neural network}
 
 	\end{itemize}
@@ -357,7 +357,7 @@ A Documentation for the user will be generated.
 \section{Nonfunctional requirements}
 	\begin{itemize}
 		\item /NF10/ All matrices are squared
-		\item /NF20/ All fixed glspl{algorithm} are used within the labeling processes
+		\item /NF20/ All fixed \glspl{algorithm} are used within the labeling processes
 		\item /NF30/ The grayscale sparsity pattern all have the same size before training
 		\item /NF40/ The NN ouputs a distinct prediction
 		\item /NF50/ The NN is saved after every iteration
@@ -377,10 +377,10 @@ A Documentation for the user will be generated.
 
 \subsubsection{Matrix Labeling}
 		\begin{itemize}
-		\item /T50/ When labeling a Matrix, the label must be the gls{algorithm} with the shortest time needed
-		\item /T60/ When creating a grayscale gls{sparsity pattern image} it must have the same size as
+		\item /T50/ When labeling a Matrix, the label must be the \gls{algorithm} with the shortest time needed
+		\item /T60/ When creating a grayscale\gls{sparsity pattern image} it must have the same size as
                        the matrix and must actually be grayscale
-		\item /T70/ After saving the labeled matrix with its sparsity pattern in a given directory, their must a file including the right matrix, the corresponding gls{sparsity pattern image} and the right label
+		\item /T70/ After saving the labeled matrix with its sparsity pattern in a given directory, their must a file including the right matrix, the corresponding \gls{sparsity pattern image} and the right label
 		\end{itemize}
 	\subsubsection{DNN Training and Testing}
 		\begin{itemize}
@@ -397,7 +397,7 @@ A Documentation for the user will be generated.
 		\begin{itemize}
 		\item /T160/ After the input of a Matrix, the right file is loaded
 		\item /T170/ After loading a NN from a given directory, the right NN has to be in the system
-		\item /T180/ When printing the gls{classification} output, it has to be the prediction of the NN
+		\item /T180/ When printing the classification output, it has to be the prediction of the NN
 		\end{itemize}
 \subsection{the following data consistencies must be checked}
 \newpage
@@ -411,7 +411,7 @@ The product consists of four individual modules. The main module is the \gls{cla
 
 
 \subsubsection{Use of the \gls{collector}}
-The user wants a set of matrices for his own purpose. He likes our idea of combining the creation of matrices with fetching matrices from the gls{Suite Sparse} matrix collection. He therefore opens the module \gls{collector}. He wants to generate 300 matrices of size 64x64 with a density of 0.2 and wants to use as many matrices as possible from the gls{Suite Sparse} matrix collection. He wants to call his set of matrices collectedMatrices and enters the command collect -a 300 -n collectedMatrices -s 64 -d 0.2 -g. When the process finished gets notified. He navigates to the results file of the \gls{collector} in the file manager and proceeds to using the set of matricies for his own purposes.
+The user wants a set of matrices for his own purpose. He likes our idea of combining the creation of matrices with fetching matrices from the \gls{Suite Sparse} matrix collection. He therefore opens the module \gls{collector}. He wants to generate 300 matrices of size 64x64 with a density of 0.2 and wants to use as many matrices as possible from the \gls{Suite Sparse} matrix collection. He wants to call his set of matrices collectedMatrices and enters the command collect -a 300 -n collectedMatrices -s 64 -d 0.2 -g. When the process finished gets notified. He navigates to the results file of the \gls{collector} in the file manager and proceeds to using the set of matricies for his own purposes.
 \begin{center}
 \includegraphics[width=\textwidth]{collector}
 \end{center}
@@ -420,14 +420,14 @@ The user wants a set of matrices for his own purpose. He likes our idea of combi
 The user has a very specific problem which generates only a certain kind of sparse matrices. That is why he wants to adapt the \gls{neural network} for his specific task. He furthermore only wants to use the default \gls{preconditioner}/\gls{iterative solver} combinations. He first of all safes all of his matrices in one directory x of his choice. Then he opens the \gls{labeling module}. The command label -p x -n labeledMatrices will label all the matrices and generate their greyscale pattern image in the directory. The set of greyscale pattern images will be safed with the name labeledMatrices in the results file of the \gls{labeling module}. The user may proceed with using the \gls{neural network}.
 
 
-\textbf{Optional:} The user is fine with the default matrices, but he wants to use other \gls{preconditioner}/\gls{iterative solver} combinations which are included in the gls{Ginkgo} libary. He opens the \gls{labeling module}. With the command list combinations he will see all the combinations that are currently used. With the command add <\gls{preconditioner}/\gls{iterative solver}> a the new combinations of his choice will be added. With the command delete <\gls{preconditioner}/\gls{iterative solver}> the specified combination will be deleted. After the user made his choice he may proceed with using the \gls{neural network}.
+\textbf{Optional:} The user is fine with the default matrices, but he wants to use other \gls{preconditioner}/\gls{iterative solver} combinations which are included in the \gls{Ginkgo} libary. He opens the \gls{labeling module}. With the command list combinations he will see all the combinations that are currently used. With the command add <\gls{preconditioner}/\gls{iterative solver}> a the new combinations of his choice will be added. With the command delete <\gls{preconditioner}/\gls{iterative solver}> the specified combination will be deleted. After the user made his choice he may proceed with using the \gls{neural network}.
 \begin{center}
 \includegraphics[width=\textwidth]{labelingModule}
 \end{center}
 
 
 \subsubsection{Use of the \gls{training module}}
-\textbf{Optional:} The user has changed the set of matrices and/or the \gls{preconditioner}/\gls{iterative solver} combinations. He now wants to build the classifier. He opens the \gls{training module}. With the command train -n myNeuralNetwork the \gls{neural network} will be trained. The \gls{neural network} will be saved in the results folder with the name myNeuralNetwork.  The user may then proceed with using the gls{classifier}.
+\textbf{Optional:} The user has changed the set of matrices and/or the \gls{preconditioner}/\gls{iterative solver} combinations. He now wants to build the \gls{classifier}. He opens the \gls{training module}. With the command train -n myNeuralNetwork the \gls{neural network} will be trained. The \gls{neural network} will be saved in the results folder with the name myNeuralNetwork.  The user may then proceed with using the \gls{classifier}.
 
 \begin{center}
 \includegraphics[width=\textwidth]{trainingModule}
@@ -465,7 +465,7 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 	\item[-]\textbf{-n <name>} Name under which the matrices will be saved
 	\item[-]\textbf{-s <size>} (optional) Absolute size the generated square matrices should have. Default is 128
 	\item[-]\textbf{-d <density>} (optional) Density level of the matrices. A float between 0 and 1 where 1 means no zero values
-	\item[-]\textbf{-g}(optional) (Flag) If set it downloads as many matrices of that size as possible from the gls{Suite Sparse} matrix collection
+	\item[-]\textbf{-g}(optional) (Flag) If set it downloads as many matrices of that size as possible from the \gls{Suite Sparse} matrix collection
 	\item[-]\textbf{-g <path>} (optional) Path where the created/downloaded matrices will be saved
 	\end{itemize}
 
@@ -522,13 +522,13 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 	\end{itemize}
 
 \item/B40/\textbf{classify -p <path> -n <network> -s}:
-\newline The user is able to pass a matrix to a the trained \gls{neural network}, which will find the best solving gls{algorithm}.
+\newline The user is able to pass a matrix to a the trained \gls{neural network}, which will find the best solving \gls{algorithm}.
 
 \textbf{Arguments}
 	\begin{itemize}
 	\item[-]\textbf{-p <path>} Path to the matrix the user wants to classify
 	\item[-]\textbf{-n <network>} (optional) Path to the trained \glspl{neural network}, if not set, uses the \gls{neural network} shipped with the program
-	\item[-]\textbf{-s} (optional) (Flag) If set matrix will also be solved after gls{classification}.
+	\item[-]\textbf{-s} (optional) (Flag) If set matrix will also be solved after classification.
 	\end{itemize}
 
 \textbf{Print}

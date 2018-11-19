@@ -2,21 +2,19 @@
 \usepackage[utf8]{inputenc} % use utf8 file encoding for TeX sources
 \usepackage[T1]{fontenc}    % avoid garbled Unicode text in pdf
 \usepackage[german]{babel}  % german hyphenation, quotes, etc
-\usepackage{graphicx}
+\usepackage{graphicx}       % provides commands for including figures
 \usepackage{rotating}
 \graphicspath{ {images/} }
 \usepackage{hyperref}       % detailed hyperlink/pdf configuration
 \hypersetup{                % ‘texdoc hyperref‘ for options
-pdftitle={PSE : DataMovementDeaon},%
+pdftitle={PSE : LAMeetsML},%
 bookmarks=true,%
 }
-\usepackage{graphicx}       % provides commands for including figures
 \usepackage{csquotes}       % provides \enquote{} macro for "quotes"
 \usepackage[nonumberlist, acronym]{glossaries} % provides glossary commands
 \usepackage{enumitem}
 \usepackage{lscape}
 \usepackage{caption}
-\usepackage{rotating}
 \usepackage{placeins}
 
 \makenoidxglossaries
@@ -42,7 +40,7 @@ bookmarks=true,%
 {
 	name=collector,
 	plural=collector,
-	description={The first module in the program. Responsible for generating artifical matrices and collection preexisting matrices from the suite sparse matrix collection.}
+	description={The first module in the program. Responsible for generating artificial matrices and collection preexisting matrices from the suite sparse matrix collection.}
 }
 
 \newglossaryentry{command-line interface}
@@ -140,7 +138,7 @@ bookmarks=true,%
 {
 	name=ssget,
 	plural=ssget,
-	description={ssget is a tool from Suite Sparse, that gets matrices from Suite Sparse}
+	description={ssget is a command line tool for downloading matrices from the Suite Sparse Matrix Collection}
 }
 
 \newglossaryentry{Suite Sparse}
@@ -262,7 +260,7 @@ additional meta-data, including labels.
 \begin{itemize}
 \item no matrices other that sparse, squared matrices will be supported
 
-\item Preferably integration of existing techonologies instead of own implementation (\gls{ssget})
+\item Preferably integration of existing technologies instead of own implementation (\gls{ssget})
 
 \item Use of \gls{Keras} and \gls{Ginkgo}
 
@@ -536,6 +534,57 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 	\item[-]Error, in case the matrix has a wrong format
 	\item[-]Error, in case the \gls{neural network} or matrix path is wrong
 	\end{itemize}
+
+\item(optional)/B50/\textbf{label -l}:
+\newline The user is able to retrieve a list of the available and used algorithms for the labeling module
+
+\textbf{Arguments}
+	\begin{itemize}
+	\item[-]\textbf{-l} (flag) If set, all other arguments will be ignored 
+	\end{itemize}
+\textbf{Print}
+	\begin{itemize}
+	\item[-]A list of all \glspl{algorithm} the \gls{labeling module} is able currently uses and is able to use
+	\end{itemize}
+
+\item(optional)/B50/\textbf{label -l}:
+\newline The user is able to retrieve a list of the available and used algorithms for the labeling module
+
+\textbf{Arguments}
+	\begin{itemize}
+	\item[-]\textbf{-l} (flag) If set, all other arguments will be ignored 
+	\end{itemize}
+\textbf{Print}
+	\begin{itemize}
+	\item[-]A list of all \glspl{algorithm} the \gls{labeling module} is able currently uses and is able to use
+	\end{itemize}
+
+\item(optional)/B60/\textbf{label -a <algorithm>}:
+\newline The user is able to add a \gls{algorithm} that will be used for labeling matrices.
+
+\textbf{Arguments}
+	\begin{itemize}
+	\item[-]\textbf{-a <algorithm>}If set, all other arguments will be ignored and the \gls{algorithm} will be added to the used algorithms
+	\end{itemize}
+\textbf{Print}
+	\begin{itemize}
+	\item[-]A message if the adding worked
+	\item[-]Error, in case the entered \gls{algorithm} is not supported 
+	\end{itemize}
+
+\item(optional)/B70/\textbf{label -r <algorithm>}:
+\newline The user is able to delete a \gls{algorithm} from the list of used algorithms.
+
+\textbf{Arguments}
+	\begin{itemize}
+	\item[-]\textbf{-r <algorithm>}If set, all other arguments will be ignored and the \gls{algorithm} will be removed to the used algorithms
+	\end{itemize}
+\textbf{Print}
+	\begin{itemize}
+	\item[-]A message if the remove worked
+	\item[-]Error, in case the entered \gls{algorithm} is not found. 
+	\end{itemize}
+
 \end{itemize}
 \clearpage
 

@@ -2,21 +2,19 @@
 \usepackage[utf8]{inputenc} % use utf8 file encoding for TeX sources
 \usepackage[T1]{fontenc}    % avoid garbled Unicode text in pdf
 \usepackage[german]{babel}  % german hyphenation, quotes, etc
-\usepackage{graphicx}
+\usepackage{graphicx}       % provides commands for including figures
 \usepackage{rotating}
 \graphicspath{ {images/} }
 \usepackage{hyperref}       % detailed hyperlink/pdf configuration
 \hypersetup{                % ‘texdoc hyperref‘ for options
-pdftitle={PSE : DataMovementDeaon},%
+pdftitle={PSE : LAMeetsML},%
 bookmarks=true,%
 }
-\usepackage{graphicx}       % provides commands for including figures
 \usepackage{csquotes}       % provides \enquote{} macro for "quotes"
 \usepackage[nonumberlist, acronym]{glossaries} % provides glossary commands
 \usepackage{enumitem}
 \usepackage{lscape}
 \usepackage{caption}
-\usepackage{rotating}
 \usepackage{placeins}
 
 \makenoidxglossaries
@@ -42,7 +40,7 @@ bookmarks=true,%
 {
 	name=collector,
 	plural=collector,
-	description={The first module in the program. Responsible for generating artifical matrices and collection preexisting matrices from the suite sparse matrix collection.}
+	description={The first module in the program. Responsible for generating artificial matrices and collection preexisting matrices from the suite sparse matrix collection.}
 }
 
 \newglossaryentry{command-line interface}
@@ -399,7 +397,6 @@ A Documentation for the user will be generated.
 		\item /T170/ After loading a NN from a given directory, the right NN has to be in the system
 		\item /T180/ When printing the classification output, it has to be the prediction of the NN
 		\end{itemize}
-\subsection{the following data consistencies must be checked}
 \newpage
 \section{System models}
 \subsection{Scenarios}

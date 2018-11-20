@@ -343,7 +343,7 @@ A Documentation for the user will be generated.
 	\item artificial generated matrices
 	\item collected matrices by \gls{ssget}
 	\item 500-1000 labled matrices for training and test
-	\item gray scale \gls{grayscale sparsity pattern image}
+	\item \gls{grayscale sparsity pattern image}
 	\item \gls{neural network}
 
 	\end{itemize}
@@ -352,7 +352,7 @@ A Documentation for the user will be generated.
 	\begin{itemize}
 		\item /NF10/ All matrices are squared
 		\item /NF20/ All fixed \glspl{algorithm} are used within the labeling processes
-		\item /NF30/ The \gls{grayscale sparsity pattern image} all have the same size before training
+		\item /NF30/ The \glspl{grayscale sparsity pattern image} all have the same size before training
 		\item /NF40/ The \gls{neural network} ouputs a distinct prediction
 		\item /NF50/ The \gls{neural network} is saved after every iteration
 	\end{itemize}
@@ -374,7 +374,7 @@ A Documentation for the user will be generated.
 		\item /T50/ When labeling a Matrix, the label must be the \gls{algorithm} with the shortest time needed
 		\item /T60/ When creating a \gls{grayscale sparsity pattern image} it must have the same size as
                        the matrix and must actually be grayscale
-		\item /T70/ After saving the labeled matrix with its \gls{grayscale sparsity pattern image} in a given directory, their must a file including the right matrix, the corresponding \gls{grayscale sparsity pattern image} and the right label
+		\item /T70/ After saving the labeled matrix with its \gls{grayscale sparsity pattern image} in a given directory, there must be a file including the right matrix, the corresponding \gls{grayscale sparsity pattern image} and the right label
 		\end{itemize}
 	\subsubsection{Deep \gls{neural network} Training and Testing}
 		\begin{itemize}
@@ -413,7 +413,7 @@ The user wants a set of matrices for his own purpose. He likes our idea of combi
 The user has a very specific problem which generates only a certain kind of sparse matrices. That is why he wants to adapt the \gls{neural network} for his specific task. He furthermore only wants to use the default \gls{preconditioner}/\gls{iterative solver} combinations. He first of all safes all of his matrices in one directory x of his choice. Then he opens the \gls{labeling module}. The command label -p x -n labeledMatrices will label all the matrices and generate their \gls{grayscale sparsity pattern image} in the directory. The set of \gls{grayscale sparsity pattern image} will be safed with the name labeledMatrices in the results file of the \gls{labeling module}. The user may proceed with using the \gls{neural network}.
 
 
-\textbf{Optional:} The user is fine with the default matrices, but he wants to use other \gls{preconditioner}/\gls{iterative solver} combinations which are included in the \gls{Ginkgo} libary. He opens the \gls{labeling module}. With the command list combinations he will see all the combinations that are currently used. With the command add <\gls{preconditioner}/\gls{iterative solver}> a the new combinations of his choice will be added. With the command delete <\gls{preconditioner}/\gls{iterative solver}> the specified combination will be deleted. After the user made his choice he may proceed with using the \gls{neural network}.
+\textbf{Optional:} The user is fine with the default matrices, but he wants to use other \gls{preconditioner}/\gls{iterative solver} combinations which are included in the \gls{Ginkgo} libary. He opens the \gls{labeling module}. With the command label -l he will see all the combinations that are currently used. With the command label -a <\gls{preconditioner}/\gls{iterative solver}> the new combinations of his choice will be added. With the command label -d <\gls{preconditioner}/\gls{iterative solver}> the specified combination will be deleted. After the user made his choice he may proceed with using the \gls{neural network}.
 \begin{center}
 \includegraphics[width=\textwidth]{labelingModule}
 \end{center}
@@ -445,9 +445,11 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 \subsubsection{Classifier}
 \includegraphics[width=1.3\textwidth]{useCase_Classifier}
 
+\clearpage
+
 \subsection{Command line options}
 \begin{itemize}
-\item/B10/\textbf{collect -a <amount> -n <name> -s <size> -d <density> -p <path> -g}:
+\item/B10/\textbf{collect -a <amount> -n <name> -s <size> -d <density> -s <saving path> -g}:
 \newline The user is able to create a specified amount of matrices that will be saved under a given name
 
 \textbf{Arguments}
@@ -455,9 +457,9 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 	\item[-]\textbf{-a <amount>} Absolute amount of matrices the user wants to generate
 	\item[-]\textbf{-n <name>} Name under which the matrices will be saved
 	\item[-]\textbf{-s <size>} (optional) Absolute size the generated square matrices should have. Default is 128
-	\item[-]\textbf{-d <density>} (optional) Density level of the matrices. A float between 0 and 1 where 1 means no zero values
+	\item[-]\textbf{-d <density>} (optional) Density level of the matrices. A float between 0 and 1 where 1 means no zero values. Default is 0.2
 	\item[-]\textbf{-g}(optional) (Flag) If set it downloads as many matrices of that size as possible from the \gls{Suite Sparse} matrix collection
-	\item[-]\textbf{-g <path>} (optional) Path where the created/downloaded matrices will be saved
+	\item[-]\textbf{-s <saving path>} (optional) Path where the created/downloaded matrices will be saved
 	\end{itemize}
 
 \textbf{Print}
@@ -467,17 +469,17 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 	\item[-]Error, in case any required arguments are missing or invalid
 	\item[-]Error, in case the specified name is already taken
 	\item[-]Error, in case \textbf{-g} is set and user has no internet connection
-	\item[-]Error, in case \textbf{-p <path>} is not a valid path
+	\item[-]Error, in case \textbf{-s <saving path>} is not a valid path
 	\end{itemize}
 
-\item/B20/\textbf{label -p <path> -n <name> -p <path>}:
+\item/B20/\textbf{label -p <path> -n <name> -s <saving path>}:
 \newline The user is able to pass matrices that he wants to get labeled
 
 \textbf{Arguments}
 	\begin{itemize}
 	\item[-]\textbf{-p <path>} Absolute path to the matrices in the local storage the user wants to have labeled
 	\item[-]\textbf{-n <name>} Name under which the labeled matrices will be saved
-	\item[-]\textbf{-g <path>} (optional) Path where the labeled matrices will be saved
+	\item[-]\textbf{-s <saving path>} (optional) Path where the labeled matrices will be saved
 	\end{itemize}
 
 \textbf{Print}
@@ -488,10 +490,10 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 	\item[-]Error, in case matrices have wrong format
 	\item[-]Error, in case the specified name is already taken
 	\item[-]Error, in case the remote fetching of the matrices did result in an error
-	\item[-]Error, in case \textbf{-p <path>} is not a valid path
+	\item[-]Error, in case \textbf{-s <saving path>} is not a valid path
 	\end{itemize}
 
-\item/B30/\textbf{train -p <path> -n <name> -t <train> -p <path>}:
+\item/B30/\textbf{train -p <path> -n <name> -t <train> -s <saving path>}:
 \newline The user is able to pass labeled matrices to a \gls{neural network}, that will learn from this matrices
 
 \textbf{Arguments}
@@ -499,7 +501,7 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 	\item[-]\textbf{-p <path>} Absolute path to the labeled matrices on the local storage
 	\item[-]\textbf{-n <name>} Name under which the \glspl{neural network} will be saved after training has finished
 	\item[-]\textbf{-t <train>} (optional) Float between 0 and 1. Amount of matrices used for training where 1 means all. Standard is 0.8
-	\item[-]\textbf{-g <path>} (optional) Path where the \gls{neural network}state will be saved
+	\item[-]\textbf{-s <saving path>} (optional) Path where the \gls{neural network}state will be saved
 	\end{itemize}
 
 \textbf{Print}
@@ -509,7 +511,7 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 	\item[-]Error, in case any required arguments are missing or invalid
 	\item[-]Error, in case matrices have wrong format or are not labeled
 	\item[-]Error, in case the specified name is already taken
-	\item[-]Error, in case \textbf{-p <path>} is not a valid path
+	\item[-]Error, in case \textbf{-s <saving path>} is not a valid path
 	\end{itemize}
 
 \item/B40/\textbf{classify -p <path> -n <network> -s}:
@@ -529,18 +531,6 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 	\item[-]Error, in case any required arguments are missing or invalid
 	\item[-]Error, in case the matrix has a wrong format
 	\item[-]Error, in case the \gls{neural network} or matrix path is wrong
-	\end{itemize}
-
-\item(optional)/B50/\textbf{label -l}:
-\newline The user is able to retrieve a list of the available and used algorithms for the labeling module
-
-\textbf{Arguments}
-	\begin{itemize}
-	\item[-]\textbf{-l} (flag) If set, all other arguments will be ignored 
-	\end{itemize}
-\textbf{Print}
-	\begin{itemize}
-	\item[-]A list of all \glspl{algorithm} the \gls{labeling module} is able currently uses and is able to use
 	\end{itemize}
 
 \item(optional)/B50/\textbf{label -l}:
@@ -577,7 +567,7 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 	\end{itemize}
 \textbf{Print}
 	\begin{itemize}
-	\item[-]A message if the remove worked
+	\item[-]A message if the removing worked
 	\item[-]Error, in case the entered \gls{algorithm} is not found. 
 	\end{itemize}
 

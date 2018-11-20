@@ -111,6 +111,7 @@ venv.bak/
 *.aux
 *.out
 *.pdf
+*.toc
 
 #PyCharm
 *.idea/

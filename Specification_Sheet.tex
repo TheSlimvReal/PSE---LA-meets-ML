@@ -34,7 +34,7 @@ bookmarks=true,%
 {
 	name=classifier,
 	plural= classifiers,
-	description={The classifier is the last and main module in the program. It is able to determine the fastest \gls{preconditioner}/\gls{iterative solver} combination for a given sparse linear system. It uses the \gls{neural network} trained by the module \gls{neural network}}
+	description={The classifier is the last and main module in the program. It is able to determine the fastest \gls{preconditioner}/\gls{iterative solver} combination for a given sparse linear system. It uses the \gls{neural network} trained by the \gls{training module}}
 }
 
 \newglossaryentry{collector}
@@ -62,7 +62,7 @@ bookmarks=true,%
 {
 	name=GPU,
 	plural=GPUs,
-	description={GPU is a graphics processing unit is a specialized electronic circuit designed to rapidly manipulate and alter memory to accelerate the creation of images in a frame buffer intended for output to a display device}
+	description={A GPU is a graphic processing unit which has specialized electronic circuit designed to rapidly manipulate and alter memory to accelerate the creation of images in a frame buffer intended for output to a display device}
 }
 
 \newglossaryentry{grayscale sparsity pattern image}
@@ -259,7 +259,7 @@ additional meta-data, including labels.
 
 \end{itemize}
 
-\subsection{demarcation criteria}
+\subsection{Demarcation Criteria}
 \begin{itemize}
 \item No matrices other that sparse, squared matrices will be supported
 
@@ -407,7 +407,7 @@ The product consists of four individual modules. The main module is the \gls{cla
 
 
 \subsubsection{Use of the \gls{collector}}
-The user wants a set of matrices for his own purpose. He likes our idea of combining the creation of matrices with fetching matrices from the \gls{Suite Sparse} matrix collection. He therefore opens the module \gls{collector}. He wants to generate 300 matrices of size 64x64 with a density of 0.2 and wants to use as many matrices as possible from the \gls{Suite Sparse} matrix collection. He wants to call his set of matrices collectedMatrices and enters the command collect -a 300 -n collectedMatrices -s 64 -d 0.2 -g. When the process finished gets notified. He navigates to the results file of the \gls{collector} in the file manager and proceeds to using the set of matricies for his own purposes.
+The user wants a set of matrices for his own purpose. He likes our idea of combining the creation of matrices with fetching matrices from the \gls{Suite Sparse} matrix collection. He therefore opens the module \gls{collector}. He wants to generate 300 matrices of size 64x64 with a density of 0.2 and wants to use as many matrices as possible from the \gls{Suite Sparse} matrix collection. He wants to call his set of matrices collectedMatrices and enters the command collect -a 300 -n collectedMatrices -s 64 -d 0.2 -g. When the process finished he gets notified. He navigates to the results file of the \gls{collector} in the file manager and proceeds with using the set of matricies for his own purposes.
 \begin{center}
 \includegraphics[width=\textwidth]{collector}
 \end{center}
@@ -581,12 +581,12 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 There exist programs that try to solve the same problem, but with different approaches. 
 Most of them scan the matrices for special metrics and based on that decide which solver will be the fastest. 
 So there are metrics the \gls{neural network} might find, to predict the optimal solver for a given matrix. 
-Other then that, most of the things needed, can already be found in plugins like Keras for the \gls{neural network} and \gls{ssget} for downloading matrices from the \gls{Suite Sparse}. 
-So there is definitely a way to accomplish this task and the only question is, how accurate the \gls{classifier} will be.
+Other than that, most of the things needed can already be found in plugins like Keras for the \gls{neural network} and \gls{ssget} for downloading matrices from the \gls{Suite Sparse}. 
+So there definitely is a way to accomplish this task and the only question is how accurate the \gls{classifier} will be.
 
 \subsection{Alternatives}
 As mentioned before, there are programs that try to solve the same problem and some of them are also quite accurate at it.
-But for the moment, nobody can tell if our approach might be more accurate.
+But for the moment nobody can tell if our approach might be more accurate.
 
 \subsection{Personal Feasibility}
 The team consists of five trained computer scientists with some of them already having experience regarding machine learning techniques.

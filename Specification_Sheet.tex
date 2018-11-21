@@ -68,7 +68,7 @@ bookmarks=true,%
 \newglossaryentry{grayscale sparsity pattern image}
 {
 	name=grayscale sparsity pattern image,
-	plural=grayscale sparsity pattern image,
+	plural=grayscale sparsity pattern images,
 	description={Grayscale sparsity pattern image is an image, displaying the zero and nonzero areas of a matrix, by covering the zero areas white and all other areas by a shade of gray, depending on the value}
 }
 
@@ -261,11 +261,11 @@ additional meta-data, including labels.
 
 \subsection{Demarcation Criteria}
 \begin{itemize}
-\item No matrices other that sparse, squared matrices will be supported
+\item No matrices other than sparse, square matrices will be supported
 
 \item It should not be possible to program your own algorithms. Only access to existing algorithms is available.
 
-\item Except for the matrices of Suit Sparse, no other collections of matrices will be supported.
+\item Except for the matrices of \gls{Suite Sparse}, no other collections of matrices will be supported.
 
 \end{itemize}
 \section{Product use}
@@ -354,7 +354,7 @@ A Documentation for the user will be generated.
 
 \section{Nonfunctional requirements}
 	\begin{itemize}
-		\item /NF10/ All matrices are squared
+		\item /NF10/ All matrices are square
 		\item /NF20/ All fixed \glspl{algorithm} are used within the labeling processes
 		\item /NF30/ The \glspl{grayscale sparsity pattern image} all have the same size before training
 		\item /NF40/ The \gls{neural network} ouputs a distinct prediction
@@ -367,10 +367,10 @@ A Documentation for the user will be generated.
 \subsubsection{Matrix Generation}
 	\begin{itemize}
 		\item /T10/ When generating a matrix, the returned matrix must have the right size and sparsity level
-		\item /T15/ When generating a matrix, it must be squared
+		\item /T15/ When generating a matrix, it must be square
 		\item /T20/ When generating an amount of matrices, there must be an exact number of matrices by the given amount
 		\item /T30/ When putting noise on a matrix, the returned matrix must have noise
-		\item /T40/ After saving a matrix in the given directory, there must me the right file, with the right format
+		\item /T40/ After saving a matrix in the given directory, there must be the right file, with the right format
 	\end{itemize}
 
 \subsubsection{Matrix Labeling}
@@ -378,7 +378,7 @@ A Documentation for the user will be generated.
 		\item /T50/ When labeling a Matrix, the label must be the \gls{algorithm} with the shortest time needed
 		\item /T60/ When creating a \gls{grayscale sparsity pattern image} it must have the same size as
                        the matrix and must actually be grayscale
-		\item /T70/ After saving the labeled matrix with its \gls{grayscale sparsity pattern image} in a given directory, there must be a file including the right matrix, the corresponding \gls{grayscale sparsity pattern image} and the right label
+		\item /T70/ After saving the labeled matrix with its \gls{grayscale sparsity pattern image} in a given directory, there must be a file including the right matrix, the corresponding \glspl{grayscale sparsity pattern image} and the right label
 		\end{itemize}
 	\subsubsection{Deep \gls{neural network} Training and Testing}
 		\begin{itemize}
@@ -462,7 +462,7 @@ With the command \textit{classify  -p x - the \gls{neural network}} will classif
 	\item[-]\textbf{-s <size>} (optional) Absolute size the generated square matrices should have. Default is 128
 	\item[-]\textbf{-d <density>} (optional) Density level of the matrices. A float between 0 and 1 where 1 means no zero values. Default is 0.2
 	\item[-]\textbf{-p <path>} (optional) Path where the created/downloaded matrices will be saved
-	\item[-]\textbf{-g}(optional) (Flag) If set it downloads as many matrices of that size as possible from the \gls{Suite Sparse} matrix collection
+	\item[-]\textbf{-g} (optional) (flag) If set it downloads as many matrices of that size as possible from the \gls{Suite Sparse} matrix collection
 	\end{itemize}
 
 \textbf{Print}
@@ -480,7 +480,7 @@ With the command \textit{classify  -p x - the \gls{neural network}} will classif
 
 \textbf{Arguments}
 	\begin{itemize}
-	\item[-]\textbf{label}(Command) If set, enter labeling mode
+	\item[-]\textbf{label} (command) If set, enter labeling mode
 	\item[-]\textbf{-p <path>} Absolute path to the matrices in the local storage the user wants to have labeled
 	\item[-]\textbf{-n <name>} Name under which the labeled matrices will be saved
 	\item[-]\textbf{-s <saving path>} (optional) Path where the labeled matrices will be saved
@@ -519,13 +519,13 @@ With the command \textit{classify  -p x - the \gls{neural network}} will classif
 	\end{itemize}
 
 \item/B40/\textbf{classify -p <path> -n <network> -s}:
-\newline The user is able to pass a matrix to a the trained \gls{neural network}, which will find the best solving \gls{algorithm}.
+\newline The user is able to pass a matrix to the trained \gls{neural network}, which will find the best solving \gls{algorithm}.
 
 \textbf{Arguments}
 	\begin{itemize}
 	\item[-]\textbf{-p <path>} Path to the matrix the user wants to classify
 	\item[-]\textbf{-n <network>} (optional) Path to the trained \glspl{neural network}, if not set, uses the \gls{neural network} shipped with the program
-	\item[-]\textbf{-s} (optional) (Flag) If set matrix will also be solved after classification.
+	\item[-]\textbf{-s} (optional) (flag) If set matrix will also be solved after classification.
 	\end{itemize}
 
 \textbf{Print}
@@ -542,7 +542,7 @@ With the command \textit{classify  -p x - the \gls{neural network}} will classif
 
 \textbf{Arguments}
 	\begin{itemize}
-	\item[-]\textbf{list}(Command) If set, enter list mode
+	\item[-]\textbf{list} (command) If set, enter list mode
 	\end{itemize}
 
 \textbf{Print}
@@ -556,8 +556,8 @@ With the command \textit{classify  -p x - the \gls{neural network}} will classif
 
 \textbf{Arguments}
 	\begin{itemize}
-	\item[-]\textbf{add}(Command) If set, enter adding mode
-	\item[-]\textbf{<algorithm>}A list of all \glspl{algorithm} the user wants to add, separated by blanks
+	\item[-]\textbf{add} (command) If set, enter adding mode
+	\item[-]\textbf{<algorithm>} A list of all \glspl{algorithm} the user wants to add, separated by blanks
 	\end{itemize}
 \textbf{Print}
 	\begin{itemize}

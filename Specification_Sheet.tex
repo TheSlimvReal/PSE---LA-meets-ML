@@ -407,23 +407,23 @@ The product consists of four individual modules. The main module is the \gls{cla
 
 
 \subsubsection{Use of the \gls{collector}}
-The user wants a set of matrices for his own purpose. He likes our idea of combining the creation of matrices with fetching matrices from the \gls{Suite Sparse} matrix collection. He therefore opens the module \gls{collector}. He wants to generate 300 matrices of size 64x64 with a density of 0.2 and wants to use as many matrices as possible from the \gls{Suite Sparse} matrix collection. He wants to call his set of matrices collectedMatrices and enters the command collect -a 300 -n collectedMatrices -s 64 -d 0.2 -g. When the process finished he gets notified. He navigates to the results file of the \gls{collector} in the file manager and proceeds with using the set of matricies for his own purposes.
+The user wants a set of matrices for his own purpose. He likes our idea of combining the creation of matrices with fetching matrices from the \gls{Suite Sparse} matrix collection. He therefore opens the module \gls{collector}. He wants to generate 300 matrices of size 64x64 with a density of 0.2 and wants to use as many matrices as possible from the \gls{Suite Sparse} matrix collection. He wants to call his set of matrices collectedMatrices and enters the command \textit{collect -a 300 -n collectedMatrices -s 64 -d 0.2 -g}. When the process finished he gets notified. He navigates to the results file of the \gls{collector} in the file manager and proceeds with using the set of matricies for his own purposes.
 \begin{center}
 \includegraphics[width=\textwidth]{collector}
 \end{center}
 
 \subsubsection{Use of the \gls{labeling module}}
-The user has a very specific problem which generates only a certain kind of sparse matrices. That is why he wants to adapt the \gls{neural network} for his specific task. He furthermore only wants to use the default \gls{preconditioner}/\gls{iterative solver} combinations. He first of all safes all of his matrices in one directory x of his choice. Then he opens the \gls{labeling module}. The command label -p x -n labeledMatrices will label all the matrices and generate their \gls{grayscale sparsity pattern image} in the directory. The set of \gls{grayscale sparsity pattern image} will be safed with the name labeledMatrices in the results file of the \gls{labeling module}. The user may proceed with using the \gls{neural network}.
+The user has a very specific problem which generates only a certain kind of sparse matrices. That is why he wants to adapt the \gls{neural network} for his specific task. He furthermore only wants to use the default \gls{preconditioner}/\gls{iterative solver} combinations. He first of all safes all of his matrices in one directory x of his choice. Then he opens the \gls{labeling module}. The command \textit{labeler label -p x -n labeledMatrices} will label all the matrices and generate their \gls{grayscale sparsity pattern image} in the directory. The set of \gls{grayscale sparsity pattern image} will be safed with the name labeledMatrices in the results file of the \gls{labeling module}. The user may proceed with using the \gls{neural network}.
 
 
-\textbf{Optional:} The user is fine with the default matrices, but he wants to use other \gls{preconditioner}/\gls{iterative solver} combinations which are included in the \gls{Ginkgo} libary. He opens the \gls{labeling module}. With the command label -l he will see all the combinations that are currently used. With the command label -a <\gls{preconditioner}/\gls{iterative solver}> the new combinations of his choice will be added. With the command label -d <\gls{preconditioner}/\gls{iterative solver}> the specified combination will be deleted. After the user made his choice he may proceed with using the \gls{neural network}.
+\textbf{Optional:} The user is fine with the default matrices, but he wants to use other \gls{preconditioner}/\gls{iterative solver} combinations which are included in the \gls{Ginkgo} libary. He opens the \gls{labeling module}. With the command \textit{labeler list} he will see all the combinations that are currently used. With the command \textit{labeler add <\gls{preconditioner}/\gls{iterative solver}>} the new combinations of his choice will be added. With the command \textit{labeler remove <\gls{preconditioner}/\gls{iterative solver}>} the specified combination will be deleted. After the user made his choice he may proceed with using the \gls{neural network}.
 \begin{center}
 \includegraphics[width=\textwidth]{labelingModule}
 \end{center}
 
 
 \subsubsection{Use of the \gls{training module}}
-\textbf{Optional:} The user has changed the set of matrices and/or the \gls{preconditioner}/\gls{iterative solver} combinations. He now wants to build the \gls{classifier}. He opens the \gls{training module}. With the command train -n myNeuralNetwork the \gls{neural network} will be trained. The \gls{neural network} will be saved in the results folder with the name myNeuralNetwork.  The user may then proceed with using the \gls{classifier}.
+\textbf{Optional:} The user has changed the set of matrices and/or the \gls{preconditioner}/\gls{iterative solver} combinations. He now wants to build the \gls{classifier}. He opens the \gls{training module}. With the command \textit{train -n myNeuralNetwork} the \gls{neural network} will be trained. The \gls{neural network} will be saved in the results folder with the name myNeuralNetwork.  The user may then proceed with using the \gls{classifier}.
 
 \begin{center}
 \includegraphics[width=\textwidth]{trainingModule}
@@ -432,7 +432,7 @@ The user has a very specific problem which generates only a certain kind of spar
 \subsubsection{Use of the classifier}
 
 The user wants to find the fastest \gls{preconditioner}/\gls{iterative solver} combination for a sparse linear system. If he did not change anything in the previous modules the default settings will be used. He will first save the sparse matrix in any desired filepath x. Afterwards the user starts the \gls{classifier}.
-With the command classify  -p x - the \gls{neural network} will classify the matrix and determine the fastest \gls{iterative solver}/\gls{preconditioner} combination for solving the matrix. This combination will be printed to the command line. (\textbf{Optional:} After determining the fastest combination the program will solve the matrix with this combination. The solved matrix will be safed in a directory the user specifies.)
+With the command \textit{classify  -p x - the \gls{neural network}} will classify the matrix and determine the fastest \gls{iterative solver}/\gls{preconditioner} combination for solving the matrix. This combination will be printed to the command line. (\textbf{Optional:} After determining the fastest combination the program will solve the matrix with this combination. The solved matrix will be safed in a directory the user specifies.)
 \begin{center}
 \includegraphics[width=\textwidth]{classifier}
 \end{center}
@@ -474,11 +474,12 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 	\item[-]Error, in case \textbf{-p <path>} is not a valid path
 	\end{itemize}
 
-\item/B20/\textbf{label -p <path> -n <name> -s <saving path>}:
+\item/B20/\textbf{labeler label -p <path> -n <name> -s <saving path>}:
 \newline The user is able to pass matrices that he wants to get labeled
 
 \textbf{Arguments}
 	\begin{itemize}
+	\item[-]\textbf{label}(Command) If set, enter labeling mode
 	\item[-]\textbf{-p <path>} Absolute path to the matrices in the local storage the user wants to have labeled
 	\item[-]\textbf{-n <name>} Name under which the labeled matrices will be saved
 	\item[-]\textbf{-s <saving path>} (optional) Path where the labeled matrices will be saved
@@ -503,7 +504,7 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 	\item[-]\textbf{-p <path>} Absolute path to the labeled matrices on the local storage
 	\item[-]\textbf{-n <name>} Name under which the \glspl{neural network} will be saved after training has finished
 	\item[-]\textbf{-t <train>} (optional) Float between 0 and 1. Amount of matrices used for training where 1 means all. Standard is 0.8
-	\item[-]\textbf{-s <saving path>} (optional) Path where the \gls{neural network}state will be saved
+	\item[-]\textbf{-s <saving path>} (optional) Path where the \gls{neural network} state will be saved
 	\end{itemize}
 
 \textbf{Print}
@@ -535,42 +536,48 @@ With the command classify  -p x - the \gls{neural network} will classify the mat
 	\item[-]Error, in case the \gls{neural network} or matrix path is wrong
 	\end{itemize}
 
-\item(optional)/B50/\textbf{label -l}:
+\item(optional)/B50/\textbf{labeler list}:
 \newline The user is able to retrieve a list of the available and used algorithms for the labeling module
 
 \textbf{Arguments}
 	\begin{itemize}
-	\item[-]\textbf{-l} (flag) If set, all other arguments will be ignored 
-	\end{itemize}
-\textbf{Print}
-	\begin{itemize}
-	\item[-]A list of all \glspl{algorithm} the \gls{labeling module} is able currently uses and is able to use
+	\item[-]\textbf{list}(Command) If set, enter list mode
 	\end{itemize}
 
-\item(optional)/B60/\textbf{label -a <algorithm>}:
-\newline The user is able to add a \gls{algorithm} that will be used for labeling matrices.
+\textbf{Print}
+	\begin{itemize}
+	\item[-]A list of all \glspl{algorithm} the \gls{labeling module} currently uses and is able to use
+	\item[-]Error, in case the user passed more arguments
+	\end{itemize}
+
+\item(optional)/B60/\textbf{label add <algorithm>}:
+\newline The user is able to add an \gls{algorithm} that will be used for labeling matrices.
 
 \textbf{Arguments}
 	\begin{itemize}
-	\item[-]\textbf{-a <algorithm>}If set, all other arguments will be ignored and the \gls{algorithm} will be added to the used algorithms
+	\item[-]\textbf{add}(Command) If set, enter adding mode
+	\item[-]\textbf{<algorithm>}A list of all \glspl{algorithm} the user wants to add, separated by blanks
 	\end{itemize}
 \textbf{Print}
 	\begin{itemize}
 	\item[-]A message if the adding worked
-	\item[-]Error, in case the entered \gls{algorithm} is not supported 
+	\item[-]Error, in case the entered \gls{algorithm}/\glspl{algorithm} is not supported 
+	\item[-]Error, in case other arguments were passed
 	\end{itemize}
 
-\item(optional)/B70/\textbf{label -r <algorithm>}:
-\newline The user is able to delete a \gls{algorithm} from the list of used algorithms.
+\item(optional)/B70/\textbf{label remove <algorithm>}:
+\newline The user is able to remove an \gls{algorithm} from the list of used algorithms.
 
 \textbf{Arguments}
 	\begin{itemize}
-	\item[-]\textbf{-r <algorithm>}If set, all other arguments will be ignored and the \gls{algorithm} will be removed to the used algorithms
+	\item[-]\textbf{remove}(Command) If set, enter removing mode
+	\item[-]\textbf{<algorithm>}A list of \glspl{algorithm} the user wants to remove from the used algorithms
 	\end{itemize}
 \textbf{Print}
 	\begin{itemize}
 	\item[-]A message if the removing worked
-	\item[-]Error, in case the entered \gls{algorithm} is not found. 
+	\item[-]Error, in case the entered \gls{algorithm}/\glspl{algorithm} is not found. 
+	\item[-]Error, in case other arguments were passed
 	\end{itemize}
 
 \end{itemize}

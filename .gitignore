@@ -110,7 +110,7 @@ venv.bak/
 *.synctex.gz
 *.aux
 *.out
-*.pdf
+
 *.toc
 
 #PyCharm

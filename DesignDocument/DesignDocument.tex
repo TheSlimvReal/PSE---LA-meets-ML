@@ -71,12 +71,60 @@ Makus G\"{o}tz
 \subsubsection{Class Configuration File}
 The configuration file is a text file. It is used to specify all necessary information the class neural network needs to train the neural network.If the user does not change anything in the configuration file, defaut options will be used.The configuration file is organized in four main categories. 
 \begin{enumerate}
-\item loading path of the set of matrices
+\item loading path of the set of matrices 
 \item saving path for the neural network
 \item loading path for the neural network
-\item model definition and hyperparameters
+\item model definition and hyperparameters abc
 \end{enumerate}
-\subsubsection{Class Neural Network}
+The loading path of the set of matrices is the path in which the matrices that are used for the training and testing are stored. The training module only supports one hd5 file. If the path is any other file, the labling module will print an error(would crashing make sense if the user has to change the config file anyway?). For the training and testing making sense there should be at least 500 matrices in the hd5 file. Otherwise the accuracy of the neural network will be so low that i can not be used for classification. If there is no path specified, the training module will use a default path. In the default path will be the latest matrices that the labling module has produced. \newline
+
+The saving path for the neural network is the path where the trained and tested neural network will be safed. It will be safed as a Keras model. If there is no path specified, the neural network will be safed at a default destination. If there is no path for the neural network specified in the module Classifier the module will use this default path to load its neural network.\newline
+
+The loading path for the neural network is strictly optional. If this path is specified the training module will use the neural network in the path for training and testing. This option enables the user to use a pre-trained neural network for training. This could be the case if the user interrupts the training process at a certain time and wants to to repeat the training later. Other use cases are of course possible too. The neural network has to be a model of the Keras framework. If the path is any other file the training module will print an error(crash?). If this path is not specified the training module will create a new neural network(with the model definition and hyperparamters of the next category) and train with it. \newline
+
+The model definition and hyperparameters are used to determine which neural network will be trained and tested. The model definition determines the following:
+\begin{itemize}
+\item the amount of layers
+\item the amount of nodes in every layer
+\item the kind of neural network(e.g. Convolutional)
+\item the activation function
+\item the regularization
+\end{itemize}
+
+The hyperparamters determine the following:
+
+\begin{itemize}
+\item the dropout
+\item the batch size
+\item how much of the data should be training and how much should be testing data
+\end{itemize}
+
+\subsubsection{Class TrainingModule}
+The TrainingModule class is responsible for the training and testing of a neural network. It can not be instantiated, since it is a utility class.The structure is mainly oriented towards the keras workflow and will be further described later. The class offers one public method, the method train(). \newline
+When the user types train() in the CLI the method train in the class TrainingModule will be executed in the following manner(see the activity diagram for a graphical overview).
+\begin{itemize}
+\item load the configuration file
+\item load the matrices
+\item seperate matrices in training and test data
+\item train a preexisting neural network or a new one(depending on the configuration file)
+\item test the neural network
+\item save the neural network
+\end{itemize}
+
+The configuration file that gets loaded will be used to specify the subsequent points.\newline
+
+The configuration file will determine from which path the labeled matrices will be loaded. If there were no changes made in the configuration file, the default path will be used(see the class description of the configuration file). The labeled matrices will be loaded in one hd5 file. If the path links to any other file, the class TrainingModule will print an error to the command line (crash?). \newline
+
+After that the class TrainingModule will seperate the training and test data. How the data will be seperated is specified in the configuration file.\newline
+
+Following there are two alternatives. If the user has specified a neural network in the configuration file, the class TrainingModule will train this neural network with the labeled matrices for the training. If the user has not specified a neural network in the configuration file, the class TrainingModule will create a new neural network with the specifications in the configuration file. If there are no model definitions in the configuration file the class TrainingModule will use the default neural network(see default neural network). The class TrainingModule then proceeds with training the new neural network with the labeled matrices for the training. In both cases the current loss will be continously printed to the command line.\newline
+
+Now the neural network is trained. The class TrainingModule proceeds with testing the neural network with the labeled matrices for the testing. This process will determine the accuracy of the neural network on the given test matrices. The accuracy will be printed on the command line.\newline
+
+After that the neural network will be safed as a keras model. The path for the saving is specified in the configuration file.
+
+
+
 
 \subsection{Classifier}
 \subsection{Command line interface}
@@ -94,6 +142,10 @@ The configuration file is a text file. It is used to specify all necessary infor
 \subsection{Classifier}
 
 \section{Class diagrams}
+
+\section{Explanations}
+\subsection{default neural network}
+how is the nn structured(layers,activation function), what is it trying to achieve,...
 
 
 \section{Sequence diagrams}

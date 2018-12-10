@@ -103,9 +103,24 @@ This method prints a string to the CLI.
 The controller is the main entry point for the program execution. 
 It creates the view, receives the user input, calls the parser to create a command from the input and starts the module the user wants.
 
-\subsubsection{Class OutputService}
-The OutputService handles how each module can create output to the CLI. 
+\subsubsection{Interface OutputService}
+The OutputService interfaces can be implemented and passed to a module to receive the output of the modules. 
 Therefore it has methods that represent different ways output can be displayed. 
+
+ \subsection{Interface Subscriber}
+The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
+
+\subsection{Class Observable} 
+The Observable class can be used to notify Subscribers when new values are provided.
+Subscribers can subscribe themselves to an Observer to be notified get notifications.
+The next() method calls update() on each subscriber.
+
+\subsection{Class ClIOutputService}
+This class implements the OutputService and the Subscriber interface. 
+On creation it gets a reference of the View to which it will pass the lines the modules want to output.
+It also implements the Subscriber interface to subscribe itself to an observable.
+This can be used to display lines that are overwritten with new values like an progress bar or counter.
+
 
 \subsubsection{Class CommandParser}
 The CommandParser is a class that only has one static public method.

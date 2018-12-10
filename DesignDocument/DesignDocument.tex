@@ -4,7 +4,7 @@
 \usepackage[german, english]{babel}  % german hyphenation, quotes, etc
 \usepackage{graphicx}       % provides commands for including figures
 \usepackage{rotating}
-\usepackage{pdfpages.ins}
+\usepackage{pdfpages}
 \graphicspath{ {images/} }
 \usepackage{hyperref}       % detailed hyperlink/pdf configuration
 \hypersetup{                % ‘texdoc hyperref‘ for options
@@ -108,6 +108,14 @@ The OutputService handles how each module can create output to the CLI.
 Therefore it has methods that represent different ways output can be displayed. 
 
 \subsubsection{Class CommandParser}
+The CommandParser is a class that only has one static public method.
+This method receives the user input string and returns a command.
+
+\subsubsection{Class Command}
+The Command class holds all the information entered by the user that is needed to execute a module.
+There is one command subclass for each module and the command class also validates that all parameters are available to run the module.
+The command also has a execute method which runs the specific module with all the arguments it needs.
+
 
 \subsection{Labeling Module}
 \subsection{Training Moulde}

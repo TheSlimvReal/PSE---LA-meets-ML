@@ -148,10 +148,22 @@ After that the neural network will be safed as a keras model. The path for the s
 
 
 \subsection{Classifier}
-\subsection{Command line interface}
-\subsection{Classes needed in more than one module}
+\subsubsection{Class Classifier}
+\subsubsection{Interface Algorithm}
+This interface is for the different algorithms for solving a given matrix.
+\subsubsection{Class ConcreteAlgorithm}
+The Concrete Algorithm class is for solving a matrix in a certain way. This means a certain approach to solve a matrix.
 \subsubsection{Class Matrix}
 
+\subsection{Class Loader}
+
+\subsection{Class Validator}
+
+\subsubsection{Class Neural Network}
+
+\subsubsection{Class PatternImageCreator}
+This class creates a Grayscale Sparcity Pattern Image out of a given matrix.
+\subsubsection{Class GrayscaleSparcityPatternImage}
 
 \section{Activity diagrams}
 
@@ -161,8 +173,15 @@ After that the neural network will be safed as a keras model. The path for the s
 \subsection{Training Moulde}
 \includepdf[pages={1}]{ActivityDiagrams/PDF/TrainingModule}
 \subsection{Classifier}
+\includepdf[pages={1}]{ActivityDiagrams/PDF/classification}
 
 \section{Class diagrams}
+
+\subsection{Collector}
+\subsection{Labeling Module}
+\subsection{Training Moulde}
+\subsection{Classifier}
+\includepdf[pages={1}]{ClassDiagrams/PDF/Classifier}
 
 \section{Explanations}
 \subsection{default neural network}

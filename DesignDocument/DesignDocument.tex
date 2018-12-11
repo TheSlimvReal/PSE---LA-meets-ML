@@ -69,15 +69,24 @@ Makus G\"{o}tz
 \subsubsection{Class Collector}
 The Collector class is responsible for collecting a given amount of matrices and saving it into a HDF5 dataset.
 When the user types collect into the CLI, a collector Object will be created and the public method collect() with its parameters:
+<<<<<<< Updated upstream
 amount, name, size, density and path will be called. The class has a Saver class attribute and a Generator class attribute.
+=======
+amount, name, size, density and path will be called. The class has a Saver class attribute and a Generator class attribute. 
+>>>>>>> Stashed changes
 It uses methods from the Generator class to get matrices to collect and methods from the Saver class to save the collected dataset.
 (see the collect method Activity Diagram for a more detailed overview).
 The Collector class is the interface between matrix collecting and the CLI and conceals all the classes of the Collector described in the following.
 
 \subsubsection{Class Saver}
+<<<<<<< Updated upstream
 The Saver class is just responsible for saving a given matrix dataset.
 Its only method is the save(dataset, name, path) method, which
 is called by the collect method from an Collector object.
+=======
+The Saver class is just responsible for saving a given matrix dataset. Its only method is the save(dataset, name, path) method, which
+is called by the collect method from an Collector object. 
+>>>>>>> Stashed changes
 The save method takes an NPArray as a matrix dataset, converts it into an HDF5 file and saves it into a given directory with a given name.
 
 \subsubsection{Class Generator}
@@ -90,37 +99,68 @@ Its getMatrix method is called by a generator object.
 The getMatrix method uses the Matrix class to initialize a matrix, then the private downloadMatrix method to fetch a matrix from SuiteSparse, and after that uses its private cutMatrix method to cut a fixed size, regular matrix out of it.
 
 \subsubsection{Class Validator}
+<<<<<<< Updated upstream
 The Validator class is a util class and responsible for validating given matrices(checking for regularity)
  Its only static method validate takes a matrix and returns true for regular, and false for not regular.
 
 \subsubsection{Class CommandLineInterface}
 The view represents the concrete command line interface. 
+=======
+The Validator class is a util class and responsible for validating given matrices(checking for regularity).
+Its only static method validate takes a matrix and returns true for regular, and false for not regular.
+
+\subsubsection{Class View}
+The view represents the command line interface. 
+>>>>>>> Stashed changes
 Therefore it only consists of two methods. 
 The first one is readInput that receives a message that will be displayed and reads the next user input. 
 The other method is createOutput. 
 This method prints a string to the CLI.
 
+<<<<<<< Updated upstream
 \subsubsection{Interface OutputService}
 The OutputService interfaces can be implemented and passed to a module to receive the output of the modules. 
 Therefore it has methods that represent different ways output can be displayed. 
 
+=======
+>>>>>>> Stashed changes
 \subsubsection{Class Controller} 
 The controller is the main entry point for the program execution. 
 It creates the view, receives the user input, calls the parser to create a command from the input and starts the module the user wants.
 
+<<<<<<< Updated upstream
  \subsubsection{Interface Subscriber}
 The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
 
 \subsubsection{Class Observable} 
+=======
+\subsubsection{Interface OutputService}
+The OutputService interfaces can be implemented and passed to a module to receive the output of the modules. 
+Therefore it has methods that represent different ways output can be displayed. 
+
+ \subsection{Interface Subscriber}
+The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
+
+\subsection{Class Observable} 
+>>>>>>> Stashed changes
 The Observable class can be used to notify Subscribers when new values are provided.
 Subscribers can subscribe themselves to an Observer to be notified get notifications.
 The next() method calls update() on each subscriber.
 
+<<<<<<< Updated upstream
 \subsection{Class CLIOutputService}
 This class implements the OutputService and the Subscriber interface. 
 On creation it gets a reference of the View to which it will pass the lines the modules wants to output.
 It also implements the Subscriber interface to subscribe itself to an observable.
 This can be used to display lines that are overwritten with new values like an progress bar or a counter.
+=======
+\subsection{Class ClIOutputService}
+This class implements the OutputService and the Subscriber interface. 
+On creation it gets a reference of the View to which it will pass the lines the modules want to output.
+It also implements the Subscriber interface to subscribe itself to an observable.
+This can be used to display lines that are overwritten with new values like an progress bar or counter.
+
+>>>>>>> Stashed changes
 
 \subsubsection{Class CommandParser}
 The CommandParser is a class that only has one static public method.
@@ -131,6 +171,10 @@ The Command class holds all the information entered by the user that is needed t
 There is one command subclass for each module and the command class also validates that all parameters are available to run the module.
 The command also has a execute method which runs the specific module with all the arguments it needs.
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 \subsection{Labeling Module}
 \subsection{Training Moulde}
 \subsubsection{Class Configuration File}

@@ -69,13 +69,16 @@ Makus G\"{o}tz
 \subsubsection{Class Collector}
 The Collector class is responsible for collecting a given amount of matrices and saving it into a HDF5 dataset.
 When the user types collect into the CLI, a collector Object will be created and the public method collect() with its parameters:
-amount, name, size, density and path will be called. The class has a Saver class attribute and a Generator class attribute. It uses methods from the Generator class to get matrices to collect and methods from the Saver class to save the collected dataset.
+amount, name, size, density and path will be called. The class has a Saver class attribute and a Generator class attribute.
+It uses methods from the Generator class to get matrices to collect and methods from the Saver class to save the collected dataset.
 (see the collect method Activity Diagram for a more detailed overview).
 The Collector class is the interface between matrix collecting and the CLI and conceals all the classes of the Collector described in the following.
 
 \subsubsection{Class Saver}
-The Saver class is just responsible for saving a given matrix dataset. Its only method is the save(dataset, name, path) method, which
-is called by the collect method from an Collector object. The save method takes an NPArray as a matrix dataset, converts it into an HDF5 file and saves it into a given directory with a given name.
+The Saver class is just responsible for saving a given matrix dataset.
+Its only method is the save(dataset, name, path) method, which
+is called by the collect method from an Collector object.
+The save method takes an NPArray as a matrix dataset, converts it into an HDF5 file and saves it into a given directory with a given name.
 
 \subsubsection{Class Generator}
 The Generator class is responsible for actually generating matrices by transforming raw matrices from SuiteSparse and validating them.
@@ -83,25 +86,83 @@ The generate(size, density):Matrix method is called by a Collector object, uses 
 
 \subsubsection{Class Ssget}
 The Ssget class is responsible for fetching matrices from the SuiteSparse collection, transforming them and returning them.
-Its getMatrix method is called by a generator object. The getMatrix method uses the Matrix class to initialize a matrix, then the private downloadMatrix method to fetch a matrix from SuiteSparse, and after that uses its private cutMatrix method to cut a fixed size, regular matrix out of it.
+Its getMatrix method is called by a generator object.
+The getMatrix method uses the Matrix class to initialize a matrix, then the private downloadMatrix method to fetch a matrix from SuiteSparse, and after that uses its private cutMatrix method to cut a fixed size, regular matrix out of it.
 
 \subsubsection{Class Validator}
-The Validator class is a util class and responsible for validating given matrices(checking for regularity). Its only static method validate takes a matrix and returns true for regular, and false for not regular.
+The Validator class is a util class and responsible for validating given matrices(checking for regularity)
+ Its only static method validate takes a matrix and returns true for regular, and false for not regular.
+
+\subsubsection{Class CommandLineInterface}
+The view represents the concrete command line interface. 
+Therefore it only consists of two methods. 
+The first one is readInput that receives a message that will be displayed and reads the next user input. 
+The other method is createOutput. 
+This method prints a string to the CLI.
+
+\subsubsection{Interface OutputService}
+The OutputService interfaces can be implemented and passed to a module to receive the output of the modules. 
+Therefore it has methods that represent different ways output can be displayed. 
+
+\subsubsection{Class Controller} 
+The controller is the main entry point for the program execution. 
+It creates the view, receives the user input, calls the parser to create a command from the input and starts the module the user wants.
+
+ \subsubsection{Interface Subscriber}
+The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
+
+\subsubsection{Class Observable} 
+The Observable class can be used to notify Subscribers when new values are provided.
+Subscribers can subscribe themselves to an Observer to be notified get notifications.
+The next() method calls update() on each subscriber.
+
+\subsection{Class CLIOutputService}
+This class implements the OutputService and the Subscriber interface. 
+On creation it gets a reference of the View to which it will pass the lines the modules wants to output.
+It also implements the Subscriber interface to subscribe itself to an observable.
+This can be used to display lines that are overwritten with new values like an progress bar or a counter.
+
+\subsubsection{Class CommandParser}
+The CommandParser is a class that only has one static public method.
+This method receives the user input string and returns a command.
+
+\subsubsection{Class Command}
+The Command class holds all the information entered by the user that is needed to execute a module.
+There is one command subclass for each module and the command class also validates that all parameters are available to run the module.
+The command also has a execute method which runs the specific module with all the arguments it needs.
+
 \subsection{Labeling Module}
 \subsection{Training Moulde}
 \subsubsection{Class Configuration File}
-The configuration file is a text file. It is used to specify all necessary information the class neural network needs to train the neural network.If the user does not change anything in the configuration file, defaut options will be used.The configuration file is organized in four main categories. 
+The configuration file is a text file.
+It is used to specify all necessary information the class neural network needs to train the neural network.
+If the user does not change anything in the configuration file, defaut options will be used.The configuration file is organized in four main categories. 
 \begin{enumerate}
 \item loading path of the set of matrices 
 \item saving path for the neural network
 \item loading path for the neural network
 \item model definition and hyperparameters abc
 \end{enumerate}
-The loading path of the set of matrices is the path in which the matrices that are used for the training and testing are stored. The training module only supports one hd5 file. If the path is any other file, the labling module will print an error(would crashing make sense if the user has to change the config file anyway?). For the training and testing making sense there should be at least 500 matrices in the hd5 file. Otherwise the accuracy of the neural network will be so low that i can not be used for classification. If there is no path specified, the training module will use a default path. In the default path will be the latest matrices that the labling module has produced. \newline
+The loading path of the set of matrices is the path in which the matrices that are used for the training and testing are stored.
+The training module only supports one hd5 file.
+If the path is any other file, the labling module will print an error(would crashing make sense if the user has to change the config file anyway?).
+For the training and testing making sense there should be at least 500 matrices in the hd5 file.
+Otherwise the accuracy of the neural network will be so low that i can not be used for classification.
+If there is no path specified, the training module will use a default path.
+In the default path will be the latest matrices that the labling module has produced. \newline
 
-The saving path for the neural network is the path where the trained and tested neural network will be safed. It will be safed as a Keras model. If there is no path specified, the neural network will be safed at a default destination. If there is no path for the neural network specified in the module Classifier the module will use this default path to load its neural network.\newline
+The saving path for the neural network is the path where the trained and tested neural network will be safed.
+It will be safed as a Keras model.
+If there is no path specified, the neural network will be safed at a default destination.
+If there is no path for the neural network specified in the module Classifier the module will use this default path to load its neural network.\newline
 
-The loading path for the neural network is strictly optional. If this path is specified the training module will use the neural network in the path for training and testing. This option enables the user to use a pre-trained neural network for training. This could be the case if the user interrupts the training process at a certain time and wants to to repeat the training later. Other use cases are of course possible too. The neural network has to be a model of the Keras framework. If the path is any other file the training module will print an error(crash?). If this path is not specified the training module will create a new neural network(with the model definition and hyperparamters of the next category) and train with it. \newline
+The loading path for the neural network is strictly optional.
+If this path is specified the training module will use the neural network in the path for training and testing.
+This option enables the user to use a pre-trained neural network for training.
+This could be the case if the user interrupts the training process at a certain time and wants to to repeat the training later.
+Other use cases are of course possible too.
+The neural network has to be a model of the Keras framework. If the path is any other file the training module will print an error(crash?).
+If this path is not specified the training module will create a new neural network(with the model definition and hyperparamters of the next category) and train with it. \newline
 
 The model definition and hyperparameters are used to determine which neural network will be trained and tested. The model definition determines the following:
 \begin{itemize}
@@ -121,7 +182,9 @@ The hyperparamters determine the following:
 \end{itemize}
 
 \subsubsection{Class TrainingModule}
-The TrainingModule class is responsible for the training and testing of a neural network. It can not be instantiated, since it is a utility class.The structure is mainly oriented towards the keras workflow and will be further described later. The class offers one public method, the method train(). \newline
+The TrainingModule class is responsible for the training and testing of a neural network.
+It can not be instantiated, since it is a utility class.The structure is mainly oriented towards the keras workflow and will be further described later.
+The class offers one public method, the method train(). \newline
 When the user types train() in the CLI the method train in the class TrainingModule will be executed in the following manner(see the activity diagram for a graphical overview).
 \begin{itemize}
 \item load the configuration file
@@ -134,15 +197,25 @@ When the user types train() in the CLI the method train in the class TrainingMod
 
 The configuration file that gets loaded will be used to specify the subsequent points.\newline
 
-The configuration file will determine from which path the labeled matrices will be loaded. If there were no changes made in the configuration file, the default path will be used(see the class description of the configuration file). The labeled matrices will be loaded in one hd5 file. If the path links to any other file, the class TrainingModule will print an error to the command line (crash?). \newline
+The configuration file will determine from which path the labeled matrices will be loaded.
+If there were no changes made in the configuration file, the default path will be used(see the class description of the configuration file).
+The labeled matrices will be loaded in one hd5 file. If the path links to any other file, the class TrainingModule will print an error to the command line (crash?). \newline
 
-After that the class TrainingModule will seperate the training and test data. How the data will be seperated is specified in the configuration file.\newline
+After that the class TrainingModule will seperate the training and test data.
+How the data will be seperated is specified in the configuration file.\newline
 
-Following there are two alternatives. If the user has specified a neural network in the configuration file, the class TrainingModule will train this neural network with the labeled matrices for the training. If the user has not specified a neural network in the configuration file, the class TrainingModule will create a new neural network with the specifications in the configuration file. If there are no model definitions in the configuration file the class TrainingModule will use the default neural network(see default neural network). The class TrainingModule then proceeds with training the new neural network with the labeled matrices for the training. In both cases the current loss will be continously printed to the command line.\newline
+Following there are two alternatives
+ If the user has specified a neural network in the configuration file, the class TrainingModule will train this neural network with the labeled matrices for the training.
+If the user has not specified a neural network in the configuration file, the class TrainingModule will create a new neural network with the specifications in the configuration file.
+If there are no model definitions in the configuration file the class TrainingModule will use the default neural network(see default neural network).
+The class TrainingModule then proceeds with training the new neural network with the labeled matrices for the training. In both cases the current loss will be continously printed to the command line.\newline
 
-Now the neural network is trained. The class TrainingModule proceeds with testing the neural network with the labeled matrices for the testing. This process will determine the accuracy of the neural network on the given test matrices. The accuracy will be printed on the command line.\newline
+Now the neural network is trained. The class TrainingModule proceeds with testing the neural network with the labeled matrices for the testing.
+This process will determine the accuracy of the neural network on the given test matrices.
+The accuracy will be printed on the command line.\newline
 
-After that the neural network will be safed as a keras model. The path for the saving is specified in the configuration file.
+After that the neural network will be safed as a keras model.
+The path for the saving is specified in the configuration file.
 
 
 
@@ -152,7 +225,8 @@ After that the neural network will be safed as a keras model. The path for the s
 \subsubsection{Interface Algorithm}
 This interface is for the different algorithms for solving a given matrix.
 \subsubsection{Class ConcreteAlgorithm}
-The Concrete Algorithm class is for solving a matrix in a certain way. This means a certain approach to solve a matrix.
+The Concrete Algorithm class is for solving a matrix in a certain way.
+This means a certain approach to solve a matrix.
 \subsubsection{Class Matrix}
 
 \subsection{Class Loader}

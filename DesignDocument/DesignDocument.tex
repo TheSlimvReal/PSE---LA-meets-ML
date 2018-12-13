@@ -107,7 +107,38 @@ The command also has a execute method which runs the specific module with all th
 
 \subsection{Activity Diagrams}
 
+\subsubsection{User Input Activity Diagram}
+
+\includepdf[pages={1}]{ActivityDiagrams/PDF/user_input_activity_diagram}
+
+This activity diagram shows the main workflow of the whole program.
+The program first waits for user input.
+After the user enters his input into the command line interface, the CommandParser parses this input to a command.
+If the command equals quit, the programm will exit.
+If not the command will be validated to contain enough information to start the desired module.
+If it is not valid, an error message will be printed and the user can enter a new input.
+If the command is valid, the module will be started.
+Therefore the module computes his specific task in iterations.
+After each iteration it print the current progress to the user.
+This two activities repeat until all tasks are done.
+When the module is finished, the program prints a complete message and start waiting for new user input.
+
 \subsection{Class Diagrams}
+
+\subsubsection{Command Parsing}
+
+\includepdf[pages={1}]{ClassDiagrams/PDF/CommandParsing}
+
+This class diagrams shows all classes that are used by the CommandParser.
+The CommandParser has one method that receives an input string and returns a command.
+This method uses the first word of the input string to determine which module is supposed to be started.
+Based on this he creates an instance of this subclass of the command.
+The remaining string will be parsed to a dictionary with keys and values. 
+This dictionary is passed to the constructor of the command object.
+In the constructor of the command, the command also calls the validate() method.
+This method checks if all arguments that are necessary for the specific module start are provided.
+After that is finished the command can be returned by the CommandParser.
+The execute method of the command can be then used to start the modules computation.
 
 \subsection{Sequence Diagrams}
 
@@ -286,9 +317,6 @@ This class creates a Grayscale Sparcity Pattern Image out of a given matrix.
 \section{Explanations}
 \subsection{default neural network}
 how is the nn structured(layers,activation function), what is it trying to achieve,...
-
-
-\section{Sequence diagrams}
 
 \section{Glossary}
 %\glspl{collector}, labeling modle, neural network, classifier, default settings  \glspl{Dateiformat}

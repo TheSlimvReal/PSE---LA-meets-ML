@@ -63,9 +63,59 @@ Makus G\"{o}tz
 \newpage
 
 
-\section{Class descriptions}
+\section{Module Interaction}
 
-\subsection{Collector}
+\subsection{Class Descriptions}
+
+\subsubsection{Class CommandLineInterface}
+The view represents the concrete command line interface. 
+Therefore it only consists of two methods. 
+The first one is readInput that receives a message that will be displayed and reads the next user input. 
+The other method is createOutput. 
+This method prints a string to the CLI.
+
+\subsubsection{Interface OutputService}
+The OutputService interfaces can be implemented and passed to a module to receive the output of the modules. 
+Therefore it has methods that represent different ways output can be displayed. 
+
+ \subsubsection{Interface Subscriber}
+The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
+
+\subsubsection{Class Observable} 
+The Observable class can be used to notify Subscribers when new values are provided.
+Subscribers can subscribe themselves to an Observer to be notified get notifications.
+The next() method calls update() on each subscriber.
+
+\subsection{Class CLIOutputService}
+This class implements the OutputService and the Subscriber interface. 
+On creation it gets a reference of the View to which it will pass the lines the modules wants to output.
+It also implements the Subscriber interface to subscribe itself to an observable.
+This can be used to display lines that are overwritten with new values like an progress bar or a counter.
+
+\subsubsection{Class Controller} 
+The controller is the main entry point for the program execution. 
+It creates the view, receives the user input, calls the parser to create a command from the input and starts the module the user wants.
+
+\subsubsection{Class CommandParser}
+The CommandParser is a static class that gets the input which the user entered and parses it to a concrete command-object.
+
+\subsubsection{Class Command}
+The Command class holds all the information entered by the user that is needed to execute a module.
+There is one command subclass for each module and the command class also validates that all parameters are available to run the module.
+The command also has a execute method which runs the specific module with all the arguments it needs.
+
+
+\subsection{Activity Diagrams}
+
+\subsection{Class Diagrams}
+
+\subsection{Sequence Diagrams}
+
+
+\section{Collector}
+
+\subsection{Class Description}
+
 \subsubsection{Class Collector}
 The Collector class is responsible for collecting a given amount of matrices and saving it into a HDF5 dataset.
 When the user types collect into the CLI, a collector Object will be created and the public method collect() with its parameters:
@@ -93,46 +143,21 @@ The getMatrix method uses the Matrix class to initialize a matrix, then the priv
 The Validator class is a util class and responsible for validating given matrices(checking for regularity)
  Its only static method validate takes a matrix and returns true for regular, and false for not regular.
 
-\subsubsection{Class CommandLineInterface}
-The view represents the concrete command line interface. 
-Therefore it only consists of two methods. 
-The first one is readInput that receives a message that will be displayed and reads the next user input. 
-The other method is createOutput. 
-This method prints a string to the CLI.
+\subsection{Activity Diagrams}
 
-\subsubsection{Interface OutputService}
-The OutputService interfaces can be implemented and passed to a module to receive the output of the modules. 
-Therefore it has methods that represent different ways output can be displayed. 
+\subsection{Class Diagrams}
 
-\subsubsection{Class Controller} 
-The controller is the main entry point for the program execution. 
-It creates the view, receives the user input, calls the parser to create a command from the input and starts the module the user wants.
+\subsection{Sequence Diagrams}
 
- \subsubsection{Interface Subscriber}
-The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
 
-\subsubsection{Class Observable} 
-The Observable class can be used to notify Subscribers when new values are provided.
-Subscribers can subscribe themselves to an Observer to be notified get notifications.
-The next() method calls update() on each subscriber.
+\section{Labeling Module}
 
-\subsection{Class CLIOutputService}
-This class implements the OutputService and the Subscriber interface. 
-On creation it gets a reference of the View to which it will pass the lines the modules wants to output.
-It also implements the Subscriber interface to subscribe itself to an observable.
-This can be used to display lines that are overwritten with new values like an progress bar or a counter.
+\subsection{Class Description}
 
-\subsubsection{Class CommandParser}
-The CommandParser is a class that only has one static public method.
-This method receives the user input string and returns a command.
+\section{Training Moulde}
 
-\subsubsection{Class Command}
-The Command class holds all the information entered by the user that is needed to execute a module.
-There is one command subclass for each module and the command class also validates that all parameters are available to run the module.
-The command also has a execute method which runs the specific module with all the arguments it needs.
+\subsection{Class Description}
 
-\subsection{Labeling Module}
-\subsection{Training Moulde}
 \subsubsection{Class Configuration File}
 The configuration file is a text file.
 It is used to specify all necessary information the class neural network needs to train the neural network.
@@ -217,10 +242,19 @@ The accuracy will be printed on the command line.\newline
 After that the neural network will be safed as a keras model.
 The path for the saving is specified in the configuration file.
 
+\subsection{Activity Diagrams}
+
+\includepdf[pages={1}]{ActivityDiagrams/PDF/TrainingModule}
+
+\subsection{Class Diagrams}
+
+\subsection{Sequence Diagrams}
 
 
+\section{Classifier}
 
-\subsection{Classifier}
+\subsection{Class Descriptions}
+
 \subsubsection{Class Classifier}
 \subsubsection{Interface Algorithm}
 This interface is for the different algorithms for solving a given matrix.
@@ -239,23 +273,15 @@ This means a certain approach to solve a matrix.
 This class creates a Grayscale Sparcity Pattern Image out of a given matrix.
 \subsubsection{Class GrayscaleSparcityPatternImage}
 
-\section{Activity diagrams}
+\subsection{Activity Diagrams}
 
-
-\subsection{Collector}
-\subsection{Labeling Module}
-\subsection{Training Moulde}
-\includepdf[pages={1}]{ActivityDiagrams/PDF/TrainingModule}
-\subsection{Classifier}
 \includepdf[pages={1}]{ActivityDiagrams/PDF/classification}
 
-\section{Class diagrams}
+\subsection{Class Diagrams}
 
-\subsection{Collector}
-\subsection{Labeling Module}
-\subsection{Training Moulde}
-\subsection{Classifier}
 \includepdf[pages={1}]{ClassDiagrams/PDF/Classifier}
+
+\subsection{Sequence Diagrams}
 
 \section{Explanations}
 \subsection{default neural network}

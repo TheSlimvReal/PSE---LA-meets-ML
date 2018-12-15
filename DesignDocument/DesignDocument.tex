@@ -114,7 +114,7 @@ The command also has a execute method which runs the specific module with all th
 This activity diagram shows the main workflow of the whole program.
 The program first waits for user input.
 After the user enters his input into the command line interface, the CommandParser parses this input to a command.
-If the command equals quit, the programm will exit.
+If the command equals quit, the program will exit.
 If not the command will be validated to contain enough information to start the desired module.
 If it is not valid, an error message will be printed and the user can enter a new input.
 If the command is valid, the module will be started.
@@ -146,10 +146,62 @@ The execute method of the command can be then used to start the modules computat
 
 \includepdf[pages={1}]{ComponentDiagrams/PDF/interaction_overview}
 
+This component diagram shows the main interaction between the modules.
+For our main structure we use the model view controller 
+Each class belongs to one of the three part view, controller or model.
+In the view there is the CommandLineInterface which like the name suggests represents the command line. 
+It receives string it displays and makes the user input available for other classes.
+The other class is the view is the CLIOutputService. 
+This class works as the observer for the model and receives the strings the model wants to output.
+It then provides strings that can be displayed by the command line interface.
 
+The next big part is the controller.
+This parts main component is the class that is also called controller.
+This class gets a string by the CommandLineInterface.
+This string it then passed to the CommandParser.
+This class creates the right command and passes the arguments to this command.
+The command stores this arguments and makes them available for the modules.
+
+The model consists of the four static modules that make the computations.
+This modules get the arguments that are provided by the command.
+The modules can also provide strings that can be displayed in the view.
 
 \subsection{Sequence Diagrams}
 
+\subsubsection{Controller Sequence Diagram}
+
+\includepdf[pages={1}]{SequenceDiagram/PDF/controller_sequence_diagram}
+
+This class diagram shows what happens when the controller is being created.
+First it will create the CommandLineInterface class.
+After that it asks the command line interface for user input.
+This user input is then passed to tot the CommandParser that creates a dict out of this string and creates the right instance of a Command.
+When creating a command, it also calls the validate method that checks if all arguments that are needed by the module for running its computation.
+After that, the controller creates CLIOutputService and attaches the CommandLineInterface to it.
+This CLIOutputService is then registered to the module so this can create output to the command line interface.
+After all this setup steps, the module is ready to be executed.
+Therefore the controller calls the execute method on the command, which then calls the start method of the module with the arguments it needs.
+The module then starts its computations and eventually calls the CLIOutputService to create some user output.
+The module calls print_line with the string it wants to output.
+The CLIOUtputService creates the string that can be displayed and this is passed to the CommandLineInterface that is attached to CLIOUtputService.
+After all computations are done, the module returns his call.
+Now the sequence of a normal program run is finished.
+
+\subsubsection{Print Overriding String}
+
+\includepdf[pages={1}]{SequenceDiagram/PDF/print_progress_sequence_diagram}
+
+Sometimes the user wants to print a progress like a download status that is updated by time.
+But there should not be a new line for each percentage the download gets further.
+Instead the old string should be overwritten by time and and the module should only have to pass the new status.
+Therefore there is the method print_overriding in the CLIOutputService that wants an string and an observable object.
+That is why the module first creates observable object.
+This object is then being passed to the print_overriding method together with a string that will stay the same all the time.
+Because the CLIOUtputService implements the Subscriber interface, it can subscribe itself to the observable.
+Now that the CLIOutputService is subscribed to the Observable, it will be notified when the Observable gets a new data.
+When the module starts it computations, it can call next with the new data with which it wants to override the old one in the view.
+In the next call of the observable, all subscribers will be notified with the new value.
+The string with the new value can now be printed to the command line interface.s
 
 \section{Collector}
 

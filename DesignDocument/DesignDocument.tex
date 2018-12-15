@@ -205,7 +205,7 @@ The modules can also provide strings that can be displayed in the view.
 
 \subsubsection{Controller Sequence Diagram}
 
-\includepdf[pages={1}]{SequenceDiagram/PDF/controller_sequence_diagram}
+\includepdf{SequenceDiagram/PDF/controller_sequence_diagram}
 
 This class diagram shows what happens when the controller is being created.
 First it will create the CommandLineInterface class.
@@ -222,6 +222,27 @@ The CLIOUtputService creates the string that can be displayed and this is passed
 After all computations are done, the module returns his call.
 Now the sequence of a normal program run is finished.
 
+\section{Display Output}
+
+\subsection{Class Diagrams}
+
+\subsubsection{Command Parsing}
+
+\includepdf{ClassDiagrams/PDF/CommandParsing}
+
+This class diagrams shows all classes that are used by the CommandParser.
+The CommandParser has one method that receives an input string and returns a command.
+This method uses the first word of the input string to determine which module is supposed to be started.
+Based on this he creates an instance of this subclass of the command.
+The remaining string will be parsed to a dictionary with keys and values. 
+This dictionary is passed to the constructor of the command object.
+In the constructor of the command, the command also calls the validate() method.
+This method checks if all arguments that are necessary for the specific module start are provided.
+After that is finished the command can be returned by the CommandParser.
+The execute method of the command can be then used to start the modules computation.
+
+\subsection{Sequence Diagrams}
+
 \subsubsection{Print Overriding String}
 
 \includepdf{SequenceDiagram/PDF/print_progress_sequence_diagram}
@@ -236,7 +257,22 @@ Because the CLIOUtputService implements the Subscriber interface, it can subscri
 Now that the CLIOutputService is subscribed to the Observable, it will be notified when the Observable gets a new data.
 When the module starts it computations, it can call next with the new data with which it wants to override the old one in the view.
 In the next call of the observable, all subscribers will be notified with the new value.
-The string with the new value can now be printed to the command line interface.s
+The string with the new value can now be printed to the command line interfaces
+
+\section{Exception Handling}
+
+\subsection{Class Diagrams}
+
+\subsubsection{Exception Classes}
+
+\includepdf{ClassDiagrams/PDF/exception_cases_class_diagram}
+
+Each exception extends Python's Exception class.
+There are four kinds of exceptions that are excepted.
+The IllegalArgumentException will be risen when the arguments the user has entered are not valid.
+The InvalidConfigException will be risen when the user edited the configuration file with invalid arguments or syntax.
+The IOException will be risen when errors occur while reading or writing data to the hard drive.
+The InvalidOSException will be risen when trying to access functionality that is not supported on the current operating system.
 
 \section{Collector}
 

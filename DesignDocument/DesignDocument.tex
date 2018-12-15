@@ -291,6 +291,14 @@ The path for the saving is specified in the configuration file.
 
 
 \section{Classifier}
+The classifier classifies a matrix given by a path. 
+In this path, the matrix is stored in the form of an HDF5 file.
+As a second parameter the neural network path will be given. 
+In this path the trained network the user wants to use for his classification is saved.
+As a last parameter the user can set the solve flag, what gives the opportunity to also solve the matrix with the best solving algorithm classified by the neural network.
+
+
+
 
 \subsection{Class Descriptions}
 
@@ -304,13 +312,11 @@ This means a certain approach to solve a matrix.
 
 \subsection{Class Loader}
 
-\subsection{Class Validator}
+\subsubsection{Class Validator}
+The Validator class is a util class and responsible for validating given matrices(checking for regularity)
+Its only static method validate takes a matrix and returns true for regular, and false for not regular.
 
 \subsubsection{Class Neural Network}
-
-\subsubsection{Class PatternImageCreator}
-This class creates a Grayscale Sparcity Pattern Image out of a given matrix.
-\subsubsection{Class GrayscaleSparcityPatternImage}
 
 \subsection{Activity Diagrams}
 

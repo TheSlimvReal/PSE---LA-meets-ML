@@ -4,6 +4,7 @@
 \usepackage[german, english]{babel}  % german hyphenation, quotes, etc
 \usepackage{graphicx}       % provides commands for including figures
 \usepackage{rotating}
+\usepackage{amsmath}
 \usepackage{pdfpages}
 \graphicspath{ {images/} }
 \usepackage{hyperref}       % detailed hyperlink/pdf configuration
@@ -172,16 +173,31 @@ The command also has a execute method which runs the specific module with all th
 The labeling module is responsible for the labeling of the sparse matrices. The label of a matrix describes which which preconditioner/iterative solver combination solves the given matrix the fastest. The label is represented by a vector. Each entry in the vector corresponds to one preconditioner/iterative solver combination. The entry of the fastest one is 1, all other entries are zero. The matrices with the corresponding labels will be used to train the neural network in the training module. 
 \includepdf{ClassDiagrams/PDF/LabelingModule_classdiagramm.pdf}
 The main component of the labeling module is the class labeling module. It provides the only public method in the labling module, the method start(path:String, savingName:String,savingPath:String). This method is the entry point of the module and will start the labeling process of the provided matrices(specified by the path). \newline\newline
+
+The class labeling modue has a set of matrices which the module will label.\newline\newline
+
 The module furthermore has a Loader class. The class labeling module has exactly one Loader class. This class is responsible for loading the matrices which get labeled. Its only method is the method load(path:String) which gets a path of a hdf5 file supplied and returns a dataset. If the specified path is not a hdf5 file, the programm will print an error to the command line. \newline\newline
+
 Another class in the labeling module is the Saver class. The class labeling module has exactly one Saver class. This class is responsible for the saving of the matrices and the labels. Its only method is the method save(dataset:Dataset,path:String). If this method is called, the specified dataset will be safed at the specified path. The matrices and the labels will be safed in one hdf5 file.\newline
 \newline
-Since the labeling module is responsible for finding the best preconditioner/iterative solver combination for a given set of matrices, the module furthermore has a preconditioner and a iterative solver classes. Those classes are abstract. ConcreteIteraiveSolvers inherit from the class IterativeSolver and ConcretePreconditioners from the class Preconditioner.\newline
-The IterativeSolver class contains the logic for solving a matrix with a 
+
+Since the labeling module is responsible for finding the best preconditioner/iterative solver combination for a given set of matrices, the module furthermore has a preconditioner and a algorithm class. Those classes are abstract. ConcreteAlgorithms inherit from the class Algorithm and ConcretePreconditioners from the class Preconditioner.\newline\newline
+
+The Algorithm class contains the logic for solving a matrix with an iterative solver. Each ConcreteAlgorithm corresponds to one iterative solver.Each class of ConcreteAlgorithm has the method execute() which will solve a given matrix. We will be using the design pattern "stragety" for the iterative solvers. The reason being that each algorithm does basically the same thing(solving a matrix) in a different manner. The user moreover has no influence on which algorithm we will be using at any given time. 
+Each algorithm will take an optional precondtioner as its input for the method execute(). The preconditioner will be used at every step of the iterative solver.
 
 \subsubsection{Class LabelingModule}
+activity diagram
 \subsubsection{Class Algorithm}
+An algorithm in our sense is an interative solver which is able to to solve a linear system Ax=b for x, where A is a (in our case sparse) matrix of size nxn, x is a vector of size 1xn and b is vector of size 1xn(n$\in$N).
+%find correct symbol for N
+The iterative solver uses an iterative approach to solve the matrix. An iterative approach is characterized by the idea that the matrix gets solved step by step, where the solution of one step enables the solution of the next step.An iterative solver may optionally use a preconditioner for its calculation. Since there are many different iterative solvers which achieve the same outcome(solving for x) we will be using the design pattern "strategy". That is why the class Algortihm is abstract and ConcreteAlgorithms (which actually represent one iterative solver each) will inherit from Algorithm. The user at no point decides which algorithm gets used at any given time. \newline
+An Algorithm one has one method execute() ,which takes a matrix (and a preconditioner) and solves it. The time the iterative solver takes to solve the matrix will be recorded and in the class labelingModule used to label the matrix. All Concrete algortihms have to implement 
+
 \subsubsection{Class ConcreteAlgorithm}
+A ConcreteAlgorithm is the actual representation of one iterative solver. 
 \subsubsection{Class Preconditioner}
+A preconditioner is a transformation of a linear system Ax=b for x, where A is a (in our case sparse) matrix of size nxn, x is a vector of size 1xn and b is vector of size 1xn(n$\in$N). A transformation may be a Matrix p (nxn) which would result in the linear system PAx = Pb. A preconditioner is used so that the linear system may be solved more easily by an iterative solver. The transformation of the preconditioner is applied in every step of an iterative solver. 
 \subsubsection{Class ConcretePreconditioner}
 
 \subsection{Training module}
@@ -197,7 +213,7 @@ If the user does not change anything in the configuration file, defaut options w
 \item loading path of the set of matrices 
 \item saving path for the neural network
 \item loading path for the neural network
-\item model definition and hyperparameters abc
+\item model definition and hyperparameters  
 \end{enumerate}
 The loading path of the set of matrices is the path in which the matrices that are used for the training and testing are stored.
 The training module only supports one hdf5 file.
@@ -298,22 +314,7 @@ This means a certain approach to solve a matrix.
 This class creates a Grayscale Sparcity Pattern Image out of a given matrix.
 \subsubsection{Class GrayscaleSparcityPatternImage}
 
-\section{Activity diagrams}
 
-
-\subsection{Collector}
-\subsection{Labeling Module}
-\subsection{Training Moulde}
-
-\subsection{Classifier}
-\includepdf[pages={1}]{ActivityDiagrams/PDF/classification}
-
-\section{Class diagrams}
-
-\subsection{Collector}
-\subsection{Labeling Module}
-\subsection{Training Module}
-\subsection{Classifier}
 \includepdf[pages={1}]{ClassDiagrams/PDF/Classifier}
 
 \section{Explanations}

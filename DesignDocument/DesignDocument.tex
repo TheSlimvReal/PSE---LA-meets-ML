@@ -96,11 +96,6 @@ Makus G\"{o}tz
 
 \section{Overview}
 
-\subsection{Component Diagram}
-
-
-
-\includepdf[pages={1}]{ComponentDiagrams/PDF/interaction_overview}
 %include big class diagramm
 
 \section{Module Interaction}
@@ -149,7 +144,7 @@ The command also has a execute method which runs the specific module with all th
 
 \subsubsection{User Input Activity Diagram}
 
-\includepdf[pages={1}]{ActivityDiagrams/PDF/user_input_activity_diagram}
+\includepdf{ActivityDiagrams/PDF/user_input_activity_diagram}
 
 This activity diagram shows the main workflow of the whole program.
 The program first waits for user input.
@@ -167,7 +162,7 @@ When the module is finished, the program prints a complete message and start wai
 
 \subsubsection{Command Parsing}
 
-\includepdf[pages={1}]{ClassDiagrams/PDF/CommandParsing}
+\includepdf{ClassDiagrams/PDF/CommandParsing}
 
 This class diagrams shows all classes that are used by the CommandParser.
 The CommandParser has one method that receives an input string and returns a command.
@@ -180,7 +175,11 @@ This method checks if all arguments that are necessary for the specific module s
 After that is finished the command can be returned by the CommandParser.
 The execute method of the command can be then used to start the modules computation.
 
+\subsection{Component Diagram}
 
+\subsubsection{Model View Controller Component Diagram}
+
+\includepdf{ComponentDiagrams/PDF/interaction_overview}
 
 This component diagram shows the main interaction between the modules.
 For our main structure we use the model view controller 
@@ -218,21 +217,21 @@ This CLIOutputService is then registered to the module so this can create output
 After all this setup steps, the module is ready to be executed.
 Therefore the controller calls the execute method on the command, which then calls the start method of the module with the arguments it needs.
 The module then starts its computations and eventually calls the CLIOutputService to create some user output.
-The module calls print_line with the string it wants to output.
+The module calls print\char`_line with the string it wants to output.
 The CLIOUtputService creates the string that can be displayed and this is passed to the CommandLineInterface that is attached to CLIOUtputService.
 After all computations are done, the module returns his call.
 Now the sequence of a normal program run is finished.
 
 \subsubsection{Print Overriding String}
 
-\includepdf[pages={1}]{SequenceDiagram/PDF/print_progress_sequence_diagram}
+\includepdf{SequenceDiagram/PDF/print_progress_sequence_diagram}
 
 Sometimes the user wants to print a progress like a download status that is updated by time.
 But there should not be a new line for each percentage the download gets further.
 Instead the old string should be overwritten by time and and the module should only have to pass the new status.
-Therefore there is the method print_overriding in the CLIOutputService that wants an string and an observable object.
+Therefore there is the method print\char`_overriding in the CLIOutputService that wants an string and an observable object.
 That is why the module first creates observable object.
-This object is then being passed to the print_overriding method together with a string that will stay the same all the time.
+This object is then being passed to the print\char`_overriding method together with a string that will stay the same all the time.
 Because the CLIOUtputService implements the Subscriber interface, it can subscribe itself to the observable.
 Now that the CLIOutputService is subscribed to the Observable, it will be notified when the Observable gets a new data.
 When the module starts it computations, it can call next with the new data with which it wants to override the old one in the view.

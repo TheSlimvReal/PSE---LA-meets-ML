@@ -27,9 +27,15 @@ bookmarks=true,%
 
 \newglossaryentry{memento}
 {
-	name=algorithm,
-	plural=algorithms,
-	description={In mathematics and computer science, an algorithm is an unambiguous specification of how to solve a class of problems. Algorithms can perform calculation, data processing and automated reasoning tasks}
+	name=Solver,
+	plural=Solvers,
+	description={In mathematics and computer science, an Solver is an unambiguous specification of how to solve a class of problems. Solvers can perform calculation, data processing and automated reasoning tasks}
+}
+\newglossaryentry{ginkgo}
+{
+	name=Solver,
+	plural=Solvers,
+	description={In mathematics and computer science, an Solver is an unambiguous specification of how to solve a class of problems. Solvers can perform calculation, data processing and automated reasoning tasks}
 }
 
 
@@ -170,7 +176,7 @@ There is one command subclass for each module and the command class also validat
 The command also has a execute method which runs the specific module with all the arguments it needs.
 
 \subsection{Labeling Module}
-The labeling module is responsible for the labeling of the sparse matrices. The label of a matrix describes which which preconditioner/iterative solver combination solves the given matrix the fastest. The label is represented by a vector. Each entry in the vector corresponds to one preconditioner/iterative solver combination. The entry of the fastest one is 1, all other entries are zero. The matrices with the corresponding labels will be used to train the neural network in the training module. 
+The labeling module is responsible for the labeling of the sparse matrices. The label of a matrix describes which which preconditioner/iterative Solver combination solves the given matrix the fastest. The label is represented by a vector. Each entry in the vector corresponds to one preconditioner/iterative Solver combination. The entry of the fastest one is 1, all other entries are zero. The matrices with the corresponding labels will be used to train the neural network in the training module. 
 \includepdf{ClassDiagrams/PDF/LabelingModule_classdiagramm.pdf}
 The main component of the labeling module is the class labeling module. It provides the only public method in the labling module, the method start(path:String, savingName:String,savingPath:String). This method is the entry point of the module and will start the labeling process of the provided matrices(specified by the path). \newline\newline
 
@@ -181,24 +187,26 @@ The module furthermore has a Loader class. The class labeling module has exactly
 Another class in the labeling module is the Saver class. The class labeling module has exactly one Saver class. This class is responsible for the saving of the matrices and the labels. Its only method is the method save(dataset:Dataset,path:String). If this method is called, the specified dataset will be safed at the specified path. The matrices and the labels will be safed in one hdf5 file.\newline
 \newline
 
-Since the labeling module is responsible for finding the best preconditioner/iterative solver combination for a given set of matrices, the module furthermore has a preconditioner and a algorithm class. Those classes are abstract. ConcreteAlgorithms inherit from the class Algorithm and ConcretePreconditioners from the class Preconditioner.\newline\newline
+Since the labeling module is responsible for finding the best preconditioner/iterative Solver combination for a given set of matrices, the module furthermore has a preconditioner and a Solver class. Those classes are abstract. ConcreteSolvers inherit from the class Solver and ConcretePreconditioners from the class Preconditioner.\newline\newline
 
-The Algorithm class contains the logic for solving a matrix with an iterative solver. Each ConcreteAlgorithm corresponds to one iterative solver.Each class of ConcreteAlgorithm has the method execute() which will solve a given matrix. We will be using the design pattern "stragety" for the iterative solvers. The reason being that each algorithm does basically the same thing(solving a matrix) in a different manner. The user moreover has no influence on which algorithm we will be using at any given time. 
-Each algorithm will take an optional precondtioner as its input for the method execute(). The preconditioner will be used at every step of the iterative solver.
+The Solver class contains the logic for solving a matrix with an iterative Solver. Each ConcreteSolver corresponds to one iterative Solver.Each class of ConcreteSolver has the method execute(Matrix,Preconditioner) which will solve a given matrix. We will be using the design pattern "stragety" for the iterative Solvers. The reason being that each Solver does basically the same thing(solving a matrix) in a different manner. The user moreover has no influence on which Solver we will be using at any given time. 
+Each Solver will take an optional precondtioner as its input for the method execute(Matrix,Preconditioner). The preconditioner will be used at every step of the iterative Solver. We will be using the design pattern "strategy" for the Preconditioners too. Preconditioners each return a GinkoPreconditioner which will be used by the Solver class to communicate with the ginkgo libary. So each ConcretePreconditioner basically does the same thing(returning a preconditioner). The user furthermore has no influence on which preconditioner we will be using at any given time. That is why the "strategy" design pattern is applicable
 
 \subsubsection{Class LabelingModule}
 activity diagram
-\subsubsection{Class Algorithm}
-An algorithm in our sense is an interative solver which is able to to solve a linear system Ax=b for x, where A is a (in our case sparse) matrix of size nxn, x is a vector of size 1xn and b is vector of size 1xn(n$\in$N).
+\subsubsection{Class Solver}
+An Solver in our sense is an interative Solver which is able to to solve a linear system Ax=b for x, where A is a (in our case sparse) matrix of size nxn, x is a vector of size 1xn and b is vector of size 1xn(n$\in$N).
 %find correct symbol for N
-The iterative solver uses an iterative approach to solve the matrix. An iterative approach is characterized by the idea that the matrix gets solved step by step, where the solution of one step enables the solution of the next step.An iterative solver may optionally use a preconditioner for its calculation. Since there are many different iterative solvers which achieve the same outcome(solving for x) we will be using the design pattern "strategy". That is why the class Algortihm is abstract and ConcreteAlgorithms (which actually represent one iterative solver each) will inherit from Algorithm. The user at no point decides which algorithm gets used at any given time. \newline
-An Algorithm one has one method execute() ,which takes a matrix (and a preconditioner) and solves it. The time the iterative solver takes to solve the matrix will be recorded and in the class labelingModule used to label the matrix. All Concrete algortihms have to implement 
+The iterative Solver uses an iterative approach to solve the matrix. An iterative approach is characterized by the idea that the matrix gets solved step by step, where the solution of one step enables the solution of the next step. The class iterative Solver achieves this by communicating with the ginkgo libary, which has an implementation of the solvers. An iterative Solver may optionally use a preconditioner for its calculation. Since there are many different iterative Solvers which achieve the same outcome(solving for x) we will be using the design pattern "strategy". That is why the class Algortihm is abstract and ConcreteSolvers (which actually represent one iterative Solver each) will inherit from Solver. The user at no point decides which Solver gets used at any given time. \newline
+An Solver one has one method execute(Matrix,Preconditioner) ,which takes a matrix (and a preconditioner) and solves it. The time the iterative Solver takes to solve the matrix will be recorded and in the class labelingModule used to label the matrix. All ConcreteSolvers have to implement the abstract function execute.
 
-\subsubsection{Class ConcreteAlgorithm}
-A ConcreteAlgorithm is the actual representation of one iterative solver. 
+\subsubsection{Class ConcreteSolver}
+A ConcreteSolver is the actual representation of one iterative Solver. 
 \subsubsection{Class Preconditioner}
-A preconditioner is a transformation of a linear system Ax=b for x, where A is a (in our case sparse) matrix of size nxn, x is a vector of size 1xn and b is vector of size 1xn(n$\in$N). A transformation may be a Matrix p (nxn) which would result in the linear system PAx = Pb. A preconditioner is used so that the linear system may be solved more easily by an iterative solver. The transformation of the preconditioner is applied in every step of an iterative solver. 
+A preconditioner is a transformation of a linear system Ax=b for x, where A is a (in our case sparse) matrix of size nxn, x is a vector of size 1xn and b is vector of size 1xn(n$\in$N). A transformation may be a Matrix p (nxn) which would result in the linear system PAx = Pb. A preconditioner is used so that the linear system may be solved more easily by an iterative Solver. The transformation of the preconditioner is applied in every step of an iterative Solver. \newline\newline
+The class Preconditioner only has one method, getPreconditioner() which will return the GinkoPreconditioner corresponding to the preconditioner class. The preconditioner class achieves this by communicating with the ginkgo libary. 
 \subsubsection{Class ConcretePreconditioner}
+A ConcretePreconditioner is the actual representation of one preconditioner.
 
 \subsection{Training module}
 The training module is responsible for the training and testing of a neural network. It is structured in 2 parts, the configuration file and the class training module. The class training module loads its configuration in the configuartion file. It furthermore uses a set of labled matrices for the training and testing. With the configuration set, the class training module will start the training and testing. The trained network will be saved to a specified path.
@@ -297,10 +305,10 @@ We will furthermore be using the function keras.callbacks.ModelCheckpoint to sav
 
 \subsection{Classifier}
 \subsubsection{Class Classifier}
-\subsubsection{Interface Algorithm}
-This interface is for the different algorithms for solving a given matrix.
-\subsubsection{Class ConcreteAlgorithm}
-The Concrete Algorithm class is for solving a matrix in a certain way.
+\subsubsection{Interface Solver}
+This interface is for the different Solvers for solving a given matrix.
+\subsubsection{Class ConcreteSolver}
+The Concrete Solver class is for solving a matrix in a certain way.
 This means a certain approach to solve a matrix.
 \subsubsection{Class Matrix}
 \subsection{Classes which more than one Module uses}

@@ -270,7 +270,8 @@ The module furthermore has a Loader class. The class labeling module has exactly
 
 Another class in the labeling module is the Saver class. The class labeling module has exactly one Saver class. This class is responsible for the saving of the matrices and the labels. Its only method is the method save(dataset:Dataset,path:String). If this method is called, the specified dataset will be safed at the specified path. The matrices and the labels will be safed in one hdf5 file.\newline
 \newline
-
+The labeling module class moreover has a validator class. This class is responsible for determining wheter the given matrix is regular. If that is not the case, the matrix will be deleted.
+\newline\newline
 Since the labeling module is responsible for finding the best preconditioner/iterative Solver combination for a given set of matrices, the module furthermore has a preconditioner and a Solver class. Those classes are abstract. ConcreteSolvers inherit from the class Solver and ConcretePreconditioners from the class Preconditioner.\newline\newline
 
 The Solver class contains the logic for solving a matrix with an iterative Solver. Each ConcreteSolver corresponds to one iterative Solver.Each class of ConcreteSolver has the method execute(Matrix,Preconditioner) which will solve a given matrix. We will be using the design pattern "stragety" for the iterative Solvers. The reason being that each Solver does basically the same thing(solving a matrix) in a different manner. The user moreover has no influence on which Solver we will be using at any given time. 

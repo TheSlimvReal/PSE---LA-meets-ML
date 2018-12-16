@@ -313,66 +313,6 @@ The getMatrix method uses the Matrix class to initialize a matrix, then the priv
 The Validator class is a util class and responsible for validating given matrices(checking for regularity)
  Its only static method validate takes a matrix and returns true for regular, and false for not regular.
 
-\subsubsection{Class CommandLineInterface}
-The view represents the concrete command line interface.
-
-The Validator class is a util class and responsible for validating given matrices(checking for regularity).
-Its only static method validate takes a matrix and returns true for regular, and false for not regular.
-
-\subsubsection{Class View}
-The view represents the command line interface.
-
-Therefore it only consists of two methods.
-The first one is readInput that receives a message that will be displayed and reads the next user input.
-The other method is createOutput.
-This method prints a string to the CLI.
-
-
-\subsubsection{Interface OutputService}
-The OutputService interfaces can be implemented and passed to a module to receive the output of the modules.
-Therefore it has methods that represent different ways output can be displayed.
-
-\subsection{Sequence Diagrams}
-
-
- \subsubsection{Interface Subscriber}
-The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
-
-\subsubsection{Class Observable}
-
-\subsubsection{Interface OutputService}
-The OutputService interfaces can be implemented and passed to a module to receive the output of the modules.
-Therefore it has methods that represent different ways output can be displayed.
-
- \subsection{Interface Subscriber}
-The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
-
-\subsection{Class Observable}
-
-The Observable class can be used to notify Subscribers when new values are provided.
-Subscribers can subscribe themselves to an Observer to be notified get notifications.
-The next() method calls update() on each subscriber.
-
-
-\subsection{Class CLIOutputService}
-This class implements the OutputService and the Subscriber interface.
-On creation it gets a reference of the View to which it will pass the lines the modules wants to output.
-It also implements the Subscriber interface to subscribe itself to an observable.
-This can be used to display lines that are overwritten with new values like an progress bar or a counter.
-
-\subsection{Class ClIOutputService}
-This class implements the OutputService and the Subscriber interface.
-On creation it gets a reference of the View to which it will pass the lines the modules want to output.
-It also implements the Subscriber interface to subscribe itself to an observable.
-This can be used to display lines that are overwritten with new values like an progress bar or counter.
-
-
-\subsubsection{Class CommandParser}
-The CommandParser is a class that only has one static public method.
-This method receives the user input string and returns a command.
-
-
-
 \section{Labeling Module}
 The labeling module is responsible for the labeling of the sparse matrices. The label of a matrix describes which which \gls{preconditioner}/\gls{iterative solver} combination solves the given matrix the fastest. The label is represented by a vector. Each entry in the vector corresponds to one \gls{preconditioner}/\gls{iterative solver} combination. The entry of the fastest one is 1, all other entries are zero. The matrices with the corresponding labels will be used to train the neural network in the training module.
 \includepdf{ClassDiagrams/PDF/LabelingModule_classdiagramm.pdf}

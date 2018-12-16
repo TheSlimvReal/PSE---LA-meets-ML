@@ -17,7 +17,8 @@ bookmarks=true,%
 \usepackage{enumitem}
 \usepackage{lscape}
 \usepackage{caption}
-\usepackage{placeins}
+%\usepackage{placeins}
+\usepackage[section]{placeins}
 
 
 \makenoidxglossaries
@@ -458,23 +459,60 @@ After that the neural network will be safed as a keras model.
 The path for the saving is specified in the configuration file.
 
 
+\newpage
 \section{Classifier}
-\subsection{Class Classifier}
-\subsection{Interface Solver}
-This interface is for the different Solvers for solving a given matrix.
-\subsection{Class ConcreteSolver}
-The Concrete Solver class is for solving a matrix in a certain way.
-The classifier classifies a matrix given by a path.
-In this path, the matrix is stored in the form of an HDF5 file.
-As a second parameter the neural network path will be given.
-In this path the trained network the user wants to use for his classification is saved.
-As a last parameter the user can set the solve flag, what gives the opportunity to also solve the matrix with the best solving algorithm classified by the neural network.
+
+\subsection{Diagrams}
+
+\subsection{Class Diagrams}
+
+\begin{figure}[h]
+\begin{center}
+\includepdf[pages={1}]{ClassDiagrams/PDF/Classifier}
+\label{Class Diagram}
+\end{center}
+\end{figure}
+
+\newpage
+
 
 \subsection{Class Descriptions}
 
 \subsubsection{Class Classifier}
+The classifier classifies a matrix given by a path. 
+In this path, the matrix is stored in the form of an HDF5 file.
+As a second parameter the neural network path will be given. 
+In this path the trained network the user wants to use for his classification is saved.
 
+\newpage
+ 
+\subsection{Activity Diagrams}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=8cm,height=15cm,keepaspectratio]{ActivityDiagrams/PDF/classification}
+%\includepdf[pages={1}]{ActivityDiagrams/PDF/classification}
+\label{Activity Diagrams}
+\end{center}
+\end{figure}
+
+\newpage
+\subsubsection{Description}
+\newpage
+\subsection{Sequence Diagrams} 
+
+\begin{figure}[h]
+\begin{center}
+\includepdf[pages={1}]{SequenceDiagram/PDF/classifier_sequence_diagram}
+\label{Sequence Diagrams}
+\end{center}
+\end{figure}
+
+\newpage
+\subsubsection{Description}
+\newpage
 \section{Classes which more than one Module uses}
+
 \subsection{Class Loader}
 
 \subsubsection{Class Validator}
@@ -483,20 +521,8 @@ Its only static method validate takes a matrix and returns true for regular, and
 
 \subsubsection{Class Neural Network}
 
-\subsubsection{Class PatternImageCreator}
-This class creates a Grayscale Sparcity Pattern Image out of a given matrix.
-\subsubsection{Class GrayscaleSparcityPatternImage}
 
-\subsection{Activity Diagrams}
-
-\includepdf[pages={1}]{ActivityDiagrams/PDF/classification}
-
-\subsection{Class Diagrams}
-
-\includepdf[pages={1}]{ClassDiagrams/PDF/Classifier}
-
-
-
+\newpage
 \section{Glossary}
 %\glspl{collector}, labeling modle, neural network, classifier, default settings  \glspl{Dateiformat}
 
@@ -506,3 +532,4 @@ This class creates a Grayscale Sparcity Pattern Image out of a given matrix.
 \printnoidxglossaries
 
 \end{document}
+

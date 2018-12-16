@@ -96,11 +96,6 @@ Makus G\"{o}tz
 
 \section{Overview}
 
-\subsection{Component Diagram}
-
-
-
-\includepdf[pages={1}]{ComponentDiagrams/PDF/interaction_overview}
 %include big class diagramm
 
 \section{Module Interaction}
@@ -108,29 +103,11 @@ Makus G\"{o}tz
 \subsection{Class Descriptions}
 
 \subsubsection{Class CommandLineInterface}
-The view represents the concrete command line interface. 
+The class CommandLineInterface represents the concrete command line interface. 
 Therefore it only consists of two methods. 
-The first one is readInput that receives a message that will be displayed and reads the next user input. 
-The other method is createOutput. 
+The first one is read\char`_input that receives a message that will be displayed and reads the next user input. 
+The other method is create\char`_output. 
 This method prints a string to the CLI.
-
-\subsubsection{Interface OutputService}
-The OutputService interfaces can be implemented and passed to a module to receive the output of the modules. 
-Therefore it has methods that represent different ways output can be displayed. 
-
- \subsubsection{Interface Subscriber}
-The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
-
-\subsubsection{Class Observable} 
-The Observable class can be used to notify Subscribers when new values are provided.
-Subscribers can subscribe themselves to an Observer to be notified get notifications.
-The next() method calls update() on each subscriber.
-
-\subsection{Class CLIOutputService}
-This class implements the OutputService and the Subscriber interface. 
-On creation it gets a reference of the View to which it will pass the lines the modules wants to output.
-It also implements the Subscriber interface to subscribe itself to an observable.
-This can be used to display lines that are overwritten with new values like an progress bar or a counter.
 
 \subsubsection{Class Controller} 
 The controller is the main entry point for the program execution. 
@@ -149,25 +126,23 @@ The command also has a execute method which runs the specific module with all th
 
 \subsubsection{User Input Activity Diagram}
 
-\includepdf[pages={1}]{ActivityDiagrams/PDF/user_input_activity_diagram}
-
 This activity diagram shows the main workflow of the whole program.
 The program first waits for user input.
 After the user enters his input into the command line interface, the CommandParser parses this input to a command.
-If the command equals quit, the programm will exit.
+If the command equals quit, the program will exit.
 If not the command will be validated to contain enough information to start the desired module.
 If it is not valid, an error message will be printed and the user can enter a new input.
 If the command is valid, the module will be started.
 Therefore the module computes his specific task in iterations.
-After each iteration it print the current progress to the user.
+After each iteration it prints the current progress to the user.
 This two activities repeat until all tasks are done.
-When the module is finished, the program prints a complete message and start waiting for new user input.
+When the module is finished, the program prints a complete message and starts waiting for new user input.
+
+\includepdf{ActivityDiagrams/PDF/user_input_activity_diagram}
 
 \subsection{Class Diagrams}
 
 \subsubsection{Command Parsing}
-
-\includepdf[pages={1}]{ClassDiagrams/PDF/CommandParsing}
 
 This class diagrams shows all classes that are used by the CommandParser.
 The CommandParser has one method that receives an input string and returns a command.
@@ -180,12 +155,126 @@ This method checks if all arguments that are necessary for the specific module s
 After that is finished the command can be returned by the CommandParser.
 The execute method of the command can be then used to start the modules computation.
 
+\includepdf{ClassDiagrams/PDF/CommandParsing}
 
+\subsection{Component Diagram}
 
+\subsubsection{Model View Controller Component Diagram}
 
+This component diagram shows the main interaction between the modules.
+For our main structure we use the model view controller
+Each class belongs to one of the three parts: view, controller or model.
+In the view there is the CommandLineInterface, which as the name suggests represents the command line.
+It receives strings, that it will display and makes the user input available for other classes.
+The other class in the view is the CLIOutputService.
+This class works as the observer for the model and receives the strings the model wants to output.
+It then provides strings that can be displayed by the command line interface.
+
+The next big part is the controller.
+This parts main component is the class that is also called controller.
+This class gets a string by the CommandLineInterface.
+This string it then passed to the CommandParser.
+This class creates the right command and passes the arguments to this command.
+The command stores this arguments and makes them available for the modules.
+
+The model consists of the four static modules that make the computations.
+This modules get the arguments that are provided by the command.
+The modules can also provide strings that can be displayed in the view.
+
+\includepdf{ComponentDiagrams/PDF/interaction_overview}
 
 \subsection{Sequence Diagrams}
 
+\subsubsection{Controller Sequence Diagram}
+
+This class diagram shows what happens when the controller is being created.
+First it will create the CommandLineInterface class.
+After finishing that, it asks the command line interface for user input.
+This user input is then passed to the CommandParser that creates a dict out of this string and creates the right instance of a Command.
+When creating a command, it also calls the validate method that checks if all arguments that are needed by the module for running its computation are provided.
+If thats the case, the controller creates a CLIOutputService and attaches the CommandLineInterface to it.
+This CLIOutputService is then registered to the module so this can create output to the command line interface.
+After all this setup steps, the module is ready to be executed.
+Therefore the controller calls the execute method on the command, which then calls the start method of the module with the arguments it needs.
+The module then starts its computations and eventually calls the CLIOutputService to create some user output.
+The module calls print\char`_line with the string it wants to output.
+The CLIOutputService creates the string that can be displayed and this is passed to the CommandLineInterface that is attached to CLIOutputService.
+After all computations are done, the module returns his call.
+Now the user can enter a new input until he enters quit.
+
+\includepdf{SequenceDiagram/PDF/controller_sequence_diagram}
+
+\section{Display Output}
+
+\subsection{Class Descriptions}
+
+\subsubsection{Interface OutputService}
+The OutputService interfaces can be implemented and passed to a module to receive the output of the modules. 
+Therefore it has methods that represent different ways output can be displayed. 
+
+ \subsubsection{Interface Subscriber}
+The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
+
+\subsubsection{Class Observable} 
+The Observable class can be used to notify subscribers when new values are provided.
+Subscribers can subscribe themselves to an Observer to get notifications about new data.
+The next() method calls update() on each subscriber.
+
+\subsection{Class CLIOutputService}
+This class implements the OutputService and the Subscriber interface. 
+On creation it gets a reference of the CommandLineInterface to which it will pass the lines the modules wants to output.
+It also implements the Subscriber interface to subscribe itself to an observable.
+This can be used to display lines that are overwritten with new values like an progress bar or a counter.
+
+\subsection{Class Diagrams}
+
+\subsubsection{Command Parsing}
+
+This class diagrams shows all classes that are used by the CommandParser.
+The CommandParser has one method that receives an input string and returns a command.
+This method uses the first word of the input string to determine which module is supposed to be started.
+Based on this he creates an instance of this subclass of the command.
+The remaining string will be parsed to a dictionary with keys and values.
+This dictionary is passed to the constructor of the command object.
+In the constructor of the command, the command also calls the validate() method.
+This method checks if all arguments that are necessary for the specific module start are provided.
+After that is finished the command can be returned by the CommandParser.
+The execute method of the command can be then used to start the modules computation.
+
+\includepdf{ClassDiagrams/PDF/CommandParsing}
+
+\subsection{Sequence Diagrams}
+
+\subsubsection{Print Overriding String}
+
+Sometimes the user wants to print a progress like a download status that is updated by time.
+But there should not be a new line for each percentage the download gets further.
+Instead the old string should be overwritten by time and and the module should only have to pass the new status.
+Therefore there is the method print\char`_overriding in the CLIOutputService that wants an string and an observable object.
+That is why the module first creates the observable object.
+This object is then being passed to the print\char`_overriding method together with a string that will stay the same for this process.
+Because the CLIOUtputService implements the Subscriber interface, it can subscribe itself to the observable.
+Now that the CLIOutputService is subscribed to the Observable, it will be notified when the Observable gets new data.
+When the module starts it computations, it can call next with the new data with which it wants to override the old one in the view.
+In the next call of the observable, all subscribers will be notified with the new value.
+The string with the new value can now be printed to the command line interfaces
+
+\includepdf{SequenceDiagram/PDF/print_progress_sequence_diagram}
+
+\section{Exception Handling}
+
+\subsection{Class Diagrams}
+
+\subsubsection{Exception Classes}
+
+Each exception extends Python's Exception class.
+There are four kinds of exceptions that are excepted.
+The IllegalArgumentException will be risen when the arguments the user has entered are not valid.
+The InvalidConfigException will be risen when the user edited the configuration file with invalid arguments or syntax.
+The IOException will be risen when errors occur while reading or writing data to the hard drive.
+The InvalidOSException will be risen when trying to access functionality that is not supported on the current operating system.
+
+\includepdf{ClassDiagrams/PDF/exception_cases_class_diagram}
 
 \section{Collector}
 
@@ -193,11 +282,13 @@ The execute method of the command can be then used to start the modules computat
 
 \subsubsection{Class Collector}
 The Collector class is responsible for collecting a given amount of matrices and saving it into a HDF5 dataset.
-When the user types collect into the CLI, a collector Object will be created and the public method collect() with its parameters:
+When the user types collect into the CLI, a Collector object will be created and the public method collect() with its parameters:
 
-amount, name, size, density and path will be called. The class has a Saver class attribute and a Generator class attribute.
+amount, name, size, density and path
 
-amount, name, size, density and path will be called. The class has a Saver class attribute and a Generator class attribute. 
+will be called. 
+
+The class has a Saver class attribute and a Generator class attribute.
 
 It uses methods from the Generator class to get matrices to collect and methods from the Saver class to save the collected dataset.
 (see the collect method Activity Diagram for a more detailed overview).
@@ -210,7 +301,7 @@ Its only method is the save(dataset, name, path) method, which
 is called by the collect method from an Collector object.
 
 The Saver class is just responsible for saving a given matrix dataset. Its only method is the save(dataset, name, path) method, which
-is called by the collect method from an Collector object. 
+is called by the collect method from an Collector object.
 
 The save method takes an NPArray as a matrix dataset, converts it into an HDF5 file and saves it into a given directory with a given name.
 
@@ -228,68 +319,8 @@ The getMatrix method uses the Matrix class to initialize a matrix, then the priv
 The Validator class is a util class and responsible for validating given matrices(checking for regularity)
  Its only static method validate takes a matrix and returns true for regular, and false for not regular.
 
-\subsubsection{Class CommandLineInterface}
-The view represents the concrete command line interface. 
-
-The Validator class is a util class and responsible for validating given matrices(checking for regularity).
-Its only static method validate takes a matrix and returns true for regular, and false for not regular.
-
-\subsubsection{Class View}
-The view represents the command line interface. 
-
-Therefore it only consists of two methods. 
-The first one is readInput that receives a message that will be displayed and reads the next user input. 
-The other method is createOutput. 
-This method prints a string to the CLI.
-
-
-\subsubsection{Interface OutputService}
-The OutputService interfaces can be implemented and passed to a module to receive the output of the modules. 
-Therefore it has methods that represent different ways output can be displayed. 
-
-\subsection{Sequence Diagrams}
-
-
- \subsubsection{Interface Subscriber}
-The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
-
-\subsubsection{Class Observable} 
-
-\subsubsection{Interface OutputService}
-The OutputService interfaces can be implemented and passed to a module to receive the output of the modules. 
-Therefore it has methods that represent different ways output can be displayed. 
-
- \subsection{Interface Subscriber}
-The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
-
-\subsection{Class Observable} 
-
-The Observable class can be used to notify Subscribers when new values are provided.
-Subscribers can subscribe themselves to an Observer to be notified get notifications.
-The next() method calls update() on each subscriber.
-
-
-\subsection{Class CLIOutputService}
-This class implements the OutputService and the Subscriber interface. 
-On creation it gets a reference of the View to which it will pass the lines the modules wants to output.
-It also implements the Subscriber interface to subscribe itself to an observable.
-This can be used to display lines that are overwritten with new values like an progress bar or a counter.
-
-\subsection{Class ClIOutputService}
-This class implements the OutputService and the Subscriber interface. 
-On creation it gets a reference of the View to which it will pass the lines the modules want to output.
-It also implements the Subscriber interface to subscribe itself to an observable.
-This can be used to display lines that are overwritten with new values like an progress bar or counter.
-
-
-\subsubsection{Class CommandParser}
-The CommandParser is a class that only has one static public method.
-This method receives the user input string and returns a command.
-
-
-
 \section{Labeling Module}
-The labeling module is responsible for the labeling of the sparse matrices. The label of a matrix describes which which \gls{preconditioner}/\gls{iterative solver} combination solves the given matrix the fastest. The label is represented by a vector. Each entry in the vector corresponds to one \gls{preconditioner}/\gls{iterative solver} combination. The entry of the fastest one is 1, all other entries are zero. The matrices with the corresponding labels will be used to train the neural network in the training module. 
+The labeling module is responsible for the labeling of the sparse matrices. The label of a matrix describes which which \gls{preconditioner}/\gls{iterative solver} combination solves the given matrix the fastest. The label is represented by a vector. Each entry in the vector corresponds to one \gls{preconditioner}/\gls{iterative solver} combination. The entry of the fastest one is 1, all other entries are zero. The matrices with the corresponding labels will be used to train the neural network in the training module.
 \includepdf{ClassDiagrams/PDF/LabelingModule_classdiagramm.pdf}
 The main component of the labeling module is the class labeling module. It provides the only public method in the labling module, the method start(path:String, savingName:String,savingPath:String). This method is the entry point of the module and will start the labeling process of the provided matrices(specified by the path). \newline\newline
 
@@ -303,13 +334,13 @@ The labeling module class moreover has a validator class. This class is responsi
 \newline\newline
 Since the labeling module is responsible for finding the best \gls{preconditioner}/\gls{iterative solver} combination for a given set of matrices, the module furthermore has a \gls{preconditioner} and a Solver class. Those classes are abstract. ConcreteSolvers inherit from the class Solver and Concrete\gls{preconditioner}s from the class \gls{preconditioner}.\newline\newline
 
-The Solver class contains the logic for solving a matrix with an \gls{iterative solver}. Each ConcreteSolver corresponds to one \gls{iterative solver}.Each class of ConcreteSolver has the method execute(Matrix,\gls{preconditioner}) which will solve a given matrix. We will be using the design pattern "stragety" for the \gls{iterative solver}s. The reason being that each Solver does basically the same thing(solving a matrix) in a different manner. The user moreover has no influence on which Solver we will be using at any given time. 
+The Solver class contains the logic for solving a matrix with an \gls{iterative solver}. Each ConcreteSolver corresponds to one \gls{iterative solver}.Each class of ConcreteSolver has the method execute(Matrix,\gls{preconditioner}) which will solve a given matrix. We will be using the design pattern "stragety" for the \gls{iterative solver}s. The reason being that each Solver does basically the same thing(solving a matrix) in a different manner. The user moreover has no influence on which Solver we will be using at any given time.
 Each Solver will take an optional precondtioner as its input for the method execute(Matrix,\gls{preconditioner}). The \gls{preconditioner} will be used at every step of the \gls{iterative solver}. We will be using the design pattern "\gls{strategy}" for the \gls{preconditioner}s too. \gls{preconditioner}s each return a Ginko\gls{preconditioner} which will be used by the Solver class to communicate with the ginkgo libary. So each Concrete\gls{preconditioner} basically does the same thing(returning a \gls{preconditioner}). The user furthermore has no influence on which \gls{preconditioner} we will be using at any given time. That is why the "\gls{strategy}" design pattern is applicable
 
 \subsection{Class Descriptions}
 
 \subsubsection{Class LabelingModule}
-The class LabelingModule is the main component of the labeling module. It provides one public method start(path:String, savingName:String,savingPath:String) which is the entry point for the labeling module. When the user types label in the command line this command will be executed. The arguments of the start method are optional. If there are no arguments provided the labeling module will be using default paths. The default paths are specified in a configuration file(see the training module for further details). If the User specifes his own paths they have to be vaild. Valid in this case means that the path points to a hdf5 file with the correct formatation. If this is not the case the program will print an error message to the command line and execute a controlled shutdown so that the user can specify a correct path. 
+The class LabelingModule is the main component of the labeling module. It provides one public method start(path:String, savingName:String,savingPath:String) which is the entry point for the labeling module. When the user types label in the command line this command will be executed. The arguments of the start method are optional. If there are no arguments provided the labeling module will be using default paths. The default paths are specified in a configuration file(see the training module for further details). If the User specifes his own paths they have to be vaild. Valid in this case means that the path points to a hdf5 file with the correct formatation. If this is not the case the program will print an error message to the command line and execute a controlled shutdown so that the user can specify a correct path.
 \subsubsection{Class Solver}
 An Solver in our sense is an interative Solver which is able to to solve a linear system Ax=b for x, where A is a (in our case sparse) matrix of size nxn, x is a vector of size 1xn and b is vector of size 1xn(n$\in$N). The matrix A in our case will be the Matrix the method execute(matrix,preconditioner) will receive, the vector b will be a random vector with values between 0 and 1. We chose the vector to be random since the choice of b has no great influence on the time it takes to solve the linear system.
 %find correct symbol for N
@@ -317,11 +348,11 @@ The \gls{iterative solver} uses an iterative approach to solve the linear sysetm
 A Solver has one method execute(Matrix,\gls{preconditioner}) ,which takes a matrix (and a \gls{preconditioner}) and solves it. The time the \gls{iterative solver} takes to solve the matrix will be recorded and in the class labelingModule used to label the matrix. All ConcreteSolvers have to implement the abstract function execute.
 
 \subsubsection{Class ConcreteSolver}
-A ConcreteSolver is the actual representation of one \gls{iterative solver}. 
+A ConcreteSolver is the actual representation of one \gls{iterative solver}.
 
 \subsubsection{Class \gls{preconditioner}}
 A \gls{preconditioner} is a transformation of a linear system Ax=b for x, where A is a (in our case sparse) matrix of size nxn, x is a vector of size 1xn and b is vector of size 1xn(n$\in$N). A transformation may be a Matrix p (nxn) which would result in the linear system PAx = Pb. A \gls{preconditioner} is used so that the linear system may be solved more easily by an \gls{iterative solver}. The transformation of the \gls{preconditioner} is applied in every step of an \gls{iterative solver}. \newline\newline
-The class \gls{preconditioner} only has one method, get\gls{preconditioner}() which will return the Ginko\gls{preconditioner} corresponding to the \gls{preconditioner} class. The \gls{preconditioner} class achieves this by communicating with the ginkgo libary. 
+The class \gls{preconditioner} only has one method, get\gls{preconditioner}() which will return the Ginko\gls{preconditioner} corresponding to the \gls{preconditioner} class. The \gls{preconditioner} class achieves this by communicating with the ginkgo libary.
 
 \subsubsection{Class Concrete\gls{preconditioner}}
 A Concrete\gls{preconditioner} is the actual representation of one \gls{preconditioner}.
@@ -336,12 +367,12 @@ The training module is responsible for the training and testing of a neural netw
 \subsubsection{Class Configuration File}
 The configuration file is a text file.
 It is used to specify all necessary information the class neural network needs to train the neural network.
-If the user does not change anything in the configuration file, defaut options will be used. The configuration file is organized in four main categories. 
+If the user does not change anything in the configuration file, defaut options will be used. The configuration file is organized in four main categories.
 \begin{enumerate}
 \item loading path of the set of matrices 
 \item saving path for the neural network
 \item loading path for the neural network
-\item model definition and hyperparameters  
+\item model definition and hyperparameters
 \end{enumerate}
 The loading path of the set of matrices is the path in which the matrices that are used for the training and testing are stored.
 The training module only supports one hdf5 file.
@@ -389,7 +420,7 @@ The TrainingModule class is responsible for the training and testing of a neural
 It can not be instantiated, since it is a utility class.The structure is mainly oriented towards the keras workflow and will be further described later in the activity diagramm.
 The class offers one public method, the method train(). \newline
 
-We will furthermore be using the function keras.callbacks.ModelCheckpoint to save the neural network after every epoch. This will guarantee that we do not loose all training progress if the computer crashes or other unexpected events happen. The proceedure is consitent with the design pattern \gls{memento}. 
+We will furthermore be using the function keras.callbacks.ModelCheckpoint to save the neural network after every epoch. This will guarantee that we do not loose all training progress if the computer crashes or other unexpected events happen. The proceedure is consitent with the design pattern \gls{memento}.
 
 
 \subsection{Activity Diagarams}
@@ -433,14 +464,42 @@ The path for the saving is specified in the configuration file.
 This interface is for the different Solvers for solving a given matrix.
 \subsection{Class ConcreteSolver}
 The Concrete Solver class is for solving a matrix in a certain way.
+The classifier classifies a matrix given by a path.
+In this path, the matrix is stored in the form of an HDF5 file.
+As a second parameter the neural network path will be given.
+In this path the trained network the user wants to use for his classification is saved.
+As a last parameter the user can set the solve flag, what gives the opportunity to also solve the matrix with the best solving algorithm classified by the neural network.
+
+
+
+
+\subsection{Class Descriptions}
+
+\subsubsection{Class Classifier}
+\subsubsection{Interface Algorithm}
+This interface is for the different algorithms for solving a given matrix.
+\subsubsection{Class ConcreteAlgorithm}
+The Concrete Algorithm class is for solving a matrix in a certain way.
 This means a certain approach to solve a matrix.
 \subsection{Class Matrix}
 \section{Classes which more than one Module uses}
 \subsection{Class Loader}
 
-\subsection{Class Validator}
+\subsubsection{Class Validator}
+The Validator class is a util class and responsible for validating given matrices(checking for regularity)
+Its only static method validate takes a matrix and returns true for regular, and false for not regular.
 
+\subsubsection{Class Neural Network}
 
+\subsubsection{Class PatternImageCreator}
+This class creates a Grayscale Sparcity Pattern Image out of a given matrix.
+\subsubsection{Class GrayscaleSparcityPatternImage}
+
+\subsection{Activity Diagrams}
+
+\includepdf[pages={1}]{ActivityDiagrams/PDF/classification}
+
+\subsection{Class Diagrams}
 
 \includepdf[pages={1}]{ClassDiagrams/PDF/Classifier}
 

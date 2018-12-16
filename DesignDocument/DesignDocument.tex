@@ -103,29 +103,11 @@ Makus G\"{o}tz
 \subsection{Class Descriptions}
 
 \subsubsection{Class CommandLineInterface}
-The view represents the concrete command line interface. 
+The class CommandLineInterface represents the concrete command line interface. 
 Therefore it only consists of two methods. 
-The first one is readInput that receives a message that will be displayed and reads the next user input. 
-The other method is createOutput. 
+The first one is read\char`_input that receives a message that will be displayed and reads the next user input. 
+The other method is create\char`_output. 
 This method prints a string to the CLI.
-
-\subsubsection{Interface OutputService}
-The OutputService interfaces can be implemented and passed to a module to receive the output of the modules. 
-Therefore it has methods that represent different ways output can be displayed. 
-
- \subsubsection{Interface Subscriber}
-The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
-
-\subsubsection{Class Observable} 
-The Observable class can be used to notify Subscribers when new values are provided.
-Subscribers can subscribe themselves to an Observer to be notified get notifications.
-The next() method calls update() on each subscriber.
-
-\subsection{Class CLIOutputService}
-This class implements the OutputService and the Subscriber interface. 
-On creation it gets a reference of the View to which it will pass the lines the modules wants to output.
-It also implements the Subscriber interface to subscribe itself to an observable.
-This can be used to display lines that are overwritten with new values like an progress bar or a counter.
 
 \subsubsection{Class Controller} 
 The controller is the main entry point for the program execution. 
@@ -144,8 +126,6 @@ The command also has a execute method which runs the specific module with all th
 
 \subsubsection{User Input Activity Diagram}
 
-\includepdf{ActivityDiagrams/PDF/user_input_activity_diagram}
-
 This activity diagram shows the main workflow of the whole program.
 The program first waits for user input.
 After the user enters his input into the command line interface, the CommandParser parses this input to a command.
@@ -158,11 +138,11 @@ After each iteration it print the current progress to the user.
 This two activities repeat until all tasks are done.
 When the module is finished, the program prints a complete message and start waiting for new user input.
 
+\includepdf{ActivityDiagrams/PDF/user_input_activity_diagram}
+
 \subsection{Class Diagrams}
 
 \subsubsection{Command Parsing}
-
-\includepdf{ClassDiagrams/PDF/CommandParsing}
 
 This class diagrams shows all classes that are used by the CommandParser.
 The CommandParser has one method that receives an input string and returns a command.
@@ -175,11 +155,11 @@ This method checks if all arguments that are necessary for the specific module s
 After that is finished the command can be returned by the CommandParser.
 The execute method of the command can be then used to start the modules computation.
 
+\includepdf{ClassDiagrams/PDF/CommandParsing}
+
 \subsection{Component Diagram}
 
 \subsubsection{Model View Controller Component Diagram}
-
-\includepdf{ComponentDiagrams/PDF/interaction_overview}
 
 This component diagram shows the main interaction between the modules.
 For our main structure we use the model view controller
@@ -201,11 +181,11 @@ The model consists of the four static modules that make the computations.
 This modules get the arguments that are provided by the command.
 The modules can also provide strings that can be displayed in the view.
 
+\includepdf{ComponentDiagrams/PDF/interaction_overview}
+
 \subsection{Sequence Diagrams}
 
 \subsubsection{Controller Sequence Diagram}
-
-\includepdf{SequenceDiagram/PDF/controller_sequence_diagram}
 
 This class diagram shows what happens when the controller is being created.
 First it will create the CommandLineInterface class.
@@ -222,13 +202,33 @@ The CLIOUtputService creates the string that can be displayed and this is passed
 After all computations are done, the module returns his call.
 Now the user can enter a new input until he enters quit.
 
+\includepdf{SequenceDiagram/PDF/controller_sequence_diagram}
+
 \section{Display Output}
+
+\subsection{Class Descriptions}
+
+\subsubsection{Interface OutputService}
+The OutputService interfaces can be implemented and passed to a module to receive the output of the modules. 
+Therefore it has methods that represent different ways output can be displayed. 
+
+\subsection{Class CLIOutputService}
+This class implements the OutputService and the Subscriber interface. 
+On creation it gets a reference of the View to which it will pass the lines the modules wants to output.
+It also implements the Subscriber interface to subscribe itself to an observable.
+This can be used to display lines that are overwritten with new values like an progress bar or a counter.
+
+ \subsubsection{Interface Subscriber}
+The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
+
+\subsubsection{Class Observable} 
+The Observable class can be used to notify Subscribers when new values are provided.
+Subscribers can subscribe themselves to an Observer to be notified get notifications.
+The next() method calls update() on each subscriber.
 
 \subsection{Class Diagrams}
 
 \subsubsection{Command Parsing}
-
-\includepdf{ClassDiagrams/PDF/CommandParsing}
 
 This class diagrams shows all classes that are used by the CommandParser.
 The CommandParser has one method that receives an input string and returns a command.
@@ -241,11 +241,11 @@ This method checks if all arguments that are necessary for the specific module s
 After that is finished the command can be returned by the CommandParser.
 The execute method of the command can be then used to start the modules computation.
 
+\includepdf{ClassDiagrams/PDF/CommandParsing}
+
 \subsection{Sequence Diagrams}
 
 \subsubsection{Print Overriding String}
-
-\includepdf{SequenceDiagram/PDF/print_progress_sequence_diagram}
 
 Sometimes the user wants to print a progress like a download status that is updated by time.
 But there should not be a new line for each percentage the download gets further.
@@ -259,13 +259,13 @@ When the module starts it computations, it can call next with the new data with 
 In the next call of the observable, all subscribers will be notified with the new value.
 The string with the new value can now be printed to the command line interfaces
 
+\includepdf{SequenceDiagram/PDF/print_progress_sequence_diagram}
+
 \section{Exception Handling}
 
 \subsection{Class Diagrams}
 
 \subsubsection{Exception Classes}
-
-\includepdf{ClassDiagrams/PDF/exception_cases_class_diagram}
 
 Each exception extends Python's Exception class.
 There are four kinds of exceptions that are excepted.
@@ -273,6 +273,8 @@ The IllegalArgumentException will be risen when the arguments the user has enter
 The InvalidConfigException will be risen when the user edited the configuration file with invalid arguments or syntax.
 The IOException will be risen when errors occur while reading or writing data to the hard drive.
 The InvalidOSException will be risen when trying to access functionality that is not supported on the current operating system.
+
+\includepdf{ClassDiagrams/PDF/exception_cases_class_diagram}
 
 \section{Collector}
 

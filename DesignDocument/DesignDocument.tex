@@ -498,6 +498,15 @@ In this path the trained network the user wants to use for his classification is
 
 \newpage
 \subsubsection{Description}
+The method start in the class classifier classifies a given Matrix.
+First of all the classifier has to get the matrix. 
+After that the matrix has to be validated.
+This validation will give a boolean back, whether the matrix is regular (true) or not (false).
+If the validation is true (validation = true) the matrix will be normalized.
+After that the neural network will be loaded, with which in the following the matrix will be classified.
+In the last step a result will be printed whether it is the result of the classification or an Error-statement, because the validation was false.
+
+ 
 \newpage
 \subsection{Sequence Diagrams} 
 
@@ -510,6 +519,18 @@ In this path the trained network the user wants to use for his classification is
 
 \newpage
 \subsubsection{Description}
+The method start has the input parameters "path" and "network".
+The first parameter "path" is the path to the HDF5 file in which the matrix is saved that shall be classified.
+The second parameter "network" is the path to the neural network which will classify the matrix.
+First of all the classifier will be calling the Loader to load the Matrix.
+The Loader will give back the matrix, that will be in the next step validated by the validator. 
+The validator will give back a boolean value whether the matrix is regular (true) or not regular (false).
+If the validation value is true the classifier will normalize the matrix. 
+After that the matrix is normalized and ready for classification by the neural network.
+So in the next step, the loader will load the neural network located on the given network path and gives back the neural network to the classifier.
+In the next step, the classifier can give the matrix to the neural network for classification and the neural network gives back the  solver with which the matrix is classified.
+
+
 \newpage
 \section{Classes which more than one Module uses}
 

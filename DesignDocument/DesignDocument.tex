@@ -134,9 +134,9 @@ If not the command will be validated to contain enough information to start the 
 If it is not valid, an error message will be printed and the user can enter a new input.
 If the command is valid, the module will be started.
 Therefore the module computes his specific task in iterations.
-After each iteration it print the current progress to the user.
+After each iteration it prints the current progress to the user.
 This two activities repeat until all tasks are done.
-When the module is finished, the program prints a complete message and start waiting for new user input.
+When the module is finished, the program prints a complete message and starts waiting for new user input.
 
 \includepdf{ActivityDiagrams/PDF/user_input_activity_diagram}
 
@@ -163,10 +163,10 @@ The execute method of the command can be then used to start the modules computat
 
 This component diagram shows the main interaction between the modules.
 For our main structure we use the model view controller
-Each class belongs to one of the three part view, controller or model.
-In the view there is the CommandLineInterface which like the name suggests represents the command line.
-It receives string it displays and makes the user input available for other classes.
-The other class is the view is the CLIOutputService.
+Each class belongs to one of the three parts: view, controller or model.
+In the view there is the CommandLineInterface, which as the name suggests represents the command line.
+It receives strings, that it will display and makes the user input available for other classes.
+The other class in the view is the CLIOutputService.
 This class works as the observer for the model and receives the strings the model wants to output.
 It then provides strings that can be displayed by the command line interface.
 
@@ -189,16 +189,16 @@ The modules can also provide strings that can be displayed in the view.
 
 This class diagram shows what happens when the controller is being created.
 First it will create the CommandLineInterface class.
-After that it asks the command line interface for user input.
-This user input is then passed to tot the CommandParser that creates a dict out of this string and creates the right instance of a Command.
-When creating a command, it also calls the validate method that checks if all arguments that are needed by the module for running its computation.
-After that, the controller creates CLIOutputService and attaches the CommandLineInterface to it.
+After finishing that, it asks the command line interface for user input.
+This user input is then passed to the CommandParser that creates a dict out of this string and creates the right instance of a Command.
+When creating a command, it also calls the validate method that checks if all arguments that are needed by the module for running its computation are provided.
+If thats the case, the controller creates a CLIOutputService and attaches the CommandLineInterface to it.
 This CLIOutputService is then registered to the module so this can create output to the command line interface.
 After all this setup steps, the module is ready to be executed.
 Therefore the controller calls the execute method on the command, which then calls the start method of the module with the arguments it needs.
 The module then starts its computations and eventually calls the CLIOutputService to create some user output.
 The module calls print\char`_line with the string it wants to output.
-The CLIOUtputService creates the string that can be displayed and this is passed to the CommandLineInterface that is attached to CLIOUtputService.
+The CLIOutputService creates the string that can be displayed and this is passed to the CommandLineInterface that is attached to CLIOutputService.
 After all computations are done, the module returns his call.
 Now the user can enter a new input until he enters quit.
 
@@ -212,19 +212,19 @@ Now the user can enter a new input until he enters quit.
 The OutputService interfaces can be implemented and passed to a module to receive the output of the modules. 
 Therefore it has methods that represent different ways output can be displayed. 
 
-\subsection{Class CLIOutputService}
-This class implements the OutputService and the Subscriber interface. 
-On creation it gets a reference of the View to which it will pass the lines the modules wants to output.
-It also implements the Subscriber interface to subscribe itself to an observable.
-This can be used to display lines that are overwritten with new values like an progress bar or a counter.
-
  \subsubsection{Interface Subscriber}
 The Subscriber interface only provides the method update() which will be triggered by an Observable upon receiving new values.
 
 \subsubsection{Class Observable} 
-The Observable class can be used to notify Subscribers when new values are provided.
-Subscribers can subscribe themselves to an Observer to be notified get notifications.
+The Observable class can be used to notify subscribers when new values are provided.
+Subscribers can subscribe themselves to an Observer to get notifications about new data.
 The next() method calls update() on each subscriber.
+
+\subsection{Class CLIOutputService}
+This class implements the OutputService and the Subscriber interface. 
+On creation it gets a reference of the CommandLineInterface to which it will pass the lines the modules wants to output.
+It also implements the Subscriber interface to subscribe itself to an observable.
+This can be used to display lines that are overwritten with new values like an progress bar or a counter.
 
 \subsection{Class Diagrams}
 
@@ -251,10 +251,10 @@ Sometimes the user wants to print a progress like a download status that is upda
 But there should not be a new line for each percentage the download gets further.
 Instead the old string should be overwritten by time and and the module should only have to pass the new status.
 Therefore there is the method print\char`_overriding in the CLIOutputService that wants an string and an observable object.
-That is why the module first creates observable object.
-This object is then being passed to the print\char`_overriding method together with a string that will stay the same all the time.
+That is why the module first creates the observable object.
+This object is then being passed to the print\char`_overriding method together with a string that will stay the same for this process.
 Because the CLIOUtputService implements the Subscriber interface, it can subscribe itself to the observable.
-Now that the CLIOutputService is subscribed to the Observable, it will be notified when the Observable gets a new data.
+Now that the CLIOutputService is subscribed to the Observable, it will be notified when the Observable gets new data.
 When the module starts it computations, it can call next with the new data with which it wants to override the old one in the view.
 In the next call of the observable, all subscribers will be notified with the new value.
 The string with the new value can now be printed to the command line interfaces
@@ -282,9 +282,13 @@ The InvalidOSException will be risen when trying to access functionality that is
 
 \subsubsection{Class Collector}
 The Collector class is responsible for collecting a given amount of matrices and saving it into a HDF5 dataset.
-When the user types collect into the CLI, a collector Object will be created and the public method collect() with its parameters:
+When the user types collect into the CLI, a Collector object will be created and the public method collect() with its parameters:
 
-amount, name, size, density and path will be called. The class has a Saver class attribute and a Generator class attribute.
+amount, name, size, density and path
+
+will be called. 
+
+The class has a Saver class attribute and a Generator class attribute.
 
 It uses methods from the Generator class to get matrices to collect and methods from the Saver class to save the collected dataset.
 (see the collect method Activity Diagram for a more detailed overview).

@@ -268,11 +268,11 @@ The string with the new value can now be printed to the command line interfaces
 \subsubsection{Exception Classes}
 
 Each exception extends Python's Exception class.
-There are four kinds of exceptions that are excepted.
-The IllegalArgumentException will be risen when the arguments the user has entered are not valid.
-The InvalidConfigException will be risen when the user edited the configuration file with invalid arguments or syntax.
-The IOException will be risen when errors occur while reading or writing data to the hard drive.
-The InvalidOSException will be risen when trying to access functionality that is not supported on the current operating system.
+There are four kinds of exceptions that may be thrown by one of our classes.\newline\newline
+The IllegalArgumentException will be thrown if the arguments the user has entered are not valid.\newline\newline
+The InvalidConfigException will be thrown if the user edited the configuration file with invalid arguments or syntax.\newline\newline
+The IOException will be thrown if errors occur while reading from or writing data to the hard drive.\newline\newline
+The InvalidOSException will be thrown if some part of our program is trying to access functionality that is not supported on the current operating system.
 
 \includepdf{ClassDiagrams/PDF/exception_cases_class_diagram}
 
@@ -335,7 +335,7 @@ The labeling module class moreover has a validator class. This class is responsi
 Since the labeling module is responsible for finding the best \gls{preconditioner}/\gls{iterative solver} combination for a given set of matrices, the module furthermore has a \gls{preconditioner} and a Solver class. Those classes are abstract. ConcreteSolvers inherit from the class Solver and Concrete\gls{preconditioner}s from the class \gls{preconditioner}.\newline\newline
 
 The Solver class contains the logic for solving a matrix with an \gls{iterative solver}. Each ConcreteSolver corresponds to one \gls{iterative solver}.Each class of ConcreteSolver has the method execute(Matrix,\gls{preconditioner}) which will solve a given matrix. We will be using the design pattern "stragety" for the \gls{iterative solver}s. The reason being that each Solver does basically the same thing(solving a matrix) in a different manner. The user moreover has no influence on which Solver we will be using at any given time.
-Each Solver will take an optional precondtioner as its input for the method execute(Matrix,\gls{preconditioner}). The \gls{preconditioner} will be used at every step of the \gls{iterative solver}. We will be using the design pattern "\gls{strategy}" for the \gls{preconditioner}s too. \gls{preconditioner}s each return a Ginko\gls{preconditioner} which will be used by the Solver class to communicate with the ginkgo libary. So each Concrete\gls{preconditioner} basically does the same thing(returning a \gls{preconditioner}). The user furthermore has no influence on which \gls{preconditioner} we will be using at any given time. That is why the "\gls{strategy}" design pattern is applicable
+Each Solver will take an optional precondtioner as its input for the method execute(Matrix,\gls{preconditioner}). The \gls{preconditioner} will be used at every step of the \gls{iterative solver}. We will be using the design pattern "\gls{strategy}" for the \gls{preconditioner}s too. \gls{preconditioner}s each return a Ginko\gls{preconditioner} which will be used by the Solver class to communicate with the ginkgo libary. So each Concrete\gls{preconditioner} basically does the same thing(returning a \gls{preconditioner}). The user furthermore has no influence on which \gls{preconditioner} we will be using at any given time. That is why the "\gls{strategy}" design pattern is applicable.
 
 \subsection{Class Descriptions}
 
@@ -360,39 +360,39 @@ A Concrete\gls{preconditioner} is the actual representation of one \gls{precondi
 \subsection{Activity Diagrams}
 
 \section{Training module}
-The training module is responsible for the training and testing of a neural network. It is structured in 2 parts, the configuration file and the class training module. The class training module loads its configuration in the configuartion file. It furthermore uses a set of labled matrices for the training and testing. With the configuration set, the class training module will start the training and testing. The trained network will be saved to a specified path.
+The training module is responsible for the training and testing of a neural network. It is structured in 2 parts, the configuration file and the class training module. The class training module loads its configuration from the configuartion file. It furthermore uses a set of labled matrices for the training and testing. With the configuration set, the class training module will start the training and testing. The trained network will be saved to a specified path.
 %\includepdf[pages={1}]{ClassDiagrams/PDF/TrainingModuleClassDiagram}
 \includegraphics{ClassDiagrams/PDF/TrainingModule_classdiagram.pdf}
 \subsection{Class descriptions}
 \subsubsection{Class Configuration File}
 The configuration file is a text file.
 It is used to specify all necessary information the class neural network needs to train the neural network.
-If the user does not change anything in the configuration file, defaut options will be used. The configuration file is organized in four main categories.
+If the user does not change anything in the configuration file, defaut options for the model definiton and hyperparameters will be used. The loading and saving paths may be changed via the command line. The configuration file is organized in four main categories.
 \begin{enumerate}
-\item loading path of the set of matrices 
-\item saving path for the neural network
-\item loading path for the neural network
-\item model definition and hyperparameters
+\item default loading path of the set of matrices 
+\item default saving path for the neural network
+\item default loading path for the neural network
+\item default model definition and hyperparameters
 \end{enumerate}
 The loading path of the set of matrices is the path in which the matrices that are used for the training and testing are stored.
 The training module only supports one hdf5 file.
-If the path is any other file, the labling module will print an error and execute a controlled shutdown so that the user can specify a valid path. .
+If the path is any other file, the labling module will print an error message to the command line so that the user can specify a valid path.
 For the training and testing making sense there should be at least 500 matrices in the hdf5 file.
 Otherwise the accuracy of the neural network will be so low that i can not be used for classification.
-If there is no path specified, the training module will use a default path.
+If there is no path specified in the start method, the training module will use a default path.
 In the default path will be the latest matrices that the labling module has produced. \newline
 
 The saving path for the neural network is the path where the trained and tested neural network will be safed.
 It will be safed as a Keras model.
-If there is no path specified, the neural network will be safed at a default destination.
+If there is no path specified in the start method, the neural network will be safed at a default destination.
 If there is no path for the neural network specified in the module Classifier the module will use this default path to load its neural network.\newline
 
 The loading path for the neural network is strictly optional.
-If this path is specified the training module will use the neural network in the path for training and testing.
+If this path is specified in the method start the training module will use the neural network in the path for training and testing.
 This option enables the user to use a pre-trained neural network for training.
 This could be the case if the user interrupts the training process at a certain time and wants to to repeat the training later.
 Other use cases are of course possible too.
-The neural network has to be a model of the Keras framework. If the path is any other file the training module will print an error and execute a controlled shutdown so that the user can specify a valid path.
+The neural network has to be a model of the Keras framework. If the path is any other file the training module will print an error so that the user can specify a valid path.
 If this path is not specified the training module will create a new neural network(with the model definition and hyperparamters of the next category) and train with it. \newline
 
 The model definition and hyperparameters are used to determine which neural network will be trained and tested. The model definition determines the following:
@@ -418,19 +418,20 @@ The hyperparamters determine the following:
 \subsubsection{Class TrainingModule}
 The TrainingModule class is responsible for the training and testing of a neural network.
 It can not be instantiated, since it is a utility class.The structure is mainly oriented towards the keras workflow and will be further described later in the activity diagramm.
-The class offers one public method, the method train(). \newline
+The class offers one public method, the method start(matrices\_path: String,neural\_network\_path: String,
+name: String,saving\_path: String). \newline
 
 We will furthermore be using the function keras.callbacks.ModelCheckpoint to save the neural network after every epoch. This will guarantee that we do not loose all training progress if the computer crashes or other unexpected events happen. The proceedure is consitent with the design pattern \gls{memento}.
 
 
 \subsection{Activity Diagarams}
-When the user types train() in the CLI the method train in the class TrainingModule will be executed in the following manner:
+When the user types train in the CLI the method train in the class TrainingModule will be executed in the following manner:
 \includepdf[pages={1}]{ActivityDiagrams/PDF/TrainingModule}
 \begin{itemize}
 \item load the configuration file
-\item load the matrices
-\item seperate matrices in training and test data
-\item train a preexisting neural network or a new one(depending on the configuration file)
+\item load the labeled matrices
+\item seperate the labeled matrices in training and test data
+\item train a preexisting neural network or a new one(depending on the specifed paths)
 \item test the neural network
 \item save the neural network
 \end{itemize}
@@ -438,15 +439,16 @@ When the user types train() in the CLI the method train in the class TrainingMod
 The configuration file that gets loaded will be used to specify the subsequent points.\newline
 
 The configuration file will determine from which path the labeled matrices will be loaded.
-If there were no changes made in the configuration file, the default path will be used(see the class description of the configuration file).
-The labeled matrices will be loaded in one hd5 file. If the path links to any other file, the class TrainingModule will print an error to the command line and execute a controlled shutdown so that the user can specify a valid path.. \newline
+If there is no path specified in the method start, the default path will be used(see the class description of the configuration file).
+The labeled matrices will be loaded in one hdf5 file. If the path links to any other file, the class TrainingModule will print an error to the command line so that the user can specify a valid path. \newline
 
 After that the class TrainingModule will seperate the training and test data.
 How the data will be seperated is specified in the configuration file.\newline
 
 Following there are two alternatives
- If the user has specified a neural network in the configuration file, the class TrainingModule will train this neural network with the labeled matrices for the training.
-If the user has not specified a neural network in the configuration file, the class TrainingModule will create a new neural network with the specifications in the configuration file.
+ If the user has specified a neural network loading path in the method start, the class TrainingModule will train this neural network with the labeled matrices for the training.
+If the user has not specified a neural network  loading path in the method start, the class TrainingModule will create a new neural network with the specifications in the configuration file.\newline
+
 If there are no model definitions in the configuration file the class TrainingModule will use the \gls{default neural network}.
 The class TrainingModule then proceeds with training the new neural network with the labeled matrices for the training. In both cases the current loss will be continously printed to the command line.\newline
 
@@ -455,7 +457,7 @@ This process will determine the accuracy of the neural network on the given test
 The accuracy will be printed on the command line.\newline
 
 After that the neural network will be safed as a keras model.
-The path for the saving is specified in the configuration file.
+The path for the saving is specified in the configuration file or by the method start.
 
 
 \section{Classifier}
@@ -489,13 +491,8 @@ This means a certain approach to solve a matrix.
 The Validator class is a util class and responsible for validating given matrices(checking for regularity)
 Its only static method validate takes a matrix and returns true for regular, and false for not regular.
 
-\subsubsection{Class Neural Network}
 
-\subsubsection{Class PatternImageCreator}
-This class creates a Grayscale Sparcity Pattern Image out of a given matrix.
-\subsubsection{Class GrayscaleSparcityPatternImage}
 
-\subsection{Activity Diagrams}
 
 \includepdf[pages={1}]{ActivityDiagrams/PDF/classification}
 

@@ -305,27 +305,23 @@ the Collector class which is the entry point of the component. The Collector cla
 \subsubsection{Class Collector}
 The Collector class is responsible for collecting a given amount of matrices and saving it into a HDF5 dataset.
 When the user types collect into the CLI, a Collector object will be created and the public method collect() with its parameters:
-
 amount, name, size, density and path
-
 will be called. 
-
 The class has a Saver class attribute and a Generator class attribute.
-
 It uses methods from the Generator class to get matrices to collect and methods from the Saver class to save the collected dataset.
 (see the collect method Activity Diagram for a more detailed overview).
 The Collector class is the interface between matrix collecting and the CLI and conceals all the classes of the Collector described in the following.
 
-
-
 \subsubsection{Class Generator}
 The Generator class is responsible for actually generating matrices by transforming raw matrices from SuiteSparse and validating them.
-The generate(size, density):Matrix method is called by a Collector object, uses the Matrix class to initialize an empty matrix, uses the Ssget class to fetch and transform matrices from the SuiteSparse collection and uses the static Validator.validate method to check if the matrix is regular and can be returned.
+The generate(size: Integer, density: Integer):Matrix method is called by a Collector object, uses the Matrix class to initialize an empty matrix, uses the Ssget class to fetch and transform matrices from the SuiteSparse collection and uses the static Validator.validate(matrix: Matrix)  method to check if the matrix is regular and can be returned.
 
 \subsubsection{Class Ssget}
 The Ssget class is responsible for fetching matrices from the SuiteSparse collection, transforming them and returning them.
 Its getMatrix method is called by a generator object.
 The getMatrix method uses the Matrix class to initialize a matrix, then the private downloadMatrix method to fetch a matrix from SuiteSparse, and after that uses its private cutMatrix method to cut a fixed size, regular matrix out of it.
+
+\subsection{Activity Diagrams}
 
 
 \section{Labeling Module}

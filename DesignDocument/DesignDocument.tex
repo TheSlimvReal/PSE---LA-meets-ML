@@ -297,6 +297,9 @@ The InvalidOSException will be risen when trying to access functionality that is
 \end{center}
 \end{figure}
 
+The collector component is responsible for acquiring, creating, collecting and saving matrices into a dataset. It consists of six classes:
+the Collector class which is the entry point of the component. The Collector class has one Generator object for generating matrices and one Saver object for saving a dataset. The Generator class has one Validator util class for checking regularity, one Ssget object for fetching and cutting matrices from the SuiteSparse Matrix collection and multiple matrix objects for initializing and returning matrices.
+
 \subsection{Class Description}
 
 \subsubsection{Class Collector}
@@ -313,16 +316,7 @@ It uses methods from the Generator class to get matrices to collect and methods 
 (see the collect method Activity Diagram for a more detailed overview).
 The Collector class is the interface between matrix collecting and the CLI and conceals all the classes of the Collector described in the following.
 
-\subsubsection{Class Saver}
 
-The Saver class is just responsible for saving a given matrix dataset.
-Its only method is the save(dataset, name, path) method, which
-is called by the collect method from an Collector object.
-
-The Saver class is just responsible for saving a given matrix dataset. Its only method is the save(dataset, name, path) method, which
-is called by the collect method from an Collector object.
-
-The save method takes an NPArray as a matrix dataset, converts it into an HDF5 file and saves it into a given directory with a given name.
 
 \subsubsection{Class Generator}
 The Generator class is responsible for actually generating matrices by transforming raw matrices from SuiteSparse and validating them.
@@ -333,10 +327,6 @@ The Ssget class is responsible for fetching matrices from the SuiteSparse collec
 Its getMatrix method is called by a generator object.
 The getMatrix method uses the Matrix class to initialize a matrix, then the private downloadMatrix method to fetch a matrix from SuiteSparse, and after that uses its private cutMatrix method to cut a fixed size, regular matrix out of it.
 
-\subsubsection{Class Validator}
-
-The Validator class is a util class and responsible for validating given matrices(checking for regularity)
- Its only static method validate takes a matrix and returns true for regular, and false for not regular.
 
 \section{Labeling Module}
 The labeling module is responsible for the labeling of the sparse matrices. The \gls{label} of a matrix describes which \gls{preconditioner}/\gls{iterative solver} combination solves the given matrix the fastest. The \gls{label} is represented by a vector. Each entry in the vector corresponds to one \gls{preconditioner}/\gls{iterative solver} combination. The entry of the fastest one is 1, all other entries are zero. The matrices with the corresponding \glspl{label} will be used to train the neural network in the training module.
@@ -577,15 +567,21 @@ In the next step, the classifier can give the matrix to the neural network for c
 
 
 \newpage
-\section{Classes which more than one Module uses}
+\section{Classes used by multiple modules}
 
 \subsection{Class Loader}
-
-\subsubsection{Class Validator}
+\subsection{Class Saver}
+The Saver class is just responsible for saving a given matrix dataset.
+Its only method is the public method save(dataset: Dataset, name: String, path: String).
+The save method takes a matrix dataset, converts it into an HDF5 file and saves it into a given directory with a given name.
+\subsection{Class Validator}
 The Validator class is a util class and responsible for validating given matrices(checking for regularity)
 Its only static method validate takes a matrix and returns true for regular, and false for not regular.
 
-\subsubsection{Class Neural Network}
+\subsection{Class Matrix}
+The Matrix class is for representing matrices. It is defined by two attributes. The first attribute is the matrix size which is an integer and the second attribute are the matrix values which is a two-dimensional integer array. Both attributes are set with a constructor and can be requested by its get methods.
+
+\subsection{Class Neural Network}
 
 
 \newpage

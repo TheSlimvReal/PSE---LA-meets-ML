@@ -322,7 +322,14 @@ Its getMatrix method is called by a generator object.
 The getMatrix method uses the Matrix class to initialize a matrix, then the private downloadMatrix method to fetch a matrix from SuiteSparse, and after that uses its private cutMatrix method to cut a fixed size, regular matrix out of it.
 
 \subsection{Activity Diagrams}
-
+The collect method is executed in the following manner:
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=17cm,height=15cm,keepaspectratio]{ActivityDiagrams/PDF/Collector_collect_activity.pdf}
+%\includepdf[pages={1}]{ActivityDiagrams/PDF/classification}
+\label{Activity Diagrams}
+\end{center}
+\end{figure}
 
 \section{Labeling Module}
 The labeling module is responsible for the labeling of the sparse matrices. The \gls{label} of a matrix describes which \gls{preconditioner}/\gls{iterative solver} combination solves the given matrix the fastest. The \gls{label} is represented by a vector. Each entry in the vector corresponds to one \gls{preconditioner}/\gls{iterative solver} combination. The entry of the fastest one is 1, all other entries are zero. The matrices with the corresponding \glspl{label} will be used to train the neural network in the training module.

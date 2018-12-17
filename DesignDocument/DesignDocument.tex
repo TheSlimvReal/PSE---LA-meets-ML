@@ -139,10 +139,10 @@ Makus G\"{o}tz
 \subsection{Class Descriptions}
 
 \subsubsection{Class CommandLineInterface}
-The class CommandLineInterface represents the concrete \gls{CLI}. 
+The class CommandLineInterface represents the concrete \gls{CLI}.
 Therefore it only consists of two methods. 
-The first one is readInput that receives a message that will be displayed and reads the next user input. 
-The other method is createOutput. 
+The first one is readInput that receives a message that will be displayed and reads the next user input.
+The other method is createOutput.
 This method prints a string to the \gls{CLI}.
 
 \subsubsection{Class Controller} 
@@ -398,7 +398,7 @@ This activity diagram gives a brief overview on how the collector works.
 First of all a counter is set to zero. Then a matirx dataset for the later collected matrices is initialized.
 After that a matrix will be fetched from the generator and added to the already initialized dataset.
 At last, the counter is increased by one and after that, when the counter equals the amount, the dataset is saved by the saver.
-If the counter is still smaller than the given amount, another matrix will be fetched. 
+If the counter is still smaller than the given amount, another matrix will be fetched.
 
 \newpage
 \begin{figure}[h]
@@ -414,12 +414,27 @@ At first an empty matrix with the given size is initialized.
 After that a matrix is fetched from ssget. When the matrix is regular (this is checked by the Validator) then it will be returned.
 Otherwise another matrix will be fetched.
 
+\subsection{Sequence Diagrams}
+
+The sequence diagramm shows what happens when the collect method of the Collector is called. First of all a loop is entered, which terminates, when the desired amount of collected matrices is exceeded. Then the generate method from the Generator is called with size and density as parameters. The generate method now calls the getMatrix method from the Ssget Class and gets a Matrix as an answer. Then the generate method checks the regularity of the returned matrix by calling the validate method from the validator with the matrix to be checked as a parameter. When the validate method delivers  regular as an answer, the generate method returns the matrix. The returned matrix is added to the dataset by the collect method. After exiting the loop, the dataset is saved by calling the save method from the saver with the dataset, the desired name and the saving path as parameters.
+
+
+\newpage
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{SequenceDiagram/PDF/Collector_collect_sequenzdiagramm.pdf}
+\label{Sequence Diagram}
+\end{center}
+\end{figure}
+\newpage
+
+
 \section{Labeling Module}
 The labeling module is responsible for the labeling of the sparse matrices.
-The \gls{label} of a matrix describes which \gls{preconditioner}/\gls{iterative solver} combination solves the given matrix the fastest. 
-The \gls{label} is represented by a vector. 
-Each entry in the vector corresponds to one \gls{preconditioner}/\gls{iterative solver} combination. 
-The entry of the fastest one is 1, all other entries are zero. 
+The \gls{label} of a matrix describes which \gls{preconditioner}/\gls{iterative solver} combination solves the given matrix the fastest.
+The \gls{label} is represented by a vector.
+Each entry in the vector corresponds to one \gls{preconditioner}/\gls{iterative solver} combination.
+The entry of the fastest one is 1, all other entries are zero.
 The matrices with the corresponding \glspl{label} will be used to train the \gls{neural network} in the training module.
 
 \newpage
@@ -564,7 +579,7 @@ The calculated average time will be written in the fastest time variable and the
 After that a new combination is loaded, if there is another one to test.
 For each new combination the process of using the combination, saving the time and calculating the average time remains the same.
 After the average time of the new combination is calculated.
-After that there are two options. 
+After that there are two options.
 1. if the average time of the new combination is smaller than the time saved in the fastest time variable, the fastest time variable gets overwritten with the new average time and the new combination is also getting written in the \gls{tupel}.
 2. the fastest time is smaller then the new average time, is that the case, the new average time and combination is ignored.
 Last but not least, if all combinations are finished testing a \gls{label} is created based on the current fastest time and \gls{preconditioner}, \gls{iterative solver} combination and the \gls{label} is returned.
@@ -748,7 +763,7 @@ The path for the saving is specified in the configuration file or by the method 
 \subsubsection{Class Classifier}
 The classifier classifies a matrix given by a path. 
 In this path, the matrix is stored in the form of an \gls{HDF5} file.
-As a second parameter the \gls{neural network} path will be given. 
+As a second parameter the \gls{neural network} path will be given.
 At this path the trained network the user wants to use for his classification is saved.
 
 \newpage

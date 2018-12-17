@@ -17,7 +17,8 @@ bookmarks=true,%
 \usepackage{enumitem}
 \usepackage{lscape}
 \usepackage{caption}
-\usepackage{placeins}
+%\usepackage{placeins}
+\usepackage[section]{placeins}
 
 
 \makenoidxglossaries
@@ -57,7 +58,18 @@ bookmarks=true,%
 	plural=iterative solvers,
 	description={An \gls{iterative solver} is a method for solving a linear system. An \gls{iterative solver} uses an iterative approach to solve a matrix. An iterative approach is characterized by the idea that the matrix gets solved step by step, where the solution of one step enables the solution of the next step. An \gls{iterative solver} may use a \gls{preconditioner} to improve its results.}
 }
-
+\newglossaryentry{tupel}
+{
+	name=tupel,
+	plural=tupel,
+	description={A tupel is a structure of data, that holds more than one data, in contrast to other data structures that usually hold only one data.}
+}
+\newglossaryentry{label}
+{
+	name=label,
+	plural=labels,
+	description={A label is a word or a phrase that is used to describe the characteristics or qualities of something}
+}
 \newglossaryentry{default neural network}
 {
 	name=default neural network,
@@ -138,7 +150,15 @@ After each iteration it prints the current progress to the user.
 This two activities repeat until all tasks are done.
 When the module is finished, the program prints a complete message and starts waiting for new user input.
 
-\includepdf{ActivityDiagrams/PDF/user_input_activity_diagram}
+\newpage
+
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ActivityDiagrams/PDF/user_input_activity_diagram}
+\label{User Input Activity Diagram}
+\end{center}
+\end{figure}
+\newpage
 
 \subsection{Class Diagrams}
 
@@ -155,7 +175,15 @@ This method checks if all arguments that are necessary for the specific module s
 After that is finished the command can be returned by the CommandParser.
 The execute method of the command can be then used to start the modules computation.
 
-\includepdf{ClassDiagrams/PDF/CommandParsing}
+\newpage
+
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ClassDiagrams/PDF/CommandParsing}
+\label{Command Parsing}
+\end{center}
+\end{figure}
+\newpage
 
 \subsection{Component Diagram}
 
@@ -181,7 +209,15 @@ The model consists of the four static modules that make the computations.
 This modules get the arguments that are provided by the command.
 The modules can also provide strings that can be displayed in the view.
 
-\includepdf{ComponentDiagrams/PDF/interaction_overview}
+\newpage
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ComponentDiagrams/PDF/interaction_overview}
+\label{Model View Controller Component Diagram}
+\end{center}
+\end{figure}
+\newpage
+
 
 \subsection{Sequence Diagrams}
 
@@ -202,7 +238,14 @@ The CLIOutputService creates the string that can be displayed and this is passed
 After all computations are done, the module returns his call.
 Now the user can enter a new input until he enters quit.
 
-\includepdf{SequenceDiagram/PDF/controller_sequence_diagram}
+\newpage
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{SequenceDiagram/PDF/controller_sequence_diagram}
+\label{Controller Sequence Diagram}
+\end{center}
+\end{figure}
+\newpage
 
 \section{Display Output}
 
@@ -241,7 +284,14 @@ This method checks if all arguments that are necessary for the specific module s
 After that is finished the command can be returned by the CommandParser.
 The execute method of the command can be then used to start the modules computation.
 
-\includepdf{ClassDiagrams/PDF/CommandParsing}
+\newpage
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ClassDiagrams/PDF/CommandParsing}
+\label{Command Parsing}
+\end{center}
+\end{figure}
+\newpage
 
 \subsection{Sequence Diagrams}
 
@@ -259,7 +309,14 @@ When the module starts it computations, it can call next with the new data with 
 In the next call of the observable, all subscribers will be notified with the new value.
 The string with the new value can now be printed to the command line interfaces
 
-\includepdf{SequenceDiagram/PDF/print_progress_sequence_diagram}
+\newpage
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{SequenceDiagram/PDF/print_progress_sequence_diagram}
+\label{Print Overriding String}
+\end{center}
+\end{figure}
+\newpage
 
 \section{Exception Handling}
 
@@ -274,61 +331,77 @@ The InvalidConfigException will be risen when the user edited the configuration 
 The IOException will be risen when errors occur while reading or writing data to the hard drive.
 The InvalidOSException will be risen when trying to access functionality that is not supported on the current operating system.
 
-\includepdf{ClassDiagrams/PDF/exception_cases_class_diagram}
+
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ClassDiagrams/PDF/exception_cases_class_diagram}
+\label{Exception Classes}
+\end{center}
+\end{figure}
+\newpage
 
 \section{Collector}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=17cm,height=15cm,keepaspectratio]{ClassDiagrams/PDF/Collector_classdiagram.pdf}
+%\includepdf[pages={1}]{ActivityDiagrams/PDF/classification}
+\label{Activity Diagrams}
+\end{center}
+\end{figure}
+
+The collector component is responsible for acquiring, creating, collecting and saving matrices into a dataset. It consists of six classes:
+the Collector class which is the entry point of the component. The Collector class has one Generator object for generating matrices and one Saver object for saving a dataset. The Generator class has one Validator util class for checking regularity, one Ssget object for fetching and cutting matrices from the SuiteSparse Matrix collection and multiple matrix objects for initializing and returning matrices.
 
 \subsection{Class Description}
 
 \subsubsection{Class Collector}
 The Collector class is responsible for collecting a given amount of matrices and saving it into a HDF5 dataset.
 When the user types collect into the CLI, a Collector object will be created and the public method collect() with its parameters:
-
 amount, name, size, density and path
-
 will be called. 
-
 The class has a Saver class attribute and a Generator class attribute.
-
 It uses methods from the Generator class to get matrices to collect and methods from the Saver class to save the collected dataset.
 (see the collect method Activity Diagram for a more detailed overview).
 The Collector class is the interface between matrix collecting and the CLI and conceals all the classes of the Collector described in the following.
 
-\subsubsection{Class Saver}
-
-The Saver class is just responsible for saving a given matrix dataset.
-Its only method is the save(dataset, name, path) method, which
-is called by the collect method from an Collector object.
-
-The Saver class is just responsible for saving a given matrix dataset. Its only method is the save(dataset, name, path) method, which
-is called by the collect method from an Collector object.
-
-The save method takes an NPArray as a matrix dataset, converts it into an HDF5 file and saves it into a given directory with a given name.
-
 \subsubsection{Class Generator}
 The Generator class is responsible for actually generating matrices by transforming raw matrices from SuiteSparse and validating them.
-The generate(size, density):Matrix method is called by a Collector object, uses the Matrix class to initialize an empty matrix, uses the Ssget class to fetch and transform matrices from the SuiteSparse collection and uses the static Validator.validate method to check if the matrix is regular and can be returned.
+The generate(size: Integer, density: Integer):Matrix method is called by a Collector object, uses the Matrix class to initialize an empty matrix, uses the Ssget class to fetch and transform matrices from the SuiteSparse collection and uses the static Validator.validate(matrix: Matrix)  method to check if the matrix is regular and can be returned.
 
 \subsubsection{Class Ssget}
 The Ssget class is responsible for fetching matrices from the SuiteSparse collection, transforming them and returning them.
 Its getMatrix method is called by a generator object.
 The getMatrix method uses the Matrix class to initialize a matrix, then the private downloadMatrix method to fetch a matrix from SuiteSparse, and after that uses its private cutMatrix method to cut a fixed size, regular matrix out of it.
 
-\subsubsection{Class Validator}
-
-The Validator class is a util class and responsible for validating given matrices(checking for regularity)
- Its only static method validate takes a matrix and returns true for regular, and false for not regular.
+\subsection{Activity Diagrams}
+The collect method is executed in the following manner:
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=17cm,height=15cm,keepaspectratio]{ActivityDiagrams/PDF/Collector_collect_activity.pdf}
+%\includepdf[pages={1}]{ActivityDiagrams/PDF/classification}
+\label{Activity Diagrams}
+\end{center}
+\end{figure}
 
 \section{Labeling Module}
-The labeling module is responsible for the labeling of the sparse matrices. The label of a matrix describes which which \gls{preconditioner}/\gls{iterative solver} combination solves the given matrix the fastest. The label is represented by a vector. Each entry in the vector corresponds to one \gls{preconditioner}/\gls{iterative solver} combination. The entry of the fastest one is 1, all other entries are zero. The matrices with the corresponding labels will be used to train the neural network in the training module.
-\includepdf{ClassDiagrams/PDF/LabelingModule_classdiagramm.pdf}
+The labeling module is responsible for the labeling of the sparse matrices. The \gls{label} of a matrix describes which \gls{preconditioner}/\gls{iterative solver} combination solves the given matrix the fastest. The \gls{label} is represented by a vector. Each entry in the vector corresponds to one \gls{preconditioner}/\gls{iterative solver} combination. The entry of the fastest one is 1, all other entries are zero. The matrices with the corresponding \glspl{label} will be used to train the neural network in the training module.
+
+\newpage
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ClassDiagrams/PDF/LabelingModule_classdiagram.pdf}
+\label{Labeling Module}
+\end{center}
+\end{figure}
+\newpage
+
 The main component of the labeling module is the class labeling module. It provides the only public method in the labling module, the method start(path:String, savingName:String,savingPath:String). This method is the entry point of the module and will start the labeling process of the provided matrices(specified by the path). \newline\newline
 
 The class labeling modue has a set of matrices which the module will label.\newline\newline
 
 The module furthermore has a Loader class. The class labeling module has exactly one Loader class. This class is responsible for loading the matrices which get labeled. Its only method is the method load(path:String) which gets a path of a hdf5 file supplied and returns a dataset. If the specified path is not a hdf5 file, the programm will print an error to the command line. \newline\newline
 
-Another class in the labeling module is the Saver class. The class labeling module has exactly one Saver class. This class is responsible for the saving of the matrices and the labels. Its only method is the method save(dataset:Dataset,path:String). If this method is called, the specified dataset will be safed at the specified path. The matrices and the labels will be safed in one hdf5 file.\newline
+Another class in the labeling module is the Saver class. The class labeling module has exactly one Saver class. This class is responsible for the saving of the matrices and the \glspl{label}. Its only method is the method save(dataset:Dataset,path:String). If this method is called, the specified dataset will be safed at the specified path. The matrices and the \glspl{label} will be safed in one hdf5 file.\newline
 \newline
 The labeling module class moreover has a validator class. This class is responsible for determining wheter the given matrix is regular. If that is not the case, the matrix will be deleted.
 \newline\newline
@@ -357,7 +430,71 @@ The class \gls{preconditioner} only has one method, get\gls{preconditioner}() wh
 \subsubsection{Class Concrete\gls{preconditioner}}
 A Concrete\gls{preconditioner} is the actual representation of one \gls{preconditioner}.
 
+\newpage
 \subsection{Activity Diagrams}
+When the user types label() in the CLI the moethod start() in the class LabelingModule will be executed in the following manner:
+
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= 15cm, keepaspectratio]{ActivityDiagrams/PDF/LabelingModule_start_activity.pdf}
+\label{Activity Diagrams}
+\end{center}
+\end{figure}
+\newpage
+
+
+The activity diagram ``start LabelingModule'' shows the general overview of what the LabelingModule does.The shown method start() is the only public method in the LabelingModule class, therefore the only way to communicate whit it.
+First of all the dataset to work on will be loaded from the given path, which contains all matrices the LabelingModule has to label.
+After that the dataset will be labeled (explained in detail in the ``label given dataset'' activity diagram).
+Last but not least the new dataset with \glspl{label} will be saved under the given savingPath.
+
+
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= 15cm, keepaspectratio]{ActivityDiagrams/PDF/LabelingModule_label_activity.pdf}
+\label{Activity Diagrams}
+\end{center}
+\end{figure}
+\newpage
+
+
+The activity diagram ``label given dataset'' shows how the class LabelingModule labels a dataset.First of all a new dataset is initialized.
+The following steps will be made on each matrix in the dataset.
+First of all the matrix is validated, to see whether the matrix is regular or not, if the matrix isn't regular the matrix will be removed. In case that the matrix is regular, the \gls{label} for the matrix is calculated (explained in the ``calculate label for given matrix activity diagram'').  The calculated \gls{label} will be saved in the new dataset.
+As soon as every matrix has been labeled the new dataset is returned.
+
+
+\newpage
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ActivityDiagrams/PDF/LabelingModule_calculateLabel_activity.pdf}
+\label{Activity Diagrams}
+\end{center}
+\end{figure}
+\newpage
+
+The activity diagram ``calculate label for given matrix'' shows how a \gls{label} is calculated for a single matrix. First of all a fastest item variable and a \gls{tupel} of \gls{preconditioner},\gls{iterative solver} is initialized.
+The first \gls{preconditioner},\gls{iterative solver} combination is used on the matrix and the time it took to solve given matrix is saved, that process is looped, until we have enough saved time data.
+Out of the saved times for the \gls{preconditioner},\gls{iterative solver} combination the average time the combination took will be calculated. The calculated average time will be written in the fastest time variable and the combination in the \gls{tupel} previously initialized. After that a new combination is loaded, if there is another one to test.
+For each new combination the process of using the combination, saving the time and calculating the average time remains the same. After the average time of the new combination is calculated. After that there are two options. 1. if the average time of the new combination is smaller than the time saved in the fastest time variable, the fastest time variable gets overwritten with the new average time and the new combination is also getting written in the \gls{tupel}.2. the fastest time is smaller then the new average time, is that the case, the new average time and combination is ignored.
+Last but not least, if all combinations are finished testing a \gls{label} is created based on the current fastest time and \gls{preconditioner}, \gls{iterative solver} combination and the \gls{label} is returned.
+
+\subsection{Sequence Diagrams}
+The sequence diagram shows what happens when the start() method of the LabelingModule is called. First of all the method load(), with the parameter path, of the Loader class is called,the path is either the path the user wrote in his input, or it is the standard path, which is specified in the Configuartion Fil. The load() method returns the dataset the LabelingModule will be working on. After that, the LabelingModule calls its own method label() with the just received dataset. The label() method then goes into a loop, covering each matrix on its own.
+For each matrix, the validate() method of the Validator gets called with the parameter matrix. validate() returns a boolean, whether the matrix is regular (true) or not (false).
+If the matrix is regular, the method calculate\_label() of the LabelingModule with the parameter matrix is called. calculate\_label returns a \gls{label}. if the matrix isn't regular, or the \gls{label} is calculated the loop starts with the next matrix, until there are none left.After all \glspl{label} are calculated they all are summarized in a dataset.
+The new dataset is after that one of the parameters for the save() method of the Saver class, which saves the new dataset, with the given namen in the given path.
+
+\newpage
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{SequenceDiagram/PDF/LabelingModule_start_sequenzdiagram.pdf}
+\label{Activity Diagrams}
+\end{center}
+\end{figure}
+\newpage
+
+
 
 \section{Training module}
 The training module is responsible for the training and testing of a neural network. It is structured in 2 parts, the configuration file and the class training module. The class training module loads its configuration in the configuartion file. It furthermore uses a set of labled matrices for the training and testing. With the configuration set, the class training module will start the training and testing. The trained network will be saved to a specified path.
@@ -458,53 +595,97 @@ After that the neural network will be safed as a keras model.
 The path for the saving is specified in the configuration file.
 
 
+\newpage
 \section{Classifier}
-\subsection{Class Classifier}
-\subsection{Interface Solver}
-This interface is for the different Solvers for solving a given matrix.
-\subsection{Class ConcreteSolver}
-The Concrete Solver class is for solving a matrix in a certain way.
-The classifier classifies a matrix given by a path.
-In this path, the matrix is stored in the form of an HDF5 file.
-As a second parameter the neural network path will be given.
-In this path the trained network the user wants to use for his classification is saved.
-As a last parameter the user can set the solve flag, what gives the opportunity to also solve the matrix with the best solving algorithm classified by the neural network.
 
+\subsection{Diagrams}
 
+\subsection{Class Diagrams}
+
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth]{ClassDiagrams/PDF/Classifier}
+\label{Class Diagram}
+\end{center}
+\end{figure}
+
+\newpage
 
 
 \subsection{Class Descriptions}
 
 \subsubsection{Class Classifier}
-\subsubsection{Interface Algorithm}
-This interface is for the different algorithms for solving a given matrix.
-\subsubsection{Class ConcreteAlgorithm}
-The Concrete Algorithm class is for solving a matrix in a certain way.
-This means a certain approach to solve a matrix.
-\subsection{Class Matrix}
-\section{Classes which more than one Module uses}
-\subsection{Class Loader}
+The classifier classifies a matrix given by a path. 
+In this path, the matrix is stored in the form of an HDF5 file.
+As a second parameter the neural network path will be given. 
+In this path the trained network the user wants to use for his classification is saved.
 
-\subsubsection{Class Validator}
+\newpage
+ 
+\subsection{Activity Diagrams}
+
+\begin{figure}[h]
+\begin{center}
+%\includegraphics[width=8cm,height=15cm,keepaspectratio]{ActivityDiagrams/PDF/classification}
+\includegraphics[height=\textheight]{ActivityDiagrams/PDF/classification}
+\label{Activity Diagrams}
+\end{center}
+\end{figure}
+
+\newpage
+\subsubsection{Description}
+The method start in the class classifier classifies a given Matrix.
+First of all the classifier has to get the matrix. 
+After that the matrix has to be validated.
+This validation will give a boolean back, whether the matrix is regular (true) or not (false).
+If the validation is true (validation = true) the matrix will be normalized.
+After that the neural network will be loaded, with which in the following the matrix will be classified.
+In the last step a result will be printed whether it is the result of the classification or an Error-statement, because the validation was false.
+
+ 
+\newpage
+\subsection{Sequence Diagrams} 
+
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth]{SequenceDiagram/PDF/classifier_sequence_diagram}
+\label{Sequence Diagrams}
+\end{center}
+\end{figure}
+
+\newpage
+\subsubsection{Description}
+The method start has the input parameters "path" and "network".
+The first parameter "path" is the path to the HDF5 file in which the matrix is saved that shall be classified.
+The second parameter "network" is the path to the neural network which will classify the matrix.
+First of all the classifier will be calling the Loader to load the Matrix.
+The Loader will give back the matrix, that will be in the next step validated by the validator. 
+The validator will give back a boolean value whether the matrix is regular (true) or not regular (false).
+If the validation value is true the classifier will normalize the matrix. 
+After that the matrix is normalized and ready for classification by the neural network.
+So in the next step, the loader will load the neural network located on the given network path and gives back the neural network to the classifier.
+In the next step, the classifier can give the matrix to the neural network for classification and the neural network gives back the  solver with which the matrix is classified.
+
+
+\newpage
+\section{Classes used by multiple modules}
+
+\subsection{Class Loader}
+\subsection{Class Saver}
+The Saver class is just responsible for saving a given matrix dataset.
+Its only method is the public method save(dataset: Dataset, name: String, path: String).
+The save method takes a matrix dataset, converts it into an HDF5 file and saves it into a given directory with a given name.
+\subsection{Class Validator}
 The Validator class is a util class and responsible for validating given matrices(checking for regularity)
 Its only static method validate takes a matrix and returns true for regular, and false for not regular.
 
-\subsubsection{Class Neural Network}
+\subsection{Class Matrix}
+The Matrix class is for representing matrices. It is defined by two attributes. The first attribute is the matrix size which is an integer and the second attribute are the matrix values which is a two-dimensional integer array. Both attributes are set with a constructor and can be requested by its get methods.
 
-\subsubsection{Class PatternImageCreator}
-This class creates a Grayscale Sparcity Pattern Image out of a given matrix.
-\subsubsection{Class GrayscaleSparcityPatternImage}
-
-\subsection{Activity Diagrams}
-
-\includepdf[pages={1}]{ActivityDiagrams/PDF/classification}
-
-\subsection{Class Diagrams}
-
-\includepdf[pages={1}]{ClassDiagrams/PDF/Classifier}
+\subsection{Class Neural Network}
 
 
-
+\newpage
 \section{Glossary}
 %\glspl{collector}, labeling modle, neural network, classifier, default settings  \glspl{Dateiformat}
 
@@ -514,3 +695,4 @@ This class creates a Grayscale Sparcity Pattern Image out of a given matrix.
 \printnoidxglossaries
 
 \end{document}
+

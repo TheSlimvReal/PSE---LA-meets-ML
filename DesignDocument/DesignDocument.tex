@@ -586,7 +586,8 @@ Last but not least, if all combinations are finished testing a \gls{label} is cr
 
 \subsection{Sequence Diagrams}
 The sequence diagram shows what happens when the start() method of the LabelingModule is called.
-First of all the method load(), with the parameter path, of the Loader class is called,the path is either the path the user wrote in his input, or it is the standard path, which is specified in the Configuartion File.
+First of all the method load(), with the parameter path, of the Loader class is called.
+The path is either the path the user wrote in his input, or it is the standard path, which is specified in the configuration file.
 The load() method returns the dataset the LabelingModule will be working on.
 After that, the LabelingModule calls its own method label() with the just received dataset.
 The label() method then goes into a loop, covering each matrix on its own.

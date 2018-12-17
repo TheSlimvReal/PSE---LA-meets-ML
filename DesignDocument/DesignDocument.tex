@@ -30,13 +30,12 @@ bookmarks=true,%
 \newglossaryentry{ginkgo}
 {
 	name=ginkgo,
-	plural=ginkgo,
 	description={The ginkgo libarary is a  c++ libary which among other things enables an user to solve a linear system with a specified \gls{iterative solver} and \gls{preconditioner}. We will be using this libary to solve our systems.}
 }
 \newglossaryentry{strategy}
 {
 	name=strategy,
-	plural=strategy,
+	plural=strategies,
 	description={\gls{strategy} is a design pattern of the category behavioral design patterns. It defines a family of iterchangable algorithms. It furthermore enables the selection of an algorithm at runtime, so that the algorithm may vary independently of the clients that use them.}
 }
 \newglossaryentry{memento}
@@ -60,7 +59,7 @@ bookmarks=true,%
 \newglossaryentry{tupel}
 {
 	name=tupel,
-	plural=tupel,
+	plural=tupels,
 	description={A tupel is a structure of data, that holds more than one data, in contrast to other data structures that usually hold only one data.}
 }
 \newglossaryentry{label}
@@ -71,7 +70,7 @@ bookmarks=true,%
 }
 \newglossaryentry{neural network}
 {
-	name=nerual network,
+	name=neural network,
 	description={
 	The neural network itself is not an algorithm, but rather a framework for many different machine learning algorithm to work together and process complex data inputs.
 	Such systems "learn" to perform tasks by considering examples, generally without being programmed with any task-specific rules
@@ -142,9 +141,9 @@ Makus G\"{o}tz
 \subsubsection{Class CommandLineInterface}
 The class CommandLineInterface represents the concrete \gls{CLI}. 
 Therefore it only consists of two methods. 
-The first one is read\char`_input that receives a message that will be displayed and reads the next user input. 
-The other method is create\char`_output. 
-This method prints a string to the CLI.
+The first one is readInput that receives a message that will be displayed and reads the next user input. 
+The other method is createOutput. 
+This method prints a string to the \gls{CLI}.
 
 \subsubsection{Class Controller} 
 The controller is the main entry point for the program execution. 
@@ -183,31 +182,6 @@ Therefore the module computes his specific task in iterations.
 After each iteration it prints the current progress to the user.
 This two activities repeat until all tasks are done.
 When the module is finished, the program prints a complete message and starts waiting for new user input.
-
-\newpage
-
-\subsection{Class Diagrams}
-
-\subsubsection{Command Parsing}
-
-\begin{figure}[h]
-\begin{center}
-\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ClassDiagrams/PDF/CommandParsing}
-\label{Command Parsing}
-\end{center}
-\end{figure}
-\newpage
-
-This class diagrams shows all classes that are used by the CommandParser.
-The CommandParser has one method that receives an input string and returns a command.
-This method uses the first word of the input string to determine which module is supposed to be started.
-Based on this he creates an instance of this subclass of the command.
-The remaining string will be parsed to a dictionary with keys and values. 
-This dictionary is passed to the constructor of the command object.
-In the constructor of the command, the command also calls the validate() method.
-This method checks if all arguments that are necessary for the specific module start are provided.
-After that is finished the command can be returned by the CommandParser.
-The execute method of the command can be then used to start the modules computation.
 
 \newpage
 
@@ -338,9 +312,9 @@ The execute method of the command can be then used to start the modules computat
 Sometimes the user wants to print a progress like a download status that is updated by time.
 But there should not be a new line for each percentage the download gets further.
 Instead the old string should be overwritten by time and and the module should only have to pass the new status.
-Therefore there is the method print\char`_overriding in the CLIOutputService that wants an string and an observable object.
+Therefore there is the method printOverriding in the CLIOutputService that wants an string and an observable object.
 That is why the module first creates the observable object.
-This object is then being passed to the print\char`_overriding method together with a string that will stay the same for this process.
+This object is then being passed to the printOverriding method together with a string that will stay the same for this process.
 Because the CLIOUtputService implements the Subscriber interface, it can subscribe itself to the observable.
 Now that the CLIOutputService is subscribed to the Observable, it will be notified when the Observable gets new data.
 When the module starts it computations, it can call next with the new data with which it wants to override the old one in the view.
@@ -383,20 +357,21 @@ The InvalidOSException will be thrown if some part of our program is trying to a
 
 The collector component is responsible for acquiring, creating, collecting and saving matrices into a dataset.
 It consists of six classes:
-the Collector class which is the entry point of the component. The Collector class has one Generator object for generating matrices and one Saver object for saving a dataset.
-The Generator class has one Validator util class for checking regularity, one Ssget object for fetching and cutting matrices from the SuiteSparse Matrix collection and multiple matrix objects for initializing and returning matrices.
+The Collector class which is the entry point of the component.
+The Collector class has one Generator object for generating matrices and uses the Saver for saving a dataset.
+The Generator class has one Validator util class for checking regularity, one Ssget instance for fetching and cutting matrices from the SuiteSparse Matrix collection and multiple matrix objects for initializing and returning matrices.
 
 \subsection{Class Description}
 
 \subsubsection{Class Collector}
 The Collector class is responsible for collecting a given amount of matrices and saving it into a \gls{HDF5} dataset.
-When the user types collect into the CLI, a Collector object will be created and the public method collect() with its parameters:
+When the user types collect into the \gls{CLI}, a Collector object will be created and the public method collect() with its parameters:
 amount, name, size, density and path
 will be called. 
 The class has a Saver class attribute and a Generator class attribute.
 It uses methods from the Generator class to get matrices to collect and methods from the Saver class to save the collected dataset.
 (see the collect method Activity Diagram for a more detailed overview).
-The Collector class is the interface between matrix collecting and the CLI and conceals all the classes of the Collector described in the following.
+The Collector class is the interface between matrix collecting and the \gls{CLI} and conceals all the classes of the Collector described in the following.
 
 \subsubsection{Class Generator}
 The Generator class is responsible for actually generating matrices by transforming raw matrices from SuiteSparse and validating them.
@@ -434,9 +409,9 @@ If the counter is still smaller than the given amount, another matrix will be fe
 \end{figure}
 \newpage
 
-This activity diagram shows are matrices are generated when collecting them to create a dataset.
+This activity diagram shows how matrices are generated when collecting them to create a dataset.
 At first an empty matrix with the given size is initialized.
-After that a matrix is fetched from ssget. When the matrix is regular(this is checked by the Validator) then it will be returned.
+After that a matrix is fetched from ssget. When the matrix is regular (this is checked by the Validator) then it will be returned.
 Otherwise another matrix will be fetched.
 
 \section{Labeling Module}
@@ -465,7 +440,7 @@ The class labeling modue has a set of matrices which the module will label.\newl
 The module furthermore has a Loader class. The class labeling module has exactly one Loader class.
 This class is responsible for loading the matrices which get labeled.
 Its only method is the method load(path:String) which gets a path of a \gls{HDF5} file supplied and returns a dataset.
-If the specified path is not a \gls{HDF5} file, the programm will print an error to the command line. \newline\newline
+If the specified path is not a \gls{HDF5} file, the module will throw and exception. \newline\newline
 
 Another class in the labeling module is the Saver class.
 The class labeling module has exactly one Saver class.
@@ -479,16 +454,16 @@ This class is responsible for determining wheter the given matrix is regular.
 If that is not the case, the matrix will be deleted.
 \newline\newline
 Since the labeling module is responsible for finding the best \gls{preconditioner}/\gls{iterative solver} combination for a given set of matrices, the module furthermore has a \gls{preconditioner} and a Solver class.
-Those classes are abstract. ConcreteSolvers inherit from the class Solver and Concrete\gls{preconditioner}s from the class \gls{preconditioner}.\newline\newline
+Those classes are abstract. ConcreteSolvers inherit from the class Solver and Concrete \glspl{preconditioner} from the class \gls{preconditioner}.\newline\newline
 
 The Solver class contains the logic for solving a matrix with an \gls{iterative solver}.
 Each ConcreteSolver corresponds to one \gls{iterative solver}.Each class of ConcreteSolver has the method execute(Matrix,\gls{preconditioner}) which will solve a given matrix.
-We will be using the design pattern "stragety" for the \gls{iterative solver}s.
-The reason being that each Solver does basically the same thing(solving a matrix) in a different manner.
+We will be using the design pattern "stragety" for the \glspl{iterative solver}.
+Because each Solver does basically the same thing(solving a matrix) in a different manner, we decided to implement this pattern.
 The user moreover has no influence on which Solver we will be using at any given time.
 Each Solver will take an optional precondtioner as its input for the method execute(Matrix,\gls{preconditioner}).
 The \gls{preconditioner} will be used at every step of the \gls{iterative solver}.
-We will be using the design pattern "\gls{strategy}" for the \gls{preconditioner}s too. \gls{preconditioner}s each return a Ginko\gls{preconditioner} which will be used by the Solver class to communicate with the ginkgo libary.
+We will be using the design pattern "\gls{strategy}" for the \glspl{preconditioner} too. \glspl{preconditioner} each return a Ginko\gls{preconditioner} which will be used by the Solver class to communicate with the ginkgo libary.
 So each Concrete\gls{preconditioner} basically does the same thing(returning a \gls{preconditioner}).
 The user furthermore has no influence on which \gls{preconditioner} we will be using at any given time. That is why the "\gls{strategy}" design pattern is applicable.
 
@@ -528,15 +503,15 @@ A \gls{preconditioner} is a transformation of a linear system Ax=b for x, where 
 A transformation may be a Matrix p (nxn) which would result in the linear system PAx = Pb.
 A \gls{preconditioner} is used so that the linear system may be solved more easily by an \gls{iterative solver}.
 The transformation of the \gls{preconditioner} is applied in every step of an \gls{iterative solver}. \newline\newline
-The class \gls{preconditioner} only has one method, get\gls{preconditioner}() which will return the Ginko\gls{preconditioner} corresponding to the \gls{preconditioner} class.
-The \gls{preconditioner} class achieves this by communicating with the ginkgo libary.
+The class \gls{preconditioner} only has one method, getPreconditioner() which will return the Ginko-Preconditioner corresponding to the Preconditioner class.
+The Preconditioner class achieves this by communicating with the ginkgo libary.
 
 \subsubsection{Class Concrete\gls{preconditioner}}
-A Concrete\gls{preconditioner} is the actual representation of one \gls{preconditioner}.
+A Concrete Preconditioner is the actual representation of one \gls{preconditioner}.
 
 \newpage
 \subsection{Activity Diagrams}
-When the user types label() in the CLI the moethod start() in the class LabelingModule will be executed in the following manner:
+When the user types label in the \gls{CLI} the moethod start() in the class LabelingModule will be executed in the following manner:
 
 \begin{figure}[h]
 \begin{center}
@@ -563,9 +538,10 @@ Last but not least the new dataset with \glspl{label} will be saved under the gi
 \newpage
 
 
-The activity diagram ``label given dataset'' shows how the class LabelingModule labels a dataset.First of all a new dataset is initialized.
+The activity diagram ``label given dataset'' shows how the class LabelingModule labels a dataset.
+First of all a new dataset is initialized.
 The following steps will be made on each matrix in the dataset.
-First of all the matrix is validated, to see whether the matrix is regular or not, if the matrix isn't regular the matrix will be removed.
+At first the matrix is validated, to see whether the matrix is regular or not, if the matrix isn't regular the matrix will be removed.
 In case that the matrix is regular, the \gls{label} for the matrix is calculated (explained in the ``calculate label for given matrix activity diagram'').
 The calculated \gls{label} will be saved in the new dataset.
 As soon as every matrix has been labeled the new dataset is returned.
@@ -588,7 +564,9 @@ The calculated average time will be written in the fastest time variable and the
 After that a new combination is loaded, if there is another one to test.
 For each new combination the process of using the combination, saving the time and calculating the average time remains the same.
 After the average time of the new combination is calculated.
-After that there are two options. 1. if the average time of the new combination is smaller than the time saved in the fastest time variable, the fastest time variable gets overwritten with the new average time and the new combination is also getting written in the \gls{tupel}.2. the fastest time is smaller then the new average time, is that the case, the new average time and combination is ignored.
+After that there are two options. 
+1. if the average time of the new combination is smaller than the time saved in the fastest time variable, the fastest time variable gets overwritten with the new average time and the new combination is also getting written in the \gls{tupel}.
+2. the fastest time is smaller then the new average time, is that the case, the new average time and combination is ignored.
 Last but not least, if all combinations are finished testing a \gls{label} is created based on the current fastest time and \gls{preconditioner}, \gls{iterative solver} combination and the \gls{label} is returned.
 
 \subsection{Sequence Diagrams}
@@ -598,10 +576,11 @@ The load() method returns the dataset the LabelingModule will be working on.
 After that, the LabelingModule calls its own method label() with the just received dataset.
 The label() method then goes into a loop, covering each matrix on its own.
 For each matrix, the validate() method of the Validator gets called with the parameter matrix. validate() returns a boolean, whether the matrix is regular (true) or not (false).
-If the matrix is regular, the method calculate\_label() of the LabelingModule with the parameter matrix is called. calculate\_label returns a \gls{label}.
+If the matrix is regular, the method calculateLabel() of the LabelingModule with the parameter matrix is called. calculateLabel returns a \gls{label}.
 If the matrix isn't regular, or the \gls{label} is calculated the loop starts with the next matrix, until there are none left.
 After all \glspl{label} are calculated they all are summarized in a dataset.
-The new dataset is after that one of the parameters for the save() method of the Saver class, which saves the new dataset, with the given namen in the given path.
+The newly created data set will be now passed to the save method together with a filename and a path.
+The saver then saves this labeled matrices to the memory.
 
 \newpage
 \begin{figure}[h]
@@ -644,8 +623,8 @@ The loading and saving paths may be changed via the command line. The configurat
 \end{enumerate}
 The loading path of the set of matrices is the path in which the matrices that are used for the training and testing are stored.
 The training module only supports one \gls{HDF5} file.
-If the path is any other file, the labling module will print an error message to the command line so that the user can specify a valid path.
-For the training and testing making sense there should be at least 500 matrices in the \gls{HDF5} file.
+If the path is invalid, the labling module will throw an error that will be printed to the user.
+For the training and testing being effective there should be at least 500 matrices in the \gls{HDF5} file.
 Otherwise the accuracy of the \gls{neural network} will be so low that i can not be used for classification.
 If there is no path specified in the start method, the training module will use a default path.
 In the default path will be the latest matrices that the labling module has produced. \newline
@@ -662,7 +641,7 @@ This could be the case if the user interrupts the training process at a certain 
 Other use cases are of course possible too.
 The \gls{neural network} has to be a model of the Keras framework.
 If the path is any other file the training module will print an error so that the user can specify a valid path.
-If this path is not specified the training module will create a new \gls{neural network}(with the model definition and hyperparamters of the next category) and train with it. \newline
+If this path is not specified the training module will create a new \gls{neural network} (with the model definition and hyperparamters of the next category) and train with this one. \newline
 
 The model definition and hyperparameters are used to determine which \gls{neural network} will be trained and tested.
 The model definition determines the following:
@@ -687,7 +666,8 @@ The hyperparamters determine the following:
 
 \subsubsection{Class TrainingModule}
 The TrainingModule class is responsible for the training and testing of a \gls{neural network}.
-It can not be instantiated, since it is a utility class.The structure is mainly oriented towards the keras workflow and will be further described later in the activity diagramm.
+It can not be instantiated, since it is a utility class.
+The structure is mainly oriented towards the keras workflow and will be further described later in the activity diagramm.
 The class offers one public method, the method start(matrices\_path: String,neural\_network\_path: String,
 name: String,saving\_path: String). \newline
 
@@ -697,7 +677,7 @@ The proceedure is consitent with the design pattern \gls{memento}.
 
 
 \subsection{Activity Diagarams}
-When the user types train in the CLI the method train in the class TrainingModule will be executed in the following manner:
+When the user types train in the \gls{CLI} the method train in the class TrainingModule will be executed in the following manner:
 
 \begin{figure}[h]
 \begin{center}
@@ -730,8 +710,8 @@ This is done because those values will be fed in the \gls{neural network} and th
 After that the class TrainingModule will seperate the training and test data.
 How the data will be seperated is specified in the configuration file.\newline
 
-Following there are two alternatives
- If the user has specified a \gls{neural network} loading path in the method start, the class TrainingModule will train this \gls{neural network} with the labeled matrices for the training.
+Following that, there are two alternatives:
+If the user has specified a \gls{neural network} loading path in the method start, the class TrainingModule will train this \gls{neural network} with the labeled matrices for the training.
 If the user has not specified a \gls{neural network}  loading path in the method start, the class TrainingModule will create a new \gls{neural network} with the specifications in the configuration file.\newline
 
 If there are no model definitions in the configuration file the class TrainingModule will use the \gls{default neural network}.
@@ -769,7 +749,7 @@ The path for the saving is specified in the configuration file or by the method 
 The classifier classifies a matrix given by a path. 
 In this path, the matrix is stored in the form of an \gls{HDF5} file.
 As a second parameter the \gls{neural network} path will be given. 
-In this path the trained network the user wants to use for his classification is saved.
+At this path the trained network the user wants to use for his classification is saved.
 
 \newpage
  
@@ -777,21 +757,20 @@ In this path the trained network the user wants to use for his classification is
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=8cm,height=15cm,keepaspectratio]{ActivityDiagrams/PDF/classification}
+\includegraphics[width=8cm,height=15cm,keepaspectratio]{ActivityDiagrams/PDF/classification_activity_diagram}
 %\includegraphics[height=\textheight]{ActivityDiagrams/PDF/classification}
 \label{Activity Diagrams}
 \end{center}
 \end{figure}
 
 \newpage
-\subsubsection{Description}
 The method start in the class classifier classifies a given Matrix.
 First of all the classifier has to get the matrix. 
 After that the matrix has to be validated.
-This validation will give a boolean back, whether the matrix is regular (true) or not (false).
+This validation will give back a boolean, whether the matrix is regular (true) or not (false).
 If the validation is true (validation = true) the matrix will be normalized.
 After that the \gls{neural network} will be loaded, with which in the following the matrix will be classified.
-In the last step a result will be printed whether it is the result of the classification or an Error-statement, because the validation was false.
+In the last step a result will be printed whether it is the result of the classification or an exception, because the validation was returning false.
 
  
 \newpage
@@ -805,17 +784,16 @@ In the last step a result will be printed whether it is the result of the classi
 \end{figure}
 
 \newpage
-\subsubsection{Description}
 The method start has the input parameters "path" and "network".
-The first parameter "path" is the path to the \gls{HDF5} file in which the matrix is saved that shall be classified.
-The second parameter "network" is the path to the \gls{neural network} which will classify the matrix.
+The first parameter "path" is the path to the \gls{HDF5} file in which the matrix is saved that is supposed to be classified.
+The second parameter "network" is the path to the \gls{neural network} which will be used to classify the matrix.
 First of all the classifier will be calling the Loader to load the Matrix.
 The Loader will give back the matrix, that will be in the next step validated by the validator. 
 The validator will give back a boolean value whether the matrix is regular (true) or not regular (false).
 If the validation value is true the classifier will normalize the matrix. 
 After that the matrix is normalized and ready for classification by the \gls{neural network}.
-So in the next step, the loader will load the \gls{neural network} located on the given network path and gives back the \gls{neural network} to the classifier.
-In the next step, the classifier can give the matrix to the \gls{neural network} for classification and the \gls{neural network} gives back the  solver with which the matrix is classified.
+In the next step, the loader will load the \gls{neural network} located on the given network path and gives back the \gls{neural network} to the classifier.
+Finishing that, the classifier can give the matrix to the \gls{neural network} for classification and the \gls{neural network} returns a solver with which the matrix is classified.
 
 
 \newpage
@@ -856,21 +834,27 @@ This activity diagram shows how a given matrix is validated.
 First the condition number of the matrix is calculated, when the condition number implies regularity, true is returned. Otherwise false is returned.
 
 \subsection{Class Matrix}
-The Matrix class is for representing matrices. It is defined by two attributes.
-The first attribute is the matrix size which is an integer and the second attribute are the matrix values which is a two-dimensional integer array.
-Both attributes are set with a constructor and can be requested by its get methods.
+The Matrix class represents matrices, in particular two-dimensional floating number arrays.
+It is defined by two attributes.
+The first attribute is the matrix size which is an integer and the second attribute are the matrix values which is a two-dimensional double array.
+Both attributes are set with a constructor and can be requested by its getter methods.
 
-\subsection{Class Neural Network}
-The NeuralNetwork class represents the \gls{neural network}.
+\section{Representational Constructs}
+There are some constructs that are not classes but used as an abstraction for better visualization.
+
+\subsection{Neural Network}
+The NeuralNetwork represents the \gls{neural network} that will be created, trained and used for classification by the keras module.
+
+\subsection{Configuration File}
+The configuration file is a file that will be shipped together with our program.
+It holds the default values for every attribute that can have a default value.
+Modules that are not provided with specific attributes will be taking the default values out of this file.
+The user can also edit this file, to customize the program's default behavior.
 
 
 \newpage
 \section{Glossary}
-%\glspl{collector}, labeling modle, neural network, classifier, default settings  \glspl{Dateiformat}
 
-% % Automatisch generiertes Glossar (Latex zwei mal ausführen um Glossar anzuzeigen)
-%
-%\glsaddall % das sorgt dafür, dass alles Glossareinträge gedruckt werden, nicht nur die verwendeten. Das sollte nicht nötig sein!
 \printnoidxglossaries
 
 \end{document}

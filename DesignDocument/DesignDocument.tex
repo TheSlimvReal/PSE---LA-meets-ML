@@ -399,6 +399,21 @@ At last, the counter is increased by one and after that, when the counter equals
 
 This activity diagram shows are matrices are generated when collecting them to create a dataset. At first an empty matrix with the given size is initialized. After that a matrix is fetched from ssget. When the matrix is regular(this is checked by the Validator) then it will be returned. Otherwise another matrix will be fetched.
 
+\subsection{Sequence Diagrams}
+
+The sequence diagramm shows what happens when the collect method of the Collector is called. First of all a loop is entered, which terminates, when the desired amount of collected matrices is exceeded. Then the generate method from the Generator is called with size and density as parameters. The generate method now calls the getMatrix method from the Ssget Class and gets a Matrix as an answer. Then the generate method checks the regularity of the returned matrix by calling the validate method from the validator with the matrix to be checked as a parameter. When the validate method delivers  regular as an answer, the generate method returns the matrix. The returned matrix is added to the dataset by the collect method. After exiting the loop, the dataset is saved by calling the save method from the saver with the dataset, the desired name and the saving path as parameters.
+
+
+\newpage
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{SequenceDiagram/PDF/Collector_collect_sequenzdiagramm.pdf}
+\label{Sequence Diagram}
+\end{center}
+\end{figure}
+\newpage
+
+
 \section{Labeling Module}
 The labeling module is responsible for the labeling of the sparse matrices. The \gls{label} of a matrix describes which \gls{preconditioner}/\gls{iterative solver} combination solves the given matrix the fastest. The \gls{label} is represented by a vector. Each entry in the vector corresponds to one \gls{preconditioner}/\gls{iterative solver} combination. The entry of the fastest one is 1, all other entries are zero. The matrices with the corresponding \glspl{label} will be used to train the neural network in the training module.
 
@@ -496,7 +511,7 @@ For each new combination the process of using the combination, saving the time a
 Last but not least, if all combinations are finished testing a \gls{label} is created based on the current fastest time and \gls{preconditioner}, \gls{iterative solver} combination and the \gls{label} is returned.
 
 \subsection{Sequence Diagrams}
-The sequence diagram shows what happens when the start() method of the LabelingModule is called. First of all the method load(), with the parameter path, of the Loader class is called,the path is either the path the user wrote in his input, or it is the standard path, which is specified in the Configuartion Fil. The load() method returns the dataset the LabelingModule will be working on. After that, the LabelingModule calls its own method label() with the just received dataset. The label() method then goes into a loop, covering each matrix on its own.
+The sequence diagram shows what happens when the start() method of the LabelingModule is called. First of all the method load(), with the parameter path, of the Loader class is called, the path is either the path the user wrote in his input, or it is the standard path, which is specified in the configuration file. The load() method returns the dataset the LabelingModule will be working on. After that, the LabelingModule calls its own method label() with the just received dataset. The label() method then goes into a loop, covering each matrix on its own.
 For each matrix, the validate() method of the Validator gets called with the parameter matrix. validate() returns a boolean, whether the matrix is regular (true) or not (false).
 If the matrix is regular, the method calculate\_label() of the LabelingModule with the parameter matrix is called. calculate\_label returns a \gls{label}. if the matrix isn't regular, or the \gls{label} is calculated the loop starts with the next matrix, until there are none left.After all \glspl{label} are calculated they all are summarized in a dataset.
 The new dataset is after that one of the parameters for the save() method of the Saver class, which saves the new dataset, with the given namen in the given path.

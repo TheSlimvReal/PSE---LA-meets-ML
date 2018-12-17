@@ -401,10 +401,17 @@ The new dataset is after that one of the parameters for the save() method of the
 \section{Training module}
 The training module is responsible for the training and testing of a neural network. It is structured in 2 parts, the configuration file and the class training module. The class training module loads its configuration from the configuartion file. It furthermore uses a set of labled matrices for the training and testing. With the configuration set, the class training module will start the training and testing. The trained network will be saved to a specified path.
 %\includepdf[pages={1}]{ClassDiagrams/PDF/TrainingModuleClassDiagram}
+\begin{figure}[h]
+\begin{center}
 \includegraphics{ClassDiagrams/PDF/TrainingModule_classdiagram.pdf}
+\label{Activity Diagrams}
+\end{center}
+\end{figure}
+
+%\includegraphics{ClassDiagrams/PDF/TrainingModule_classdiagram.pdf}
 \subsection{Class descriptions}
 \subsubsection{Class Configuration File}
-The configuration file is a text file.
+The configuration file is a text file. The information will be loaded with a configuration file parser.
 It is used to specify all necessary information the class neural network needs to train the neural network.
 If the user does not change anything in the configuration file, defaut options for the model definiton and hyperparameters will be used. The loading and saving paths may be changed via the command line. The configuration file is organized in four main categories.
 \begin{enumerate}
@@ -465,10 +472,18 @@ We will furthermore be using the function keras.callbacks.ModelCheckpoint to sav
 
 \subsection{Activity Diagarams}
 When the user types train in the CLI the method train in the class TrainingModule will be executed in the following manner:
-\includepdf[pages={1}]{ActivityDiagrams/PDF/TrainingModule}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.9]{ActivityDiagrams/PDF/TrainingModule}
+\label{Activity Diagrams}
+\end{center}
+\end{figure}
+
 \begin{itemize}
 \item load the configuration file
 \item load the labeled matrices
+\item normalize values of the matrix(between 0 and 1)
 \item seperate the labeled matrices in training and test data
 \item train a preexisting neural network or a new one(depending on the specifed paths)
 \item test the neural network
@@ -480,6 +495,8 @@ The configuration file that gets loaded will be used to specify the subsequent p
 The configuration file will determine from which path the labeled matrices will be loaded.
 If there is no path specified in the method start, the default path will be used(see the class description of the configuration file).
 The labeled matrices will be loaded in one hdf5 file. If the path links to any other file, the class TrainingModule will print an error to the command line so that the user can specify a valid path. \newline
+
+Then the values of the matrix will be normalized. This means that every entry will be converted to a value between 0 and 1, such that relative distances are kept. This is done because those values will be fed in the neural network and there should not be outliers which result in the neural network not beeing trained properly.
 
 After that the class TrainingModule will seperate the training and test data.
 How the data will be seperated is specified in the configuration file.\newline

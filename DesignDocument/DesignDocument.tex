@@ -375,13 +375,29 @@ The getMatrix method uses the Matrix class to initialize a matrix, then the priv
 
 \subsection{Activity Diagrams}
 The collect method is executed in the following manner:
+\newpage
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=17cm,height=15cm,keepaspectratio]{ActivityDiagrams/PDF/Collector_collect_activity.pdf}
-%\includepdf[pages={1}]{ActivityDiagrams/PDF/classification}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ActivityDiagrams/PDF/Collector_collect_activity.pdf}
 \label{Activity Diagrams}
 \end{center}
 \end{figure}
+\newpage
+
+
+This activity diagram gives a brief overview on how the collector works. First of all a counter is set to zero. Then a matirx dataset for the later collected matrices is initialized. After that a matrix will be fetched from the generator and added to the already initialized dataset.
+At last, the counter is increased by one and after that, when the counter equals the amount, the dataset is saved by the saver. If the counter is still smaller than the given amount, another matrix will be fetched. 
+
+\newpage
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ActivityDiagrams/PDF/Collector_generate_activity.pdf}
+\label{Activity Diagrams}
+\end{center}
+\end{figure}
+\newpage
+
+This activity diagram shows are matrices are generated when collecting them to create a dataset. At first an empty matrix with the given size is initialized. After that a matrix is fetched from ssget. When the matrix is regular(this is checked by the Validator) then it will be returned. Otherwise another matrix will be fetched.
 
 \section{Labeling Module}
 The labeling module is responsible for the labeling of the sparse matrices. The \gls{label} of a matrix describes which \gls{preconditioner}/\gls{iterative solver} combination solves the given matrix the fastest. The \gls{label} is represented by a vector. Each entry in the vector corresponds to one \gls{preconditioner}/\gls{iterative solver} combination. The entry of the fastest one is 1, all other entries are zero. The matrices with the corresponding \glspl{label} will be used to train the neural network in the training module.
@@ -694,9 +710,30 @@ In the next step, the classifier can give the matrix to the neural network for c
 The Saver class is just responsible for saving a given matrix dataset.
 Its only method is the public method save(dataset: Dataset, name: String, path: String).
 The save method takes a matrix dataset, converts it into an HDF5 file and saves it into a given directory with a given name.
+\subsubsection{Activity Diagram}
+\newpage
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ActivityDiagrams/PDF/Collector_save_activity.pdf}
+\label{Activity Diagrams}
+\end{center}
+\end{figure}
+\newpage
+This activity diagram shows how a dataset is saved with a given name on a given path. First of all an HDF5 file is initialized. After that each matrix is taken out of the dataset and stacked into the initialized HDF5 file, then the HDF5 file is saved with the given name on the given path.
 \subsection{Class Validator}
 The Validator class is a util class and responsible for validating given matrices(checking for regularity)
 Its only static method validate takes a matrix and returns true for regular, and false for not regular.
+\subsubsection{Activity Diagram}
+\newpage
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ActivityDiagrams/PDF/Collector_validate_activity.pdf}
+\label{Activity Diagrams}
+\end{center}
+\end{figure}
+\newpage
+
+This activity diagram shows how a given matrix is validated. First the condition number of the matrix is calculated, when the condition number implies regularity, true is returned. Otherwise false is returned.
 
 \subsection{Class Matrix}
 The Matrix class is for representing matrices. It is defined by two attributes. The first attribute is the matrix size which is an integer and the second attribute are the matrix values which is a two-dimensional integer array. Both attributes are set with a constructor and can be requested by its get methods.

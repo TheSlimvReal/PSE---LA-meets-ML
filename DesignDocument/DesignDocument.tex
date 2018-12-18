@@ -332,6 +332,7 @@ The IOException will be thrown if errors occur while reading from or writing dat
 The InvalidOSException will be thrown if some part of our program is trying to access functionality that is not supported on the current operating system.
 
 
+\newpage
 \begin{figure}[h]
 \begin{center}
 \includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ClassDiagrams/PDF/exception_cases_class_diagram}
@@ -654,6 +655,8 @@ The classifier classifies a matrix given by a path.
 In this path, the matrix is stored in the form of an HDF5 file.
 As a second parameter the neural network path will be given. 
 In this path the trained network the user wants to use for his classification is saved.
+The classification has exactly one matrix object for classification. 
+To get this matrix object out of a given path, the Classifier class has a loader to load the matrix and a validator to validate the matrix.
 
 \newpage
  
@@ -661,8 +664,8 @@ In this path the trained network the user wants to use for his classification is
 
 \begin{figure}[h]
 \begin{center}
-%\includegraphics[width=8cm,height=15cm,keepaspectratio]{ActivityDiagrams/PDF/classification}
-\includegraphics[height=\textheight]{ActivityDiagrams/PDF/classification}
+\includegraphics[width=8cm,height=15cm,keepaspectratio]{ActivityDiagrams/PDF/classification}
+%\includegraphics[height=\textheight]{ActivityDiagrams/PDF/classification}
 \label{Activity Diagrams}
 \end{center}
 \end{figure}
@@ -696,14 +699,15 @@ The second parameter "network" is the path to the neural network which will clas
 First of all the classifier will be calling the Loader to load the Matrix.
 The Loader will give back the matrix, that will be in the next step validated by the validator. 
 The validator will give back a boolean value whether the matrix is regular (true) or not regular (false).
-If the validation value is true the classifier will normalize the matrix. 
+If the validation value is true the classifier will normalize the matrix with Keras. 
 After that the matrix is normalized and ready for classification by the neural network.
-So in the next step, the loader will load the neural network located on the given network path and gives back the neural network to the classifier.
+So in the next step, the classifier will load the neural network with help of Keras located on the given network path and gives back the neural network to the classifier.
 In the next step, the classifier can give the matrix to the neural network for classification and the neural network gives back the  solver with which the matrix is classified.
 
 
 \newpage
-\section{Classes used by multiple modules}
+\section{Help classes}
+Following classes are used by multiple classes and modules:
 
 \subsection{Class Loader}
 \subsection{Class Saver}
@@ -740,6 +744,14 @@ The Matrix class is for representing matrices. It is defined by two attributes. 
 
 \subsection{Class Neural Network}
 
+\section{Class Diagram}
+\newpage
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ClassDiagrams/PDF/Big_classdiagram.pdf}
+\label{Class Diagram}
+\end{center}
+\end{figure}
 
 \newpage
 \section{Glossary}

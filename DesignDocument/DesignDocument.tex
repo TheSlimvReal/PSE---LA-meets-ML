@@ -313,6 +313,25 @@ The execute method of the command can be then used to start the modules computat
 
 \newpage
 
+\subsubsection{Text Output}
+
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ClassDiagrams/PDF/OutputService}
+\label{Command Parsing}
+\end{center}
+\end{figure}
+\newpage
+
+This is the class diagram for the classes that are responsible for the output of content.
+The main part is the CLIOutputService. 
+This class implements the OutputService and Subscriber interface.
+The fourth class is the Observable class where subscribers can subscribe themselves on.
+The CLIOutputService also gets an instance of the CommandLineInterface on creation.
+This way the CLIOutputService can print lines to the \gls{CLI}
+
+\newpage
+
 \subsection{Sequence Diagrams}
 
 \subsubsection{Print Overriding String}

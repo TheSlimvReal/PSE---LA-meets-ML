@@ -329,6 +329,15 @@ The string with the new value can now be printed to the \gls{CLI}
 
 \subsubsection{Exception Classes}
 
+Each exception extends Python's Exception class.
+There are four kinds of exceptions that may be thrown by one of our classes.\newline\newline
+The IllegalArgumentException will be thrown if the arguments the user has entered are not valid.\newline\newline
+The InvalidConfigException will be thrown if the user edited the configuration file with invalid arguments or syntax.\newline\newline
+The IOException will be thrown if errors occur while reading from or writing data to the hard drive.\newline\newline
+The InvalidOSException will be thrown if some part of our program is trying to access functionality that is not supported on the current operating system.
+
+
+\newpage
 \begin{figure}[h]
 \begin{center}
 
@@ -763,9 +772,11 @@ The path for the saving is specified in the configuration file or by the method 
 
 \subsubsection{Class Classifier}
 The classifier classifies a matrix given by a path. 
-In this path, the matrix is stored in the form of an \gls{HDF5} file.
-As a second parameter the \gls{neural network} path will be given.
-At this path the trained network the user wants to use for his classification is saved.
+In this path, the matrix is stored in the form of an HDF5 file.
+As a second parameter the neural network path will be given. 
+In this path the trained network the user wants to use for his classification is saved.
+The classification has exactly one matrix object for classification. 
+To get this matrix object out of a given path, the Classifier class has a loader to load the matrix and a validator to validate the matrix.
 
 \newpage
  
@@ -773,7 +784,7 @@ At this path the trained network the user wants to use for his classification is
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=8cm,height=15cm,keepaspectratio]{ActivityDiagrams/PDF/classification_activity_diagram}
+\includegraphics[width=8cm,height=15cm,keepaspectratio]{ActivityDiagrams/PDF/classification}
 %\includegraphics[height=\textheight]{ActivityDiagrams/PDF/classification}
 \label{Activity Diagrams}
 \end{center}
@@ -806,14 +817,15 @@ The second parameter "network" is the path to the \gls{neural network} which wil
 First of all the classifier will be calling the Loader to load the Matrix.
 The Loader will give back the matrix, that will be in the next step validated by the validator. 
 The validator will give back a boolean value whether the matrix is regular (true) or not regular (false).
-If the validation value is true the classifier will normalize the matrix. 
-After that the matrix is normalized and ready for classification by the \gls{neural network}.
-In the next step, the loader will load the \gls{neural network} located on the given network path and gives back the \gls{neural network} to the classifier.
-Finishing that, the classifier can give the matrix to the \gls{neural network} for classification and the \gls{neural network} returns a solver with which the matrix is classified.
+If the validation value is true the classifier will normalize the matrix with Keras. 
+After that the matrix is normalized and ready for classification by the neural network.
+So in the next step, the classifier will load the neural network with help of Keras located on the given network path and gives back the neural network to the classifier.
+In the next step, the classifier can give the matrix to the neural network for classification and the neural network gives back the  solver with which the matrix is classified.
 
 
 \newpage
-\section{Classes used by multiple modules}
+\section{Help classes}
+Following classes are used by multiple classes and modules:
 
 \subsection{Class Loader}
 The Loader class is responsible for loading the \gls{HDF5} files into a format that can be used for further computations on the matrices.
@@ -858,8 +870,14 @@ Both attributes are set with a constructor and can be requested by its getter me
 \section{Representational Constructs}
 There are some constructs that are not classes but used as an abstraction for better visualization.
 
-\subsection{Neural Network}
-The NeuralNetwork represents the \gls{neural network} that will be created, trained and used for classification by the keras module.
+\section{Class Diagram}
+\newpage
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ClassDiagrams/PDF/Big_classdiagram.pdf}
+\label{Class Diagram}
+\end{center}
+\end{figure}
 
 \subsection{Configuration File}
 The configuration file is a file that will be shipped together with our program.

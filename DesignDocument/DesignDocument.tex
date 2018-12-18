@@ -315,7 +315,7 @@ Instead the old string should be overwritten by time and and the module should o
 Therefore there is the method printOverriding in the CLIOutputService that wants an string and an observable object.
 That is why the module first creates the observable object.
 This object is then being passed to the printOverriding method together with a string that will stay the same for this process.
-Because the CLIOUtputService implements the Subscriber interface, it can subscribe itself to the observable.
+Because the CLIOutputService implements the Subscriber interface, it can subscribe itself to the observable.
 Now that the CLIOutputService is subscribed to the Observable, it will be notified when the Observable gets new data.
 When the module starts it computations, it can call next with the new data with which it wants to override the old one in the view.
 In the next call of the observable, all subscribers will be notified with the new value.
@@ -493,11 +493,11 @@ If there are no arguments provided the labeling module will be using default pat
 The default paths are specified in a configuration file(see the training module for further details).
 If the User specifes his own paths they have to be vaild.
 Valid in this case means that the path points to a \gls{HDF5} file with the correct formatation.
-If this is not the case the program will print an error message to the command line and execute a controlled shutdown so that the user can specify a correct path.
+If this is not the case the program will print an error message to the command line so that the user can specify a correct path.
 \subsubsection{Class Solver}
 An Solver in our sense is an interative Solver which is able to to solve a linear system Ax=b for x, where A is a (in our case sparse) matrix of size nxn, x is a vector of size 1xn and b is vector of size 1xn(n$\in$N).
 The matrix A in our case will be the Matrix the method execute(matrix,preconditioner) will receive, the vector b will be a random vector with values between 0 and 1.
-We chose the vector to be random since the choice of b has no great influence on the time it takes to solve the linear system.
+We chose the vector to be random since the choice of b has no significant influence on the time it takes to solve the linear system.
 %find correct symbol for N
 The \gls{iterative solver} uses an iterative approach to solve the linear sysetm.
 An iterative approach is characterized by the idea that the linear system gets solved step by step, where the solution of one step enables the solution of the next step.
@@ -526,7 +526,7 @@ A Concrete Preconditioner is the actual representation of one \gls{preconditione
 
 \newpage
 \subsection{Activity Diagrams}
-When the user types label in the \gls{CLI} the moethod start() in the class LabelingModule will be executed in the following manner:
+When the user types label in the \gls{CLI} the method start() in the class LabelingModule will be executed in the following manner:
 
 \begin{figure}[h]
 \begin{center}
@@ -587,7 +587,7 @@ Last but not least, if all combinations are finished testing a \gls{label} is cr
 \subsection{Sequence Diagrams}
 The sequence diagram shows what happens when the start() method of the LabelingModule is called.
 First of all the method load(), with the parameter path, of the Loader class is called.
-The path is either the path the user wrote in his input, or it is the standard path, which is specified in the configuration file.
+The path is either the path the user wrote in his input, or it is the default path, which is specified in the configuration file.
 The load() method returns the dataset the LabelingModule will be working on.
 After that, the LabelingModule calls its own method label() with the just received dataset.
 The label() method then goes into a loop, covering each matrix on its own.
@@ -612,7 +612,7 @@ The saver then saves this labeled matrices to the memory.
 \section{Training module}
 The training module is responsible for the training and testing of a \gls{neural network}.
 It is structured in 2 parts, the configuration file and the class training module.
-The class training module loads its configuration from the configuartion file.
+The class training module loads its configuration from the configuration file.
 It furthermore uses a set of labled matrices for the training and testing.
 With the configuration set, the class training module will start the training and testing.
 The trained network will be saved to a specified path.
@@ -640,8 +640,8 @@ The loading and saving paths may be changed via the command line. The configurat
 The loading path of the set of matrices is the path in which the matrices that are used for the training and testing are stored.
 The training module only supports one \gls{HDF5} file.
 If the path is invalid, the labling module will throw an error that will be printed to the user.
-For the training and testing being effective there should be at least 500 matrices in the \gls{HDF5} file.
-Otherwise the accuracy of the \gls{neural network} will be so low that i can not be used for classification.
+For the training and testing of a new neural network being effective there should be at least 500 matrices in the \gls{HDF5} file.
+Otherwise the accuracy of the \gls{neural network} will be so low that it can not be used for classification.
 If there is no path specified in the start method, the training module will use a default path.
 In the default path will be the latest matrices that the labling module has produced. \newline
 

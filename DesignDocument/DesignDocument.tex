@@ -132,7 +132,20 @@ Makus G\"{o}tz
 
 \section{Overview}
 
+This is the design document for the PSE-Project Linear Algebra meets machine learning. In this document we will be explaining all of our classes and class interactions.
+
+Following there is a diagramm of all our classes of our program, which serves as a brief overview.
+
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ClassDiagrams/PDF/Big_classdiagram.pdf}
+\label{Class Diagram}
+\end{center}
+\end{figure}
 %include big class diagramm
+
+We will be structuring our programm in five main kategories: The colletor, the labling module, the training module, the classifier and the command line interface. They will be explained in detail in the following chapters.
+
 
 \section{Module Interaction}
 
@@ -784,7 +797,7 @@ To get this matrix object out of a given path, the Classifier class has a loader
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=8cm,height=15cm,keepaspectratio]{ActivityDiagrams/PDF/classification}
+\includegraphics[width=8cm,height=15cm,keepaspectratio]{ActivityDiagrams/PDF/classification_activity_diagram.pdf}
 %\includegraphics[height=\textheight]{ActivityDiagrams/PDF/classification}
 \label{Activity Diagrams}
 \end{center}
@@ -872,12 +885,7 @@ There are some constructs that are not classes but used as an abstraction for be
 
 \section{Class Diagram}
 \newpage
-\begin{figure}[h]
-\begin{center}
-\includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ClassDiagrams/PDF/Big_classdiagram.pdf}
-\label{Class Diagram}
-\end{center}
-\end{figure}
+
 
 \subsection{Configuration File}
 The configuration file is a file that will be shipped together with our program.

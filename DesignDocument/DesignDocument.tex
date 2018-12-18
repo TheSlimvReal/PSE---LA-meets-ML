@@ -136,6 +136,7 @@ This is the design document for the PSE-Project Linear Algebra meets machine lea
 
 Following there is a diagramm of all our classes of our program, which serves as a brief overview.
 
+
 \begin{figure}[h]
 \begin{center}
 \includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ClassDiagrams/PDF/Big_classdiagram.pdf}
@@ -143,8 +144,10 @@ Following there is a diagramm of all our classes of our program, which serves as
 \end{center}
 \end{figure}
 %include big class diagramm
+\newpage
 
-We will be structuring our programm in five main kategories: The colletor, the labling module, the training module, the classifier and the command line interface. They will be explained in detail in the following chapters.
+We will be structuring our programm in seven modules: The collector, the labeling module, the training module, the classifier, the helpclasses, the controller and the view. 
+They will be explained in detail in the following chapters.
 
 
 \section{Module Interaction}
@@ -840,6 +843,14 @@ In the next step, the classifier can give the matrix to the neural network for c
 \section{Help classes}
 Following classes are used by multiple classes and modules:
 
+\begin{figure}[h]
+\begin{center}
+\includepdf[width=\textwidth]{ClassDiagrams/PDF/HelpClasses}
+\label{Sequence Diagrams}
+\end{center}
+\end{figure}
+\newpage
+
 \subsection{Class Loader}
 The Loader class is responsible for loading the \gls{HDF5} files into a format that can be used for further computations on the matrices.
 It can load single matrices and also a whole data set of many matrices.
@@ -882,9 +893,6 @@ Both attributes are set with a constructor and can be requested by its getter me
 
 \section{Representational Constructs}
 There are some constructs that are not classes but used as an abstraction for better visualization.
-
-\section{Class Diagram}
-\newpage
 
 
 \subsection{Configuration File}

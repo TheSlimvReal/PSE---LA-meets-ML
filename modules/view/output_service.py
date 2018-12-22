@@ -18,9 +18,9 @@ class OutputService:
     def print_overriding(self, message: str, observable: Observable):
         pass
 
-    ##  Prints an error to the view
+    ##  Prints an exception to the view
     #
-    #   @param error the string with the error message
+    #   @param exception the string with the exception message
     def print_error(self, error: str) -> None:
         pass
 

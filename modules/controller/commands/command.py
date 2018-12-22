@@ -3,6 +3,9 @@ from modules.controller.commands.key import Key
 
 
 ##  Interface for the module specific commands
+from modules.view.output_service import OutputService
+
+
 class Command:
 
     arguments: List[Key]

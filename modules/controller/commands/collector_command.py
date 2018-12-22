@@ -3,7 +3,7 @@ from modules.controller.commands.key import Key
 from modules.exception.excpetions import IllegalArgumentException
 
 
-class LabelCommand(Command):
+class CollectorCommand(Command):
 
     def __init__(self):
         Command.__init__(self)
@@ -15,11 +15,15 @@ class LabelCommand(Command):
         return super().validate()
 
     def get_key(self, key: str) -> Key:
-        if key == "-n" or key == "--name":
+        if key == "-a" or key == "--amount":
+            return Key.AMOUNT
+        elif key == "-n" or key == "--name":
             return Key.NAME
+        elif key == "-d" or key == "--density":
+            return Key.DENSITY
+        elif key == "-s" or key == "--size":
+            return Key.SIZE
         elif key == "-p" or key == "--path":
             return Key.PATH
-        elif key == "-s" or key == "--saving-path":
-            return Key.SAVING_PATH
         else:
-            raise IllegalArgumentException("Key %s is unknown." %s)
+            raise IllegalArgumentException("Key %s is unknown" % key)

@@ -36,4 +36,4 @@ class Command:
     #
     #   @param key the key that will be checked if its an argument
     def get_key(self, key: str) -> Key:
-        raise IllegalArgumentException("Method not implemented")
+        raise IllegalArgumentException("%s is not a valid key." % key)

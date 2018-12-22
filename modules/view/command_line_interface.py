@@ -9,11 +9,12 @@ class CommandLineInterface:
     #
     #   @param message the message that should be printed
     def create_output(self, message: str) -> None:
-        pass
+        print(message)
 
     ##  Prints a message and reads the user input
     #
     #   @param message the message that will be displayed first
     #   @return the string the user entered
     def read_input(self, message: str) -> str:
-        pass
+        input_line: str = input(message + "\n")
+        return input_line

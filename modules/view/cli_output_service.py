@@ -10,14 +10,19 @@ class CLIOutputService(OutputService, Subscriber):
 
     view: CommandLineInterface
 
+    message: str = ""
+
     def __init__(self, view: CommandLineInterface):
         self.view = view
 
     def print_line(self, line: str) -> None:
-        super().print_line(line)
+        self.view.print_to_view(line)
 
     def print_overriding(self, message: str, observable: Observable):
-        super().print_overriding(message, observable)
+        observable.add_subscriber(self)
+        if "%s" not in message:
+            message += " %s"
+        self.message = "\r" + message
 
     def print_error(self, error: str) -> None:
         super().print_error(error)
@@ -26,4 +31,4 @@ class CLIOutputService(OutputService, Subscriber):
         super().print_matrix(matrix)
 
     def update(self, value: str) -> None:
-        super().update(value)
+        self.print_line(self.message % value)

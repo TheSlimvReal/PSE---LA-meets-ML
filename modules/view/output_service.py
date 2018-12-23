@@ -15,7 +15,7 @@ class OutputService:
     #
     #   @param message the line that will stay the same
     #   @param observable where the updates of the values can be retrieved
-    def print_overriding(self, message: str, observable: Observable):
+    def print_stream(self, message: str, observable: Observable):
         pass
 
     ##  Prints an exception to the view

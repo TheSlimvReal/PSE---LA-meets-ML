@@ -9,7 +9,7 @@ class CommandLineInterface:
     ##  Creates output to the command line
     #
     #   @param message the message that should be printed
-    def print_to_view(self, message: str) -> None:
+    def print(self, message: str) -> None:
         print(message)
 
     ##  Prints a message and reads the user input
@@ -21,5 +21,5 @@ class CommandLineInterface:
         return input_line
 
     def print_overriding(self, line: str) -> None:
-        sys.stdout.write(line)
+        sys.stdout.write("\r" + line)
         sys.stdout.flush()

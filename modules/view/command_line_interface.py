@@ -17,7 +17,7 @@ class CommandLineInterface:
     #   @param message the message that will be displayed first
     #   @return the string the user entered
     def read_input(self, message: str) -> str:
-        input_line: str = input(message)
+        input_line: str = input(message + "\n")
         return input_line
 
     def print_overriding(self, line: str) -> None:

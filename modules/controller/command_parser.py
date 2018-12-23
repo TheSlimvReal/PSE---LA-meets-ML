@@ -6,7 +6,6 @@ from modules.controller.commands.command import Command
 
 ##  Class for parsing strings to a command
 from modules.controller.commands.collector_command import CollectorCommand
-from modules.controller.commands.key import Key
 from modules.controller.commands.label_command import LabelCommand
 from modules.controller.commands.quit_command import QuitCommand
 from modules.controller.commands.train_command import TrainCommand

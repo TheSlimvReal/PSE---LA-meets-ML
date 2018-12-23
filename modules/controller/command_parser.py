@@ -29,7 +29,7 @@ class CommandParser:
     def _get_command(mode: str) -> Command:
         if mode == "collect":
             return CollectorCommand()
-        elif mode == "label":
+        elif mode == "labeler":
             return LabelCommand()
         elif mode == "train":
             return TrainCommand()

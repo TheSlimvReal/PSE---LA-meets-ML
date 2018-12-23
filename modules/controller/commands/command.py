@@ -6,10 +6,10 @@ from modules.exception.excpetions import IllegalArgumentException
 ##  Interface for the module specific commands
 class Command:
 
-    arguments: List[Key]
+    arguments: Dict[Key, str]
 
     def __init__(self):
-        self.arguments = []
+        self.arguments = {}
 
     ##  can be called the execute the module
     def execute(self) -> None:

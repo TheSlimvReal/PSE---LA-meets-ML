@@ -12,9 +12,17 @@ from modules.exception.excpetions import IllegalArgumentException
 
 
 def test_valid_input_returns_command():
-    input_string: str = "collect"
+    input_string: str = "collect --name name --density density --amount amount -p path --size size"
+    expected = {
+        Key.NAME: "name",
+        Key.DENSITY: "density",
+        Key.AMOUNT: "amount",
+        Key.PATH: "path",
+        Key.SIZE: "size"
+    }
     command: Command = CommandParser.parse_input(input_string)
     assert isinstance(command, CollectorCommand)
+    assert command.arguments == expected
 
 
 def test_valid_input_with_arguments():
@@ -46,3 +54,21 @@ def test_invalid_mode_throws_exception():
     input_string: str = "labeler -n name -p path"
     with pytest.raises(IllegalArgumentException):
         CommandParser.parse_input(input_string)
+
+
+def test_valid_collector_input():
+    input_string: str = "collect --amount amount -n name -s size --density density -p path"
+    command: Command = CommandParser.parse_input(input_string)
+    assert isinstance(command, CollectorCommand)
+    expected: Dict[Key, str] = {
+        Key.AMOUNT: "amount",
+        Key.NAME: "name",
+        Key.SIZE: "size",
+        Key.DENSITY: "density",
+        Key.PATH: "path"
+    }
+    assert command.arguments == expected
+
+
+def test_valid_labeler_input():
+    input_string = "labeler label "

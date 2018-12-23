@@ -13,7 +13,7 @@ def test_create_observable_to_print_three_values(mocked_cli):
         75,
         100
     ]
-    expected_calls = [call.print_stream("downloading %s" % str(i)) for i in values]
+    expected_calls = [call.print_overriding("downloading %s" % str(i)) for i in values]
     obs = Observable()
     output_service = CLIOutputService(mocked_cli)
     output_service.print_stream("downloading %s", obs)

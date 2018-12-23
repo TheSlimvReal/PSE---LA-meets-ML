@@ -7,6 +7,8 @@ from modules.controller.commands.classify_command import ClassifyCommand
 from modules.controller.commands.collector_command import CollectorCommand
 from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
+from modules.controller.commands.label_command import LabelCommand
+from modules.controller.commands.label_mode import LabelMode
 from modules.controller.commands.train_command import TrainCommand
 from modules.exception.excpetions import IllegalArgumentException
 
@@ -70,5 +72,42 @@ def test_valid_collector_input():
     assert command.arguments == expected
 
 
-def test_valid_labeler_input():
-    input_string = "labeler label "
+def test_valid_labeler_label_mode():
+    input_string = "labeler label -n name --path path -s saving_path"
+    expected = {
+        Key.NAME: "name",
+        Key.PATH: "path",
+        Key.SAVING_PATH: "saving_path",
+    }
+    command = CommandParser.parse_input(input_string)
+    assert isinstance(command, LabelCommand)
+    assert command.mode == LabelMode.LABEL
+    assert command.arguments == expected
+
+
+def test_valid_labeler_add_mode():
+    input_string = "labeler add algo1 algo2 algo3"
+    expected = [
+        "algo1",
+        "algo2",
+        "algo3",
+    ]
+    command = CommandParser.parse_input(input_string)
+    assert isinstance(command, LabelCommand)
+    assert command.mode == LabelMode.ADD
+    assert command.configs == expected
+
+
+def test_valid_labeler_remove_mode():
+    input_string = "labeler remove algo1"
+    expected = ["algo1"]
+    command = CommandParser.parse_input(input_string)
+    assert isinstance(command, LabelCommand)
+    assert command.mode == LabelMode.REMOVE
+    assert command.configs == expected
+
+
+def test_fails_when_entering_invalid_module():
+    input_string = "generate -s size -a amount"
+    with pytest.raises(IllegalArgumentException):
+        CommandParser.parse_input(input_string)

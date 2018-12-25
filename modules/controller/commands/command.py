@@ -6,10 +6,19 @@ from modules.exception.excpetions import IllegalArgumentException
 ##  Interface for the module specific commands
 class Command:
 
-    arguments: Dict[Key, str]
+    arguments: Dict[Key, str] = {}
 
-    def __init__(self):
-        self.arguments = {}
+    _valid_short_arguments: Dict[str, Key] = {}
+
+    _valid_long_arguments: Dict[str, Key] = {}
+
+    @property
+    def valid_short_arguments(self) -> Dict[str, Key]:
+        return self._valid_short_arguments
+
+    @property
+    def valid_long_arguments(self) -> Dict[str, Key]:
+        return self._valid_long_arguments
 
     ##  can be called the execute the module
     def execute(self) -> None:
@@ -25,15 +34,17 @@ class Command:
     def add_args(self, arg_list: List[str]) -> None:
         args: Dict[Key, str] = {}
         while len(arg_list) != 0:
-            key = self.get_key(arg_list.pop(0))
+            next_key = arg_list.pop(0)
+            key: Key
+            if next_key.startswith("-"):
+                if next_key.startswith("--"):
+                    key: Key = self.valid_long_arguments[next_key[2:]]
+                else:
+                    key: Key = self.valid_short_arguments[next_key[1:]]
+            if not key:
+                raise IllegalArgumentException("%s is not a valid argument." % next_key)
             value: str = ""
             if not arg_list[0].startswith("-"):
                 value = arg_list.pop(0)
             args[key] = value
         self.arguments = args
-
-    ##  Impelemnt this method in the subclass to define your valid keys
-    #
-    #   @param key the key that will be checked if its an argument
-    def get_key(self, key: str) -> Key:
-        raise IllegalArgumentException("%s is not a valid key." % key)

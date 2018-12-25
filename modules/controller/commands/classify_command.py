@@ -5,6 +5,18 @@ from modules.exception.excpetions import IllegalArgumentException
 
 class ClassifyCommand(Command):
 
+    valid_short_arguments = {
+        "p": Key.PATH,
+        "n": Key.NETWORK,
+        "s": Key.SOLVE
+    }
+
+    valid_long_arguments = {
+        "path": Key.PATH,
+        "network": Key.NETWORK,
+        "solve": Key.SOLVE
+    }
+
     def __init__(self):
         Command.__init__(self)
 

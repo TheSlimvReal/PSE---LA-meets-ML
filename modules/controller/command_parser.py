@@ -14,6 +14,14 @@ from modules.exception.excpetions import IllegalArgumentException
 
 class CommandParser:
 
+    _valid_commands: Dict[str, Command.__class__] = {
+        "collect": CollectorCommand,
+        "labeler": LabelCommand,
+        "train": TrainCommand,
+        "classify": ClassifyCommand,
+        "quit": QuitCommand,
+    }
+
     ##  Parses a string to a command
     #
     #   @param input_string the string that should be parsed to a command
@@ -21,21 +29,9 @@ class CommandParser:
     def parse_input(input_string: str) -> Command:
         arg_list = input_string.split(" ")
         mode: str = arg_list.pop(0)
-        command: Command = CommandParser._get_command(mode)
+        command_class = CommandParser._valid_commands[mode]
+        if not command_class:
+            raise IllegalArgumentException("%s is not a vallid command" % mode)
+        command: Command = command_class()
         command.add_args(arg_list)
         return command
-
-    @staticmethod
-    def _get_command(mode: str) -> Command:
-        if mode == "collect":
-            return CollectorCommand()
-        elif mode == "labeler":
-            return LabelCommand()
-        elif mode == "train":
-            return TrainCommand()
-        elif mode == "classify":
-            return ClassifyCommand()
-        elif mode == "quit":
-            return QuitCommand()
-        else:
-            raise IllegalArgumentException("%s is not a valid mode." % mode)

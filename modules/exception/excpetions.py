@@ -1,18 +1,25 @@
-class IllegalArgumentException(Exception):
+class MyException(Exception):
 
-    message: str
+    _message: str
 
     def __init__(self, message: str):
-        self.message = message
+        self._message = message
+
+    def get_info(self) -> str:
+        return self._message
 
 
-class InvalidConfigException(Exception):
+class IllegalArgumentException(MyException):
     pass
 
 
-class IOException(Exception):
+class InvalidConfigException(MyException):
     pass
 
 
-class InvalidOSException(Exception):
+class IOException(MyException):
+    pass
+
+
+class InvalidOSException(MyException):
     pass

@@ -32,15 +32,13 @@ class Controller:
                 else:
                     command.execute()
             except IllegalArgumentException as e:
-                self._output_service.print_error(str(e))
+                self._output_service.print_error(e)
         self._output_service.print_line("Finished")
 
     def _get_command(self) -> Command:
         input_string: str = self._view.read_input("Which module do you want to execute?")
         command: Command = CommandParser.parse_input(input_string)
         return command
-
-
 
     def _register_output_service(self):
         pass

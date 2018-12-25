@@ -12,6 +12,12 @@ class Command:
 
     _valid_long_arguments: Dict[str, Key] = {}
 
+    _required_arguments: List[Key] = []
+
+    @property
+    def required_arguments(self):
+        return self._required_arguments
+
     @property
     def valid_short_arguments(self) -> Dict[str, Key]:
         return self._valid_short_arguments
@@ -22,11 +28,14 @@ class Command:
 
     ##  can be called the execute the module
     def execute(self) -> None:
-        pass
+        self.validate()
 
-    ##  will be called in the command construction
-    def validate(self) -> bool:
-        pass
+    ##  will be called in the command execution
+    def validate(self) -> None:
+        for arg in self.required_arguments:
+            if arg not in self.arguments:
+                raise IllegalArgumentException("%s is required" % arg)
+
 
     ## parses the string list into a dict of args
     #

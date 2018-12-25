@@ -34,7 +34,7 @@ class LabelCommand(Command):
 
     def execute(self):
         if self.mode == LabelMode.LABEL:
-            self.validate()
+            super().execute()
             return
         elif self.mode == LabelMode.ADD:
             [self._add_to_config(name) for name in self.configs]

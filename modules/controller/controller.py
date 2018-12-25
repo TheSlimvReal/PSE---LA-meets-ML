@@ -25,19 +25,20 @@ class Controller:
     def start_interaction(self):
         finished: bool = False
         while not finished:
-            try:
-                command: Command = self._get_command()
-                if isinstance(command, QuitCommand):
-                    finished = True
-                else:
-                    command.execute()
-            except IllegalArgumentException as e:
-                self._output_service.print_error(e)
+            command: Command = self._get_command()
+            if isinstance(command, QuitCommand):
+                finished = True
+            else:
+                command.execute()
         self._output_service.print_line("Finished")
 
     def _get_command(self) -> Command:
         input_string: str = self._view.read_input("Which module do you want to execute?")
-        command: Command = CommandParser.parse_input(input_string)
+        try:
+            command = CommandParser.parse_input(input_string)
+        except IllegalArgumentException as e:
+            self._output_service.print_error(e)
+            command = self._get_command()
         return command
 
     def _register_output_service(self):

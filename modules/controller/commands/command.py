@@ -18,10 +18,6 @@ class Command:
     def arguments(self) -> Dict[Key, str]:
         return self._arguments
 
-    @arguments.setter
-    def arguments(self, arguments: Dict[Key, str]) -> None:
-        self._arguments = arguments
-
     @property
     def required_arguments(self) -> List[Key]:
         return self._required_arguments
@@ -56,15 +52,13 @@ class Command:
             if not arg_list[0].startswith("-"):
                 value = arg_list.pop(0)
             args[key] = value
-        self.arguments = args
+        self._arguments = args
 
     def _get_key(self, next_key: str) -> Key:
-        key: Key = None
-        if next_key.startswith("-"):
-            if next_key.startswith("--") and next_key[2:] in self._valid_long_arguments:
-                key: Key = self.valid_long_arguments[next_key[2:]]
-            elif next_key[1:] in self._valid_short_arguments:
-                key: Key = self.valid_short_arguments[next_key[1:]]
-        if not key:
+        if next_key.startswith("--") and next_key[2:] in self._valid_long_arguments:
+            key: Key = self.valid_long_arguments[next_key[2:]]
+        elif next_key.startswith("-") and next_key[1:] in self.valid_short_arguments:
+            key: Key = self.valid_short_arguments[next_key[1:]]
+        else:
             raise IllegalArgumentException("%s is not a valid argument." % next_key)
         return key

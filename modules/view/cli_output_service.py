@@ -8,15 +8,15 @@ from modules.view.subscriber import Subscriber
 ##  This class communicates with the command line interface
 class CLIOutputService(OutputService, Subscriber):
 
-    view: CommandLineInterface
+    _view: CommandLineInterface
 
     message: str = ""
 
     def __init__(self, view: CommandLineInterface):
-        self.view = view
+        self._view = view
 
     def print_line(self, line: str) -> None:
-        self.view.print(line)
+        self._view.print(line)
 
     def print_stream(self, message: str, observable: Observable):
         observable.add_subscriber(self)
@@ -31,4 +31,4 @@ class CLIOutputService(OutputService, Subscriber):
         super().print_matrix(matrix)
 
     def update(self, value: str) -> None:
-        self.view.print_overriding(self.message % value)
+        self._view.print_overriding(self.message % value)

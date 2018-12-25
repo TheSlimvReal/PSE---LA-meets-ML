@@ -29,9 +29,6 @@ class LabelCommand(Command):
     _mode: LabelMode
     _configs: List[str]
 
-    def __init__(self):
-        Command.__init__(self)
-
     def execute(self):
         if self._mode == LabelMode.LABEL:
             super().execute()

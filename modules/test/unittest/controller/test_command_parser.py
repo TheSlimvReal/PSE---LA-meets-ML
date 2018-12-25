@@ -81,7 +81,7 @@ def test_valid_labeler_label_mode():
     }
     command = CommandParser.parse_input(input_string)
     assert isinstance(command, LabelCommand)
-    assert command.mode == LabelMode.LABEL
+    assert command._mode == LabelMode.LABEL
     assert command.arguments == expected
 
 
@@ -94,8 +94,8 @@ def test_valid_labeler_add_mode():
     ]
     command = CommandParser.parse_input(input_string)
     assert isinstance(command, LabelCommand)
-    assert command.mode == LabelMode.ADD
-    assert command.configs == expected
+    assert command._mode == LabelMode.ADD
+    assert command._configs == expected
 
 
 def test_valid_labeler_remove_mode():
@@ -103,8 +103,8 @@ def test_valid_labeler_remove_mode():
     expected = ["algo1"]
     command = CommandParser.parse_input(input_string)
     assert isinstance(command, LabelCommand)
-    assert command.mode == LabelMode.REMOVE
-    assert command.configs == expected
+    assert command._mode == LabelMode.REMOVE
+    assert command._configs == expected
 
 
 def test_fails_when_entering_invalid_module():

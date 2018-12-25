@@ -6,7 +6,7 @@ from modules.exception.excpetions import IllegalArgumentException
 ##  Interface for the module specific commands
 class Command:
 
-    arguments: Dict[Key, str] = {}
+    _arguments: Dict[Key, str] = {}
 
     _valid_short_arguments: Dict[str, Key] = {}
 
@@ -15,7 +15,15 @@ class Command:
     _required_arguments: List[Key] = []
 
     @property
-    def required_arguments(self):
+    def arguments(self) -> Dict[Key, str]:
+        return self._arguments
+
+    @arguments.setter
+    def arguments(self, arguments: Dict[Key, str]) -> None:
+        self._arguments = arguments
+
+    @property
+    def required_arguments(self) -> List[Key]:
         return self._required_arguments
 
     @property

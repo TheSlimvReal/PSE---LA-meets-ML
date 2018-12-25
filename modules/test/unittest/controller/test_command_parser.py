@@ -111,3 +111,9 @@ def test_fails_when_entering_invalid_module():
     input_string = "generate -s size -a amount"
     with pytest.raises(IllegalArgumentException):
         CommandParser.parse_input(input_string)
+
+
+def test_quit_with_arguments_throws_error():
+    input_string = "quit -n name --density density"
+    with pytest.raises(IllegalArgumentException):
+        CommandParser.parse_input(input_string)

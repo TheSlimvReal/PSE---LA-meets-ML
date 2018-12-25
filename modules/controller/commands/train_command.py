@@ -18,8 +18,5 @@ class TrainCommand(Command):
         "train": Key.TRAIN,
     }
 
-    def __init__(self):
-        Command.__init__(self)
-
     def execute(self):
         super().execute()

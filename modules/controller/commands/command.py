@@ -36,7 +36,6 @@ class Command:
             if arg not in self.arguments:
                 raise IllegalArgumentException("%s is required" % arg)
 
-
     ## parses the string list into a dict of args
     #
     #   @param args the list retrieved by the input
@@ -44,16 +43,20 @@ class Command:
         args: Dict[Key, str] = {}
         while len(arg_list) != 0:
             next_key = arg_list.pop(0)
-            key: Key
-            if next_key.startswith("-"):
-                if next_key.startswith("--"):
-                    key: Key = self.valid_long_arguments[next_key[2:]]
-                else:
-                    key: Key = self.valid_short_arguments[next_key[1:]]
-            if not key:
-                raise IllegalArgumentException("%s is not a valid argument." % next_key)
+            key: Key = self._get_key(next_key)
             value: str = ""
             if not arg_list[0].startswith("-"):
                 value = arg_list.pop(0)
             args[key] = value
         self.arguments = args
+
+    def _get_key(self, next_key: str) -> Key:
+        key: Key = None
+        if next_key.startswith("-"):
+            if next_key.startswith("--") and next_key[2:] in self._valid_long_arguments:
+                key: Key = self.valid_long_arguments[next_key[2:]]
+            elif next_key[1:] in self._valid_short_arguments:
+                key: Key = self.valid_short_arguments[next_key[1:]]
+        if not key:
+            raise IllegalArgumentException("%s is not a valid argument." % next_key)
+        return key

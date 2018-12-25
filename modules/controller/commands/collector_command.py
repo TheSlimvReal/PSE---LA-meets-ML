@@ -11,6 +11,7 @@ class CollectorCommand(Command):
         "n": Key.NAME,
         "d": Key.DENSITY,
         "p": Key.PATH,
+        "s": Key.SIZE,
     }
 
     _valid_long_arguments: Dict[str, Key] = {
@@ -18,10 +19,8 @@ class CollectorCommand(Command):
         "name": Key.NAME,
         "density": Key.DENSITY,
         "path": Key.PATH,
+        "size": Key.SIZE
     }
-
-    def __init__(self):
-        Command.__init__(self)
 
     def execute(self):
         super().execute()

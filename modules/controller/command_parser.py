@@ -29,9 +29,10 @@ class CommandParser:
     def parse_input(input_string: str) -> Command:
         arg_list = input_string.split(" ")
         mode: str = arg_list.pop(0)
-        command_class = CommandParser._valid_commands[mode]
-        if not command_class:
-            raise IllegalArgumentException("%s is not a vallid command" % mode)
+        if mode in CommandParser._valid_commands:
+            command_class = CommandParser._valid_commands[mode]
+        else:
+            raise IllegalArgumentException("%s is not a valid command" % mode)
         command: Command = command_class()
         command.add_args(arg_list)
         return command

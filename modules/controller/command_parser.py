@@ -1,22 +1,21 @@
-from typing import List, Dict, Tuple
+from typing import Dict
 
 from modules.controller.commands.classify_command import ClassifyCommand
 from modules.controller.commands.command import Command
 
-
-##  Class for parsing strings to a command
-from modules.controller.commands.collector_command import CollectorCommand
+from modules.controller.commands.collect_command import CollectCommand
 from modules.controller.commands.label_command import LabelCommand
 from modules.controller.commands.quit_command import QuitCommand
 from modules.controller.commands.train_command import TrainCommand
 from modules.exception.excpetions import IllegalArgumentException
 
 
+##  Class for parsing strings to a command
 class CommandParser:
 
     _valid_commands: Dict[str, Command.__class__] = {
-        "collect": CollectorCommand,
-        "labeler": LabelCommand,
+        "collect": CollectCommand,
+        "label": LabelCommand,
         "train": TrainCommand,
         "classify": ClassifyCommand,
         "quit": QuitCommand,

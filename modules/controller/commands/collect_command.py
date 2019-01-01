@@ -4,7 +4,7 @@ from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
 
 
-class CollectorCommand(Command):
+class CollectCommand(Command):
 
     _valid_short_arguments: Dict[str, Key] = {
         "a": Key.AMOUNT,

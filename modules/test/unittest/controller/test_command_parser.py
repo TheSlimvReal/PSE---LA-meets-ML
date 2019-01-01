@@ -4,7 +4,7 @@ import pytest
 
 from modules.controller.command_parser import CommandParser
 from modules.controller.commands.classify_command import ClassifyCommand
-from modules.controller.commands.collector_command import CollectorCommand
+from modules.controller.commands.collect_command import CollectCommand
 from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
 from modules.controller.commands.label_command import LabelCommand
@@ -23,7 +23,7 @@ def test_valid_input_returns_command():
         Key.SIZE: "size"
     }
     command: Command = CommandParser.parse_input(input_string)
-    assert isinstance(command, CollectorCommand)
+    assert isinstance(command, CollectCommand)
     assert command.arguments == expected
 
 
@@ -53,7 +53,7 @@ def test_valid_input_with_flag():
 
 
 def test_invalid_mode_throws_exception():
-    input_string: str = "labeler -n name -p path"
+    input_string: str = "label -n name -p path"
     with pytest.raises(IllegalArgumentException):
         CommandParser.parse_input(input_string)
 
@@ -61,7 +61,7 @@ def test_invalid_mode_throws_exception():
 def test_valid_collector_input():
     input_string: str = "collect --amount amount -n name -s size --density density -p path"
     command: Command = CommandParser.parse_input(input_string)
-    assert isinstance(command, CollectorCommand)
+    assert isinstance(command, CollectCommand)
     expected: Dict[Key, str] = {
         Key.AMOUNT: "amount",
         Key.NAME: "name",
@@ -72,8 +72,8 @@ def test_valid_collector_input():
     assert command.arguments == expected
 
 
-def test_valid_labeler_label_mode():
-    input_string = "labeler label -n name --path path -s saving_path"
+def test_valid_label_label_mode():
+    input_string = "label label -n name --path path -s saving_path"
     expected = {
         Key.NAME: "name",
         Key.PATH: "path",
@@ -85,8 +85,8 @@ def test_valid_labeler_label_mode():
     assert command.arguments == expected
 
 
-def test_valid_labeler_add_mode():
-    input_string = "labeler add algo1 algo2 algo3"
+def test_valid_label_add_mode():
+    input_string = "label add algo1 algo2 algo3"
     expected = [
         "algo1",
         "algo2",
@@ -98,8 +98,8 @@ def test_valid_labeler_add_mode():
     assert command._configs == expected
 
 
-def test_valid_labeler_remove_mode():
-    input_string = "labeler remove algo1"
+def test_valid_label_remove_mode():
+    input_string = "label remove algo1"
     expected = ["algo1"]
     command = CommandParser.parse_input(input_string)
     assert isinstance(command, LabelCommand)

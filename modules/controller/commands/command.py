@@ -6,29 +6,39 @@ from modules.exception.excpetions import IllegalArgumentException
 ##  Interface for the module specific commands
 class Command:
 
-    _arguments: Dict[Key, str] = {}
-
-    _valid_short_arguments: Dict[str, Key] = {}
-
-    _valid_long_arguments: Dict[str, Key] = {}
-
-    _required_arguments: List[Key] = []
+    def __init__(self):
+        self.__arguments: Dict[Key, str] = {}
+        self.__valid_short_arguments: Dict[str, Key] = {}
+        self.__valid_long_arguments: Dict[str, Key] = {}
+        self.__required_arguments: List[Key] = []
 
     @property
     def arguments(self) -> Dict[Key, str]:
-        return self._arguments
+        return self.__arguments
 
     @property
     def required_arguments(self) -> List[Key]:
-        return self._required_arguments
+        return self.__required_arguments
+
+    @required_arguments.setter
+    def required_arguments(self, args: List[Key]) -> None:
+        self.__required_arguments = args
 
     @property
     def valid_short_arguments(self) -> Dict[str, Key]:
-        return self._valid_short_arguments
+        return self.__valid_short_arguments
+
+    @valid_short_arguments.setter
+    def valid_short_arguments(self, args: Dict[str, Key]) -> None:
+        self.__valid_short_arguments = args
 
     @property
     def valid_long_arguments(self) -> Dict[str, Key]:
-        return self._valid_long_arguments
+        return self.__valid_long_arguments
+
+    @valid_long_arguments.setter
+    def valid_long_arguments(self, args: Dict[str, Key]) -> None:
+        self.__valid_long_arguments = args
 
     ##  can be called the execute the module
     def execute(self) -> None:
@@ -47,15 +57,15 @@ class Command:
         args: Dict[Key, str] = {}
         while len(arg_list) != 0:
             next_key = arg_list.pop(0)
-            key: Key = self._get_key(next_key)
+            key: Key = self.__get_key(next_key)
             value: str = ""
             if not arg_list[0].startswith("-"):
                 value = arg_list.pop(0)
             args[key] = value
-        self._arguments = args
+        self.__arguments = args
 
-    def _get_key(self, next_key: str) -> Key:
-        if next_key.startswith("--") and next_key[2:] in self._valid_long_arguments:
+    def __get_key(self, next_key: str) -> Key:
+        if next_key.startswith("--") and next_key[2:] in self.valid_long_arguments:
             key: Key = self.valid_long_arguments[next_key[2:]]
         elif next_key.startswith("-") and next_key[1:] in self.valid_short_arguments:
             key: Key = self.valid_short_arguments[next_key[1:]]

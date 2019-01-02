@@ -1,25 +1,34 @@
 class MyException(Exception):
-
-    _message: str
-
     def __init__(self, message: str):
-        self._message = message
+        self._type: str = None
+        self.__message = message
 
     def get_info(self) -> str:
-        return self._message
+        return self.get_type() + ": " + self.__message
+
+    def get_type(self) -> str:
+        pass
 
 
 class IllegalArgumentException(MyException):
-    pass
+
+    def get_type(self) -> str:
+        return "IllegalArgumentException"
 
 
 class InvalidConfigException(MyException):
-    pass
+
+    def get_type(self) -> str:
+        return "InvalidConfigException"
 
 
 class IOException(MyException):
-    pass
+
+    def get_type(self) -> str:
+        return "IOException"
 
 
 class InvalidOSException(MyException):
-    pass
+
+    def get_type(self) -> str:
+        return "InvalidOSException"

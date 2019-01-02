@@ -14,13 +14,10 @@ from modules.view.output_service import OutputService
 
 class Controller:
 
-    _view: CommandLineInterface
-    _output_service: OutputService
-
     def __init__(self):
-        self._view = CommandLineInterface()
-        self._output_service = CLIOutputService(self._view)
-        self._register_output_service()
+        self.__view: CommandLineInterface = CommandLineInterface()
+        self.__output_service: OutputService = CLIOutputService(self.__view)
+        self.__register_output_service()
 
     def start_interaction(self):
         finished: bool = False
@@ -30,16 +27,16 @@ class Controller:
                 finished = True
             else:
                 command.execute()
-        self._output_service.print_line("Finished")
+        self.__output_service.print_line("Finished")
 
     def _get_command(self) -> Command:
-        input_string: str = self._view.read_input("Which module do you want to execute?")
+        input_string: str = self.__view.read_input("Which module do you want to execute?")
         try:
             command = CommandParser.parse_input(input_string)
         except IllegalArgumentException as e:
-            self._output_service.print_error(e)
+            self.__output_service.print_error(e)
             command = self._get_command()
         return command
 
-    def _register_output_service(self):
+    def __register_output_service(self):
         pass

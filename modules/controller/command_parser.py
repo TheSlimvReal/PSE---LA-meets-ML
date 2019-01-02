@@ -13,7 +13,7 @@ from modules.exception.excpetions import IllegalArgumentException
 ##  Class for parsing strings to a command
 class CommandParser:
 
-    _valid_commands: Dict[str, Command.__class__] = {
+    __valid_commands: Dict[str, Command.__class__] = {
         "collect": CollectCommand,
         "label": LabelCommand,
         "train": TrainCommand,
@@ -28,8 +28,8 @@ class CommandParser:
     def parse_input(input_string: str) -> Command:
         arg_list = input_string.split(" ")
         mode: str = arg_list.pop(0)
-        if mode in CommandParser._valid_commands:
-            command_class = CommandParser._valid_commands[mode]
+        if mode in CommandParser.__valid_commands:
+            command_class = CommandParser.__valid_commands[mode]
         else:
             raise IllegalArgumentException("%s is not a valid command" % mode)
         command: Command = command_class()

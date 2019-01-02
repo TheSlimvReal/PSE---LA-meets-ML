@@ -161,7 +161,7 @@ The first one is readInput that receives a message that will be displayed and re
 The other method is createOutput.
 This method prints a string to the \gls{CLI}.
 
-\subsubsection{Class Controller} 
+\subsubsection{Class controller}
 The controller is the main entry point for the program execution. 
 It creates the view, receives the user input, calls the parser to create a command from the input and starts the module the user wants.
 
@@ -192,7 +192,7 @@ The program first waits for user input.
 After the user enters his input into the \gls{CLI}, the CommandParser parses this input to a command.
 If the command equals quit, the program will exit.
 If not the command will be validated to contain enough information to start the desired module.
-If it is not valid, an error message will be printed and the user can enter a new input.
+If it is not valid, an exception message will be printed and the user can enter a new input.
 If the command is valid, the module will be started.
 Therefore the module computes his specific task in iterations.
 After each iteration it prints the current progress to the user.
@@ -203,12 +203,12 @@ When the module is finished, the program prints a complete message and starts wa
 
 \subsection{Component Diagram}
 
-\subsubsection{Model View Controller Component Diagram}
+\subsubsection{model view controller Component Diagram}
 
 \begin{figure}[h]
 \begin{center}
 \includepdf[width=\textwidth, height= \textheight, keepaspectratio]{ComponentDiagrams/PDF/interaction_overview}
-\label{Model View Controller Component Diagram}
+\label{model view controller Component Diagram}
 \end{center}
 \end{figure}
 \newpage
@@ -237,12 +237,12 @@ The modules can also provide strings that can be displayed in the view.
 
 \subsection{Sequence Diagrams}
 
-\subsubsection{Controller Sequence Diagram}
+\subsubsection{controller Sequence Diagram}
 
 \begin{figure}[h]
 \begin{center}
 \includepdf[width=\textwidth, height= \textheight, keepaspectratio]{SequenceDiagram/PDF/controller_sequence_diagram}
-\label{Controller Sequence Diagram}
+\label{controller Sequence Diagram}
 \end{center}
 \end{figure}
 \newpage
@@ -402,8 +402,8 @@ The InvalidOSException will be thrown if some part of our program is trying to a
 The collector component is responsible for acquiring, creating, collecting and saving matrices into a dataset.
 It consists of six classes:
 The Collector class which is the entry point of the component.
-The Collector class has one Generator object for generating matrices and uses the Saver for saving a dataset.
-The Generator class has one Validator util class for checking regularity, one Ssget instance for fetching and cutting matrices from the SuiteSparse Matrix collection and multiple matrix objects for initializing and returning matrices.
+The Collector class has one generator object for generating matrices and uses the Saver for saving a dataset.
+The generator class has one Validator util class for checking regularity, one Ssget instance for fetching and cutting matrices from the SuiteSparse Matrix collection and multiple matrix objects for initializing and returning matrices.
 
 \subsection{Class Description}
 
@@ -412,13 +412,13 @@ The Collector class is responsible for collecting a given amount of matrices and
 When the user types collect into the \gls{CLI}, a Collector object will be created and the public method collect() with its parameters:
 amount, name, size, density and path
 will be called. 
-The class has a Saver class attribute and a Generator class attribute.
-It uses methods from the Generator class to get matrices to collect and methods from the Saver class to save the collected dataset.
+The class has a Saver class attribute and a generator class attribute.
+It uses methods from the generator class to get matrices to collect and methods from the Saver class to save the collected dataset.
 (see the collect method Activity Diagram for a more detailed overview).
 The Collector class is the interface between matrix collecting and the \gls{CLI} and conceals all the classes of the Collector described in the following.
 
-\subsubsection{Class Generator}
-The Generator class is responsible for actually generating matrices by transforming raw matrices from SuiteSparse and validating them.
+\subsubsection{Class generator}
+The generator class is responsible for actually generating matrices by transforming raw matrices from SuiteSparse and validating them.
 The generate(size: Integer, density: Integer):Matrix method is called by a Collector object, uses the Matrix class to initialize an empty matrix, uses the Ssget class to fetch and transform matrices from the SuiteSparse collection and uses the static Validator.validate(matrix: Matrix)  method to check if the matrix is regular and can be returned.
 
 \subsubsection{Class Ssget}
@@ -460,7 +460,7 @@ Otherwise another matrix will be fetched.
 
 \subsection{Sequence Diagrams}
 
-The sequence diagramm shows what happens when the collect method of the Collector is called. First of all a loop is entered, which terminates, when the desired amount of collected matrices is exceeded. Then the generate method from the Generator is called with size and density as parameters. The generate method now calls the getMatrix method from the Ssget Class and gets a Matrix as an answer. Then the generate method checks the regularity of the returned matrix by calling the validate method from the validator with the matrix to be checked as a parameter. When the validate method delivers  regular as an answer, the generate method returns the matrix. The returned matrix is added to the dataset by the collect method. After exiting the loop, the dataset is saved by calling the save method from the saver with the dataset, the desired name and the saving path as parameters.
+The sequence diagramm shows what happens when the collect method of the Collector is called. First of all a loop is entered, which terminates, when the desired amount of collected matrices is exceeded. Then the generate method from the generator is called with size and density as parameters. The generate method now calls the getMatrix method from the Ssget Class and gets a Matrix as an answer. Then the generate method checks the regularity of the returned matrix by calling the validate method from the validator with the matrix to be checked as a parameter. When the validate method delivers  regular as an answer, the generate method returns the matrix. The returned matrix is added to the dataset by the collect method. After exiting the loop, the dataset is saved by calling the save method from the saver with the dataset, the desired name and the saving path as parameters.
 
 
 \newpage
@@ -537,7 +537,7 @@ If there are no arguments provided the labeling module will be using default pat
 The default paths are specified in a configuration file(see the training module for further details).
 If the User specifes his own paths they have to be vaild.
 Valid in this case means that the path points to a \gls{HDF5} file with the correct formatation.
-If this is not the case the program will print an error message to the command line so that the user can specify a correct path.
+If this is not the case the program will print an exception message to the command line so that the user can specify a correct path.
 \subsubsection{Class Solver}
 An Solver in our sense is an interative Solver which is able to to solve a linear system Ax=b for x, where A is a (in our case sparse) matrix of size nxn, x is a vector of size 1xn and b is vector of size 1xn(n$\in$N).
 The matrix A in our case will be the Matrix the method execute(matrix,preconditioner) will receive, the vector b will be a random vector with values between 0 and 1.
@@ -683,7 +683,7 @@ The loading and saving paths may be changed via the command line. The configurat
 \end{enumerate}
 The loading path of the set of matrices is the path in which the matrices that are used for the training and testing are stored.
 The training module only supports one \gls{HDF5} file.
-If the path is invalid, the labling module will throw an error that will be printed to the user.
+If the path is invalid, the labling module will throw an exception that will be printed to the user.
 For the training and testing of a new neural network being effective there should be at least 500 matrices in the \gls{HDF5} file.
 Otherwise the accuracy of the \gls{neural network} will be so low that it can not be used for classification.
 If there is no path specified in the start method, the training module will use a default path.
@@ -700,7 +700,7 @@ This option enables the user to use a pre-trained \gls{neural network} for train
 This could be the case if the user interrupts the training process at a certain time and wants to to repeat the training later.
 Other use cases are of course possible too.
 The \gls{neural network} has to be a model of the Keras framework.
-If the path is any other file the training module will print an error so that the user can specify a valid path.
+If the path is any other file the training module will print an exception so that the user can specify a valid path.
 If this path is not specified the training module will create a new \gls{neural network} (with the model definition and hyperparamters of the next category) and train with this one. \newline
 
 The model definition and hyperparameters are used to determine which \gls{neural network} will be trained and tested.
@@ -761,7 +761,7 @@ The configuration file that gets loaded will be used to specify the subsequent p
 The configuration file will determine from which path the labeled matrices will be loaded.
 If there is no path specified in the method start, the default path will be used(see the class description of the configuration file).
 The labeled matrices will be loaded in one \gls{HDF5} file.
-If the path links to any other file, the class TrainingModule will print an error to the command line so that the user can specify a valid path. \newline
+If the path links to any other file, the class TrainingModule will print an exception to the command line so that the user can specify a valid path. \newline
 
 Then the values of the matrix will be normalized.
 This means that every entry will be converted to a value between 0 and 1, such that relative distances are kept.

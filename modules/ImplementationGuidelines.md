@@ -34,14 +34,14 @@ class OutputService:
     __init__(self, message: str):
         self.__message = message
 ```
-* metters can be realized with the @property tag. e.g.:
+* getters can be realized with the @property tag. e.g.:
 ```Python
 @property
 def message(self) -> str:
     return self.__message
 ```
 
-* metters can be realized with the @attribute.setter tag. e.g.:
+* setters can be realized with the @attribute.setter tag. e.g.:
 ```Python
 @message.setter
 def message(self, message: str):

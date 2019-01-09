@@ -20,8 +20,8 @@ class OutputService:
 * To implement interfaces, just extend them. e.g `class CLIOutputService(OutputService):`
 
 ## Attributes
-* attribute names are lower case and words are seperated by underscores. e.g.: `new_message`
-* the desired is written after the attribute name seperated by a **:** e.g. `message: str`
+* attribute names are lower case and words are separated by underscores. e.g.: `new_message`
+* the desired is written after the attribute name separated by a **:** e.g. `message: str`
 * an attribute is set private by leading double underscores e.g. `__message: str`
 * an attribute is set static by just declaring it in the class body e.g. for a private static attribute:
 ```Python
@@ -49,7 +49,7 @@ def message(self, message: str):
 ```
 
 ## Methods
-* method names are lower case and words are seperated by underscores. e.g.: `some_method()`
+* method names are lower case and words are separated by underscores. e.g.: `some_method()`
 * methods are set static by the @staticmethod tag. e.g.:
 ```Python
 @staticmethod

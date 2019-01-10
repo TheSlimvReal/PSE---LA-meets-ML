@@ -7,15 +7,18 @@
 * class inheritances are written in brackets after the classname e.g `class ClassName(SuperClass):`
 
 ## Interfaces
-* interfaces are simulated by classes with empty methods, e.g.:
+* interfaces are simulated by classes with empty methods, raising an exception e.g.:
 ```Python
 class OutputService:
     def print_line(self, line: str) -> None:
-        pass
+        raise Exception("NotImplementedException")
+		
     def print_stream(self, message: str, observable: Observable) -> None:
-        pass
+        raise Exception("NotImplementedException")
+		
     def print_matrix(self, matrix: Matrix) -> None:
-        pass
+        raise Exception("NotImplementedException")
+		
 ```
 * To implement interfaces, just extend them. e.g `class CLIOutputService(OutputService):`
 

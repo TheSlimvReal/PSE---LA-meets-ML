@@ -1,0 +1,46 @@
+1. C++ Program, Shared Library and Test Run
+===========================================
+
+* Compile program
+>>> make
+
+* Test program
+>>> ./main
+
+2. Finding out about Exported Functions in Shared Libraries
+===========================================================
+
+* Use nm to find out what symbols (e.g. functions) are in a library
+>>> nm -D libfoo.so
+
+0000000000201040 B __bss_start
+                 U __cxa_atexit
+                 w __cxa_finalize
+0000000000201040 D _edata
+0000000000201048 B _end
+00000000000009f8 T _fini
+                 w __gmon_start__
+0000000000000790 T _init
+                 w _ITM_deregisterTMCloneTable
+                 w _ITM_registerTMCloneTable
+000000000000099e W _Z8multiplyIdET_S0_S0_
+0000000000000958 W _Z8multiplyIiET_S0_S0_
+                 U _ZNSolsEd
+                 U _ZNSolsEi
+                 U _ZNSolsEPFRSoS_E
+                 U _ZNSt8ios_base4InitC1Ev
+                 U _ZNSt8ios_base4InitD1Ev
+                 U _ZSt4cout
+                 U _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_
+                 
+ Note the entries: _Z8multiplyIdET_S0_S0_ and _Z8multiplyIiET_S0_S0_. These are 
+ the multiply functions. One is for double (...Id...) and one is for ints 
+ (...Ii...).
+ 
+ 3. Access the Functions from Python
+ ===================================
+ 
+ * Have a look at multiply.py and understand what it does
+ * Execute it to see it does what it should
+ >>> ./pymultiply.py
+

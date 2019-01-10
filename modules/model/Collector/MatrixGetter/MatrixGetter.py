@@ -1,7 +1,9 @@
 from collections.abc import Iterable
 from scipy.io import loadmat
 import os
-import sys, os
+import matplotlib.pyplot as plt
+import h5py
+import numpy as np
 
 
 
@@ -19,13 +21,22 @@ def rec(start):
                 todo.append(c)
     return found
 
-y = repr(sys.argv[0])
-y = y[:87]
-print(y + 'mat/')
-for folder in os.listdir(y + 'mat/'):
-    for matrix in os.listdir(y + 'mat/' + folder + '/'):
-        f = loadmat('/mat/' + folder + '/' + matrix)
-    #print(rec(f['Problem']))
-    x = rec(f['Problem'])
-    x.todense()
-    print(x.shape)
+def load(path):
+    try:
+        return loadmat(path)
+    except NotImplementedError:
+        # matrices in v7.3 matlab files are skipped
+        return False
+
+
+
+
+
+for folder in os.listdir('mat/'):
+    for matrix in os.listdir('mat/' + folder + '/'):
+        f = load('mat/' + folder + '/' + matrix)
+        if not f:
+            continue
+        x = rec(f['Problem']).todense()
+        plt.spy(x)
+        plt.show()

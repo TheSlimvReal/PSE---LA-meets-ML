@@ -1,6 +1,6 @@
 from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
-from modules.model.classification_module.classifictation_module import Classifier
+from modules.model.classification_module.classification_module import Classifier
 
 
 class ClassifyCommand(Command):

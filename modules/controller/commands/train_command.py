@@ -1,5 +1,6 @@
 from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
+from modules.model.training_module.training_module import TrainingModule
 
 
 class TrainCommand(Command):
@@ -22,3 +23,9 @@ class TrainCommand(Command):
 
     def execute(self):
         super().execute()
+        TrainingModule.train(
+            self.arguments.get(Key.PATH),
+            self.arguments.get(Key.TRAIN),
+            self.arguments.get(Key.Name),
+            self.arguments.get(Key.SAVING_PATH),
+        )

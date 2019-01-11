@@ -2,6 +2,7 @@ from typing import Dict
 
 from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
+from modules.model.collector_module.collector import Collector
 
 
 class CollectCommand(Command):
@@ -26,3 +27,10 @@ class CollectCommand(Command):
 
     def execute(self):
         super().execute()
+        Collector.collect(
+            self.get_int_value(Key.AMOUNT),
+            self.get_int_value(Key.SIZE),
+            self.get_int_value(Key.DENSITY),
+            self.arguments.get(Key.NAME),
+            self.arguments.get(Key.PATH),
+        )

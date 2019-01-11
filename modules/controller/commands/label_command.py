@@ -4,6 +4,7 @@ from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
 from modules.controller.commands.label_mode import LabelMode
 from modules.exception.excpetions import IllegalArgumentException
+from modules.model.labeling_module.labeling_module import LabelingModule
 
 
 class LabelCommand(Command):
@@ -42,6 +43,11 @@ class LabelCommand(Command):
     def execute(self):
         if self.__mode == LabelMode.LABEL:
             super().execute()
+            LabelingModule.start(
+                self.arguments.get(Key.PATH),
+                self.arguments.get(Key.Name),
+                self.arguments.get(Key.SAVING_PATH)
+            )
             return
         elif self.__mode == LabelMode.ADD:
             [self.__add_to_config(name) for name in self.__config]

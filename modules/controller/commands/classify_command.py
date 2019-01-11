@@ -1,5 +1,6 @@
 from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
+from modules.model.classification_module.classification_module import Classifier
 
 
 class ClassifyCommand(Command):
@@ -19,3 +20,7 @@ class ClassifyCommand(Command):
 
     def execute(self):
         super().execute()
+        Classifier.start(
+            self.arguments.get(Key.PATH),
+            self.arguments.get(Key.NETWORK)
+        )

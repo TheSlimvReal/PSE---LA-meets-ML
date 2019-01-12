@@ -8,9 +8,9 @@ import numpy as np
 
 
 
-def rec(start):
+def rec(matrix):
     found = None
-    todo = [start]
+    todo = [matrix]
     while len(todo) != 0:
         current = todo.pop(0)
         if str(type(current)) == "<class 'scipy.sparse.csc.csc_matrix'>":
@@ -21,12 +21,7 @@ def rec(start):
                 todo.append(c)
     return found
 
-def load(path):
-    try:
-        return loadmat(path)
-    except NotImplementedError:
-        # matrices in v7.3 matlab files are skipped
-        return False
+
 
 
 

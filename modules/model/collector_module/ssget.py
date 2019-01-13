@@ -2,6 +2,7 @@ from scipy.io import loadmat
 from random import randint
 from collections.abc import Iterable
 import os
+import matplotlib.pyplot as plt
 
 from modules.shared.matrix import Matrix
 
@@ -15,16 +16,19 @@ class SSGet:
     #   @return matrix that has been downloaded
     @staticmethod
     def get_matrix(size: int, density: float) -> Matrix:
-        downloaded_matrix = SSGet.__download_matrix()
-        return(SSGet.__cut_matrix(randint(0, downloaded_matrix.size - SSGet.__CUTSIZE)))
+        downloaded_matrix = SSGet.__download_matrix(1)
+        seed = randint(0, downloaded_matrix.shape[0] - SSGet.__CUTSIZE)
+        return SSGet.__cut_matrix(seed, downloaded_matrix)
 
     @staticmethod
     def __download_matrix(size: int) -> Matrix:
-        path = os.popen("ssget -e -i 2 -p mat").split(" ")[0] #just an example
-        return SSGet.__rec(SSGet.__load(path))
+        path = os.popen("ssget -e -i 2 -t mat").read().strip() #just an example
+        print(path)
+        return SSGet.__rec(SSGet.__load(path)['Problem'])
 
     @staticmethod
     def __cut_matrix(seed: int, matrix: Matrix) -> Matrix:
+        print(str(seed)+","+str(seed+SSGet.__CUTSIZE))
         return matrix[seed:seed+SSGet.__CUTSIZE, seed:seed+SSGet.__CUTSIZE]
 
     @staticmethod

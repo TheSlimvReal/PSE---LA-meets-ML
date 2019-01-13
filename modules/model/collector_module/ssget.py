@@ -3,6 +3,8 @@ from random import randint
 from collections.abc import Iterable
 import os
 import matplotlib.pyplot as plt
+import random
+import csv
 
 from modules.shared.matrix import Matrix
 
@@ -10,7 +12,16 @@ from modules.shared.matrix import Matrix
 ##This class handles the communication with the suit sparse matrix collection using the ssget tool
 class SSGet:
 
+    # Use this 2 attributes if you want to do a new search in the database
+    #__SEARCH_COMMAND = "ssget -s '[ @real ] && [ @rows -eq @cols ]'" #command for searching for all matrix ids which are squared and real
+    #__real_square_matrices_ids = os.popen(__SEARCH_COMMAND).read().split("\n")[:-1] #list of matrix ids
+
+    #use this attribute if you want to fetch your ids from an already downlaoded list
+    __real_square_matrices_ids = my_list = open('matrix_ids.csv', 'r').read().split("\n")
+
     __CUTSIZE = 128
+
+
     ##  Gets you a matrix
     #
     #   @return matrix that has been downloaded
@@ -18,17 +29,19 @@ class SSGet:
     def get_matrix(size: int, density: float) -> Matrix:
         downloaded_matrix = SSGet.__download_matrix(1)
         seed = randint(0, downloaded_matrix.shape[0] - SSGet.__CUTSIZE)
+
         return SSGet.__cut_matrix(seed, downloaded_matrix)
 
     @staticmethod
     def __download_matrix(size: int) -> Matrix:
-        path = os.popen("ssget -e -i 2 -t mat").read().strip() #just an example
-        print(path)
+        matrix_id = random.choice(SSGet.__real_square_matrices_ids)
+        download_command = "ssget -e -i "+matrix_id+" -t mat"
+        path = os.popen(download_command).read().strip() #just an example
         return SSGet.__rec(SSGet.__load(path)['Problem'])
 
     @staticmethod
     def __cut_matrix(seed: int, matrix: Matrix) -> Matrix:
-        print(str(seed)+","+str(seed+SSGet.__CUTSIZE))
+
         return matrix[seed:seed+SSGet.__CUTSIZE, seed:seed+SSGet.__CUTSIZE]
 
     @staticmethod
@@ -52,3 +65,4 @@ class SSGet:
                 for c in current:
                     todo.append(c)
         return found
+

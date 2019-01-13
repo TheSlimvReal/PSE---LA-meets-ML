@@ -4,6 +4,7 @@
 from modules.model.collector_module.generator import Generator
 from modules.shared.saver import Saver
 
+import os
 import numpy as np
 
 
@@ -24,4 +25,3 @@ class Collector:
         for i in range(0, amount):
             collected_dataset[i] = Generator.generate(size, density)
         Saver.save(collected_dataset, name, path)
-

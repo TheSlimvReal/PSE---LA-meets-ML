@@ -3,6 +3,7 @@
 ## This class handles the collecting of matrices for further use
 from modules.model.collector_module.generator import Generator
 from modules.shared.saver import Saver
+import matplotlib.pyplot as plt
 
 import os
 import numpy as np
@@ -21,7 +22,8 @@ class Collector:
     #   @param path where the matrices will be saved
     @staticmethod
     def collect(amount: int, size: int, density: float, name: str, path: str) -> None:
-        collected_dataset = np.empty(amount)
+        collected_dataset = []
         for i in range(0, amount):
-            collected_dataset[i] = Generator.generate(size, density)
+            collected_dataset.append(Generator.generate(size, density))
         Saver.save(collected_dataset, name, path)
+

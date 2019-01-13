@@ -13,6 +13,6 @@ class Generator:
     @staticmethod
     def generate(size: int, density: float) -> Matrix:
         generated_matrix = SSGet.get_matrix(size, density)
-        while not Validator.validate(generated_matrix):
+        while not Validator.validate(generated_matrix.todense()):
             generated_matrix = SSGet.get_matrix(size, density)
         return generated_matrix

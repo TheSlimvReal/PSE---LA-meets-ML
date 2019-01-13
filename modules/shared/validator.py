@@ -2,7 +2,7 @@
 
 ##  This class handles the validation of matrices
 from modules.shared.matrix import Matrix
-from numpy.linalg import cond
+from numpy.linalg import det
 
 
 class Validator:
@@ -15,7 +15,7 @@ class Validator:
     #   @param matrix which will be checked
     @staticmethod
     def validate(matrix: Matrix) -> bool:
-        if cond(matrix) > Validator.__THRESHOLD:
+        if det(matrix) != 0:
             return True
         else:
             return False

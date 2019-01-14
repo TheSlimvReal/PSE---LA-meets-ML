@@ -7,6 +7,7 @@ os:
 
 install:
   - pip install -r requirements.txt
+  - sudo curl -Lo /usr/local/bin/ssget https://raw.githubusercontent.com/ginkgo-project/ssget/master/ssget
 
 script:
   - pytest

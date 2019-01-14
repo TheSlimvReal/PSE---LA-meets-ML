@@ -28,7 +28,7 @@ class SSGet:
     @staticmethod
     def get_matrix(size: int, density: float) -> Matrix:
         downloaded_matrix = SSGet.__download_matrix(1)
-        while not downloaded_matrix:
+        while downloaded_matrix == []:
             downloaded_matrix = SSGet.__download_matrix(1)
         seed = randint(0, downloaded_matrix.shape[0] - SSGet.__CUTSIZE)
         print("Seed:"+str(seed))
@@ -39,7 +39,7 @@ class SSGet:
         matrix_id = random.choice(SSGet.__real_square_matrices_ids)
         download_command = "ssget -e -i "+matrix_id+" -t mat"
         path = os.popen(download_command).read().strip()    # just an example
-        if not SSGet.__load(path):
+        if SSGet.__load(path) == []:
             return []
         else:
             return SSGet.__rec(SSGet.__load(path)['Problem'])

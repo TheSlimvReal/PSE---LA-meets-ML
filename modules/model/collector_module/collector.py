@@ -16,6 +16,6 @@ class Collector:
     def collect(amount: int, size: int, density: float, name: str, path: str) -> None:
         collected_dataset = []
         for i in range(0, amount):
-            collected_dataset.append(Generator.generate(size, density))
+            matrix =  Generator.generate(size, density)
+            collected_dataset.append(matrix)
         Saver.save(collected_dataset, name, path)
-

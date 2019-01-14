@@ -12,15 +12,14 @@ from modules.shared.matrix import Matrix
 ##This class handles the communication with the suit sparse matrix collection using the ssget tool
 class SSGet:
 
-    # Use this 2 attributes if you want to do a new search in the database
-    #__SEARCH_COMMAND = "ssget -s '[ @real ] && [ @rows -eq @cols ] && [ @rows -ge 129 ]'" #command for searching for all matrix ids which are squared and real
-    #real_square_matrices_ids = os.popen(__SEARCH_COMMAND).read().split("\n")[:-1] #list of matrix ids
+    #   Use this 2 attributes if you want to do a new search in the database
+    #   SEARCH_COMMAND = "ssget -s '[ @real ] && [ @rows -eq @cols ] && [ @rows -ge 129 ]'" #command for searching for all matrix ids which are squared and real
+    #   real_square_matrices_ids = os.popen(__SEARCH_COMMAND).read().split("\n")[:-1] #list of matrix ids
 
     #use this attribute if you want to fetch your ids from an already downlaoded list
     __real_square_matrices_ids = my_list = open('matrix_ids.csv', 'r').read().split("\n")
 
     __CUTSIZE = 128
-
 
     ##  Gets you a matrix
     #
@@ -28,7 +27,7 @@ class SSGet:
     @staticmethod
     def get_matrix(size: int, density: float) -> Matrix:
         downloaded_matrix = SSGet.__download_matrix(1)
-        while downloaded_matrix == []:
+        while not downloaded_matrix:
             downloaded_matrix = SSGet.__download_matrix(1)
         seed = randint(0, downloaded_matrix.shape[0] - SSGet.__CUTSIZE)
         print("Seed:"+str(seed))
@@ -38,8 +37,8 @@ class SSGet:
     def __download_matrix(size: int) -> Matrix:
         matrix_id = random.choice(SSGet.__real_square_matrices_ids)
         download_command = "ssget -e -i "+matrix_id+" -t mat"
-        path = os.popen(download_command).read().strip() #just an example
-        if SSGet.__load(path) == []:
+        path = os.popen(download_command).read().strip()    # just an example
+        if not SSGet.__load(path):
             return []
         else:
             return SSGet.__rec(SSGet.__load(path)['Problem'])
@@ -70,6 +69,7 @@ class SSGet:
                 for c in current:
                     todo.append(c)
         return found
+
 
 """
 csvfile = 'matrix_ids.csv'

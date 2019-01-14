@@ -1,16 +1,8 @@
+from modules.model.collector_module.generator import Generator
+from modules.shared.saver import Saver
 
 
 ## This class handles the collecting of matrices for further use
-from modules.model.collector_module.generator import Generator
-from modules.shared.saver import Saver
-import matplotlib.pyplot as plt
-
-import os
-import numpy as np
-
-
-
-
 class Collector:
 
     ##  Collects matrices and saves them to the specified path

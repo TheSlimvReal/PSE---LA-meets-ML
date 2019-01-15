@@ -31,7 +31,6 @@ class SSGet:
         while downloaded_matrix == []:
             downloaded_matrix = SSGet.__download_matrix(1)
         seed = randint(0, downloaded_matrix.shape[0] - SSGet.__CUTSIZE)
-        print("Seed:"+str(seed))
         return SSGet.__cut_matrix(seed, downloaded_matrix)
 
     @staticmethod

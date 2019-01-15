@@ -37,7 +37,7 @@ class SSGet:
     @staticmethod
     def __download_matrix(size: int) -> Matrix:
         matrix_id = random.choice(SSGet.__real_square_matrices_ids)
-        download_command = "ssget -e -i "+matrix_id+" -t mat"
+        download_command = "ssget -e -i " + matrix_id + " -t mat"
         path = os.popen(download_command).read().strip()    # just an example
         if SSGet.__load(path) == []:
             return []

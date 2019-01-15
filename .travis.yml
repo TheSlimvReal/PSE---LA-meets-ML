@@ -6,17 +6,14 @@ os:
   - linux
 
 install:
+  - git clone https://github.com/ginkgo-project/ssget.git
+  - cd ssget
+  - sudo make install
+  - cd ..
   - pip install -r requirements.txt
-  - sudo curl -Lo /usr/local/bin/ssget https://raw.githubusercontent.com/ginkgo-project/ssget/master/ssget
 
 script:
   - pytest
 
 notifications:
   email: false
-
-matrix:
-  include:
-    - python: "3.7"
-      dist: xenial
-      sudo: true

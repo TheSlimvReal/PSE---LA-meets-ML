@@ -1,5 +1,6 @@
 import h5py
 
+
 ##  Class that handles the saving of datasets
 class Saver:
 
@@ -10,6 +11,9 @@ class Saver:
     #   @param path where it will be saved
     @staticmethod
     def save(dataset, name: str, path: str) -> None:
+        path = path.replace('\\', '/')
+        if not path.endswith('/'):
+            path += '/'
         saving_file = h5py.File(path + name + '.hdf5', 'w')
         group = saving_file.create_group('dense_matrices')
         id_counter = 0

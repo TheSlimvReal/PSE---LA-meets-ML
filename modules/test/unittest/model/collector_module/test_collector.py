@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 
-
 from modules.model.collector_module.collector import Collector
 import h5py
 import numpy as np
+
 
 def test_collect():
     data = Collector.collect(5, 1, 1, 'unlabeled_matrices', 'modules/shared/data/')

@@ -26,7 +26,7 @@ class SSGet:
     #
     #   @return matrix that has been downloaded
     @staticmethod
-    def get_matrix(size: int, density: float) -> Matrix:
+    def get_matrix(size: int) -> Matrix:
         downloaded_matrix = SSGet.__download_matrix(1)
         while downloaded_matrix == []:
             downloaded_matrix = SSGet.__download_matrix(1)

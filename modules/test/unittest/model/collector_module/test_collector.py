@@ -6,7 +6,7 @@ import numpy as np
 
 
 def test_collect():
-    data = Collector.collect(5, 1, 1, 'unlabeled_matrices', 'modules/shared/data/')
+    data = Collector.collect(5, 128, 'unlabeled_matrices', 'modules/shared/data/')
     assert len(data) == 5
     for matrix in data:
         plt.spy(matrix.todense())

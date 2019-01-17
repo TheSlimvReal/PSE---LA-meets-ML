@@ -11,8 +11,8 @@ class Generator:
     #   @param size of the matrix
     #   @param density of the matrix
     @staticmethod
-    def generate(size: int, density: float) -> Matrix:
-        generated_matrix = SSGet.get_matrix(size, density)
+    def generate(size: int) -> Matrix:
+        generated_matrix = SSGet.get_matrix(size)
         while not Validator.validate(generated_matrix.todense()):
-            generated_matrix = SSGet.get_matrix(size, density)
+            generated_matrix = SSGet.get_matrix(size)
         return generated_matrix

@@ -13,10 +13,10 @@ class Collector:
     #   @param name of dataset under which matrices will be saved
     #   @param path where the matrices will be saved
     @staticmethod
-    def collect(amount: int, size: int, density: float, name: str, path: str):
+    def collect(amount: int, size: int, name: str, path: str):
         collected_dataset = []
         for i in range(0, amount):
-            matrix = Generator.generate(size, density)
+            matrix = Generator.generate(size)
             collected_dataset.append(matrix)
         Saver.save(collected_dataset, name, path)
         return collected_dataset

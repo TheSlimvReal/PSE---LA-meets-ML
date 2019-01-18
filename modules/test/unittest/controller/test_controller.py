@@ -42,5 +42,3 @@ def test_invalid_input_calls_print_error(mocked_input, mocked_print_error):
     con = Controller()
     con.start_interaction()
     mocked_print_error.assert_called_once()
-
-

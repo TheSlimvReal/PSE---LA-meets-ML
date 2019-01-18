@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Optional
 from modules.controller.commands.key import Key
 from modules.exception.excpetions import IllegalArgumentException
 
@@ -72,3 +72,8 @@ class Command:
         else:
             raise IllegalArgumentException("%s is not a valid argument." % next_key)
         return key
+
+    def get_int_value(self, key: Key) -> Optional[int]:
+        if key in self.arguments:
+            return int(self.arguments.get(key))
+        return None

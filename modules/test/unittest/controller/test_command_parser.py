@@ -14,10 +14,9 @@ from modules.exception.excpetions import IllegalArgumentException
 
 
 def test_valid_input_returns_command():
-    input_string: str = "collect --name name --density density --amount amount -p path --size size"
+    input_string: str = "collect --name name --amount amount -p path --size size"
     expected = {
         Key.NAME: "name",
-        Key.DENSITY: "density",
         Key.AMOUNT: "amount",
         Key.PATH: "path",
         Key.SIZE: "size"
@@ -59,14 +58,13 @@ def test_invalid_mode_throws_exception():
 
 
 def test_valid_collector_input():
-    input_string: str = "collect --amount amount -n name -s size --density density -p path"
+    input_string: str = "collect --amount amount -n name -s size -p path"
     command: Command = CommandParser.parse_input(input_string)
     assert isinstance(command, CollectCommand)
     expected: Dict[Key, str] = {
         Key.AMOUNT: "amount",
         Key.NAME: "name",
         Key.SIZE: "size",
-        Key.DENSITY: "density",
         Key.PATH: "path"
     }
     assert command.arguments == expected

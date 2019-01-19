@@ -1,0 +1,236 @@
+\documentclass[parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc} % use utf8 file encoding for TeX sources
+\usepackage[T1]{fontenc}    % avoid garbled Unicode text in pdf
+\usepackage[german, english]{babel}  % german hyphenation, quotes, etc
+\usepackage{graphicx}       % provides commands for including figures
+\usepackage{rotating}
+\graphicspath{ {images/} }
+\usepackage{hyperref}       % detailed hyperlink/pdf configuration
+\hypersetup{                % ‘texdoc hyperref‘ for options
+pdftitle={PSE : LAMeetsML},%
+bookmarks=true,%
+}
+\usepackage{csquotes}       % provides \enquote{} macro for "quotes"
+\usepackage[nonumberlist, acronym]{glossaries} % provides glossary commands
+\usepackage{enumitem}
+\usepackage{lscape}
+\usepackage{caption}
+\usepackage{placeins}
+
+
+\makenoidxglossaries
+%
+%%Glossary
+%
+
+\newglossaryentry{algorithm}
+{
+	name=algorithm,
+	plural=algorithms,
+	description={In mathematics and computer science, an algorithm is an unambiguous specification of how to solve a class of problems. Algorithms can perform calculation, data processing and automated reasoning tasks}
+}
+
+\newglossaryentry{classifier}
+{
+	name=classifier,
+	plural= classifiers,
+	description={The classifier is the last and main module in the program. It is able to determine the fastest \gls{preconditioner}/\gls{iterative solver} combination for a given sparse linear system. It uses the \gls{neural network} trained by the \gls{training module}}
+}
+
+\newglossaryentry{collector}
+{
+	name=collector,
+	plural=collector,
+	description={The collector is the first module in the program. Responsible for generating artificial matrices and collection preexisting matrices from the suite sparse matrix collection}
+}
+
+\newglossaryentry{command-line interface}
+{
+	name=command-line interface,
+	plural=command-lines interface,
+	description={A command-line interface is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). A program which handles the interface is called a command language interpreter}
+}
+
+\newglossaryentry{Ginkgo}
+{
+	name=Ginkgo,
+	plural=Ginkgo,
+	description={Ginkgo is a high-performance linear algebra library for manycore systems, with a focus on sparse solution of linear systems}
+}
+
+\newglossaryentry{GPU}
+{
+	name=GPU,
+	plural=GPUs,
+	description={A GPU is a graphic processing unit which has specialized electronic circuit designed to rapidly manipulate and alter memory to accelerate the creation of images in a frame buffer intended for output to a display device}
+}
+
+\newglossaryentry{grayscale sparsity pattern image}
+{
+	name=grayscale sparsity pattern image,
+	plural=grayscale sparsity pattern images,
+	description={Grayscale sparsity pattern image is an image, displaying the zero and nonzero areas of a matrix, by covering the zero areas white and all other areas by a shade of gray, depending on the value}
+}
+
+\newglossaryentry{iterative solver}
+{
+	name=iterative solver,
+	plural=iterative solvers,
+	description={In computational mathematics, an iterative solver does a mathematical procedure that uses an initial guess to generate a sequence of improving approximate solutions for a class of problems, in which the n-th approximation is derived from the previous ones}
+}
+
+\newglossaryentry{Keras}
+{
+	name=Keras,
+	plural=Keras,
+	description={Keras is an open source deep learning library written in Python}
+}
+
+\newglossaryentry{labeling module}
+{
+	name=labeling module,
+	plural=labeling modules,
+	description={The labeling module is the second module in the program. Responsible for executing a given set of matrices with all the \gls{preconditioner}/\gls{iterative solver}s combination specified. It will furthermore label each matrix with the fastest combination}
+}
+
+\newglossaryentry{Linux}
+{
+	name=Linux,
+	plural=Linux,
+	description={Linux is an open-source software operating systems}
+}
+
+\newglossaryentry{neural network}
+{
+	name=neural network,
+	plural=neural networks,
+	description={The neural network itself is not an \gls{algorithm}, but rather a framework for many different machine learning \glspl{algorithm} to work together and process complex data inputs. Such systems "learn" to perform tasks by considering examples, generally without being programmed with any task-specific rules}
+}
+
+\newglossaryentry{preconditioner}
+{
+	name=preconditioner,
+	plural=preconditioners,
+	description={In mathematics, preconditioning is the application of a transformation, that conditions a given problem into a form that is more suitable for numerical solving methods}
+}
+
+\newglossaryentry{Pytest}
+{
+	name=Pytest,
+	plural=Pytests,
+	description={Pytest is an alternative, more python fitting way of writing tests}
+}
+
+\newglossaryentry{Python}
+{
+	name=Python,
+	plural=Python,
+	description={Python is an interpreted high-level programming language for general-purpose programming}
+}
+
+\newglossaryentry{ResNet}
+{
+	name=resNet,
+	plural=resNet,
+	description={A deep residual network (deep ResNet) is a type of specialized neural network that helps to handle more sophisticated deep learning tasks and models}
+}
+
+\newglossaryentry{ssget}
+{
+	name=ssget,
+	plural=ssget,
+	description={Ssget is a command line tool for downloading matrices from the Suite Sparse Matrix Collection}
+}
+
+\newglossaryentry{Suite Sparse}
+{
+	name=Suite Sparse,
+	plural=Suite Sparse,
+	description={Suite Sparse is a suite of sparse matrix algorithms and Java interface to the Suite Sparse Matrix Collection}
+}
+
+\newglossaryentry{training module}
+{
+	name=training module,
+	plural=training modules,
+	description={The training module is the third module in the program. Responsible for training a deep neural network with the set of matrices and labels given by the \gls{labeling module}}
+}
+
+\newglossaryentry{Windows}
+{
+	name=Windows,
+	plural=Windows,
+	description={Microsoft Windows is a group of several graphical operating system families, all of which are developed, marketed, and sold by Microsoft}
+}
+
+
+\newglossaryentry{gaussian noise}
+{
+	name=gaussian noise,
+	plural=gaussian noises,
+	description={The gaussian noise is statistical noise having a probability density function equal to that of the normal distribution, which is also known as the Gaussian distribution. In other words, the values that the noise can take on are Gaussian-distributed}
+}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+{\scshape\LARGE Karlsruher Institut für Technologie\par}
+\vspace{1cm}
+{\scshape\Large Implementation Document (FSD)\par}
+\vspace{1.5cm}
+{\huge\bfseries Numerical Linear Algebra meets Machine Learning \par}
+\vspace {2cm}
+
+{\Large\itshape Fabian Koffer\par}
+{\Large\itshape Simon Hanselmann\par}
+{\Large\itshape Yannick Funk\par}
+{\Large\itshape Dennis Leon Gr\"{o}tzinger\par}
+{\Large\itshape Anna Katharina Ricker\par}
+
+\vfill
+Supervisors\par
+Hartwig Anzt
+Markus G\"{o}tz
+
+\vfill
+{\large\today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+
+\section{Success Criteria}
+
+Goal is the delivery of a consistent software stack that allows for employing 
+\glspl{neural network} for the linear system. 
+The ecosystem should allow to train a \gls{neural network} on selecting a suitable \gls{iterative solver} depending on the linear system characteristics.
+
+\section{Changes on the Design}
+
+\section{The Requirements}
+\subsection{Following Requirements are accomplished}
+\subsection{Following Requirements were not accomplished}
+
+\section{Unittests}
+
+\section{Delays and Problems}
+
+\section{statistics}
+%How many lines of code, how many commits, work splitting
+\section{development model}
+%How was the communication in the team?
+%How was GIT used? Was the merging on the master branch restricted?
+
+
+\newpage
+\section{Glossary}
+%\glspl{collector}, labeling modle, neural network, classifier, default settings  \glspl{Dateiformat}
+
+% % Automatisch generiertes Glossar (Latex zwei mal ausführen um Glossar anzuzeigen)
+%
+%\glsaddall % das sorgt dafür, dass alles Glossareinträge gedruckt werden, nicht nur die verwendeten. Das sollte nicht nötig sein!
+\printnoidxglossaries
+
+\end{document}

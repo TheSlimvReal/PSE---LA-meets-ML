@@ -2,14 +2,12 @@ from scipy.io import loadmat
 from random import randint
 from collections.abc import Iterable
 import os
-import matplotlib.pyplot as plt
 import random
-import csv
 
 from modules.shared.matrix import Matrix
 
 
-##This class handles the communication with the suit sparse matrix collection using the ssget tool
+##  This class handles the communication with the suit sparse matrix collection using the ssget tool
 class SSGet:
 
     #   Use this 2 attributes if you want to do a new search in the database

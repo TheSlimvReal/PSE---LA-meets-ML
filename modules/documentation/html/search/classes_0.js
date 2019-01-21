@@ -8,6 +8,5 @@ var searchData=
   ['command',['Command',['../classmodules_1_1controller_1_1commands_1_1command_1_1_command.html',1,'modules::controller::commands::command']]],
   ['commandlineinterface',['CommandLineInterface',['../classmodules_1_1view_1_1command__line__interface_1_1_command_line_interface.html',1,'modules::view::command_line_interface']]],
   ['commandparser',['CommandParser',['../classmodules_1_1controller_1_1command__parser_1_1_command_parser.html',1,'modules::controller::command_parser']]],
-  ['configurations',['Configurations',['../classmodules_1_1shared_1_1configurations_1_1_configurations.html',1,'modules::shared::configurations']]],
   ['controller',['Controller',['../classmodules_1_1controller_1_1controller_1_1_controller.html',1,'modules::controller::controller']]]
 ];

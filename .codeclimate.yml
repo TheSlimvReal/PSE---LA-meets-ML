@@ -1,2 +1,6 @@
-- exclude_patterns:
-    - "modules/documentation"
+version: "2"
+prepate:
+  fetch: "https://github.com/TheSlimvReal/PSE---LA-meets-ML.git"
+  path: "modules"
+exclude_patterns:
+    - "documentation"

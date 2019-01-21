@@ -1,6 +1,7 @@
 version: "2"
 prepare:
-  fetch: "https://github.com/TheSlimvReal/PSE---LA-meets-ML.git"
-  path: "modules/"
+  fetch:
+    - url: "https://github.com/TheSlimvReal/PSE---LA-meets-ML.git"
+      path: "modules/"
 exclude_patterns:
     - "documentation/"

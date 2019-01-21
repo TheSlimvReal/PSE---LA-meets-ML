@@ -23,6 +23,3 @@ class Saver:
         for matrix in dataset:
             group.create_dataset('matrix_num_' + str(id_counter), data=matrix.todense(), compression='gzip')
             id_counter += 1
-
-
-

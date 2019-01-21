@@ -45,7 +45,7 @@ class SSGet:
     @staticmethod
     def __cut_matrix(seed: int, matrix: Matrix) -> Matrix:
 
-        return matrix[seed:seed+SSGet.__CUTSIZE, seed:seed+SSGet.__CUTSIZE]
+        return matrix[seed:seed + SSGet.__CUTSIZE, seed:seed + SSGet.__CUTSIZE]
 
     @staticmethod
     def __load(path):

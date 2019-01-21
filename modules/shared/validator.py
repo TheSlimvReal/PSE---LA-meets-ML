@@ -1,14 +1,11 @@
-
-
-##  This class handles the validation of matrices
 from modules.shared.matrix import Matrix
 from numpy.linalg import det
 
 
+##  This class handles the validation of matrices
 class Validator:
 
     __THRESHOLD = 30000
-
 
     ##  This function checks if a given matrix can be used by our program
     #
@@ -19,6 +16,3 @@ class Validator:
             return True
         else:
             return False
-
-
-

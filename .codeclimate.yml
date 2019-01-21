@@ -1,5 +1,5 @@
 version: "2"
-prepate:
+prepare:
   fetch: "https://github.com/TheSlimvReal/PSE---LA-meets-ML.git"
   path: "modules/"
 checks:

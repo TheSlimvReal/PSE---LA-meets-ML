@@ -2,30 +2,5 @@ version: "2"
 prepare:
   fetch: "https://github.com/TheSlimvReal/PSE---LA-meets-ML.git"
   path: "modules/"
-checks:
-  argument-count:
-      config:
-        enabled: false
-  complex-logic:
-      config:
-        threshold: 5
-  file-lines:
-      config:
-        threshold: 250
-  method-complexity:
-    config:
-      threshold: 5
-  method-count:
-    config:
-      threshold: 20
-  method-lines:
-    config:
-      threshold: 25
-  nested-control-flow:
-    config:
-      threshold: 4
-  return-statements:
-    config:
-      threshold: 4
 exclude_patterns:
     - "documentation/"

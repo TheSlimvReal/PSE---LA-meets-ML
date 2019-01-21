@@ -1,6 +1,3 @@
 version: "2"
-prepare:
-  fetch:
-    - url: "https://github.com/TheSlimvReal/PSE---LA-meets-ML.git"
 exclude_patterns:
     - "documentation/"

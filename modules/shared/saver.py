@@ -6,7 +6,6 @@ import numpy as np
 ##  Class that handles the saving of datasets
 class Saver:
 
-
     ##  This method saves a dataset to a specified location
     #   @param dataset that will be saved(structure [[matrices],[labels]] if labeled; [matrices] if not
     #   @param name under which it will be saved

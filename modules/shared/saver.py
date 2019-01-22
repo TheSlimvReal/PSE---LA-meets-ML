@@ -28,7 +28,6 @@ class Saver:
             dense_dataset = Saver.__to_dense_array(dataset)
         saving_file.create_dataset('dense_matrices', data=dense_dataset)
 
-
     ## This method converts a list of sparse matrices into an array of dense_matrices
     #   @param dataset of sparse matrices to be converted
     @staticmethod
@@ -37,4 +36,3 @@ class Saver:
         for matrix in dataset:
             dense_dataset.append(matrix.todense())
         return np.array(dense_dataset)
-    

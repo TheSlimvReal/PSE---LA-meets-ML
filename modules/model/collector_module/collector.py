@@ -18,5 +18,5 @@ class Collector:
         for i in range(0, amount):
             matrix = Generator.generate(size)
             collected_dataset.append(matrix)
-        Saver.save(collected_dataset, name, path)
+        Saver.save(collected_dataset, name, path, False)
         return collected_dataset

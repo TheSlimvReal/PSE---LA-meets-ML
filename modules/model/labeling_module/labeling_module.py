@@ -4,7 +4,6 @@ from modules.shared.matrix import Matrix
 ##  This class handles the labeling of the matrices
 class LabelingModule:
 
-
     ##  Sets up the the class for the labeling process
     #
     #   @param path where the unlabeled matrices are located

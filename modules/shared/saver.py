@@ -2,12 +2,12 @@ import h5py
 import os
 import numpy as np
 
+
 ##  Class that handles the saving of datasets
 class Saver:
 
 
     ##  This method saves a dataset to a specified location
-    #
     #   @param dataset that will be saved(structure [[matrices],[labels]] if labeled; [matrices] if not
     #   @param name under which it will be saved
     #   @param path where it will be saved
@@ -30,7 +30,6 @@ class Saver:
 
 
     ## This method converts a list of sparse matrices into an array of dense_matrices
-    #
     #   @param dataset of sparse matrices to be converted
     @staticmethod
     def __to_dense_array(dataset):
@@ -38,3 +37,4 @@ class Saver:
         for matrix in dataset:
             dense_dataset.append(matrix.todense())
         return np.array(dense_dataset)
+    

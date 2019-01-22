@@ -12,10 +12,11 @@ from ctypes import *
 #os.environ['LD_LIBRARY_PATH'] = os.getenv("LD_LIBRARY_PATH","fail")+':/usr/local/lib64'
 
 #os.system('$CXX test.cpp -shared -fpic -I/usr/local/include/ -L/usr/local/lib/-lginkgo_omp -lginkgo_reference -lginkgo -lginkgo_cuda -o testlibrary3.so')
-
+import scipy
+import h5py
 mutable_string = create_string_buffer(str.encode("real"))
 
-
+scipy.min(3)
 
 
 

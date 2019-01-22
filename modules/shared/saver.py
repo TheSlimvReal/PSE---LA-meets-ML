@@ -21,8 +21,5 @@ class Saver:
         group = saving_file.create_group('dense_matrices')
         id_counter = 0
         for matrix in dataset:
-            group.create_dataset('matrix_num_' + str(id_counter), data=matrix.todense())
+            group.create_dataset('matrix_num_' + str(id_counter), data=matrix.todense(), compression='gzip')
             id_counter += 1
-
-
-

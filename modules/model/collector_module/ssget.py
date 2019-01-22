@@ -2,21 +2,20 @@ from scipy.io import loadmat
 from random import randint
 from collections.abc import Iterable
 import os
-import matplotlib.pyplot as plt
 import random
-import csv
 
 from modules.shared.matrix import Matrix
 
 
-##This class handles the communication with the suit sparse matrix collection using the ssget tool
+##  This class handles the communication with the suit sparse matrix collection using the ssget tool
 class SSGet:
 
     #   Use this 2 attributes if you want to do a new search in the database
-    #__SEARCH_COMMAND = "ssget -s '[ @real ] && [ @rows -eq @cols ] && [ @rows -ge 129 ] && [ @rows -le 1000 ]'" #command for searching for all matrix ids which are squared and real
-    #real_square_matrices_ids = os.popen(__SEARCH_COMMAND).read().split("\n")[:-1] #list of matrix ids
+    #   SEARCH_COMMAND = "ssget -s '[ @real ] && [ @rows -eq @cols ] && [ @rows -ge 129 ] && [ @rows -le 1000 ]'"
+    # command for searching for all matrix ids which are squared and real
+    # real_square_matrices_ids = os.popen(__SEARCH_COMMAND).read().split("\n")[:-1] #list of matrix ids
 
-    #use this attribute if you want to fetch your ids from an already downlaoded list
+    #   use this attribute if you want to fetch your ids from an already downlaoded list
     __dir = os.getcwd()
     __real_square_matrices_ids = my_list = open('modules/model/collector_module/matrix_ids.csv', 'r').read().split("\n")
 
@@ -46,7 +45,7 @@ class SSGet:
     @staticmethod
     def __cut_matrix(seed: int, matrix: Matrix) -> Matrix:
 
-        return matrix[seed:seed+SSGet.__CUTSIZE, seed:seed+SSGet.__CUTSIZE]
+        return matrix[seed:seed + SSGet.__CUTSIZE, seed:seed + SSGet.__CUTSIZE]
 
     @staticmethod
     def __load(path):

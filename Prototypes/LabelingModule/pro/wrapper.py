@@ -3,6 +3,7 @@ import h5py
 import scipy.io
 import scipy.sparse
 import numpy as np
+from ctypes import *
 
 def main():
         s = ctypes.cdll.LoadLibrary("/home/ugsqo/home/ugsqo/Prototypes/LabelingModule/pro/lib.so")
@@ -26,7 +27,8 @@ def main():
         arrari = (ctypes.c_int * len(a_row_indices))(*a_row_indices)
         arrx = (ctypes.c_double * len(x))(*x)
 
-        s.main(1, "omp")
+        mutable_string = create_string_buffer(str.encode("cuda"))
+        s.main(2, mutable_string)
         s._Z44calculate_time_with_SOLVERX_on_square_matrixiPdPiiS0_S_S_.restype = ctypes.c_double
         t = s._Z44calculate_time_with_SOLVERX_on_square_matrixiPdPiiS0_S_S_(csr_matrices[0].shape[0], arra, arrari, len(a_values), arraptrs, arrb, arrx)
         print("durchschnittliche zeit von 10 runs:", t)

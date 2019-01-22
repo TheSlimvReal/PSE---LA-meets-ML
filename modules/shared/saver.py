@@ -6,7 +6,6 @@ import numpy as np
 ##  Class that handles the saving of datasets
 class Saver:
 
-
     ##  This method saves a dataset to a specified location
     #   @param dataset that will be saved(structure [[matrices],[labels]] if labeled; [matrices] if not
     #   @param name under which it will be saved
@@ -28,7 +27,6 @@ class Saver:
             dense_dataset = Saver.__to_dense_array(dataset)
         saving_file.create_dataset('dense_matrices', data=dense_dataset)
 
-
     ## This method converts a list of sparse matrices into an array of dense_matrices
     #   @param dataset of sparse matrices to be converted
     @staticmethod
@@ -37,4 +35,3 @@ class Saver:
         for matrix in dataset:
             dense_dataset.append(matrix.todense())
         return np.array(dense_dataset)
-    

@@ -11,7 +11,6 @@ from keras import optimizers
 ##  This class handles the training of the neural network
 class TrainingModule:
 
-
     ##  trains the neural network labeled matrices
     #
     #   @param matrices_path path where the labeled matrices are located

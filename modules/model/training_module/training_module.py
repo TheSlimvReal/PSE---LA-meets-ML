@@ -7,7 +7,6 @@ from keras.layers import Activation, Dropout, Flatten, Dense
 from keras import optimizers
 
 
-
 ##  This class handles the training of the neural network
 class TrainingModule:
 
@@ -36,21 +35,13 @@ class TrainingModule:
 
         optimizer = optimizers.SGD(lr=0.001)
         model.compile(loss='categorical_crossentropy',
-                     optimizer=optimizer,
-                     metrics=['accuracy'])
+                      optimizer=optimizer, metrics=['accuracy'])
 
-
-        ################################
         datagen = ImageDataGenerator()
         dataset = h5py.File(matrices_path, 'r')
-
 
         matrices = np.expand_dims(np.array(dataset['dense_matrices']), axis=3)
         labels = np.array(dataset['label_vectors'])
 
         model.fit_generator(datagen.flow(matrices, labels, batch_size=25),
                             steps_per_epoch=len(matrices) / 25, epochs=1)
-
-
-
-

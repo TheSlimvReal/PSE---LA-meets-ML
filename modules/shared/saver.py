@@ -5,6 +5,7 @@ import numpy as np
 ##  Class that handles the saving of datasets
 class Saver:
 
+
     ##  This method saves a dataset to a specified location
     #
     #   @param dataset that will be saved(structure [[matrices],[labels]] if labeled; [matrices] if not
@@ -19,7 +20,6 @@ class Saver:
         if not os.path.exists(path):
             os.makedirs(path)
         saving_file = h5py.File(path + name + '.hdf5', 'w')
-
 
         if labeled:
             dense_dataset = Saver.__to_dense_array(dataset[0])

@@ -1,5 +1,4 @@
-from modules.shared.matrix import Matrix
-
+import numpy as np
 
 ##  This class handles the classification of matrices using a neural network
 class Classifier:
@@ -30,5 +29,5 @@ class Classifier:
     #   @param matrix which will be normalized
     #   @return matrix which is normalized
     @staticmethod
-    def __normalize(matrix: Matrix) -> Matrix:
+    def __normalize(matrix: np.ndarray) -> np.ndarray:
         pass

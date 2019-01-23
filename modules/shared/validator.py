@@ -1,4 +1,4 @@
-from modules.shared.matrix import Matrix
+import numpy as np
 from numpy.linalg import det
 
 
@@ -11,7 +11,7 @@ class Validator:
     #
     #   @param matrix which will be checked
     @staticmethod
-    def validate(matrix: Matrix) -> bool:
+    def validate(matrix: np.ndarray) -> bool:
         if det(matrix) != 0:
             return True
         else:

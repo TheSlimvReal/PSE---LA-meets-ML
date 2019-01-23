@@ -12,7 +12,7 @@ class Saver:
     #   @param path where it will be saved
     #   @param labeled if dataset is labeled
     @staticmethod
-    def save(dataset, name: str, path: str, labeled: bool) -> None:
+    def save(dataset: list, name: str, path: str, labeled: bool) -> None:
         path = path.replace('\\', '/')
         if not path.endswith('/'):
             path += '/'
@@ -27,12 +27,12 @@ class Saver:
         else:
             dense_dataset = Saver.__to_dense_array(dataset)
         saving_file.create_dataset('dense_matrices', data=dense_dataset,
-                                   compression='gzip')
+                                  compression='gzip')
 
     ## This method converts a list of sparse matrices into an array of dense_matrices
     #   @param dataset of sparse matrices to be converted
     @staticmethod
-    def __to_dense_array(dataset):
+    def __to_dense_array(dataset: list) -> np.ndarray:
         dense_dataset = []
         for matrix in dataset:
             dense_dataset.append(matrix.todense())

@@ -76,7 +76,7 @@ class Command:
     ##  parses the string list into a dict of args
     #
     #   @param args the list retrieved by the input
-    def add_args(self, arg_list: List[str]) -> None:
+    def set_args(self, arg_list: List[str]) -> None:
         while len(arg_list) != 0:
             next_key = arg_list.pop(0)
             key: Key = self.__get_key(next_key)

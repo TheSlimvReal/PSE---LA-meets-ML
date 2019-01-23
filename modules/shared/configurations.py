@@ -19,4 +19,7 @@ class Configurations:
 
     @staticmethod
     def get_config(module: Module, key: Key) -> str or int:
-        return Configurations.__data[module][Configurations.__mapping[key]]
+        if module in Configurations.__data:
+            return Configurations.__data[module][Configurations.__mapping[key]]
+        else:
+            return None

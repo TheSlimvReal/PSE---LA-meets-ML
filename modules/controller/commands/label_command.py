@@ -59,10 +59,10 @@ class LabelCommand(Command):
         elif self.__mode == LabelMode.REMOVE:
             [self.__remove_from_config(name) for name in self.__config]
 
-    def add_args(self, arg_list: List[str]) -> None:
+    def set_args(self, arg_list: List[str]) -> None:
         self.__set_mode(arg_list.pop(0))
         if self.__mode == LabelMode.LABEL:
-            super().add_args(arg_list)
+            super().set_args(arg_list)
         else:
             self.__config = arg_list
 

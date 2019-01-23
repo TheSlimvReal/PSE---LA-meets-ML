@@ -13,6 +13,16 @@ from modules.controller.commands.train_command import TrainCommand
 from modules.exception.excpetions import IllegalArgumentException
 
 
+def compare_dict(actual: Dict[Key, str], expected: Dict[Key, str]) -> bool:
+    for key, value in actual.items():
+        if value is not None and key not in expected:
+            return False
+    for key, value in expected.items():
+        if value != actual.get(key):
+            return False
+    return True
+
+
 def test_valid_input_returns_command():
     input_string: str = "collect --name name --amount amount -p path --size size"
     expected = {
@@ -23,7 +33,7 @@ def test_valid_input_returns_command():
     }
     command: Command = CommandParser.parse_input(input_string)
     assert isinstance(command, CollectCommand)
-    assert command.arguments == expected
+    assert compare_dict(command.arguments, expected) is True
 
 
 def test_valid_input_with_arguments():
@@ -36,7 +46,7 @@ def test_valid_input_with_arguments():
         Key.TRAIN: "train",
         Key.SAVING_PATH: "savingPath"
     }
-    assert command.arguments == expected
+    assert compare_dict(command.arguments, expected) is True
 
 
 def test_valid_input_with_flag():
@@ -48,7 +58,7 @@ def test_valid_input_with_flag():
         Key.SOLVE: "",
         Key.NETWORK: "network"
     }
-    assert command.arguments == expected
+    assert compare_dict(command.arguments, expected) is True
 
 
 def test_invalid_mode_throws_exception():
@@ -67,7 +77,7 @@ def test_valid_collector_input():
         Key.SIZE: "size",
         Key.PATH: "path"
     }
-    assert command.arguments == expected
+    assert compare_dict(command.arguments, expected) is True
 
 
 def test_valid_label_label_mode():
@@ -80,7 +90,7 @@ def test_valid_label_label_mode():
     command = CommandParser.parse_input(input_string)
     assert isinstance(command, LabelCommand)
     assert command.mode == LabelMode.LABEL
-    assert command.arguments == expected
+    assert compare_dict(command.arguments, expected) is True
 
 
 def test_valid_label_add_mode():

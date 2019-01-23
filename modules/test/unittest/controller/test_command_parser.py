@@ -9,11 +9,13 @@ from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
 from modules.controller.commands.label_command import LabelCommand
 from modules.controller.commands.label_mode import LabelMode
+from modules.controller.commands.module import Module
 from modules.controller.commands.train_command import TrainCommand
 from modules.exception.excpetions import IllegalArgumentException
+from modules.shared.configurations import Configurations
 
 
-def compare_dict(actual: Dict[Key, str], expected: Dict[Key, str]) -> bool:
+def dicts_equal(actual: Dict[Key, str], expected: Dict[Key, str]) -> bool:
     for key, value in actual.items():
         if value is not None and key not in expected:
             return False
@@ -33,7 +35,7 @@ def test_valid_input_returns_command():
     }
     command: Command = CommandParser.parse_input(input_string)
     assert isinstance(command, CollectCommand)
-    assert compare_dict(command.arguments, expected) is True
+    assert dicts_equal(command.arguments, expected) is True
 
 
 def test_valid_input_with_arguments():
@@ -46,7 +48,7 @@ def test_valid_input_with_arguments():
         Key.TRAIN: "train",
         Key.SAVING_PATH: "savingPath"
     }
-    assert compare_dict(command.arguments, expected) is True
+    assert dicts_equal(command.arguments, expected) is True
 
 
 def test_valid_input_with_flag():
@@ -58,7 +60,7 @@ def test_valid_input_with_flag():
         Key.SOLVE: "",
         Key.NETWORK: "network"
     }
-    assert compare_dict(command.arguments, expected) is True
+    assert dicts_equal(command.arguments, expected) is True
 
 
 def test_invalid_mode_throws_exception():
@@ -77,7 +79,7 @@ def test_valid_collector_input():
         Key.SIZE: "size",
         Key.PATH: "path"
     }
-    assert compare_dict(command.arguments, expected) is True
+    assert dicts_equal(command.arguments, expected) is True
 
 
 def test_valid_label_label_mode():
@@ -90,7 +92,7 @@ def test_valid_label_label_mode():
     command = CommandParser.parse_input(input_string)
     assert isinstance(command, LabelCommand)
     assert command.mode == LabelMode.LABEL
-    assert compare_dict(command.arguments, expected) is True
+    assert dicts_equal(command.arguments, expected) is True
 
 
 def test_valid_label_add_mode():
@@ -125,3 +127,19 @@ def test_quit_with_arguments_throws_error():
     input_string = "quit -n name --density density"
     with pytest.raises(IllegalArgumentException):
         CommandParser.parse_input(input_string)
+
+
+def test_collector_with_missing_optional_args_adds_default():
+    input_string = "collect -n name"
+    size = Configurations.get_config(Module.COLLECT, Key.SIZE)
+    amount = Configurations.get_config(Module.COLLECT, Key.AMOUNT)
+    path = Configurations.get_config(Module.COLLECT, Key.PATH)
+    expected = {
+        Key.NAME: "name",
+        Key.SIZE: size,
+        Key.AMOUNT: amount,
+        Key.PATH: path
+    }
+    command = CommandParser.parse_input(input_string)
+    assert isinstance(command, CollectCommand)
+    assert dicts_equal(command.arguments, expected) is True

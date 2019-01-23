@@ -143,3 +143,16 @@ def test_collector_with_missing_optional_args_adds_default():
     command = CommandParser.parse_input(input_string)
     assert isinstance(command, CollectCommand)
     assert dicts_equal(command.arguments, expected) is True
+
+
+def test_classify_command_with_missing_optional_arg_adds_default():
+    input_str = "classify -p path -n network"
+    train = Configurations.get_config(Module.CLASSIFY, Key.TRAIN)
+    expected = {
+        Key.PATH: "path",
+        Key.NETWORK: "network",
+        Key.TRAIN: train
+    }
+    command = CommandParser.parse_input(input_str)
+    assert isinstance(command, ClassifyCommand)
+    assert dicts_equal(command.arguments, expected) is True

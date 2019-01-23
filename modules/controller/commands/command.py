@@ -2,12 +2,10 @@ from typing import List, Dict, Optional
 from modules.controller.commands.key import Key
 from modules.controller.commands.module import Module
 from modules.exception.excpetions import IllegalArgumentException
-
-
-##  Interface for the module specific commands
 from modules.shared.configurations import Configurations
 
 
+##  Interface for the module specific commands
 class Command:
 
     def __init__(self):

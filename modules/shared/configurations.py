@@ -5,18 +5,25 @@ from modules.controller.commands.key import Key
 from modules.controller.commands.module import Module
 
 
+##  This class fetches default values from the config.json
 class Configurations:
 
     __mapping: Dict[Key, str] = {
         Key.AMOUNT: "amount",
         Key.NAME: "name",
         Key.PATH: "path",
-        Key.SIZE: "size"
+        Key.SIZE: "size",
+        Key.TRAIN: "train"
     }
 
     with open("config.json") as f:
         __data = json.load(f)
 
+    ##  Gets you a default value for the argument
+    #
+    #   @param module for which you want a default value for
+    #   @param key for the default value you want
+    #   @return str or int depending on the value of the .json file
     @staticmethod
     def get_config(module: Module, key: Key) -> str or int:
         if module in Configurations.__data:

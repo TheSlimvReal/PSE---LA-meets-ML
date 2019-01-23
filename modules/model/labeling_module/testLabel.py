@@ -3,15 +3,15 @@ import h5py
 import scipy.io
 import scipy.sparse
 import numpy as np
+from modules.shared.saver import Saver
 
 SolverOrder = ["cg", "bicgstab", "fcg", "cgs", "gmers"]
 
 def main():
-    cf = h5py.File("../../shared/data/example_matrices.hdf5")
-    matrix_names = list(cf["dense_matrices"].keys())
+    cf = np.array(h5py.File("../../shared/data/labeled_matrices.hdf5")['dense_matrices'])
     csr_matrices = []
-    for name in matrix_names:
-        csr_matrix = scipy.sparse.csr_matrix(np.array(cf["dense_matrices"][name]))
+    for matrix in cf:
+        csr_matrix = scipy.sparse.csr_matrix(matrix)
         csr_matrices.append(csr_matrix)
 
     g = Ginkgowrapper(2, "reference")

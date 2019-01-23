@@ -6,7 +6,7 @@ class Ginkgowrapper:
 
         def __init__(self, argc, argv):
                 self.gingkowrapper = cdll.LoadLibrary("./ginkgowrapper.so")
-                self.gingkowrapper.main(argc, create_string_buffer(str.encode("cuda"))
+                self.gingkowrapper.main(argc, create_string_buffer(str.encode(argv)))
                 self.gingkowrapper._Z41calculate_fastest_solver_on_square_matrixiPdPiiS0_S_S_i.restype = c_int
 
 

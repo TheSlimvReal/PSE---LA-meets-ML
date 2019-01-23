@@ -43,6 +43,7 @@ class Command:
     ##  can be called the execute the module
     def execute(self) -> None:
         self.validate()
+        self.get_defaults
 
     ##  will be called in the command execution
     def validate(self) -> None:

@@ -1,5 +1,6 @@
 import numpy as np
 
+
 ##  This class handles the classification of matrices using a neural network
 class Classifier:
 

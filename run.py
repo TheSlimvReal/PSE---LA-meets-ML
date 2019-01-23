@@ -8,4 +8,3 @@ from modules.controller.controller import Controller
 #       quit
 
 Controller().start_interaction()
-

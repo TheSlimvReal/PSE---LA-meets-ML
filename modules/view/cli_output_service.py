@@ -5,6 +5,7 @@ from modules.view.output_service import OutputService
 from modules.view.subscriber import Subscriber
 import numpy as np
 
+
 ##  This class communicates with the command line interface
 class CLIOutputService(OutputService, Subscriber):
 

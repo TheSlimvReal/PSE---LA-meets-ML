@@ -24,6 +24,7 @@ class CommandParser:
     ##  Parses a string to a command
     #
     #   @param input_string the string that should be parsed to a command
+    #   @return the command object of the specified class
     @staticmethod
     def parse_input(input_string: str) -> Command:
         arg_list = input_string.split(" ")

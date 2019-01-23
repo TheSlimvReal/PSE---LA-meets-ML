@@ -1,9 +1,7 @@
-from modules.shared.matrix import Matrix
-
+import numpy as np
 
 ##  This class handles the labeling of the matrices
 class LabelingModule:
-
 
     ##  Sets up the the class for the labeling process
     #
@@ -25,5 +23,5 @@ class LabelingModule:
     #
     #   @param matrix for which a label will be created
     @staticmethod
-    def __calculate_label(matrix: Matrix):
+    def __calculate_label(matrix: np.ndarray):
         pass

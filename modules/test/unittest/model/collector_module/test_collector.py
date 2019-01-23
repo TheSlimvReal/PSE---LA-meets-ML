@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import pytest
 
 from modules.model.collector_module.collector import Collector
 import h5py
@@ -12,7 +13,5 @@ def test_collect():
         plt.spy(matrix.todense())
         plt.show()
     created_file = h5py.File('modules/shared/data/unlabeled_matrices.hdf5','r')
-    matrix_names = list(created_file['dense_matrices'].keys())
-    for name in matrix_names:
-        print(np.array(created_file['dense_matrices'][name]))
+    print(created_file['dense_matrices'])
 

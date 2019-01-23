@@ -30,7 +30,7 @@ class Controller:
         self.__output_service.print_line("Finished")
 
     def _get_command(self) -> Command:
-        input_string: str = self.__view.read_input("Which module do you want to execute?")
+        input_string = self.__view.read_input("Which module do you want to execute?")
         try:
             command = CommandParser.parse_input(input_string)
         except IllegalArgumentException as e:

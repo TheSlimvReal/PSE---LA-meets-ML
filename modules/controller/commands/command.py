@@ -1,20 +1,37 @@
 from typing import List, Dict, Optional
 from modules.controller.commands.key import Key
+from modules.controller.commands.module import Module
 from modules.exception.excpetions import IllegalArgumentException
 
 
 ##  Interface for the module specific commands
+from modules.shared.configurations import Configurations
+
+
 class Command:
 
     def __init__(self):
+        self.__module_name: Module = Module.UNDEFINED
         self.__arguments: Dict[Key, str] = {}
         self.__valid_short_arguments: Dict[str, Key] = {}
         self.__valid_long_arguments: Dict[str, Key] = {}
         self.__required_arguments: List[Key] = []
 
     @property
+    def module_name(self) -> Module:
+        return self.__module_name
+
+    @module_name.setter
+    def module_name(self, module: Module) -> None:
+        self.__module_name = module
+
+    @property
     def arguments(self) -> Dict[Key, str]:
         return self.__arguments
+
+    @arguments.setter
+    def arguments(self, arguments: Dict[Key, str]) -> None:
+        self.__arguments = arguments
 
     @property
     def required_arguments(self) -> List[Key]:
@@ -43,7 +60,7 @@ class Command:
     ##  can be called the execute the module
     def execute(self) -> None:
         self.validate()
-        self.get_defaults
+        self._get_defaults()
 
     ##  will be called in the command execution
     def validate(self) -> None:
@@ -51,19 +68,22 @@ class Command:
             if arg not in self.arguments:
                 raise IllegalArgumentException("%s is required" % arg)
 
-    ## parses the string list into a dict of args
+    def _get_defaults(self) -> None:
+        for key, value in self.arguments.items():
+            if value is None:
+                self.arguments[key] = Configurations.get_config(self.module_name, key)
+
+    ##  parses the string list into a dict of args
     #
     #   @param args the list retrieved by the input
     def add_args(self, arg_list: List[str]) -> None:
-        args: Dict[Key, str] = {}
         while len(arg_list) != 0:
             next_key = arg_list.pop(0)
             key: Key = self.__get_key(next_key)
             value: str = ""
             if not arg_list[0].startswith("-"):
                 value = arg_list.pop(0)
-            args[key] = value
-        self.__arguments = args
+            self.arguments[key] = value
 
     def __get_key(self, next_key: str) -> Key:
         if next_key.startswith("--") and next_key[2:] in self.valid_long_arguments:

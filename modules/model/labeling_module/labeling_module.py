@@ -1,6 +1,8 @@
+
 from modules.shared.loader import Loader
 from modules.shared.saver import Saver
 from modules.model.labeling_module.ginkgo import Ginkgowrapper
+
 
 import scipy.io
 import scipy.sparse
@@ -10,6 +12,7 @@ import numpy as np
 class LabelingModule:
 
     g = Ginkgowrapper(1, "reference")
+
 
     ##  Sets up the the class for the labeling process
     #

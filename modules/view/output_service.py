@@ -1,5 +1,5 @@
 from modules.exception.excpetions import MyException
-from modules.shared.matrix import Matrix
+import numpy as np
 from modules.view.observable import Observable
 
 
@@ -21,12 +21,12 @@ class OutputService:
 
     ##  Prints an exception to the view
     #
-    #   @param exception the error holding a message
+    #   @param error the error holding a message
     def print_error(self, error: MyException) -> None:
         self.print_line(error.get_info())
 
     ##  Prints a matrix to the view
     #
-    #   @param matrix the matrix that will be displayed
-    def print_matrix(self, matrix: Matrix) -> None:
+    #   @param matrix that will be displayed
+    def print_matrix(self, matrix: np.ndarray) -> None:
         pass

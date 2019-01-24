@@ -6,4 +6,5 @@ from modules.controller.controller import Controller
 #   Example interaction:
 #       collect -a 5 -n example_matrices -p modules/shared/data/
 #       quit
+
 Controller().start_interaction()

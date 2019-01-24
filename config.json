@@ -1,0 +1,17 @@
+{
+  "collect": {
+    "path": "modules/shared/data/UnlabeledMatrices/",
+    "size": 128,
+    "amount": 100
+  },
+  "label": {
+    "path": "modules/shared/data/LabeledMatrices/"
+  },
+  "train": {
+    "path": "modules/shared/data/NeuralNetwork/",
+    "train": 0.3
+  },
+  "classify": {
+    "path": "modules/shared/data/MatrixToClassify/"
+  }
+}

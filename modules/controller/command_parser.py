@@ -24,6 +24,7 @@ class CommandParser:
     ##  Parses a string to a command
     #
     #   @param input_string the string that should be parsed to a command
+    #   @return the command object of the specified class
     @staticmethod
     def parse_input(input_string: str) -> Command:
         arg_list = input_string.split(" ")
@@ -33,5 +34,5 @@ class CommandParser:
         else:
             raise IllegalArgumentException("%s is not a valid command" % mode)
         command: Command = command_class()
-        command.add_args(arg_list)
+        command.set_args(arg_list)
         return command

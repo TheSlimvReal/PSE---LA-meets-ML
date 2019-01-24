@@ -1,3 +1,4 @@
+
 from modules.shared.loader import Loader
 from modules.shared.saver import Saver
 from modules.model.labeling_module.ginkgo import Ginkgowrapper
@@ -9,6 +10,7 @@ import numpy as np
 
 ##  This class handles the labeling of the matrices
 class LabelingModule:
+
 
     g = Ginkgowrapper(1, "reference")
 
@@ -53,4 +55,5 @@ class LabelingModule:
         label = np.array([0, 0, 0, 0, 0])
         label[index] = 1
         return label
+
 

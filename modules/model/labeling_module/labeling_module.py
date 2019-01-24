@@ -11,7 +11,6 @@ import numpy as np
 class LabelingModule:
 
     g = Ginkgowrapper(1, "reference")
-
     ##  Sets up the the class for the labeling process
     #
     #   @param path where the unlabeled matrices are located

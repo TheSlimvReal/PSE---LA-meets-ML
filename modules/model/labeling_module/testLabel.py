@@ -22,12 +22,12 @@ def main():
     for matrix in csr_matrices:
         index = g.calculate_label(matrix)
         matrices.append(matrix.todense())
-        label = np.array([0,0,0,0,0])
+        label = np.array([0, 0, 0, 0, 0])
         label[index] = 1
         labels.append(label)
     new_dataset = [matrices, labels]
     print(new_dataset)
-    
+
 
 if __name__ == "__main__": main()
 

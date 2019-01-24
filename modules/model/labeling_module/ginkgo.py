@@ -25,6 +25,8 @@ class Ginkgowrapper:
                 arrx = (c_double * len(x))(*x)
 
                 return self.gingkowrapper._Z41calculate_fastest_solver_on_square_matrixiPdPiiS0_S_S_i(
-                        matrix_csr_format.shape[0], arra, arrari, len(a_values),
-                        arraptrs, arrb, arrx, self.amount_of_iterations)
+                            matrix_csr_format.shape[0],
+                            arra, arrari, len(a_values),
+                            arraptrs, arrb, arrx, self.amount_of_iterations)
+
 

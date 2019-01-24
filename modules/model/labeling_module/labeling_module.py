@@ -11,8 +11,8 @@ import numpy as np
 ##  This class handles the labeling of the matrices
 class LabelingModule:
 
-
     g = Ginkgowrapper(1, "reference")
+
     ##  Sets up the the class for the labeling process
     #
     #   @param path where the unlabeled matrices are located
@@ -54,5 +54,6 @@ class LabelingModule:
         label = np.array([0, 0, 0, 0, 0])
         label[index] = 1
         return label
+
 
 

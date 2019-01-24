@@ -11,3 +11,4 @@ os.system("$CXX  ginkgowrapper.cpp -shared -fpic -I/usr/local/include/ -L/usr/lo
           "-lginkgo_omp -lginkgo_reference -lginkgo -lginkgo_cuda -o ginkgowrapper.so")
 os.system('python3.6 testLabel.py')
 
+

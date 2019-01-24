@@ -7,7 +7,9 @@ from modules.shared.saver import Saver
 
 SolverOrder = ["cg", "bicgstab", "fcg", "cgs", "gmers"]
 
+
 def main():
+
     cf = np.array(h5py.File("../../shared/data/labeled_matrices.hdf5")['dense_matrices'])
     csr_matrices = []
     for matrix in cf:
@@ -25,5 +27,7 @@ def main():
         labels.append(label)
     new_dataset = [matrices, labels]
     print(new_dataset)
+    
 
 if __name__ == "__main__": main()
+

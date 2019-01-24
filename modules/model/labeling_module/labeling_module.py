@@ -6,6 +6,7 @@ import scipy.io
 import scipy.sparse
 import numpy as np
 
+
 ##  This class handles the labeling of the matrices
 class LabelingModule:
 
@@ -49,7 +50,7 @@ class LabelingModule:
     @staticmethod
     def __calculate_label(matrix):
         index = LabelingModule.g.calculate_label(matrix)
-        label = np.array([0,0,0,0,0])
+        label = np.array([0, 0, 0, 0, 0])
         label[index] = 1
         return label
 

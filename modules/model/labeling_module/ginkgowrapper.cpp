@@ -15,8 +15,6 @@ auto createVector(double a_values[],int a_amount_of_values);
 
 int main(int argc, char *argv)
 {
-    std::cout << argc << "\n";
-    std::cout << argv << "\n";
     // Figure out where to run the code
     if (argc == 1 || std::string(argv) == "reference") {
         exec = gko::ReferenceExecutor::create();

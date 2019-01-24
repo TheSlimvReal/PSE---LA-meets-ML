@@ -14,8 +14,6 @@ std::shared_ptr<gko::Executor> exec;
 
 int main(int argc, char *argv)
 {
-    std::cout << argc << "\n";
-    std::cout << argv << "\n";
     // Figure out where to run the code
     if (argc == 1 || std::string(argv) == "reference") {
         exec = gko::ReferenceExecutor::create();

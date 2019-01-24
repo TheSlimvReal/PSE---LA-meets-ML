@@ -1,4 +1,3 @@
-from modules.shared.matrix import Matrix
 from modules.shared.loader import Loader
 from modules.shared.saver import Saver
 from modules.model.labeling_module.ginkgo import Ginkgowrapper
@@ -6,8 +5,6 @@ from modules.model.labeling_module.ginkgo import Ginkgowrapper
 import scipy.io
 import scipy.sparse
 import numpy as np
-import h5py
-
 
 ##  This class handles the labeling of the matrices
 class LabelingModule:
@@ -21,9 +18,9 @@ class LabelingModule:
     #   @param saving_path path to where the labeled matrices will be saved
     @staticmethod
     def start(path: str, saving_name: str, saving_path: str) -> None:
-        dataset_dense_format = h5py.File("../../shared/data/labeled_matrices.hdf5")
+        dataset_dense_format = Loader.load(path)
         labeled_dataset = LabelingModule.__label(dataset_dense_format)
-        #Saver.save(labeled_dataset, saving_name, saving_path)
+        Saver.save(labeled_dataset, saving_name, saving_path, True)
         print(labeled_dataset)
 
     ##  Starts the labeling process
@@ -51,9 +48,8 @@ class LabelingModule:
     #   @param matrix for which a label will be created
     @staticmethod
     def __calculate_label(matrix):
-        index = LabelingModule.g.calculate_label(np.real(matrix))
+        index = LabelingModule.g.calculate_label(matrix)
         label = np.array([0,0,0,0,0])
         label[index] = 1
         return label
 
-if __name__ == "__main__": LabelingModule.start("../../shared/data/labeled_matrices.hdf5", "testsave", "data")

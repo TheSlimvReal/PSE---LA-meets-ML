@@ -11,5 +11,5 @@ os.environ['LD_LIBRARY_PATH'] = os.getenv("LD_LIBRARY_PATH","fail")+':/usr/local
 #environ is the environment of the current python script which is why it does not reset imedietly
 #os will, in my understanding, generate a new sub shell in which the environment variables will be set
 #thats why one can not just run p.py since it will be in another environment
-#os.system("$CXX  ginkgowrapper.cpp -shared -fpic -I/usr/local/include/ -L/usr/local/lib/ -lginkgo_omp -lginkgo_reference -lginkgo -lginkgo_cuda -o ginkgowrapper.so")
-os.system('python3.6 labeling_module.py')
+os.system("$CXX  ginkgowrapper.cpp -shared -fpic -I/usr/local/include/ -L/usr/local/lib/ -lginkgo_omp -lginkgo_reference -lginkgo -lginkgo_cuda -o ginkgowrapper.so")
+os.system('python3.6 testLabel.py')

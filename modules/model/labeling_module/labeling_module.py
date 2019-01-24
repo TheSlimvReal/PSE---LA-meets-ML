@@ -54,6 +54,3 @@ class LabelingModule:
         label = np.array([0, 0, 0, 0, 0])
         label[index] = 1
         return label
-
-
-

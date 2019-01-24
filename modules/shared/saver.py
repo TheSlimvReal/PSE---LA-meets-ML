@@ -24,7 +24,7 @@ class Saver:
             dense_dataset = Saver.__to_dense_array(dataset[0])
             saving_file.create_dataset(
                 'label_vectors',
-                data=np.array(dataset[1]),
+                data=np.array(dataset[1], dtype=np.float64),
                 compression='gzip')
         else:
             dense_dataset = Saver.__to_dense_array(dataset)
@@ -40,4 +40,4 @@ class Saver:
         dense_dataset = []
         for matrix in dataset:
             dense_dataset.append(matrix.todense())
-        return np.array(dense_dataset)
+        return np.array(dense_dataset, dtype=np.float64)

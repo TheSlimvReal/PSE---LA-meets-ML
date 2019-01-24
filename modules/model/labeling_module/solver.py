@@ -1,6 +1,7 @@
 from modules.model.labeling_module.preconditioner import Preconditioner
 import numpy as np
 
+
 ##  Abstract class representing the various solvers tht can be executed on the matrices
 class Solver:
 

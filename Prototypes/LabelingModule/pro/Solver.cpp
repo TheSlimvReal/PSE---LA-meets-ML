@@ -11,6 +11,8 @@ using namespace std;
 using namespace std::chrono;
 std::shared_ptr<gko::Executor> app_exec;
 std::shared_ptr<gko::Executor> exec;
+auto createVector(double a_values[],int a_amount_of_values);
+auto create_g_vektor(int shape, double b_values[]);
 
 int main(int argc, char *argv)
 {
@@ -32,6 +34,27 @@ int main(int argc, char *argv)
     app_exec = gko::OmpExecutor::create();
 }
 
+auto createVector(double a_values[],int a_amount_of_values) {
+    vector<double> a_values_data (a_values,a_values + a_amount_of_values);
+    return a_values_data;
+
+}
+
+
+auto create_g_vektor(int shape, double b_values[]) {
+using cg = gko::solver::Cg<>;
+    using vec = gko::matrix::Dense<>;
+    using val_array = gko::Array<double>;
+    using idx_array = gko::Array<int>;
+    using mtxDoubleInteger = gko::matrix::Csr<double, int>;
+    using bicgstab = gko::solver::Bicgstab<>;
+
+    vector<double> b_values_Data (b_values, b_values + shape);
+    double *b_values_p = b_values_Data.data();
+    auto b = vec::create(exec, gko::dim<2>(shape, 1),val_array::view(app_exec, shape, b_values_p), 1);
+    return b;
+}
+
 double calculate_time_with_SOLVERX_on_square_matrix(int shape, double a_values[], int a_row_indices[], int a_amount_of_values, int a_ptrs[], double b_values[], double x_values[])
 {
     //shortcuts
@@ -43,7 +66,8 @@ double calculate_time_with_SOLVERX_on_square_matrix(int shape, double a_values[]
     using bicgstab = gko::solver::Bicgstab<>;
 
     //create matrix A in ginkgo format
-    vector<double> a_values_data (a_values,a_values + a_amount_of_values);
+    //vector<double> a_values_data (a_values,a_values + a_amount_of_values);
+    auto a_values_data = createVector( a_values, a_amount_of_values);
     double *a_values_data_p = a_values_data.data();
     vector<int> a_row_indices_data (a_row_indices,a_row_indices + a_amount_of_values);
     int *a_row_indices_p = a_row_indices_data.data();
@@ -56,8 +80,10 @@ double calculate_time_with_SOLVERX_on_square_matrix(int shape, double a_values[]
     //create b ginkgo vector
     vector<double> b_values_Data (b_values, b_values + shape);
     double *b_values_p = b_values_Data.data();
-    auto b = vec::create(exec, gko::dim<2>(shape, 1),val_array::view(app_exec, shape, b_values_p), 1);
+    //auto b = vec::create(exec, gko::dim<2>(shape, 1),val_array::view(app_exec, shape, b_values_p), 1);
 
+
+    auto b = create_g_vektor(shape,b_values);
     //create x ginkgo vector
     vector<double> x_values_Data (x_values, x_values + shape);
     double *x_values_p = x_values_Data.data();

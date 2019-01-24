@@ -11,6 +11,7 @@ using namespace std;
 using namespace std::chrono;
 std::shared_ptr<gko::Executor> app_exec;
 std::shared_ptr<gko::Executor> exec;
+auto createVector(double a_values[],int a_amount_of_values);
 
 int main(int argc, char *argv)
 {
@@ -33,6 +34,12 @@ int main(int argc, char *argv)
     app_exec = gko::OmpExecutor::create();
 }
 
+auto createVector(double a_values[],int a_amount_of_values) {
+    vector<double> a_values_data (a_values,a_values + a_amount_of_values);
+    return a_values_data;
+
+}
+
 int calculate_fastest_solver_on_square_matrix(int shape, double a_values[], int a_row_indices[], int a_amount_of_values, int a_ptrs[], double b_values[], double x_values[], int iterations_of_solvers)
 {
     //shortcuts
@@ -43,7 +50,9 @@ int calculate_fastest_solver_on_square_matrix(int shape, double a_values[], int 
 
     
     //create matrix A in ginkgo format
-    vector<double> a_values_data (a_values,a_values + a_amount_of_values);
+    //vector<double> a_values_data (a_values,a_values + a_amount_of_values);
+
+    auto a_values_data = createVector( a_values, a_amount_of_values);
     double *a_values_data_p = a_values_data.data();
     vector<int> a_row_indices_data (a_row_indices,a_row_indices + a_amount_of_values);
     int *a_row_indices_p = a_row_indices_data.data();

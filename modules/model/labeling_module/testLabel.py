@@ -15,7 +15,7 @@ def main():
     for matrix in cf:
         csr_matrices.append(scipy.sparse.csr_matrix(np.real(matrix)))
 
-    g = Ginkgowrapper(1, "reference")
+    g = Ginkgowrapper(1, "cuda")
 
     matrices = []
     labels = []

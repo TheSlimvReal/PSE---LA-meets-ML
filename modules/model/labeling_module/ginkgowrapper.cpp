@@ -1,4 +1,4 @@
-#include <ginkgo/ginkgo.hpp>
+#include </usr/local/include/ginkgo/ginkgo.hpp>
 
 #include <fstream>
 #include <iostream>
@@ -7,6 +7,7 @@
 #include <chrono>
 #include <stdio.h>
 #include <stdlib.h>
+#include <map>
 
 //shortcuts
 using namespace std;
@@ -15,15 +16,15 @@ using vec = gko::matrix::Dense<>;
 using val_array = gko::Array<double>;
 using idx_array = gko::Array<int>;
 using mtxDoubleInteger = gko::matrix::Csr<double, int>;
+//typedef (*ScriptFunction)();
+
+
 std::shared_ptr<gko::Executor> app_exec;
 std::shared_ptr<gko::Executor> exec;
-auto createDoubleVectorPointer(double a_values[],int a_amount_of_values);
-int* createIntVectorPointer(double a_values[],int a_amount_of_values);
-auto createGinkgoMatrix(int dp, int a_amount_of_values, int a_values[]);
-auto createIntVector(int values[],int amount_of_values);
-auto createIntPointer (vector<int> values_data);
-auto createGinkgoVector(int dp, double values[]);
-int main(int argc, char *argv)
+//std::map<std::string, int(*)()> Solvers;
+
+
+int initExec(int argc, char *argv)
 {
     // Figure out where to run the code
     if (argc == 1 || std::string(argv) == "reference") {
@@ -32,6 +33,7 @@ int main(int argc, char *argv)
         exec = gko::OmpExecutor::create();
     } else if (argc == 2 && std::string(argv) == "cuda" &&
                gko::CudaExecutor::get_num_devices() > 0) {
+               printf("ok");
         exec = gko::CudaExecutor::create(0, gko::OmpExecutor::create());
     } else {
         std::cerr << "Usage: " << argv[0] << " [executor]" << std::endl;
@@ -39,10 +41,13 @@ int main(int argc, char *argv)
     }
 
 	// figure it out!!
-    app_exec = gko::OmpExecutor::create();
+    app_exec = gko::ReferenceExecutor::create();
+
+    //Solvers.emplace("Cg",gko::solver::Cg<>::build);
 }
 
 auto createDoubleVectorPointer(double values[],int amount_of_values) {
+
     vector<double> values_data (values,values + amount_of_values);
     double *values_data_p = values_data.data();
     return values_data_p;
@@ -50,19 +55,8 @@ auto createDoubleVectorPointer(double values[],int amount_of_values) {
 }
 
 int* createIntVectorPointer(int values[],int amount_of_values) {
+
     vector<int> values_data (values,values + amount_of_values);
-    /*
-    int *values_data_p;
-    values_data_p = (int*) malloc(sizeof(int));
-    if (values_data_p==NULL) {printf("error");}
-    printf("%d", *values_data.data());
-    *values_data_p = *values_data.data();
-    printf("%d", *values_data_p);
-
-    //vector<int> a_row_indices_data (a_row_indices,a_row_indices + a_amount_of_values);
-    int *a_row_indices_p = a_row_indices_data.data();
-
-    return values_data_p;*/
     int * values_data_p = values_data.data();
     return values_data_p;
 
@@ -71,9 +65,6 @@ int* createIntVectorPointer(int values[],int amount_of_values) {
 auto createIntPointer (vector<int> values_data) {
 
     int *values_data_p = values_data.data();
-
-    //vector<int> a_row_indices_data (a_row_indices,a_row_indices + a_amount_of_values);
-    //int *a_row_indices_p = a_row_indices_data.data();
 
     return values_data_p;
 }
@@ -90,19 +81,15 @@ auto createGinkgoMatrix(int dp, double a_values[], int a_row_indices[], int a_am
 
     //create the Pointer to Vector of the Values of A
     auto a_values_data_p = createDoubleVectorPointer(a_values,a_amount_of_values);
+
     //create the Pointer to Vector of the Row Indices
-    //auto a_row_indices_p = createIntVectorPointer(a_row_indices,a_amount_of_values);
-    //create the Pointer to Vector of the Pointers to the rows
     vector<int> a_row_indices_data (a_row_indices,a_row_indices + a_amount_of_values);
     int *a_row_indices_p = a_row_indices_data.data();
 
-    //int *a_row_indices_p = (int*)malloc(sizeof(int));
-    //a_row_indices_p = createIntPointer(a_row_indices_data);
-
+    //create the Pointer to Vector of the Pointers to the rows
     vector<int>  a_ptrs_data (a_ptrs,a_ptrs + (dp + 1));
-
     int *a_ptrs_p = a_ptrs_data.data();
-    //auto a_ptrs_p = createIntVectorPointer(a_ptrs,dp+1);
+
 
     auto A = mtxDoubleInteger::create(exec, gko::dim<2>(dp),
                                 val_array::view(app_exec, a_amount_of_values, a_values_data_p),
@@ -120,7 +107,26 @@ auto createGinkgoVector(int dp, double values[]) {
     return b;
 }
 
-int calculate_fastest_solver_on_square_matrix(int dp, double a_values[], int a_row_indices[], int a_amount_of_values, int a_ptrs[], double b_values[], double x_values[], int iterations_of_solvers)
+
+auto createSolver(std::shared_ptr<gko::matrix::Csr<double, int> >& A,int dp,auto (*pointer_to_Solver)()) {
+
+    auto solver_gen =
+        pointer_to_Solver()
+            .with_criteria(
+                gko::stop::Iteration::build().with_max_iters(dp).on(exec),
+                gko::stop::ResidualNormReduction<>::build()
+                    .with_reduction_factor(1e-20)
+                    .on(exec))
+            .on(exec);
+
+    auto solver = solver_gen->generate(A);
+    return solver;
+
+
+}
+
+
+int calculate_fastest_solver_on_square_matrix(int dp, double a_values[], int a_row_indices[], int a_amount_of_values, int a_ptrs[], double b_values[], double x_values[], int iterations_of_solvers,int whichSolver)
 {
 
     //create Ginkgo A Matrix
@@ -132,100 +138,52 @@ int calculate_fastest_solver_on_square_matrix(int dp, double a_values[], int a_r
     //create Ginkgo x Vector
     auto x = createGinkgoVector(dp,x_values);
 
-    // Generate solver Auslagern für mehr solver
-    auto solver_gen_cg =
-        gko::solver::Cg<>::build()
-            .with_criteria(
-                gko::stop::Iteration::build().with_max_iters(dp).on(exec),
-                gko::stop::ResidualNormReduction<>::build()
-                    .with_reduction_factor(1e-20)
-                    .on(exec))
-            .on(exec);
-    auto solver_cg = solver_gen_cg->generate(A);
+    auto solver;
+    switch ( whichSolver )
+      {
+         case 0:
+            solver = createSolver(A,dp,gko::solver::Cg<>::build);
+            break;
+         case 1:
+            solver = createSolver(A,dp,gko::solver::Bicgstab<>::build);
+            break;
+         case 2:
+            solver = createSolver(A,dp,gko::solver::Fcg<>::build);
+            break;
+         case 3:
+            solver = createSolver(A,dp,gko::solver::Cgs<>::build);
+            break;
+         case 4:
+            solver = createSolver(A,dp,gko::solver::Gmres<>::build);
+            break;
+         default:
+            exit(1);
+      }
+    /*
+    auto solver_cg = createSolver(A,dp,gko::solver::Cg<>::build);
+    
+    auto solver_bicgstab = createSolver(A,dp,gko::solver::Bicgstab<>::build);
 
-    auto solver_gen_bicgstab =
-        gko::solver::Bicgstab<>::build()
-            .with_criteria(
-                gko::stop::Iteration::build().with_max_iters(dp).on(exec),
-                gko::stop::ResidualNormReduction<>::build()
-                    .with_reduction_factor(1e-20)
-                    .on(exec))
-            .on(exec);
+    
+    auto solver_fcg = createSolver(A,dp,gko::solver::Fcg<>::build);
+    
+    auto solver_cgs = createSolver(A,dp,gko::solver::Cgs<>::build);
+    
+    auto solver_gmres = createSolver(A,dp,gko::solver::Gmres<>::build);*/
 
-    auto solver_bicgstab = solver_gen_bicgstab->generate(A);
-
-    auto solver_gen_fcg =
-        gko::solver::Fcg<>::build()
-            .with_criteria(
-                gko::stop::Iteration::build().with_max_iters(dp).on(exec),
-                gko::stop::ResidualNormReduction<>::build()
-                    .with_reduction_factor(1e-20)
-                    .on(exec))
-            .on(exec);
-
-    auto solver_fcg = solver_gen_fcg->generate(A);
-
-    auto solver_gen_cgs =
-        gko::solver::Cgs<>::build()
-            .with_criteria(
-                gko::stop::Iteration::build().with_max_iters(dp).on(exec),
-                gko::stop::ResidualNormReduction<>::build()
-                    .with_reduction_factor(1e-20)
-                    .on(exec))
-            .on(exec);
-
-    auto solver_cgs = solver_gen_cgs->generate(A);
-
-    auto solver_gen_gmres =
-        gko::solver::Gmres<>::build()
-            .with_criteria(
-                gko::stop::Iteration::build().with_max_iters(dp).on(exec),
-                gko::stop::ResidualNormReduction<>::build()
-                    .with_reduction_factor(1e-20)
-                    .on(exec))
-            .on(exec);
-
-    auto solver_gmres = solver_gen_gmres->generate(A);
 
     // Solve system & save time
     high_resolution_clock::time_point t1,t2,t3,t4;
-    double sums[] = {0,0,0,0,0};
+    double sum = 0;
     for(unsigned i = 0; i < iterations_of_solvers; i++){
 
         t1 = high_resolution_clock::now();
-        solver_cg->apply(lend(b), lend(x));
+        solver->apply(lend(b), lend(x));
         t2 = high_resolution_clock::now();
-        sums[0] += (duration_cast<microseconds>( t2 - t1 ).count())/iterations_of_solvers;
+        sum += (duration_cast<microseconds>( t2 - t1 ).count())/iterations_of_solvers;
 
-        t1 = high_resolution_clock::now();
-        solver_bicgstab->apply(lend(b), lend(x));
-        t2 = high_resolution_clock::now();
-        sums[1] += (duration_cast<microseconds>( t2 - t1 ).count())/iterations_of_solvers;
 
-        t1 = high_resolution_clock::now();
-        solver_fcg->apply(lend(b), lend(x));
-        t2 = high_resolution_clock::now();
-        sums[2] += (duration_cast<microseconds>( t2 - t1 ).count())/iterations_of_solvers;
-
-        t1 = high_resolution_clock::now();
-        solver_cgs->apply(lend(b), lend(x));
-        t2 = high_resolution_clock::now();
-        sums[3] += (duration_cast<microseconds>( t2 - t1 ).count())/iterations_of_solvers;
-
-        t1 = high_resolution_clock::now();
-        solver_gmres->apply(lend(b), lend(x));
-        t2 = high_resolution_clock::now();
-        sums[4] += (duration_cast<microseconds>( t2 - t1 ).count())/iterations_of_solvers;
     }
-    double min = sums[0];
-    int fastestCalcNumber = 0;
-    for(unsigned i = 1; i < 5; i++){
-        //std::cout << sums[i] <<"\n";
-        if(min > sums[i]){
-            min = sums[i];
-            fastestCalcNumber = i;
-        }
-    }
-    return fastestCalcNumber;
+    return sum;
 }
 

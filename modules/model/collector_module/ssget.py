@@ -15,7 +15,6 @@ class SSGet:
     # real_square_matrices_ids = os.popen(__SEARCH_COMMAND).read().split("\n")[:-1] #list of matrix ids
 
     #   use this attribute if you want to fetch your ids from an already downlaoded list
-    __dir = os.getcwd()
     __real_square_matrices_ids = my_list = open('modules/model/collector_module/matrix_ids.csv', 'r').read().split("\n")
 
     __CUTSIZE = 128

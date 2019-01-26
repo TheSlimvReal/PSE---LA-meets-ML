@@ -13,7 +13,8 @@ class Configurations:
         Key.NAME: "name",
         Key.PATH: "path",
         Key.SIZE: "size",
-        Key.TRAIN: "train"
+        Key.TRAIN: "train",
+        Key.SAVING_PATH: "saving-path",
     }
 
     with open("config.json") as f:
@@ -25,8 +26,13 @@ class Configurations:
     #   @param key for the default value you want
     #   @return str or int depending on the value of the .json file
     @staticmethod
-    def get_config(module: Module, key: Key) -> str or int:
-        if module in Configurations.__data:
-            return Configurations.__data[module][Configurations.__mapping[key]]
+    def get_config_with_key(module: Module, key: Key) -> str or int:
+        return Configurations.get_config(module, Configurations.__mapping.get(key))
+
+    @staticmethod
+    def get_config(module: Module, key: str) -> str or int:
+        tag: str = module.value
+        if tag in Configurations.__data:
+            return Configurations.__data.get(tag).get(key)
         else:
             return None

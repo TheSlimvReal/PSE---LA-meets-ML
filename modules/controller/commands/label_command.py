@@ -12,7 +12,7 @@ class LabelCommand(Command):
 
     def __init__(self):
         super().__init__()
-        self.__module_name = Module.LABEL
+        self.module_name = Module.LABEL
         self.valid_short_arguments = {
             "n": Key.NAME,
             "p": Key.PATH,

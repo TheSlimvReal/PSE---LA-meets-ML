@@ -8,10 +8,13 @@ from keras import optimizers
 from keras.models import load_model
 from keras.callbacks import ModelCheckpoint
 import keras
+from modules.view.output_service import OutputService
 
 
 ##  This class handles the training of the neural network
 class TrainingModule:
+
+    __output_service: OutputService = OutputService()
 
     ##  trains the neural network labeled matrices
     #
@@ -44,7 +47,7 @@ class TrainingModule:
 
     @staticmethod
     def __define_model(neural_network_path: str) -> keras.models.Sequential:
-        if neural_network_path == "":
+        if not neural_network_path or neural_network_path == "":
             # later config file definitions should happen here
             NUM_CLASSES = 5
             model = Sequential()
@@ -68,3 +71,7 @@ class TrainingModule:
             model = load_model(neural_network_path)
 
         return model
+
+    @staticmethod
+    def set_output_service(service: OutputService):
+        TrainingModule.__output_service = service

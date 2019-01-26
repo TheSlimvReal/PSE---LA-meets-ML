@@ -30,3 +30,6 @@ class CLIOutputService(OutputService, Subscriber):
 
     def update(self, value: str) -> None:
         self.__view.print_overriding(self.__message % value)
+
+    def finished(self) -> None:
+        self.print_line("")

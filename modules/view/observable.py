@@ -18,6 +18,11 @@ class Observable:
         for subscriber in self.__subscribers:
             subscriber.update(update)
 
+    ##  Call this to tell the subscribers that you are finished
+    def complete(self) -> None:
+        for subscriber in self.__subscribers:
+            subscriber.finished()
+
     ##  A subscriber can be added with this function
     #
     #   @param subscriber the subscriber that wants to receive status updates

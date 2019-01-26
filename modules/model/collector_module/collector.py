@@ -3,7 +3,12 @@ from modules.shared.saver import Saver
 
 
 ## This class handles the collecting of matrices for further use
+from modules.view.output_service import OutputService
+
+
 class Collector:
+
+    __output_service: OutputService = OutputService()
 
     ##  Collects matrices and saves them to the specified path
     #
@@ -20,3 +25,7 @@ class Collector:
             collected_dataset.append(matrix)
         Saver.save(collected_dataset, name, path, False)
         return collected_dataset
+
+    @staticmethod
+    def set_output_service(service: OutputService):
+        Collector.__output_service = service

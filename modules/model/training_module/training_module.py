@@ -8,7 +8,12 @@ from keras import optimizers
 
 
 ##  This class handles the training of the neural network
+from modules.view.output_service import OutputService
+
+
 class TrainingModule:
+
+    __output_service: OutputService = OutputService()
 
     ##  trains the neural network labeled matrices
     #
@@ -44,3 +49,7 @@ class TrainingModule:
 
         model.fit_generator(datagen.flow(matrices, labels, batch_size=25),
                             steps_per_epoch=len(matrices) / 25, epochs=1)
+
+    @staticmethod
+    def set_output_service(service: OutputService):
+        TrainingModule.__output_service = service

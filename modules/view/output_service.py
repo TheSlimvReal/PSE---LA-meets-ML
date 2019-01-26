@@ -4,6 +4,8 @@ from modules.view.observable import Observable
 
 
 ##  Interface for services that can be registered to a module
+#
+#   Use this as default and any other OutputService can be registered during runtime
 class OutputService:
 
     ##  Prints a line to the view
@@ -23,7 +25,7 @@ class OutputService:
     #
     #   @param error the error holding a message
     def print_error(self, error: MyException) -> None:
-        self.print_line(error.get_info())
+        pass
 
     ##  Prints a matrix to the view
     #

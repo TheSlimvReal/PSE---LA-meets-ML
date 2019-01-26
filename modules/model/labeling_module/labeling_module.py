@@ -34,7 +34,7 @@ class LabelingModule:
         dense_matrices = np.array(dataset['dense_matrices'])
         csr_matrices = []
         for matrix in dense_matrices:
-            csr_matrices.append(scipy.sparse.csr_matrix(matrix))
+            csr_matrices.append(scipy.sparse.csr_matrix(np.real(matrix)))
 
         matrices = []
         labels = []

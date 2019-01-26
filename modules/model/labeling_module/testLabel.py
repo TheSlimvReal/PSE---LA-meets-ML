@@ -13,7 +13,7 @@ def main():
     cf = np.array(h5py.File("../../shared/data/labeled_matrices.hdf5")['dense_matrices'])
     csr_matrices = []
     for matrix in cf:
-        csr_matrices.append(scipy.sparse.csr_matrix(matrix))
+        csr_matrices.append(scipy.sparse.csr_matrix(np.real(matrix)))
 
     g = Ginkgowrapper(1, "reference")
 

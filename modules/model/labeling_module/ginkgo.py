@@ -1,5 +1,6 @@
 from ctypes import *
-
+import ctypes
+import numpy as np
 
 class Ginkgowrapper:
 
@@ -8,7 +9,7 @@ class Ginkgowrapper:
         def __init__(self, argc, argv):
                 self.gingkowrapper = cdll.LoadLibrary("./ginkgowrapper.so")
                 self.gingkowrapper.main(argc, create_string_buffer(str.encode(argv)))
-                self.gingkowrapper._Z41calculate_fastest_solver_on_square_matrixiPdPiiS0_S_S_i.restype = c_int
+                self.gingkowrapper._Z41calculate_fastest_solver_on_square_matrixiPdPiiS0_S_S_i.restype = ctypes.c_int
 
         def calculate_label(self, matrix_csr_format):
                 a_values = matrix_csr_format.data

@@ -19,19 +19,19 @@ class TrainingModule:
 
     __output_service: OutputService = OutputService()
 
-    #Saving path and name
+    # Saving path and name
     __default_saving_path: str = Configurations.get_config(Module.TRAIN, "default_saving_path")
     __default_saving_name: str = Configurations.get_config(Module.TRAIN, "default_saving_name")
 
-    #Network Structure:
+    # Network Structure:
     __num_conv_lavers: int = Configurations.get_config(Module.TRAIN, "num_conv_layers")
     __num_dense_layers: int = Configurations.get_config(Module.TRAIN, "num_dense_layers")
     __layer_activation: str = Configurations.get_config(Module.TRAIN, "layer_activation")
-    __final_activation: str =  Configurations.get_config(Module.TRAIN, "final_activation")
+    __final_activation: str = Configurations.get_config(Module.TRAIN, "final_activation")
     __dropout: bool = Configurations.get_config(Module.TRAIN, "dropout")
     __num_classes: int = 5
 
-    #Hyper parameters:
+    # Hyper parameters:
     __batch_size: int = Configurations.get_config(Module.TRAIN, "batch_size")
     __training_test_split: float = Configurations.get_config(Module.TRAIN, "training_test_split")
     __learning_rate: float = Configurations.get_config(Module.TRAIN, "learning_rate")
@@ -83,7 +83,6 @@ class TrainingModule:
                 model.add(Conv2D(output_size, (kernel_size, kernel_size), input_shape=(128, 128, 1)))
                 model.add(Activation(TrainingModule.__layer_activation))
                 new_output_size = output_size
-
 
             for i in range(1,TrainingModule.__num_conv_lavers):
                 model.add(Conv2D(output_size*(i+1), (kernel_size, kernel_size)))

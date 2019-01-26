@@ -1,6 +1,7 @@
 from typing import Dict
 
 import pytest
+from mock import patch
 
 from modules.controller.command_parser import CommandParser
 from modules.controller.commands.classify_command import ClassifyCommand
@@ -146,13 +147,16 @@ def test_collector_with_missing_optional_args_adds_default():
 
 
 def test_classify_command_with_missing_optional_arg_adds_default():
-    input_str = "classify -p path -n network"
-    train = Configurations.get_config(Module.CLASSIFY, Key.TRAIN)
+    input_str = "train -p path -n network"
+    train = Configurations.get_config(Module.TRAIN, Key.TRAIN)
+    saving_path = Configurations.get_config(Module.TRAIN, Key.SAVING_PATH)
     expected = {
         Key.PATH: "path",
-        Key.NETWORK: "network",
-        Key.TRAIN: train
+        Key.NAME: "network",
+        Key.TRAIN: train,
+        Key.SAVING_PATH: saving_path,
+        Key.EXISTING_NETWORK: None,
     }
     command = CommandParser.parse_input(input_str)
-    assert isinstance(command, ClassifyCommand)
+    assert isinstance(command, TrainCommand)
     assert dicts_equal(command.arguments, expected) is True

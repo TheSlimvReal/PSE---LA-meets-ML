@@ -58,7 +58,6 @@ class Command:
     ##  can be called the execute the module
     def execute(self) -> None:
         self.validate()
-        self._get_defaults()
 
     ##  will be called in the command execution
     def validate(self) -> None:
@@ -66,7 +65,7 @@ class Command:
             if arg not in self.arguments:
                 raise IllegalArgumentException("%s is required" % arg)
 
-    def _get_defaults(self) -> None:
+    def __add_default_args(self) -> None:
         for key, value in self.arguments.items():
             if value is None:
                 self.arguments[key] = Configurations.get_config(self.module_name, key)
@@ -82,6 +81,7 @@ class Command:
             if not arg_list[0].startswith("-"):
                 value = arg_list.pop(0)
             self.arguments[key] = value
+        self.__add_default_args()
 
     def __get_key(self, next_key: str) -> Key:
         if next_key.startswith("--") and next_key[2:] in self.valid_long_arguments:

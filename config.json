@@ -5,10 +5,11 @@
     "amount": 100
   },
   "label": {
-    "path": "modules/shared/data/LabeledMatrices/"
+    "saving-path": "modules/shared/data/LabeledMatrices/"
   },
   "train": {
     "path": "modules/shared/data/NeuralNetwork/",
+    "saving-path": "modules/shared/data/NeuralNetwork/",
     "train": 0.3
   },
   "classify": {

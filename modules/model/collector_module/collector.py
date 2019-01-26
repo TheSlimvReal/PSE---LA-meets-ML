@@ -27,7 +27,7 @@ class Collector:
             observable.next(str(i + 1))
         observable.complete()
         Saver.save(collected_dataset, name, path, False)
-        Collector.__output_service.print_line("Finished collecting matrices. Saved at " + path + "name")
+        Collector.__output_service.print_line("Finished collecting matrices. Saved at " + path + " under " + name)
         return collected_dataset
 
     @staticmethod

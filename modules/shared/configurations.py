@@ -13,7 +13,8 @@ class Configurations:
         Key.NAME: "name",
         Key.PATH: "path",
         Key.SIZE: "size",
-        Key.TRAIN: "train"
+        Key.TRAIN: "train",
+        Key.SAVING_PATH: "saving-path",
     }
 
     with open("config.json") as f:
@@ -28,6 +29,6 @@ class Configurations:
     def get_config(module: Module, key: Key) -> str or int:
         tag: str = module.value
         if tag in Configurations.__data:
-            return Configurations.__data[tag][Configurations.__mapping[key]]
+            return Configurations.__data.get(tag).get(Configurations.__mapping.get(key))
         else:
             return None

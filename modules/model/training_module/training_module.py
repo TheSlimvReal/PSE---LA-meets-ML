@@ -84,19 +84,19 @@ class TrainingModule:
                 model.add(Activation(TrainingModule.__layer_activation))
                 new_output_size = output_size
 
-            for i in range(1,TrainingModule.__num_conv_lavers):
-                model.add(Conv2D(output_size*(i+1), (kernel_size, kernel_size)))
+            for i in range(1, TrainingModule.__num_conv_lavers):
+                model.add(Conv2D(output_size * (i + 1), (kernel_size, kernel_size)))
                 model.add(Activation(TrainingModule.__layer_activation))
-                new_output_size = output_size*(i+1)
+                new_output_size = output_size * (i + 1)
             if TrainingModule.__dropout:
                 model.add(Dropout(0.1))
             model.add(Flatten())
 
             if TrainingModule.__num_dense_layers > 1:
-                model.add(Dense(new_output_size*4))
+                model.add(Dense(new_output_size * 4))
                 model.add(Activation(TrainingModule.__layer_activation))
-                for i in range(1, TrainingModule.__num_dense_layers-1):
-                    model.add(Dense(int((new_output_size*4)/i)))
+                for i in range(1, TrainingModule.__num_dense_layers - 1):
+                    model.add(Dense(int((new_output_size * 4) / i)))
                     model.add(Activation(TrainingModule.__layer_activation))
             model.add(Dense(TrainingModule.__num_classes))
             model.add(Activation(TrainingModule.__final_activation))

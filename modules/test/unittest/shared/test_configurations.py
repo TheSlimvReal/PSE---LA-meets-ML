@@ -14,6 +14,6 @@ def test_loading_config_values_works():
 
 
 def test_loading_config_has_right_value():
-    actual = Configurations.get_config_with_key(Module.TRAIN, Key.TRAIN)
-    expected = 0.3
+    actual = Configurations.get_config(Module.TRAIN, "learning_rate")
+    expected = 0.001
     assert actual == expected

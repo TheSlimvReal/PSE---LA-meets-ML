@@ -37,7 +37,6 @@ class TrainingModule:
     __learning_rate: float = Configurations.get_config(Module.TRAIN, "learning_rate")
     __loss: str = Configurations.get_config(Module.TRAIN, "loss")
 
-
     ##  trains the neural network labeled matrices
     #
     #   @param matrices_path path where the labeled matrices are located
@@ -60,8 +59,10 @@ class TrainingModule:
         labels = np.array(dataset['label_vectors'])
 
         # saves model after every training epoch in format "saving_path+name+epochnr+loss"
-        if saving_path == "" or saving_path is None: saving_path = TrainingModule.__default_saving_path
-        if name == "" or name is None: name = TrainingModule.__default_saving_name
+        if saving_path == "" or saving_path is None:
+            saving_path = TrainingModule.__default_saving_path
+        if name == "" or name is None:
+            name = TrainingModule.__default_saving_name
         checkpointer = ModelCheckpoint(filepath=saving_path + name + "{epoch:02d}-{loss:.2f}.hdf5", monitor='loss',
                                        verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
 

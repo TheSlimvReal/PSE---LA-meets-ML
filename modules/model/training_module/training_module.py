@@ -47,7 +47,7 @@ class TrainingModule:
 
     @staticmethod
     def __define_model(neural_network_path: str) -> keras.models.Sequential:
-        if neural_network_path == "":
+        if not neural_network_path or neural_network_path == "":
             # later config file definitions should happen here
             NUM_CLASSES = 5
             model = Sequential()

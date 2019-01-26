@@ -16,7 +16,6 @@ from modules.view.output_service import OutputService
 #   it creates the view and executes the models
 class Controller:
 
-
     ##  Constructor sets up all the classes for the MVC
     def __init__(self):
         self.__view: CommandLineInterface = CommandLineInterface()

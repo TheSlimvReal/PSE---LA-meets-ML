@@ -22,31 +22,30 @@ class TrainingModule:
     @staticmethod
     def train(matrices_path: str, neural_network_path: str, name: str, saving_path: str) -> None:
 
-        #model is defined by the config file or loaded from a path
+        # model is defined by the config file or loaded from a path
         model = TrainingModule.__define_model(neural_network_path)
-
 
         datagen = ImageDataGenerator()
 
-        #loads matrices and labels from hdf5 file
+        # loads matrices and labels from hdf5 file
         dataset = h5py.File(matrices_path, 'r')
 
-        #converts matrices and labels in keras conform shape (samples, height, width, channels)
+        # converts matrices and labels in keras conform shape (samples, height, width, channels)
         matrices = np.expand_dims(np.array(dataset['dense_matrices']), axis=3)
         labels = np.array(dataset['label_vectors'])
 
-        #saves model after every training epoch in format "saving_path+name+epochnr+loss"
-        checkpointer = ModelCheckpoint(filepath=saving_path+name+"{epoch:02d}-{loss:.2f}.hdf5",monitor='loss',
+        # saves model after every training epoch in format "saving_path+name+epochnr+loss"
+        checkpointer = ModelCheckpoint(filepath=saving_path + name + "{epoch:02d}-{loss:.2f}.hdf5", monitor='loss',
                                        verbose=0, save_best_only=False, save_weights_only=False, mode='auto', period=1)
 
-        #trains model
+        # trains model
         model.fit_generator(datagen.flow(matrices, labels, batch_size=25),
                             steps_per_epoch=len(matrices) / 25, epochs=5, callbacks=[checkpointer])
 
     @staticmethod
     def __define_model(neural_network_path: str) -> keras.models.Sequential:
         if neural_network_path == "":
-            #later config file definitions should happen here
+            # later config file definitions should happen here
             NUM_CLASSES = 5
             model = Sequential()
 
@@ -65,7 +64,7 @@ class TrainingModule:
             model.compile(loss='categorical_crossentropy',
                           optimizer=optimizer, metrics=['accuracy'])
         else:
-            #loads a compiled model from the specified path
+            # loads a compiled model from the specified path
             model = load_model(neural_network_path)
 
         return model

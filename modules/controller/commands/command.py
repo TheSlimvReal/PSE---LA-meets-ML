@@ -68,7 +68,7 @@ class Command:
     def __add_default_args(self) -> None:
         for key, value in self.arguments.items():
             if value is None:
-                self.arguments[key] = Configurations.get_config(self.module_name, key)
+                self.arguments[key] = Configurations.get_config_with_key(self.module_name, key)
 
     ##  parses the string list into a dict of args
     #

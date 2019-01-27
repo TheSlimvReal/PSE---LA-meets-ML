@@ -27,28 +27,33 @@ bookmarks=true,%
 {
 	name=algorithm,
 	plural=algorithms,
-	description={In mathematics and computer science, an algorithm is an unambiguous specification of how to solve a class of problems. Algorithms can perform calculation, data processing and automated reasoning tasks}
+	description={In mathematics and computer science, an algorithm is an unambiguous specification of how to solve a class of problems. 
+	Algorithms can perform calculation, data processing and automated reasoning tasks}
 }
 
 \newglossaryentry{classifier}
 {
 	name=classifier,
 	plural= classifiers,
-	description={The classifier is the last and main module in the program. It is able to determine the fastest \gls{preconditioner}/\gls{iterative solver} combination for a given sparse linear system. It uses the \gls{neural network} trained by the \gls{training module}}
+	description={The classifier is the last and main module in the program. 
+	It is able to determine the fastest \gls{preconditioner}/\gls{iterative solver} combination for a given sparse linear system. 
+	It uses the \gls{neural network} trained by the \gls{training module}}
 }
 
 \newglossaryentry{collector}
 {
 	name=collector,
 	plural=collector,
-	description={The collector is the first module in the program. Responsible for generating artificial matrices and collection preexisting matrices from the suite sparse matrix collection}
+	description={The collector is the first module in the program. 
+	Responsible for generating artificial matrices and collection preexisting matrices from the suite sparse matrix collection}
 }
 
 \newglossaryentry{command-line interface}
 {
 	name=command-line interface,
 	plural=command-lines interface,
-	description={A command-line interface is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). A program which handles the interface is called a command language interpreter}
+	description={A command-line interface is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines).
+	A program which handles the interface is called a command language interpreter}
 }
 
 \newglossaryentry{Ginkgo}
@@ -90,7 +95,8 @@ bookmarks=true,%
 {
 	name=labeling module,
 	plural=labeling modules,
-	description={The labeling module is the second module in the program. Responsible for executing a given set of matrices with all the \gls{preconditioner}/\gls{iterative solver}s combination specified. It will furthermore label each matrix with the fastest combination}
+	description={The labeling module is the second module in the program. Responsible for executing a given set of matrices with all the \gls{preconditioner}/\gls{iterative solver}s combination specified. 
+	It will furthermore label each matrix with the fastest combination}
 }
 
 \newglossaryentry{Linux}
@@ -104,7 +110,8 @@ bookmarks=true,%
 {
 	name=neural network,
 	plural=neural networks,
-	description={The neural network itself is not an \gls{algorithm}, but rather a framework for many different machine learning \glspl{algorithm} to work together and process complex data inputs. Such systems "learn" to perform tasks by considering examples, generally without being programmed with any task-specific rules}
+	description={The neural network itself is not an \gls{algorithm}, but rather a framework for many different machine learning \glspl{algorithm} to work together and process complex data inputs. 
+	Such systems "learn" to perform tasks by considering examples, generally without being programmed with any task-specific rules}
 }
 
 \newglossaryentry{preconditioner}
@@ -153,7 +160,8 @@ bookmarks=true,%
 {
 	name=training module,
 	plural=training modules,
-	description={The training module is the third module in the program. Responsible for training a deep neural network with the set of matrices and labels given by the \gls{labeling module}}
+	description={The training module is the third module in the program. 
+	Responsible for training a deep neural network with the set of matrices and labels given by the \gls{labeling module}}
 }
 
 \newglossaryentry{Windows}
@@ -168,7 +176,8 @@ bookmarks=true,%
 {
 	name=gaussian noise,
 	plural=gaussian noises,
-	description={The gaussian noise is statistical noise having a probability density function equal to that of the normal distribution, which is also known as the Gaussian distribution. In other words, the values that the noise can take on are Gaussian-distributed}
+	description={The gaussian noise is statistical noise having a probability density function equal to that of the normal distribution, which is also known as the Gaussian distribution. 
+	In other words, the values that the noise can take on are Gaussian-distributed}
 }
 
 \begin{document}
@@ -202,8 +211,7 @@ Markus G\"{o}tz
 
 
 \section{Introduction}
-Goal was the delivery of a consistent software stack that allows for employing 
-\glspl{neural network} for the linear system. 
+Goal was the delivery of a consistent software stack that allows for employing \glspl{neural network} for the linear system. 
 The ecosystem should allow to train a \gls{neural network} on selecting a suitable \gls{iterative solver} depending on the linear system characteristics.
 
 Since we were dealing with a big Python project for the first time and we've never heard of Ginkgo before, getting into program environment was the first challenge.
@@ -214,7 +222,7 @@ Overall, our project now consists of lines of Python code and lines of C++ code.
 \section{Changes on the Design}
 \begin{itemize}
 \item We didn't implemented a matrix class, because we realized it is not useful to handle every matrix by its own. 
-Instead we decided to handle it directly out of the hdf5 file or from the ssget data.
+Instead we decided to handle it in numpy arrays.
 \item We changed the command interface to an abstract class to reduce redundancy of the code.
 \end{itemize}
 
@@ -233,11 +241,13 @@ additional meta-data, including labels.
 
 \item An extensible design for multiple entities that are able to generate matrices in the proposed exchange format.
 
-\item A dataset of at least 500 matrices in the envisioned data format and generated by the above two entities. There smallest share of matrices of a given entity must be no less than 30\% of the total number of contained matrices.
+\item A dataset of at least 500 matrices in the envisioned data format and generated by the above two entities. 
+There smallest share of matrices of a given entity must be no less than 30\% of the total number of contained matrices.
 
 \item An extensible design that allows to solve the matrices using a configurable set of \gls{iterative solver} algorithms using a newly developed binding to the \gls{Ginkgo} linear algebra library.
 
-\item A readily implemented and trained \gls{neural network} of the \gls{ResNet} architecture. It must be able to predict for a given matrix (in arbitrary format), which of the \gls{iterative solver} algorithms is the most suitable.
+\item A readily implemented and trained \gls{neural network} of the \gls{ResNet} architecture. 
+It must be able to predict for a given matrix (in arbitrary format), which of the \gls{iterative solver} algorithms is the most suitable.
 
 \item An entity that allows to store and load the trained \gls{neural network}.
 
@@ -245,7 +255,8 @@ additional meta-data, including labels.
 
 \item The software must be able to show the predicted \gls{algorithm} and its associated suitability probability on the standard output.
 
-\item Realization of a sustainable and quality-assured software development process. This includes a software design document, in-code documentation, unit testing and a continuous integration (CI).
+\item Realization of a sustainable and quality-assured software development process. 
+This includes a software design document, in-code documentation, unit testing and a continuous integration (CI).
 
 \end{itemize}
 
@@ -254,7 +265,7 @@ additional meta-data, including labels.
 \item All mandatory requirements were as far as possible accomplished despite the cross-platformed compatibility is not fully given. 
 This was not possible, because some used entities (ssget, gingko) where not Windows compatible.
 Compared to the specification sheet there is just the possibility to fetch and cut Suite Sparse matrices yet.
-As we figured out our design we realized that generating random matrices
+As we figured out our design we realized that generating random matrices is not that easy with our knowing.
 So as already realized in the design document, because in Suite Sparse it is very rare to have same sized matrices from Suite Sparse, it was not necessary to just fetch Suite Sparse matrices in one size. 
 Instead we just implemented a generator that fetches and cuts Suite Sparse matrices.
 \item We decided to let out the possibility to select a density, because we couldn't guarantee that the fetched and cut matrices from Suite Sparse have the wanted density.
@@ -279,7 +290,7 @@ Instead of that \gls{Ginkgo} was the main problem.
 For other projects it probably will be easier to use of a better documented library.
 On the other hand did we need this specific GPU accelerated solvers, so there probably would have been no better or similar solution.
 The same time editing of latex documents was another issue.
-In future it would be better to use for example share latex and start a new line for each sentence to minimize git problems.
+In future it would be better to use for example ShareLaTeX and start a new line for each sentence to minimize git problems.
 
 \section{Statistics}
 \begin{itemize}

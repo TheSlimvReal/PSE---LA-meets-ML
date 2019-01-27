@@ -11,6 +11,7 @@ class Command:
         self.__valid_short_arguments: Dict[str, Key] = {}
         self.__valid_long_arguments: Dict[str, Key] = {}
         self.__required_arguments: List[Key] = []
+        self.__help_arguments: List[Key] = []
 
     @property
     def arguments(self) -> Dict[Key, str]:
@@ -39,6 +40,15 @@ class Command:
     @valid_long_arguments.setter
     def valid_long_arguments(self, args: Dict[str, Key]) -> None:
         self.__valid_long_arguments = args
+
+    @property
+    def help_arguments(self) -> List[Key]:
+        return self.__help_arguments
+
+    @help_arguments.setter
+    def help_arguments(self, args: Dict[str, Key]) -> None:
+        self.__help_arguments = args
+
 
     ##  can be called the execute the module
     def execute(self) -> None:

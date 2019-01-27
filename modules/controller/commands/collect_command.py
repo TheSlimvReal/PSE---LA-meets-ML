@@ -14,13 +14,22 @@ class CollectCommand(Command):
             "n": Key.NAME,
             "p": Key.PATH,
             "s": Key.SIZE,
+            "h": Key.HELP,
         }
 
         self.valid_long_arguments: Dict[str, Key] = {
             "amount": Key.AMOUNT,
             "name": Key.NAME,
             "path": Key.PATH,
-            "size": Key.SIZE
+            "size": Key.SIZE,
+            "help": Key.HELP,
+        }
+
+        self.valid_help_arguments = {
+            "-a Absolute amount of matrices the user wants to generate",
+            "-n <name> Name under which the matrices will be saved",
+            "-s <size> (optional) Absolute size the generated square matrices should have. Default is 128",
+            "-p <path> (optional) Path where the created/downloaded matrices will be saved",
         }
 
     def execute(self):

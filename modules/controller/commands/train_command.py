@@ -12,6 +12,7 @@ class TrainCommand(Command):
             "p": Key.PATH,
             "s": Key.SAVING_PATH,
             "t": Key.TRAIN,
+            "h": Key.HELP,
         }
 
         self.valid_long_arguments = {
@@ -19,6 +20,15 @@ class TrainCommand(Command):
             "path": Key.PATH,
             "saving-path": Key.SAVING_PATH,
             "train": Key.TRAIN,
+            "help": Key.HELP,
+        }
+
+        self.valid_help_arguments = {
+            "-p <path> Absolute path to the labeled matrices on the local storage",
+            "-n <name> Name under which the neural networks will be saved after training has finished",
+            "-t <train> (optional) Float between 0 and 1. Amount of matrices used for training where 1 means all. "
+            "Standard is 0.8",
+            "-s <saving path> (optional) Path where the neural network state will be saved",
         }
 
     def execute(self):

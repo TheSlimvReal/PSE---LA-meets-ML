@@ -15,18 +15,27 @@ class LabelCommand(Command):
             "n": Key.NAME,
             "p": Key.PATH,
             "s": Key.SAVING_PATH,
+            "h": Key.HELP,
         }
 
         self.valid_long_arguments = {
             "name": Key.NAME,
             "path": Key.PATH,
             "saving-path": Key.SAVING_PATH,
+            "help": Key.HELP,
         }
 
         self.__valid_modes: Dict[str, LabelMode] = {
             "label": LabelMode.LABEL,
             "add": LabelMode.ADD,
             "remove": LabelMode.REMOVE,
+        }
+
+        self.valid_help_arguments = {
+            "label (command) If set, enter labeling mode",
+            "-p <path> Absolute path to the matrices in the local storage the user wants to have labeled",
+            "-n <name> Name under which the labeled matrices will be saved",
+            "-s <saving path> (optional) Path where the labeled matrices will be saved",
         }
 
         self.__mode: LabelMode = None

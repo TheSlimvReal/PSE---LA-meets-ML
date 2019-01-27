@@ -10,12 +10,19 @@ class ClassifyCommand(Command):
         self.valid_short_arguments = {
             "p": Key.PATH,
             "n": Key.NETWORK,
-            "s": Key.SOLVE
+            "s": Key.SOLVE,
+            "h": Key.HELP,
         }
         self.valid_long_arguments = {
             "path": Key.PATH,
             "network": Key.NETWORK,
-            "solve": Key.SOLVE
+            "solve": Key.SOLVE,
+            "help": Key.HELP,
+        }
+        self.valid_help_arguments = {
+            "-p <path> Path to the matrix the user wants to classify",
+            "-n <network> (optional) Path to the trained neural networks, if not set, uses the neural network shipped "
+            "with the program",
         }
 
     def execute(self):

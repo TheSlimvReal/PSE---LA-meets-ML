@@ -31,7 +31,7 @@ class Controller:
             if isinstance(command, QuitCommand):
                 finished = True
             elif Key.HELP in command.arguments:
-                pass
+                self.__print_help_information(command)
             else:
                 command.execute()
         self.__output_service.print_line("Finished")
@@ -52,4 +52,6 @@ class Controller:
         Classifier.set_output_service(self.__output_service)
 
     def __print_help_information(self, command: Command):
-        self.__view.print("These are the possible Tags ")
+        self.__view.print("These are the possible Tags for the " + command.module_name.value + "-command:")
+        for info in command.help_arguments:
+            self.__view.print(info)

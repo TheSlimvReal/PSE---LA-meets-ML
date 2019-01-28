@@ -14,7 +14,7 @@ class Command:
         self.__valid_short_arguments: Dict[str, Key] = {}
         self.__valid_long_arguments: Dict[str, Key] = {}
         self.__required_arguments: List[Key] = []
-        self.__help_arguments: List[Key] = []
+        self.__help_arguments: List[str] = []
 
     @property
     def module_name(self) -> Module:
@@ -57,11 +57,11 @@ class Command:
         self.__valid_long_arguments = args
 
     @property
-    def help_arguments(self) -> List[Key]:
+    def help_arguments(self) -> List[str]:
         return self.__help_arguments
 
     @help_arguments.setter
-    def help_arguments(self, args: Dict[str, Key]) -> None:
+    def help_arguments(self, args: List[str]) -> None:
         self.__help_arguments = args
 
 
@@ -88,7 +88,7 @@ class Command:
             next_key = arg_list.pop(0)
             key: Key = self.__get_key(next_key)
             value: str = ""
-            if not arg_list[0].startswith("-"):
+            if len(arg_list) and not arg_list[0].startswith("-"):
                 value = arg_list.pop(0)
             self.arguments[key] = value
         self.__add_default_args()

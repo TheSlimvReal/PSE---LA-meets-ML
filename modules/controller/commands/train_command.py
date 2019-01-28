@@ -33,7 +33,7 @@ class TrainCommand(Command):
             "help": Key.HELP,
         }
 
-        self.valid_help_arguments = {
+        self.help_arguments = {
             "-p <path> Absolute path to the labeled matrices on the local storage",
             "-n <name> Name under which the neural networks will be saved after training has finished",
             "-t <train> (optional) Float between 0 and 1. Amount of matrices used for training where 1 means all. "

@@ -78,7 +78,7 @@ class Command:
             next_key = arg_list.pop(0)
             key: Key = self.__get_key(next_key)
             value: str = ""
-            if not arg_list[0].startswith("-"):
+            if len(arg_list) and not arg_list[0].startswith("-"):
                 value = arg_list.pop(0)
             self.arguments[key] = value
         self.__add_default_args()

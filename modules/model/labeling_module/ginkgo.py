@@ -9,7 +9,7 @@ class Ginkgowrapper:
         def __init__(self, argc, argv):
                 self.gingkowrapper = ctypes.CDLL("./ginkgowrapper.so",mode=ctypes.RTLD_GLOBAL)
                 self.gingkowrapper._Z8initExeciPc(argc, create_string_buffer(str.encode(argv)))
-                self.gingkowrapper._Z41calculate_fastest_solver_on_square_matrixiPdPiiS0_S_S_ii.restype = ctypes.c_int
+                self.gingkowrapper._Z43calculate_time_with_solver_on_square_matrixiPdPiiS0_S_S_ii.restype = ctypes.c_int
 
         def calculate_label(self, matrix_csr_format):
                 a_values = matrix_csr_format.data
@@ -25,6 +25,6 @@ class Ginkgowrapper:
                 arrari = (c_int * len(a_row_indices))(*a_row_indices)
                 arrx = (c_double * len(x))(*x)
 
-                return self.gingkowrapper._Z41calculate_fastest_solver_on_square_matrixiPdPiiS0_S_S_ii(
+                return self.gingkowrapper._Z43calculate_time_with_solver_on_square_matrixiPdPiiS0_S_S_ii(
                     matrix_csr_format.shape[0], arra, arrari, len(a_values), arraptrs,
                     arrb, arrx, self.amount_of_iterations,0)

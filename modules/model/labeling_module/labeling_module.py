@@ -66,6 +66,7 @@ class LabelingModule:
     def __calculate_label(matrix):
         times = []
         for i in range(len(LabelingModule.solvers)):
+            print("oooooo")
             times.append(LabelingModule.solvers[i].execute(LabelingModule.ginkgo, matrix))
 
         label = np.array([0 for x in range(len(times))])

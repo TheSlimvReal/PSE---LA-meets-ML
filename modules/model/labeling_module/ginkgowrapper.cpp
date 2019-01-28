@@ -25,11 +25,12 @@ int initExec(int argc, char *argv)
     // Figure out where to run the code
     if (argc == 1 || std::string(argv) == "reference") {
         exec = gko::ReferenceExecutor::create();
+        printf("reference");
     } else if (argc == 2 && std::string(argv) == "omp") {
         exec = gko::OmpExecutor::create();
     } else if (argc == 2 && std::string(argv) == "cuda" &&
                gko::CudaExecutor::get_num_devices() > 0) {
-
+            printf("cuda");
         exec = gko::CudaExecutor::create(0, gko::OmpExecutor::create());
     } else {
         printf("wrong");

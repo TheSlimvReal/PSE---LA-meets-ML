@@ -20,7 +20,7 @@ def main():
     matrices = []
     labels = []
     for matrix in csr_matrices:
-        index = g.calculate_label(matrix)
+        index = g.calculate_time_to_solve(matrix,0)
         matrices.append(matrix.todense())
         label = np.array([0, 0, 0, 0, 0])
         print(index)

@@ -3,6 +3,8 @@ from modules.model.labeling_module.Solvers.bicgstab_solver import BicgstabSolver
 from modules.model.labeling_module.Solvers.fcg_solver import FcgSolver
 from modules.model.labeling_module.Solvers.cgs_solver import CgsSolver
 from modules.model.labeling_module.Solvers.gmres_solver import GmresSolver
+from modules.view.observable import Observable
+from modules.view.output_service import OutputService
 
 from modules.shared.loader import Loader
 from modules.shared.saver import Saver
@@ -16,7 +18,8 @@ import h5py
 
 ##  This class handles the labeling of the matrices
 class LabelingModule:
-
+    
+    __output_service: OutputService = OutputService()
     ginkgo = Ginkgowrapper
     solvers = [BicgstabSolver(), CgSolver(), CgsSolver(), FcgSolver(), GmresSolver()]
 
@@ -32,6 +35,7 @@ class LabelingModule:
 
         LabelingModule.ginkgo = Ginkgowrapper(1, "reference", dataset_dense_format[0].shape[0])
         labeled_dataset = LabelingModule.__label(dataset_dense_format)
+        LabelingModule.__output_service.print_line("Finished labeling matrices. Saved at " + path + " under " + saving_name)
         Saver.save(labeled_dataset, saving_name, saving_path, True)
         print(labeled_dataset)
 
@@ -48,11 +52,14 @@ class LabelingModule:
 
         matrices = []
         labels = []
-        counting = [0, 0, 0, 0, 0]
-        for matrix in csr_matrices:
-            label = LabelingModule.__calculate_label(matrix)
-            matrices.append(matrix)
+        observable: Observable = Observable()
+        LabelingModule.__output_service.print_stream("Labeling matrices %s/" + str(len(csr_matrices)), observable)
+        for i in range(len(csr_matrices)):
+            label = LabelingModule.__calculate_label(csr_matrices[i])
+            matrices.append(csr_matrices[i])
             labels.append(label)
+            observable.next(str(i + 1))
+        observable.complete()
         labeled_dataset = [matrices, labels]
         return labeled_dataset
 

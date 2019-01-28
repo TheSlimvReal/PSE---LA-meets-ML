@@ -9,4 +9,4 @@ os.environ['LD_LIBRARY_PATH'] = os.getenv("LD_LIBRARY_PATH", "fail") + ':/usr/lo
 
 os.system("$CXX  ginkgowrapper.cpp -shared -fpic -I/usr/local/include/ -L/usr/local/lib/ "
           "-lginkgo_omp -lginkgo_reference -lginkgo -lginkgo_cuda -o ginkgowrapper.so")
-os.system('python3.6 testLabel.py')
+os.system('python3.6 labeling_module.py')

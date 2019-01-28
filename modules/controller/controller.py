@@ -64,4 +64,3 @@ class Controller:
         for command in CommandParser.get_valid_commands():
             self.__view.print(command)
         self.__view.print("for more information type in the command and -h or --help.")
-

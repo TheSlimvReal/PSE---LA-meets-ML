@@ -23,6 +23,7 @@ class TrainCommand(Command):
             "saving-path": Key.SAVING_PATH,
             "train": Key.TRAIN,
             "existing-network": Key.EXISTING_NETWORK,
+            "help": Key.HELP,
         }
         self.arguments = {
             Key.NAME: None,
@@ -30,7 +31,6 @@ class TrainCommand(Command):
             Key.SAVING_PATH: None,
             Key.TRAIN: None,
             Key.EXISTING_NETWORK: None,
-            "help": Key.HELP,
         }
 
         self.help_arguments = {

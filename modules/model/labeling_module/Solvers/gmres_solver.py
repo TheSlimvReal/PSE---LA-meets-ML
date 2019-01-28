@@ -3,6 +3,7 @@ from modules.model.labeling_module.ginkgo import Ginkgowrapper
 
 import numpy as np
 
+
 ##
 class GmresSolver(Solver):
 

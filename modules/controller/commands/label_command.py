@@ -6,6 +6,7 @@ from modules.controller.commands.label_mode import LabelMode
 from modules.controller.commands.module import Module
 from modules.exception.excpetions import IllegalArgumentException
 from modules.model.labeling_module.labeling_module import LabelingModule
+from modules.model.labeling_module import cl
 
 
 class LabelCommand(Command):
@@ -48,9 +49,9 @@ class LabelCommand(Command):
     def execute(self):
         if self.__mode == LabelMode.LABEL:
             super().execute()
-            LabelingModule.start(
+            cl.start(
                 self.arguments.get(Key.PATH),
-                self.arguments.get(Key.Name),
+                self.arguments.get(Key.NAME),
                 self.arguments.get(Key.SAVING_PATH)
             )
             return

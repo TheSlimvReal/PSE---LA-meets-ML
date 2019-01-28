@@ -2,14 +2,15 @@ from ctypes import *
 import ctypes
 import random
 
+
 class Ginkgowrapper:
 
         amount_of_iterations = 1
         #b_vector = []
 
-        def __init__(self, argc, argv):
-                #self.b_vector = [random.randint(0,1) for x in range(shape)]
-                self.gingkowrapper = ctypes.CDLL("./ginkgowrapper.so", mode=ctypes.RTLD_GLOBAL)
+        def __init__(self, argc, argv, shape):
+                self.b_vector = [random.uniform(0, 1) for x in range(shape)]
+                self.gingkowrapper = ctypes.CDLL("modules/model/labeling_module/ginkgowrapper.so", mode=ctypes.RTLD_GLOBAL)
                 self.gingkowrapper._Z8initExeciPc(argc, create_string_buffer(str.encode(argv)))
                 self.gingkowrapper._Z43calculate_time_with_solver_on_square_matrixiPdPiiS0_S_S_ii.restype = ctypes.c_int
 

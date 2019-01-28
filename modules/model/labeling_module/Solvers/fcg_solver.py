@@ -8,4 +8,3 @@ class FcgSolver(Solver):
     def execute(self, ginkgo: Ginkgowrapper, matrix: np.ndarray) -> float:
         time = ginkgo.calculate_time_to_solve(matrix, 3)
         return time
-

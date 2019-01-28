@@ -15,7 +15,7 @@ def main():
     for matrix in cf:
         csr_matrices.append(scipy.sparse.csr_matrix(np.real(matrix)))
 
-    g = Ginkgowrapper(1, "cuda")
+    g = Ginkgowrapper(2, "cuda")
 
     matrices = []
     labels = []
@@ -23,7 +23,8 @@ def main():
         index = g.calculate_label(matrix)
         matrices.append(matrix.todense())
         label = np.array([0, 0, 0, 0, 0])
-        label[index] = 1
+        print(index)
+        #label[index] = 1
         labels.append(label)
     new_dataset = [matrices, labels]
     print(new_dataset)

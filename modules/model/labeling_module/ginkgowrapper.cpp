@@ -132,8 +132,9 @@ auto createSolver(std::shared_ptr<gko::matrix::Csr<double, int> >& A,int dp,auto
 
 int calculate_fastest_solver_on_square_matrix(int dp, double a_values[], int a_row_indices[], int a_amount_of_values, int a_ptrs[], double b_values[], double x_values[], int iterations_of_solvers,int whichSolver)
 {
-/*
-    char x = gko::solver::Cg<>::build;
+
+    gko::EnableDefaultFactory<gko::solver::Cg<>::Factory, gko::solver::Cg<>, gko::solver::Cg<>::parameters_type, gko::LinOpFactory>::parameters_type (*pointer_to_Solver2)() = gko::solver::Cg<>::build;
+    /*
     char y = gko::solver::Cgs<>::build;
     char z = gko::solver::Gmres<>::build;
     char u = gko::solver::Fcg<>::build;
@@ -147,13 +148,13 @@ int calculate_fastest_solver_on_square_matrix(int dp, double a_values[], int a_r
     //create Ginkgo x Vector
     auto x = createGinkgoVector(dp,x_values);
 
-    vector<std::function<void()>> pointer_to_Solver2;
+    //vector<std::function<void()>> pointer_to_Solver2;
     switch ( whichSolver )
       {
          case 0:
             //cast pointer_to_solver to solver specific function and hope it works
             //(gko::EnableDefaultFactory<gko::solver::Cg<>::Factory, gko::solver::Cg<>, gko::solver::Cg<>::parameters_type, gko::LinOpFactory>::parameters_type (*)())
-            pointer_to_Solver2 =  gko::solver::Cg<>::build;
+            //pointer_to_Solver2 =  gko::solver::Cg<>::build;
             break;
          case 1:
             //pointer_to_Solver = gko::solver::Bicgstab<>::build;

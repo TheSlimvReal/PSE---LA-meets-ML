@@ -29,7 +29,7 @@ int initExec(int argc, char *argv)
         exec = gko::OmpExecutor::create();
     } else if (argc == 2 && std::string(argv) == "cuda" &&
                gko::CudaExecutor::get_num_devices() > 0) {
-        printf("cuda");
+
         exec = gko::CudaExecutor::create(0, gko::OmpExecutor::create());
     } else {
         printf("wrong");

@@ -14,6 +14,7 @@ import scipy.io
 import scipy.sparse
 import numpy as np
 import h5py
+import sys
 
 
 ##  This class handles the labeling of the matrices
@@ -35,14 +36,13 @@ class LabelingModule:
     #   @param saving_path path to where the labeled matrices will be saved
     @staticmethod
     def start(path: str, saving_name: str, saving_path: str) -> None:
-        dataset_dense_format = h5py.File("../../shared/data/unlabeled_matrices.hdf5")["dense_matrices"]
+        dataset_dense_format = h5py.File(path)["dense_matrices"]
         #dataset_dense_format = Loader.load(path)["dense_matrices"]
 
         LabelingModule.ginkgo = Ginkgowrapper(1, "reference", dataset_dense_format[0].shape[0])
         labeled_dataset = LabelingModule.__label(dataset_dense_format)
         LabelingModule.__output_service.print_line("Finished labeling matrices. Saved at " + path + " under " + saving_name)
         Saver.save(labeled_dataset, saving_name, saving_path, True)
-        print(labeled_dataset)
 
     ##  Starts the labeling process
     #
@@ -58,7 +58,7 @@ class LabelingModule:
         matrices = []
         labels = []
         observable: Observable = Observable()
-        LabelingModule.__output_service.print_stream("Labeling matrices %s/" + str(len(csr_matrices)), observable)
+        LabelingModule.__output_service.print_stream("Labeling matrices %s/" + str(200), observable)
         for i in range(len(csr_matrices)):
             label = LabelingModule.__calculate_label(csr_matrices[i])
             matrices.append(csr_matrices[i])
@@ -81,10 +81,11 @@ class LabelingModule:
         label[times.index(min(times))] = 1
         return label
 
-
-if __name__ == "__main__":
-    LabelingModule.start("a", "a", "a")
-
     @staticmethod
     def set_output_service(service: OutputService):
         LabelingModule.__output_service = service
+
+
+if __name__ == "__main__":
+    LabelingModule.start(sys.argv[1], sys.argv[2], sys.argv[3])
+

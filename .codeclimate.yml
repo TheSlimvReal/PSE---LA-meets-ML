@@ -5,3 +5,4 @@ plugins:
         enabled: true
 exclude_patterns:
     - "**/documentation/"
+    - "**/test/"

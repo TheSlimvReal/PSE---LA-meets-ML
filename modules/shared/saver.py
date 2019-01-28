@@ -22,12 +22,16 @@ class Saver:
 
         if labeled:
             dense_dataset = Saver.__to_dense_array(dataset[0])
-            saving_file.create_dataset('label_vectors', data=np.array(dataset[1]),
-                                       compression='gzip')
+            saving_file.create_dataset(
+                'label_vectors',
+                data=np.array(dataset[1], dtype=np.float64),
+                compression='gzip')
         else:
             dense_dataset = Saver.__to_dense_array(dataset)
-        saving_file.create_dataset('dense_matrices', data=dense_dataset,
-                                  compression='gzip')
+        saving_file.create_dataset(
+            'dense_matrices',
+            data=dense_dataset,
+            compression='gzip')
 
     ## This method converts a list of sparse matrices into an array of dense_matrices
     #   @param dataset of sparse matrices to be converted
@@ -36,4 +40,4 @@ class Saver:
         dense_dataset = []
         for matrix in dataset:
             dense_dataset.append(matrix.todense())
-        return np.array(dense_dataset)
+        return np.array(dense_dataset, dtype=np.float64)

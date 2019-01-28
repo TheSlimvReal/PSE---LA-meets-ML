@@ -1,7 +1,13 @@
 import numpy as np
 
+
 ##  This class handles the labeling of the matrices
+from modules.view.output_service import OutputService
+
+
 class LabelingModule:
+
+    __output_service: OutputService = OutputService()
 
     ##  Sets up the the class for the labeling process
     #
@@ -25,3 +31,7 @@ class LabelingModule:
     @staticmethod
     def __calculate_label(matrix: np.ndarray):
         pass
+
+    @staticmethod
+    def set_output_service(service: OutputService):
+        LabelingModule.__output_service = service

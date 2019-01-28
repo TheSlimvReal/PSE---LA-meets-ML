@@ -1,0 +1,29 @@
+{
+  "collect": {
+    "path": "modules/shared/data/UnlabeledMatrices/",
+    "size": 128,
+    "amount": 100
+  },
+  "label": {
+    "saving-path": "modules/shared/data/LabeledMatrices/"
+  },
+  "train": {
+    "default_saving_path": "modules/shared/data/NeuralNetwork/",
+    "default_saving_name": "trained_net",
+
+    "num_conv_layers": 1,
+    "num_dense_layers": 3,
+    "layer_activation": "relu",
+    "final_activation": "softmax",
+    "dropout": false,
+
+    "batch_size": 25,
+    "training_test_split": 0.8,
+    "learning_rate": 0.001,
+    "loss": "categorical_crossentropy"
+
+  },
+  "classify": {
+    "path": "modules/shared/data/MatrixToClassify/"
+  }
+}

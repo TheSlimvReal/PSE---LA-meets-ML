@@ -2,6 +2,7 @@ from typing import Dict
 
 from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
+from modules.controller.commands.module import Module
 from modules.model.collector_module.collector import Collector
 
 
@@ -9,6 +10,7 @@ class CollectCommand(Command):
 
     def __init__(self):
         super().__init__()
+        self.module_name = Module.COLLECT
         self.valid_short_arguments: Dict[str, Key] = {
             "a": Key.AMOUNT,
             "n": Key.NAME,
@@ -16,7 +18,6 @@ class CollectCommand(Command):
             "s": Key.SIZE,
             "h": Key.HELP,
         }
-
         self.valid_long_arguments: Dict[str, Key] = {
             "amount": Key.AMOUNT,
             "name": Key.NAME,
@@ -30,6 +31,12 @@ class CollectCommand(Command):
             "-n <name> Name under which the matrices will be saved",
             "-s <size> (optional) Absolute size the generated square matrices should have. Default is 128",
             "-p <path> (optional) Path where the created/downloaded matrices will be saved",
+        }
+        self.arguments = {
+            Key.AMOUNT: None,
+            Key.NAME: None,
+            Key.PATH: None,
+            Key.SIZE: None
         }
 
     def execute(self):

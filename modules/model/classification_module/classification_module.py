@@ -1,9 +1,15 @@
 import numpy as np
 
+
 ##  This class handles the classification of matrices using a neural network
+from modules.view.output_service import OutputService
+
+
 class Classifier:
 
     __path: str = ""
+
+    __output_service: OutputService = OutputService()
 
     ##  Starts the classification process
     #
@@ -31,3 +37,7 @@ class Classifier:
     @staticmethod
     def __normalize(matrix: np.ndarray) -> np.ndarray:
         pass
+
+    @staticmethod
+    def set_output_service(service: OutputService):
+        Classifier.__output_service = service

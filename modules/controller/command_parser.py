@@ -34,5 +34,5 @@ class CommandParser:
         else:
             raise IllegalArgumentException("%s is not a valid command" % mode)
         command: Command = command_class()
-        command.add_args(arg_list)
+        command.set_args(arg_list)
         return command

@@ -59,7 +59,7 @@ class LabelCommand(Command):
             super().execute()
             LabelingModule.start(
                 self.arguments.get(Key.PATH),
-                self.arguments.get(Key.Name),
+                self.arguments.get(Key.NAME),
                 self.arguments.get(Key.SAVING_PATH)
             )
             return

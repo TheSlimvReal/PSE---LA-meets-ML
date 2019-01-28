@@ -22,12 +22,10 @@ from modules.view.output_service import OutputService
 
 
 class LabelingModule:
-    
+
     __output_service: OutputService = OutputService()
     ginkgo = Ginkgowrapper
     solvers = [BicgstabSolver(), CgSolver(), CgsSolver(), FcgSolver(), GmresSolver()]
-
-    __output_service: OutputService = OutputService()
 
     ##  Sets up the the class for the labeling process
     #
@@ -37,7 +35,7 @@ class LabelingModule:
     @staticmethod
     def start(path: str, saving_name: str, saving_path: str) -> None:
         dataset_dense_format = h5py.File(path)["dense_matrices"]
-        #dataset_dense_format = Loader.load(path)["dense_matrices"]
+        # dataset_dense_format = Loader.load(path)["dense_matrices"]
 
         LabelingModule.ginkgo = Ginkgowrapper(1, "reference", dataset_dense_format[0].shape[0])
         labeled_dataset = LabelingModule.__label(dataset_dense_format)
@@ -88,4 +86,3 @@ class LabelingModule:
 
 if __name__ == "__main__":
     LabelingModule.start(sys.argv[1], sys.argv[2], sys.argv[3])
-

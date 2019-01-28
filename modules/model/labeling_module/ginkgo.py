@@ -2,6 +2,7 @@ from ctypes import *
 import ctypes
 import random
 
+
 class Ginkgowrapper:
 
         amount_of_iterations = 1

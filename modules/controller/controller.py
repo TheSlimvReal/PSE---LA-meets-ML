@@ -1,5 +1,6 @@
 from modules.controller.command_parser import CommandParser
 from modules.controller.commands.command import Command
+from modules.controller.commands.help_command import HelpCommand
 from modules.controller.commands.key import Key
 from modules.controller.commands.quit_command import QuitCommand
 from modules.exception.excpetions import IllegalArgumentException
@@ -30,6 +31,8 @@ class Controller:
             command: Command = self.__get_command()
             if isinstance(command, QuitCommand):
                 finished = True
+            elif isinstance(command, HelpCommand):
+                self.__print_main_help_information(command)
             elif Key.HELP in command.arguments:
                 self.__print_help_information(command)
             else:
@@ -55,3 +58,10 @@ class Controller:
         self.__view.print("These are the possible Tags for the " + command.module_name.value + "-command:")
         for info in command.help_arguments:
             self.__view.print(info)
+
+    def __print_main_help_information(self, command):
+        self.__view.print("These are the possible interactions:")
+        for command in CommandParser.get_valid_commands():
+            self.__view.print(command)
+        self.__view.print("for more information type in the command and -h or --help.")
+

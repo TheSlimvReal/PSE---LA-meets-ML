@@ -1,5 +1,6 @@
 from modules.controller.command_parser import CommandParser
 from modules.controller.commands.command import Command
+from modules.controller.commands.key import Key
 from modules.controller.commands.quit_command import QuitCommand
 from modules.exception.excpetions import IllegalArgumentException
 from modules.view.cli_output_service import CLIOutputService
@@ -25,6 +26,8 @@ class Controller:
             command: Command = self._get_command()
             if isinstance(command, QuitCommand):
                 finished = True
+            elif Key.HELP in command.arguments:
+
             else:
                 command.execute()
         self.__output_service.print_line("Finished")
@@ -40,3 +43,6 @@ class Controller:
 
     def __register_output_service(self):
         pass
+
+    def __print_help_information(self, command: Command):
+        self.__view.print("These are the possible Tags ")

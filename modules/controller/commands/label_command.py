@@ -50,7 +50,9 @@ class LabelCommand(Command):
         return self.__config
 
     def execute(self):
-        if self.__mode == LabelMode.LABEL:
+        if Key.HELP in self.arguments:
+
+        elif self.__mode == LabelMode.LABEL:
             super().execute()
             LabelingModule.start(
                 self.arguments.get(Key.PATH),

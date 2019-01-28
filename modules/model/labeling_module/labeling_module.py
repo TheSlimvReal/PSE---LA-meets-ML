@@ -1,3 +1,8 @@
+from modules.model.labeling_module.Solvers.cg_solver import CgSolver
+from modules.model.labeling_module.Solvers.bicgstab_solver import BicgstabSolver
+from modules.model.labeling_module.Solvers.fcg_solver import FcgSolver
+from modules.model.labeling_module.Solvers.cgs_solver import CgsSolver
+from modules.model.labeling_module.Solvers.gmres_solver import GmresSolver
 
 from modules.shared.loader import Loader
 from modules.shared.saver import Saver
@@ -6,12 +11,14 @@ from modules.model.labeling_module.ginkgo import Ginkgowrapper
 import scipy.io
 import scipy.sparse
 import numpy as np
+import h5py
 
 
 ##  This class handles the labeling of the matrices
 class LabelingModule:
 
-    g = Ginkgowrapper(1, "reference")
+    ginkgo = Ginkgowrapper(1, "reference")
+    solvers = [CgSolver(), BicgstabSolver(), FcgSolver(), CgsSolver(), GmresSolver()]
 
     ##  Sets up the the class for the labeling process
     #
@@ -20,9 +27,10 @@ class LabelingModule:
     #   @param saving_path path to where the labeled matrices will be saved
     @staticmethod
     def start(path: str, saving_name: str, saving_path: str) -> None:
-        dataset_dense_format = Loader.load(path)
+        dataset_dense_format = h5py.File("../../shared/data/labeled_matrices.hdf5")["dense_matrices"]
+        #dataset_dense_format = Loader.load(path)
         labeled_dataset = LabelingModule.__label(dataset_dense_format)
-        Saver.save(labeled_dataset, saving_name, saving_path, True)
+        #Saver.save(labeled_dataset, saving_name, saving_path, True)
         print(labeled_dataset)
 
     ##  Starts the labeling process
@@ -31,7 +39,7 @@ class LabelingModule:
     @staticmethod
     def __label(dataset):
 
-        dense_matrices = np.array(dataset['dense_matrices'])
+        dense_matrices = np.array(dataset)
         csr_matrices = []
         for matrix in dense_matrices:
             csr_matrices.append(scipy.sparse.csr_matrix(matrix))
@@ -50,7 +58,21 @@ class LabelingModule:
     #   @param matrix for which a label will be created
     @staticmethod
     def __calculate_label(matrix):
-        index = LabelingModule.g.calculate_label(matrix)
-        label = np.array([0, 0, 0, 0, 0])
-        label[index] = 1
+        times = []
+        for i in range(5):
+            times[i] = LabelingModule.solvers[i].execute(LabelingModule.ginkgo, matrix)
+
+        fastest_time = times[0]
+        fastest_solver = 0
+        for i in range(1, len(times)):
+            if fastest_time > times[i]:
+                fastest_time = times[i]
+                fastest_solver = i
+
+        label = np.array([0 for x in range(len(times))])
+        label[fastest_solver] = 1
+        print(label)
         return label
+
+if __name__ == "__main__":
+    LabelingModule.start("a", "a", "a")

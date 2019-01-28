@@ -7,5 +7,5 @@ import numpy as np
 class GmresSolver(Solver):
 
     def execute(self, ginkgo: Ginkgowrapper, matrix: np.ndarray) ->float:
-        time = ginkgo.calculate_time_to_solve(matrix, "gmres")
+        time = ginkgo.calculate_time_to_solve(matrix, 4)
         return time

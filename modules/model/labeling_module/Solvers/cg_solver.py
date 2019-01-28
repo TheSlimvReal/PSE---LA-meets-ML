@@ -6,6 +6,6 @@ import numpy as np
 class CgSolver(Solver):
 
     def execute(self, ginkgo: Ginkgowrapper, matrix: np.ndarray) -> float:
-        time = ginkgo.calculate_time_to_solve(matrix, "cg")
+        time = ginkgo.calculate_time_to_solve(matrix, 1)
         return time
 

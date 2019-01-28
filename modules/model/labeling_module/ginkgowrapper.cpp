@@ -29,13 +29,17 @@ int initExec(int argc, char *argv)
     // Figure out where to run the code
     if (argc == 1 || std::string(argv) == "reference") {
         exec = gko::ReferenceExecutor::create();
+        printf("reference");
     } else if (argc == 2 && std::string(argv) == "omp") {
         exec = gko::OmpExecutor::create();
+        printf("omp");
     } else if (argc == 2 && std::string(argv) == "cuda" &&
                gko::CudaExecutor::get_num_devices() > 0) {
-               printf("ok");
+
         exec = gko::CudaExecutor::create(0, gko::OmpExecutor::create());
+        printf("cuda");
     } else {
+        printf("wrong");
         std::cerr << "Usage: " << argv[0] << " [executor]" << std::endl;
         std::exit(-1);
     }
@@ -128,7 +132,12 @@ auto createSolver(std::shared_ptr<gko::matrix::Csr<double, int> >& A,int dp,auto
 
 int calculate_fastest_solver_on_square_matrix(int dp, double a_values[], int a_row_indices[], int a_amount_of_values, int a_ptrs[], double b_values[], double x_values[], int iterations_of_solvers,int whichSolver)
 {
-
+/*
+    char x = gko::solver::Cg<>::build;
+    char y = gko::solver::Cgs<>::build;
+    char z = gko::solver::Gmres<>::build;
+    char u = gko::solver::Fcg<>::build;
+    char t = gko::solver:::Bicgstab::build;*/
     //create Ginkgo A Matrix
     auto A = share(createGinkgoMatrix(dp,a_values,a_row_indices,a_amount_of_values,a_ptrs));
 
@@ -138,30 +147,32 @@ int calculate_fastest_solver_on_square_matrix(int dp, double a_values[], int a_r
     //create Ginkgo x Vector
     auto x = createGinkgoVector(dp,x_values);
 
-    auto solver;
+    vector<std::function<void()>> pointer_to_Solver2;
     switch ( whichSolver )
       {
          case 0:
-            solver = createSolver(A,dp,gko::solver::Cg<>::build);
+            //cast pointer_to_solver to solver specific function and hope it works
+            //(gko::EnableDefaultFactory<gko::solver::Cg<>::Factory, gko::solver::Cg<>, gko::solver::Cg<>::parameters_type, gko::LinOpFactory>::parameters_type (*)())
+            pointer_to_Solver2 =  gko::solver::Cg<>::build;
             break;
          case 1:
-            solver = createSolver(A,dp,gko::solver::Bicgstab<>::build);
+            //pointer_to_Solver = gko::solver::Bicgstab<>::build;
             break;
          case 2:
-            solver = createSolver(A,dp,gko::solver::Fcg<>::build);
+            //pointer_to_Solver = gko::solver::Fcg<>::build;
             break;
          case 3:
-            solver = createSolver(A,dp,gko::solver::Cgs<>::build);
+            //pointer_to_Solver = gko::solver::Cgs<>::build;
             break;
          case 4:
-            solver = createSolver(A,dp,gko::solver::Gmres<>::build);
+            //pointer_to_Solver = gko::solver::Gmres<>::build;
             break;
          default:
             exit(1);
       }
+
+    auto solver = createSolver(A,dp,pointer_to_Solver2);
     /*
-    auto solver_cg = createSolver(A,dp,gko::solver::Cg<>::build);
-    
     auto solver_bicgstab = createSolver(A,dp,gko::solver::Bicgstab<>::build);
 
     

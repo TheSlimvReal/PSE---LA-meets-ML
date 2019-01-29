@@ -1,9 +1,10 @@
-from typing import Dict
+from typing import Dict, List
 
 from modules.controller.commands.classify_command import ClassifyCommand
 from modules.controller.commands.command import Command
 
 from modules.controller.commands.collect_command import CollectCommand
+from modules.controller.commands.help_command import HelpCommand
 from modules.controller.commands.label_command import LabelCommand
 from modules.controller.commands.quit_command import QuitCommand
 from modules.controller.commands.train_command import TrainCommand
@@ -19,7 +20,12 @@ class CommandParser:
         "train": TrainCommand,
         "classify": ClassifyCommand,
         "quit": QuitCommand,
+        "help": HelpCommand,
     }
+
+    @staticmethod
+    def get_valid_commands() -> List[str]:
+        return [key for key in CommandParser.__valid_commands]
 
     ##  Parses a string to a command
     #

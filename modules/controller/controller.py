@@ -1,5 +1,7 @@
 from modules.controller.command_parser import CommandParser
 from modules.controller.commands.command import Command
+from modules.controller.commands.help_command import HelpCommand
+from modules.controller.commands.key import Key
 from modules.controller.commands.quit_command import QuitCommand
 from modules.exception.excpetions import IllegalArgumentException
 from modules.model.classification_module.classification_module import Classifier
@@ -29,6 +31,10 @@ class Controller:
             command: Command = self.__get_command()
             if isinstance(command, QuitCommand):
                 finished = True
+            elif isinstance(command, HelpCommand):
+                self.__print_main_help_information()
+            elif Key.HELP in command.arguments:
+                self.__print_help_information(command)
             else:
                 command.execute()
         self.__output_service.print_line("Finished")
@@ -47,3 +53,14 @@ class Controller:
         LabelingModule.set_output_service(self.__output_service)
         TrainingModule.set_output_service(self.__output_service)
         Classifier.set_output_service(self.__output_service)
+
+    def __print_help_information(self, command: Command):
+        self.__output_service.print_line("These are the possible Tags for the " + command.module_name.value + "-command:")
+        for info in command.help_arguments:
+            self.__output_service.print_line(info)
+
+    def __print_main_help_information(self):
+        self.__output_service.print_line("These are the possible interactions:")
+        for command in CommandParser.get_valid_commands():
+            self.__output_service.print_line(command)
+        self.__output_service.print_line("for more information type in the command and -h or --help.")

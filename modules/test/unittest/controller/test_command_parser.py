@@ -9,7 +9,6 @@ from modules.controller.commands.collect_command import CollectCommand
 from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
 from modules.controller.commands.label_command import LabelCommand
-from modules.controller.commands.label_mode import LabelMode
 from modules.controller.commands.module import Module
 from modules.controller.commands.train_command import TrainCommand
 from modules.exception.excpetions import IllegalArgumentException
@@ -63,13 +62,6 @@ def test_valid_input_with_flag():
     }
     assert dicts_equal(command.arguments, expected) is True
 
-
-def test_invalid_mode_throws_exception():
-    input_string: str = "label -n name -p path"
-    with pytest.raises(IllegalArgumentException):
-        CommandParser.parse_input(input_string)
-
-
 def test_valid_collector_input():
     input_string: str = "collect --amount amount -n name -s size -p path"
     command: Command = CommandParser.parse_input(input_string)
@@ -83,8 +75,8 @@ def test_valid_collector_input():
     assert dicts_equal(command.arguments, expected) is True
 
 
-def test_valid_label_label_mode():
-    input_string = "label label -n name --path path -s saving_path"
+def test_valid_label_mode():
+    input_string = "label -n name --path path -s saving_path"
     expected = {
         Key.NAME: "name",
         Key.PATH: "path",
@@ -92,30 +84,7 @@ def test_valid_label_label_mode():
     }
     command = CommandParser.parse_input(input_string)
     assert isinstance(command, LabelCommand)
-    assert command.mode == LabelMode.LABEL
     assert dicts_equal(command.arguments, expected) is True
-
-
-def test_valid_label_add_mode():
-    input_string = "label add algo1 algo2 algo3"
-    expected = [
-        "algo1",
-        "algo2",
-        "algo3",
-    ]
-    command = CommandParser.parse_input(input_string)
-    assert isinstance(command, LabelCommand)
-    assert command.mode == LabelMode.ADD
-    assert command.config == expected
-
-
-def test_valid_label_remove_mode():
-    input_string = "label remove algo1"
-    expected = ["algo1"]
-    command = CommandParser.parse_input(input_string)
-    assert isinstance(command, LabelCommand)
-    assert command.mode == LabelMode.REMOVE
-    assert command.config == expected
 
 
 def test_fails_when_entering_invalid_module():

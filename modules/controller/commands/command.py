@@ -1,4 +1,4 @@
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Tuple
 from modules.controller.commands.key import Key
 from modules.controller.commands.module import Module
 from modules.exception.excpetions import IllegalArgumentException
@@ -11,9 +11,9 @@ class Command:
     def __init__(self):
         self.__module_name: Module = Module.UNDEFINED
         self.__arguments: Dict[Key, str] = {}
-        self.__valid_short_arguments: Dict[str, Key] = {}
-        self.__valid_long_arguments: Dict[str, Key] = {}
-        self.__required_arguments: List[Key] = []
+        self.__valid_arguments: Dict[Tuple[str, str], Key] = {}
+        self.__required_arguments: Tuple[Key] = ()
+        self.__help_arguments: Tuple[str] = ()
 
     @property
     def module_name(self) -> Module:
@@ -32,28 +32,28 @@ class Command:
         self.__arguments = arguments
 
     @property
-    def required_arguments(self) -> List[Key]:
+    def required_arguments(self) -> Tuple[Key]:
         return self.__required_arguments
 
     @required_arguments.setter
-    def required_arguments(self, args: List[Key]) -> None:
+    def required_arguments(self, args: Tuple[Key]) -> None:
         self.__required_arguments = args
 
     @property
-    def valid_short_arguments(self) -> Dict[str, Key]:
-        return self.__valid_short_arguments
+    def valid_arguments(self) -> Dict[Tuple[str, str], Key]:
+        return self.__valid_arguments
 
-    @valid_short_arguments.setter
-    def valid_short_arguments(self, args: Dict[str, Key]) -> None:
-        self.__valid_short_arguments = args
+    @valid_arguments.setter
+    def valid_arguments(self, args: Dict[str, Key]) -> None:
+        self.__valid_arguments = args
 
     @property
-    def valid_long_arguments(self) -> Dict[str, Key]:
-        return self.__valid_long_arguments
+    def help_arguments(self) -> Tuple[str]:
+        return self.__help_arguments
 
-    @valid_long_arguments.setter
-    def valid_long_arguments(self, args: Dict[str, Key]) -> None:
-        self.__valid_long_arguments = args
+    @help_arguments.setter
+    def help_arguments(self, args: Tuple[str]) -> None:
+        self.__help_arguments = args
 
     ##  can be called the execute the module
     def execute(self) -> None:
@@ -84,13 +84,19 @@ class Command:
         self.__add_default_args()
 
     def __get_key(self, next_key: str) -> Key:
-        if next_key.startswith("--") and next_key[2:] in self.valid_long_arguments:
-            key: Key = self.valid_long_arguments[next_key[2:]]
-        elif next_key.startswith("-") and next_key[1:] in self.valid_short_arguments:
-            key: Key = self.valid_short_arguments[next_key[1:]]
-        else:
+        key: Key
+        if next_key.startswith("--"):
+            key = self.__get_arguments_key(next_key[2:])
+        elif next_key.startswith("-"):
+            key = self.__get_arguments_key(next_key[1:])
+        if key is None:
             raise IllegalArgumentException("%s is not a valid argument." % next_key)
         return key
+
+    def __get_arguments_key(self, tag: str) -> Key:
+        for key, value in self.valid_arguments.items():
+            if tag in key:
+                return value
 
     def get_int_value(self, key: Key) -> Optional[int]:
         if key in self.arguments:

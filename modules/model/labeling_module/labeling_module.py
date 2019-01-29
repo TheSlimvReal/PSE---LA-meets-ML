@@ -48,9 +48,9 @@ class LabelingModule:
     #
     #   @param dataset which holds matrices that will be labeled
     @staticmethod
-    def __label(dataset):
+    def __label(dataset_dense_format):
 
-        dense_matrices = np.array(dataset, dtype=np.float64)
+        dense_matrices = np.array(dataset_dense_format, dtype=np.float64)
         csr_matrices = []
         for matrix in dense_matrices:
             csr_matrices.append(scipy.sparse.csr_matrix(matrix))

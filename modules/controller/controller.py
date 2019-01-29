@@ -31,9 +31,7 @@ class Controller:
             command: Command = self.__get_command()
             if isinstance(command, QuitCommand):
                 finished = True
-            elif isinstance(command, HelpCommand):
-                self.__print_main_help_information(command)
-            elif Key.HELP in command.arguments:
+            elif isinstance(command, HelpCommand) or Key.HELP in command.arguments:
                 self.__print_help_information(command)
             else:
                 command.execute()
@@ -55,11 +53,18 @@ class Controller:
         Classifier.set_output_service(self.__output_service)
 
     def __print_help_information(self, command: Command):
+        if Key.HELP in command.arguments:
+            self.__print_command_help_information(command)
+        else:
+            self.__print_main_help_information(command)
+
+    def __print_command_help_information(self, command: Command):
         self.__output_service.print_line("These are the possible Tags for the " + command.module_name.value + "-command:")
         for info in command.help_arguments:
             self.__view.print(info)
 
     def __print_main_help_information(self, command):
+
         self.__output_service.print_line("These are the possible interactions:")
         for command in CommandParser.get_valid_commands():
             self.__output_service.print_line(command)

@@ -38,10 +38,9 @@ class LabelCommand(Command):
         return self.__config
 
     def execute(self):
-       super().execute()
-       cl.start(
-           self.arguments.get(Key.PATH),
-           self.arguments.get(Key.NAME),
-           self.arguments.get(Key.SAVING_PATH)
+        super().execute()
+        cl.start(
+            self.arguments.get(Key.PATH),
+            self.arguments.get(Key.NAME),
+            self.arguments.get(Key.SAVING_PATH)
         )
-        return

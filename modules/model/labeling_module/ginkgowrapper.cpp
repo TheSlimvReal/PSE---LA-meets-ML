@@ -1,5 +1,10 @@
-#include </usr/local/include/ginkgo/ginkgo.hpp>
+/*
+This class is used to communicate with ginkgo. It calculates the time a iterative solver needs to solve a matrix.
+The class will be compiled as a shared library which we will load from python with ctypes.
 
+*/
+
+#include </usr/local/include/ginkgo/ginkgo.hpp>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -19,7 +24,11 @@ using mtxDoubleInteger = gko::matrix::Csr<double, int>;
 
 std::shared_ptr<gko::Executor> app_exec;
 std::shared_ptr<gko::Executor> exec;
-
+/*
+Initialize the executor on which the execution will take place and the executor which specifies where the data is.
+@params argc either 1 or 2
+@params *argv the string which specifies the executor; either reference, omp or cuda
+*/
 int initExec(int argc, char *argv)
 {
     // Figure out where to run the code
@@ -39,30 +48,37 @@ int initExec(int argc, char *argv)
 
     app_exec = gko::ReferenceExecutor::create();
 }
-
+/*
+create a Pointer to a vector which has doubles as values
+@params values the values
+@params amount_of_values the amount of values
+*/
 auto createDoubleVectorPointer(double values[],int amount_of_values) {
     vector<double> values_data (values,values + amount_of_values);
     double *values_data_p = values_data.data();
     return values_data_p;
 }
-
+/*
+create a Pointer to a vector which has ints as values
+!DOES NOT WORK!
+@params values the values
+@params amount_of_values the amount of values
+*/
 int* createIntVectorPointer(int values[],int amount_of_values) {
     vector<int> values_data (values,values + amount_of_values);
     int * values_data_p = values_data.data();
     return values_data_p;
 }
 
-auto createIntPointer (vector<int> values_data) {
-    int *values_data_p = values_data.data();
-    return values_data_p;
-}
 
-auto createIntVector(int values[],int amount_of_values) {
-    vector<int> values_data (values,values + amount_of_values);
-    return values_data;
-}
-
-
+/*
+create a ginkgo matrix from a matrix in the csr format(split as individual arrays)
+@params dp the discretization points
+@params a_values the values of the matrix
+@params a_row_indizies the row inidizies of the matrix
+@params a_amount_of_values the amount of values in the matrix
+@params a_ptrs the pointers to the rows of the matrix
+*/
 auto createGinkgoMatrix(int dp, double a_values[], int a_row_indices[], int a_amount_of_values, int a_ptrs[]) {
 
     //create the Pointer to Vector of the Values of A
@@ -83,13 +99,22 @@ auto createGinkgoMatrix(int dp, double a_values[], int a_row_indices[], int a_am
     return A;
 
 }
-
+/*
+create a Ginkgo vector with discretization points and certain values
+@params dp the discretization points
+@params values the values of the vector
+*/
 auto createGinkgoVector(int dp, double values[]) {
     auto values_data_p = createDoubleVectorPointer(values,dp);
     auto b = vec::create(exec, gko::dim<2>(dp, 1),val_array::view(app_exec, dp, values_data_p), 1);
     return b;
 }
-
+/*
+create a solver by applaying a certain solver factory to a ginkgo matrix
+@params A the ginkgo matrix
+@params dp the discretization points
+@params pointer_to_Solver a pointer to a certain kind of solver(Cg,Bicgstab,Cgs,Fcg or Gmres)
+*/
 auto createSolver(std::shared_ptr<gko::matrix::Csr<double, int> >& A,int dp,auto (*pointer_to_Solver)()) {
 
     auto solver_gen =
@@ -105,7 +130,20 @@ auto createSolver(std::shared_ptr<gko::matrix::Csr<double, int> >& A,int dp,auto
     return solver;
 
 }
+/*
+calculates the time a certain solver takes to solve the system Ax=b, given by the inputs (A given in csr format)
+@params dp the discretization points
+@params a_values the values of the matrix
+@params a_row_inicies the row indicies of the matrix
+@params a_amount_of_values the amount of values in the matrix
+@params a_ptrs pointers to the rows of the matrix
+@params b_values the values of the b vector
+@params x_values the values of the x vector
+@params iterations_of_solvers how often each solver should be applied
+@params whichSolver which solver should be used Cg,Bicgstab,Cgs,Fcg or Gmres, coded as ints as it is specified in the python code)
 
+
+*/
 int calculate_time_with_solver_on_square_matrix(int dp, double a_values[], int a_row_indices[], int a_amount_of_values,
     int a_ptrs[], double b_values[], double x_values[], int iterations_of_solvers, int whichSolver)
 {

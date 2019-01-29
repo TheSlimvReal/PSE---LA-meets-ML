@@ -24,11 +24,11 @@ class LabelCommand(Command):
             Key.SIZE: None,
         }
 
-        self.help_arguments = {
+        self.help_arguments = (
             "-p <path> Absolute path to the matrices in the local storage the user wants to have labeled",
             "-n <name> Name under which the labeled matrices will be saved",
             "-s <saving path> (optional) Path where the labeled matrices will be saved",
-        }
+        )
 
         self.__config: List[str] = []
 

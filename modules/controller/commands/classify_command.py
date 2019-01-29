@@ -16,11 +16,12 @@ class ClassifyCommand(Command):
             ("h", "help"): Key.HELP,
         }
 
-        self.help_arguments = {
+        self.help_arguments = (
             "-p <path> Path to the matrix the user wants to classify",
             "-n <network> (optional) Path to the trained neural networks, if not set, uses the neural network shipped "
             "with the program",
-        }
+        )
+
         self.arguments = {
             Key.PATH: None,
             Key.NETWORK: None,

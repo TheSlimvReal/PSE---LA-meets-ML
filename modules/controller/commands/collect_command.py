@@ -19,12 +19,13 @@ class CollectCommand(Command):
             ("h", "help"): Key.HELP,
         }
 
-        self.help_arguments = {
+        self.help_arguments = (
             "-a Absolute amount of matrices the user wants to generate",
             "-n <name> Name under which the matrices will be saved",
             "-s <size> (optional) Absolute size the generated square matrices should have. Default is 128",
             "-p <path> (optional) Path where the created/downloaded matrices will be saved",
-        }
+        )
+
         self.arguments = {
             Key.AMOUNT: None,
             Key.NAME: None,

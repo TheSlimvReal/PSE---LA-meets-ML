@@ -12,8 +12,8 @@ class Command:
         self.__module_name: Module = Module.UNDEFINED
         self.__arguments: Dict[Key, str] = {}
         self.__valid_arguments: Dict[Tuple[str, str], Key] = {}
-        self.__required_arguments: List[Key] = []
-        self.__help_arguments: List[str] = []
+        self.__required_arguments: Tuple[Key] = ()
+        self.__help_arguments: Tuple[str] = ()
 
     @property
     def module_name(self) -> Module:
@@ -32,11 +32,11 @@ class Command:
         self.__arguments = arguments
 
     @property
-    def required_arguments(self) -> List[Key]:
+    def required_arguments(self) -> Tuple[Key]:
         return self.__required_arguments
 
     @required_arguments.setter
-    def required_arguments(self, args: List[Key]) -> None:
+    def required_arguments(self, args: Tuple[Key]) -> None:
         self.__required_arguments = args
 
     @property
@@ -48,13 +48,12 @@ class Command:
         self.__valid_arguments = args
 
     @property
-    def help_arguments(self) -> List[str]:
+    def help_arguments(self) -> Tuple[str]:
         return self.__help_arguments
 
     @help_arguments.setter
-    def help_arguments(self, args: List[str]) -> None:
+    def help_arguments(self, args: Tuple[str]) -> None:
         self.__help_arguments = args
-
 
     ##  can be called the execute the module
     def execute(self) -> None:

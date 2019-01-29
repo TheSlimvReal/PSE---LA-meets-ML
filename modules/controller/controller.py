@@ -32,7 +32,7 @@ class Controller:
             if isinstance(command, QuitCommand):
                 finished = True
             elif isinstance(command, HelpCommand):
-                self.__print_main_help_information(command)
+                self.__print_main_help_information()
             elif Key.HELP in command.arguments:
                 self.__print_help_information(command)
             else:
@@ -57,9 +57,9 @@ class Controller:
     def __print_help_information(self, command: Command):
         self.__output_service.print_line("These are the possible Tags for the " + command.module_name.value + "-command:")
         for info in command.help_arguments:
-            self.__view.print(info)
+            self.__output_service.print_line(info)
 
-    def __print_main_help_information(self, command):
+    def __print_main_help_information(self):
         self.__output_service.print_line("These are the possible interactions:")
         for command in CommandParser.get_valid_commands():
             self.__output_service.print_line(command)

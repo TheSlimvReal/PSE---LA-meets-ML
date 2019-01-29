@@ -40,7 +40,7 @@ class Command:
         self.__required_arguments = args
 
     @property
-    def valid_arguments(self) -> Dict[Tuple[str,str], Key]:
+    def valid_arguments(self) -> Dict[Tuple[str, str], Key]:
         return self.__valid_arguments
 
     @valid_arguments.setter

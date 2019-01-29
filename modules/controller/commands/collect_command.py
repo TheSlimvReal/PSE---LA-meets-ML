@@ -11,19 +11,12 @@ class CollectCommand(Command):
     def __init__(self):
         super().__init__()
         self.module_name = Module.COLLECT
-        self.valid_short_arguments: Dict[str, Key] = {
-            "a": Key.AMOUNT,
-            "n": Key.NAME,
-            "p": Key.PATH,
-            "s": Key.SIZE,
-            "h": Key.HELP,
-        }
-        self.valid_long_arguments: Dict[str, Key] = {
-            "amount": Key.AMOUNT,
-            "name": Key.NAME,
-            "path": Key.PATH,
-            "size": Key.SIZE,
-            "help": Key.HELP,
+        self.valid_arguments: Dict[str, Key] = {
+            ("a", "amount"): Key.AMOUNT,
+            ("n", "name"): Key.NAME,
+            ("p", "path"): Key.PATH,
+            ("s", "size"): Key.SIZE,
+            ("h", "help"): Key.HELP,
         }
 
         self.help_arguments = {

@@ -1,9 +1,8 @@
-from typing import List, Dict
+from typing import List
 
 from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
 from modules.controller.commands.module import Module
-from modules.exception.excpetions import IllegalArgumentException
 from modules.model.labeling_module.labeling_module import LabelingModule
 
 
@@ -12,17 +11,11 @@ class LabelCommand(Command):
     def __init__(self):
         super().__init__()
         self.module_name = Module.LABEL
-        self.valid_short_arguments = {
-            "n": Key.NAME,
-            "p": Key.PATH,
-            "s": Key.SAVING_PATH,
-            "h": Key.HELP,
-        }
-        self.valid_long_arguments = {
-            "name": Key.NAME,
-            "path": Key.PATH,
-            "saving-path": Key.SAVING_PATH,
-            "help": Key.HELP,
+        self.valid_arguments = {
+            ("n", "name"): Key.NAME,
+            ("p", "path"): Key.PATH,
+            ("s", "saving-path"): Key.SAVING_PATH,
+            ("h", "help"): Key.HELP,
         }
 
         self.arguments = {

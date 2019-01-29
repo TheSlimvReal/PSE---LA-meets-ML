@@ -9,22 +9,15 @@ class TrainCommand(Command):
     def __init__(self):
         super().__init__()
         self.module_name = Module.TRAIN
-        self.valid_short_arguments = {
-            "n": Key.NAME,
-            "p": Key.PATH,
-            "s": Key.SAVING_PATH,
-            "t": Key.TRAIN,
-            "e": Key.EXISTING_NETWORK,
+        self.valid_arguments = {
+            ("n", "name"): Key.NAME,
+            ("p", "path"): Key.PATH,
+            ("s", "saving-path"): Key.SAVING_PATH,
+            ("t", "train"): Key.TRAIN,
+            ("e", "existing-network"): Key.EXISTING_NETWORK,
             "h": Key.HELP,
         }
-        self.valid_long_arguments = {
-            "name": Key.NAME,
-            "path": Key.PATH,
-            "saving-path": Key.SAVING_PATH,
-            "train": Key.TRAIN,
-            "existing-network": Key.EXISTING_NETWORK,
-            "help": Key.HELP,
-        }
+
         self.arguments = {
             Key.NAME: None,
             Key.PATH: None,

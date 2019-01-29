@@ -55,12 +55,12 @@ class Controller:
         Classifier.set_output_service(self.__output_service)
 
     def __print_help_information(self, command: Command):
-        self.__view.print("These are the possible Tags for the " + command.module_name.value + "-command:")
+        self.__output_service.print_line("These are the possible Tags for the " + command.module_name.value + "-command:")
         for info in command.help_arguments:
             self.__view.print(info)
 
     def __print_main_help_information(self, command):
-        self.__view.print("These are the possible interactions:")
+        self.__output_service.print_line("These are the possible interactions:")
         for command in CommandParser.get_valid_commands():
-            self.__view.print(command)
-        self.__view.print("for more information type in the command and -h or --help.")
+            self.__output_service.print_line(command)
+        self.__output_service.print_line("for more information type in the command and -h or --help.")

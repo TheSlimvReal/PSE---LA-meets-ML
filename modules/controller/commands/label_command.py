@@ -4,6 +4,7 @@ from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
 from modules.controller.commands.module import Module
 from modules.model.labeling_module.labeling_module import LabelingModule
+from modules.model.labeling_module import cl
 
 
 class LabelCommand(Command):
@@ -37,10 +38,10 @@ class LabelCommand(Command):
         return self.__config
 
     def execute(self):
-        super().execute()
-        LabelingModule.start(
-            self.arguments.get(Key.PATH),
-            self.arguments.get(Key.NAME),
-            self.arguments.get(Key.SAVING_PATH)
+       super().execute()
+       cl.start(
+           self.arguments.get(Key.PATH),
+           self.arguments.get(Key.NAME),
+           self.arguments.get(Key.SAVING_PATH)
         )
         return

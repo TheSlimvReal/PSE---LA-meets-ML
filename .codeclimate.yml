@@ -1,7 +1,7 @@
 #   This file holds the configuration for the automated code checks on CodeClimate
 version: "2"
 checks:
-    coginitve-complexity:
+    cognitive-complexity:
         config:
             threshold: 6
 plugins:

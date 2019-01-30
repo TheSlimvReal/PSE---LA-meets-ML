@@ -38,6 +38,7 @@ int initExec(int argc, char *argv)
         exec = gko::OmpExecutor::create();
     } else if (argc == 2 && std::string(argv) == "cuda" &&
                gko::CudaExecutor::get_num_devices() > 0) {
+               printf("cuda");
 
         exec = gko::CudaExecutor::create(0, gko::OmpExecutor::create());
     } else {
@@ -164,6 +165,7 @@ int getTime(auto solver, auto b, auto x, int iterations_of_solvers) {
 int calculate_time_with_solver_on_square_matrix(int dp, double a_values[], int a_row_indices[], int a_amount_of_values,
     int a_ptrs[], double b_values[], double x_values[], int iterations_of_solvers, int whichSolver)
 {
+
 
     map<string,int(*)()> int_map;
     //create Ginkgo A Matrix

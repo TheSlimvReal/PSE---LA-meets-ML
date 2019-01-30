@@ -25,7 +25,7 @@ class LabelingModule:
 
     __output_service: OutputService = OutputService()
     ginkgo = Ginkgowrapper
-    solvers = [BicgstabSolver(), CgSolver(), CgsSolver(), FcgSolver(), GmresSolver()]
+    solvers = [BicgstabSolver(), CgSolver(), CgsSolver(), FcgSolver()]
 
     ##  Sets up the the class for the labeling process
     #
@@ -41,6 +41,7 @@ class LabelingModule:
         labeled_dataset = LabelingModule.__label(dataset_dense_format)
         LabelingModule.__output_service.print_line("Finished labeling matrices. Saved at " + path + " under " + saving_name)
         Saver.save(labeled_dataset, saving_name, saving_path, True)
+        print(labeled_dataset)
 
     ##  Starts the labeling process
     #

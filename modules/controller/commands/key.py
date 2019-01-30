@@ -14,4 +14,5 @@ class Key(Enum):
     NETWORK = 9
     MODE = 10
     SOLVE = 11
+    HELP = 12
     EXISTING_NETWORK = 12

@@ -86,13 +86,13 @@ auto createGinkgoMatrix(int dp, double a_values[], int a_row_indices[], int a_am
     auto a_values_data_p = createDoubleVectorPointer(a_values,a_amount_of_values);
 
     //create the Pointer to Vector of the Row Indices
-    //vector<int> a_row_indices_data (a_row_indices,a_row_indices + a_amount_of_values);
-    //int *a_row_indices_p = a_row_indices_data.data();
-    int* a_row_indices_p = createIntVectorPointer(a_row_indices,a_amount_of_values);
+    vector<int> a_row_indices_data (a_row_indices,a_row_indices + a_amount_of_values);
+    int *a_row_indices_p = a_row_indices_data.data();
+    //int* a_row_indices_p = createIntVectorPointer(a_row_indices,a_amount_of_values);
     //create the Pointer to Vector of the Pointers to the rows
-    //vector<int>  a_ptrs_data (a_ptrs,a_ptrs + (dp + 1));
-    //int *a_ptrs_p = a_ptrs_data.data();
-    int *a_ptrs_p = createIntVectorPointer(a_ptrs,dp+1);
+    vector<int>  a_ptrs_data (a_ptrs,a_ptrs + (dp + 1));
+    int *a_ptrs_p = a_ptrs_data.data();
+    //int *a_ptrs_p = createIntVectorPointer(a_ptrs,dp+1);
 
     auto A = mtxDoubleInteger::create(exec, gko::dim<2>(dp),
                                 val_array::view(app_exec, a_amount_of_values, a_values_data_p),

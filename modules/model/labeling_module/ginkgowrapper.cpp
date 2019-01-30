@@ -64,7 +64,7 @@ create a Pointer to a vector which has ints as values
 @params values the values
 @params amount_of_values the amount of values
 */
-int* createIntVectorPointer(int values[],int amount_of_values) {
+auto createIntVectorPointer(int values[],int amount_of_values) {
     vector<int> values_data (values,values + amount_of_values);
     int * values_data_p = values_data.data();
     return values_data_p;
@@ -82,15 +82,17 @@ create a ginkgo matrix from a matrix in the csr format(split as individual array
 auto createGinkgoMatrix(int dp, double a_values[], int a_row_indices[], int a_amount_of_values, int a_ptrs[]) {
 
     //create the Pointer to Vector of the Values of A
+
     auto a_values_data_p = createDoubleVectorPointer(a_values,a_amount_of_values);
 
     //create the Pointer to Vector of the Row Indices
-    vector<int> a_row_indices_data (a_row_indices,a_row_indices + a_amount_of_values);
-    int *a_row_indices_p = a_row_indices_data.data();
-
+    //vector<int> a_row_indices_data (a_row_indices,a_row_indices + a_amount_of_values);
+    //int *a_row_indices_p = a_row_indices_data.data();
+    int* a_row_indices_p = createIntVectorPointer(a_row_indices,a_amount_of_values);
     //create the Pointer to Vector of the Pointers to the rows
-    vector<int>  a_ptrs_data (a_ptrs,a_ptrs + (dp + 1));
-    int *a_ptrs_p = a_ptrs_data.data();
+    //vector<int>  a_ptrs_data (a_ptrs,a_ptrs + (dp + 1));
+    //int *a_ptrs_p = a_ptrs_data.data();
+    int *a_ptrs_p = createIntVectorPointer(a_ptrs,dp+1);
 
     auto A = mtxDoubleInteger::create(exec, gko::dim<2>(dp),
                                 val_array::view(app_exec, a_amount_of_values, a_values_data_p),
@@ -144,10 +146,26 @@ calculates the time a certain solver takes to solve the system Ax=b, given by th
 
 
 */
+
+int getTime(auto solver, auto b, auto x, int iterations_of_solvers) {
+    int sum;
+
+    sum = 0;
+          for(unsigned i = 0; i < iterations_of_solvers; i++){
+                auto t1 = high_resolution_clock::now();
+                solver->apply(lend(b), lend(x));
+                auto t2 = high_resolution_clock::now();
+                sum += (duration_cast<microseconds>( t2 - t1 ).count())/iterations_of_solvers;
+          }
+     return sum;
+
+
+}
 int calculate_time_with_solver_on_square_matrix(int dp, double a_values[], int a_row_indices[], int a_amount_of_values,
     int a_ptrs[], double b_values[], double x_values[], int iterations_of_solvers, int whichSolver)
 {
 
+    map<string,int(*)()> int_map;
     //create Ginkgo A Matrix
     auto A = share(createGinkgoMatrix(dp,a_values,a_row_indices,a_amount_of_values,a_ptrs));
 
@@ -167,11 +185,14 @@ int calculate_time_with_solver_on_square_matrix(int dp, double a_values[], int a
 
           sum = 0;
           for(unsigned i = 0; i < iterations_of_solvers; i++){
+
                 t1 = high_resolution_clock::now();
                 solver->apply(lend(b), lend(x));
                 t2 = high_resolution_clock::now();
                 sum += (duration_cast<microseconds>( t2 - t1 ).count())/iterations_of_solvers;
           }
+
+          //sum = getTime(solver,b,x,iterations_of_solvers);
           break;
         }
     case 1:

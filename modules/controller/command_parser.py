@@ -7,6 +7,7 @@ from modules.controller.commands.collect_command import CollectCommand
 from modules.controller.commands.help_command import HelpCommand
 from modules.controller.commands.label_command import LabelCommand
 from modules.controller.commands.quit_command import QuitCommand
+from modules.controller.commands.ssget_command import SSGETCommand
 from modules.controller.commands.train_command import TrainCommand
 from modules.exception.excpetions import IllegalArgumentException
 
@@ -21,6 +22,7 @@ class CommandParser:
         "classify": ClassifyCommand,
         "quit": QuitCommand,
         "help": HelpCommand,
+        "ssget": SSGETCommand,
     }
 
     @staticmethod

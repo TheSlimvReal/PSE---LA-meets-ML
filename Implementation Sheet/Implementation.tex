@@ -289,7 +289,7 @@ Instead we just implemented a generator that fetches and cuts Suite Sparse matri
 
 \subsection{Following Requirements were not accomplished}
 \begin{itemize}
-\item A web interface to the software that is able to select a single, a set or all matrices of an uploadable le for prediction by the neural network. The web interface may also be able to visualize the contained matrices, annotated labels as well as prediction results.
+\item A web interface to the software that is able to select a single, a set or all matrices of an uploadable file for prediction by the neural network. The web interface may also be able to visualize the contained matrices, annotated labels as well as prediction results.
 
 \item The system must support at least five iterative solver algorithms. 
 
@@ -302,47 +302,47 @@ Instead we just implemented a generator that fetches and cuts Suite Sparse matri
 \section{Unittests}
 
 \subsection{Controller}
-\subsubsection{test command parser}
+\subsubsection{test\_command\_parser}
 This test checks the functionality of the command parser.
 It has following tests:
 
 \begin{itemize}
 
-\item dicts equal
+\item dicts\_equal
 
-\item test valid input returns command
+\item test\_valid\_input\_returns\_command
 
-\item test valid input with arguments
+\item test\_valid\_input\_with\_arguments
 
-\item test valid input with flag
+\item test\_valid\_input\_with\_flag
 
-\item test invalid mode throws exception
+\item test\_invalid\_mode\_throws\_exception
 
-\item test valid collector input
+\item test\_valid\_collector\_input
 
-\item test valid label mode
+\item test\_valid\_label\_mode
 
-\item test fails when entering invalid module
+\item test\_fails\_when\_entering\_invalid\_module
 
-\item test quit with arguments throws error
+\item test\_quit\_with\_arguments\_throws\_error
 
-\item test collector with missing optional args adds default
+\item test\_collector\_with\_missing\_optional\_args\_adds\_default
 
-\item test classify command with missing optional arg adds default
+\item test\_classify\_command\_with\_missing\_optional\_arg\_adds\_default
 
 \end{itemize}
 
-\subsubsection{test controller}
+\subsubsection{test\_controller}
 This test checks the functionality of the controller.
 It has following tests:
 
 \begin{itemize}
 
-\item test controller with two iterations
+\item test\_controller\_with\_two\_iterations
 
-\item test invalid input calls print error
+\item test\_invalid\_input\_calls\_print\_error
 
-\item test help flag print
+\item test\_help\_flag\_print
 
 \end{itemize}
 
@@ -353,7 +353,7 @@ It has following tests:
 
 \begin{itemize}
 
-\item test collect
+\item test\_collect
 
 \end{itemize}
 
@@ -364,9 +364,9 @@ It has following tests:
 
 \begin{itemize}
 
-\item test loading config values works
+\item test\_loading\_config\_values\_works
 
-\item test loading config has right value
+\item test\_loading\_config\_has\_right\_value
 
 \end{itemize}
 
@@ -377,11 +377,10 @@ It has following tests:
 
 \begin{itemize}
 
-\item test create observable to print three values
+\item test\_create\_observable\_to\_print\_three\_values
 
 \end{itemize}
 
-\newpage
 \section{Delays and Problems}
 Our main problem was with the \gls{Ginkgo}. 
 It was bad documented what made working with it very hard and caused a delay in our implementation plan. 

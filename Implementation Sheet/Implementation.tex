@@ -276,6 +276,53 @@ Instead we just implemented a generator that fetches and cuts Suite Sparse matri
 
 
 \section{Unittests}
+\subsection{Controller}
+\subsubsection{test_command_parser}
+This test checks the functionality of the command parser.
+It has following tests:
+\begin{itemize}
+\item dicts_equal
+\item test_valid_input_returns_command
+\item test_valid_input_with_arguments
+\item test_valid_input_with_flag
+\item test_invalid_mode_throws_exception
+\item test_valid_collector_input
+\item test_valid_label_mode
+\item test_fails_when_entering_invalid_module
+\item test_quit_with_arguments_throws_error
+\item test_collector_with_missing_optional_args_adds_default
+\item test_classify_command_with_missing_optional_arg_adds_default
+\end{itemize}
+
+\subsubsection{test_controller}
+This test checks the functionality of the controller.
+It has following tests:
+\begin{itemize}
+\item test_controller_with_two_iterations
+\item test_invalid_input_calls_print_error
+\item test_help_flag_print
+\end{itemize}
+
+\subsection{model}
+\subsubsection{test_collector}
+This test checks the functionality of the collector.
+It has following tests:
+\begin{itemize}
+\item test_collect
+\end{itemize}
+
+\subsection{shared}
+\subsubsection{test_configurations}
+\begin{itemize}
+\item test_loading_config_values_works
+\item test_loading_config_has_right_value
+\end{itemize}
+
+\subsection{view}
+\subsubsection{test_cli_output_service}
+\begin{itemize}
+\item test_create_observable_to_print_three_values
+\end{itemize}
 
 
 \section{Delays and Problems}
@@ -332,3 +379,4 @@ As soon as the labeler module worked, Yannick implemented the training module an
 \printnoidxglossaries
 
 \end{document}
+

@@ -8,6 +8,7 @@ def start(path, saving_name, saving_path):
     os.environ['LD_LIBRARY_PATH'] = '/usr/local/cuda/lib'
     os.environ['LD_LIBRARY_PATH'] = os.getenv("LD_LIBRARY_PATH", "fail") + ':/usr/local/lib'
     os.environ['LD_LIBRARY_PATH'] = os.getenv("LD_LIBRARY_PATH", "fail") + ':/usr/local/lib64'
+    print(os.environ)
 
     os.system("$CXX  modules/model/labeling_module/ginkgowrapper.cpp -shared -fpic -I/usr/local/include/ "
               "-L/usr/local/lib/ -lginkgo_omp -lginkgo_reference -lginkgo -lginkgo_cuda "

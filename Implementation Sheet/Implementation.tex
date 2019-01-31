@@ -4,6 +4,8 @@
 \usepackage[german, english]{babel}  % german hyphenation, quotes, etc
 \usepackage{graphicx}       % provides commands for including figures
 \usepackage{rotating}
+\usepackage{amsmath}
+\usepackage{pdfpages}
 \graphicspath{ {images/} }
 \usepackage{hyperref}       % detailed hyperlink/pdf configuration
 \hypersetup{                % ‘texdoc hyperref‘ for options
@@ -15,7 +17,9 @@ bookmarks=true,%
 \usepackage{enumitem}
 \usepackage{lscape}
 \usepackage{caption}
-\usepackage{placeins}
+%\usepackage{placeins}
+\usepackage[section]{placeins}
+
 
 
 \makenoidxglossaries
@@ -220,10 +224,18 @@ It turned out that our design was very good and we hardly had to make any change
 Overall, our project now consists of lines of Python code and lines of C++ code.
 
 \section{Changes on the Design}
+
 \begin{itemize}
+
 \item We didn't implemented a matrix class, because we realized it is not useful to handle every matrix by its own. 
 Instead we decided to handle it in numpy arrays.
+
+\item We decided to leave out the density because it wasn't
+
 \item We changed the command interface to an abstract class to reduce redundancy of the code.
+
+\item We decided to let out the possibility to select a density, because we couldn't guarantee that the fetched and cut matrices from Suite Sparse have the wanted density.
+
 \end{itemize}
 
 %collector class?
@@ -257,32 +269,130 @@ It must be able to predict for a given matrix (in arbitrary format), which of th
 
 \item Realization of a sustainable and quality-assured software development process. 
 This includes a software design document, in-code documentation, unit testing and a continuous integration (CI).
-
+\end{itemize}
+Following optional requirements are accomplished:
+\begin{itemize}
+\item The software must be able to utilize GPU accelerators for the training and prediction capabilities of the neural network.
 \end{itemize}
 
 \subsection{Following Requirements were accomplished as far as possible}
 \begin{itemize}
+
 \item All mandatory requirements were as far as possible accomplished despite the cross-platformed compatibility is not fully given. 
 This was not possible, because some used entities (ssget, gingko) where not Windows compatible.
 Compared to the specification sheet there is just the possibility to fetch and cut Suite Sparse matrices yet.
 As we figured out our design we realized that generating random matrices is not that easy with our knowing.
 So as already realized in the design document, because in Suite Sparse it is very rare to have same sized matrices from Suite Sparse, it was not necessary to just fetch Suite Sparse matrices in one size. 
 Instead we just implemented a generator that fetches and cuts Suite Sparse matrices.
-\item We decided to let out the possibility to select a density, because we couldn't guarantee that the fetched and cut matrices from Suite Sparse have the wanted density.
+
+\item We decided to let out the possibility to select a density as explained in the changes of design
+
 \end{itemize}
 
 
 \subsection{Following Requirements were not accomplished}
+\begin{itemize}
+\item A web interface to the software that is able to select a single, a set or all matrices of an uploadable file for prediction by the neural network. The web interface may also be able to visualize the contained matrices, annotated labels as well as prediction results.
 
+\item The system must support at least five iterative solver algorithms. 
+
+\item Scalability of the workflow including matrix generation, training, prediction in that multiple processors may be used in parallel.
+
+\end{itemize}
 
 \section{Unittests}
 
+\subsection{Controller}
+\subsubsection{test\_command\_parser}
+This test checks the functionality of the command parser.
+It has following tests:
+
+\begin{itemize}
+
+\item dicts\_equal
+
+\item test\_valid\_input\_returns\_command
+
+\item test\_valid\_input\_with\_arguments
+
+\item test\_valid\_input\_with\_flag
+
+\item test\_invalid\_mode\_throws\_exception
+
+\item test\_valid\_collector\_input
+
+\item test\_valid\_label\_mode
+
+\item test\_fails\_when\_entering\_invalid\_module
+
+\item test\_quit\_with\_arguments\_throws\_error
+
+\item test\_collector\_with\_missing\_optional\_args\_adds\_default
+
+\item test\_classify\_command\_with\_missing\_optional\_arg\_adds\_default
+
+\end{itemize}
+
+\subsubsection{test\_controller}
+This test checks the functionality of the controller.
+It has following tests:
+
+\begin{itemize}
+
+\item test\_controller\_with\_two\_iterations
+
+\item test\_invalid\_input\_calls\_print\_error
+
+\item test\_help\_flag\_print
+
+\end{itemize}
+
+\subsection{model}
+\subsubsection{test collector}
+This test checks the functionality of the collector.
+It has following tests:
+
+\begin{itemize}
+
+\item test\_collect
+
+\end{itemize}
+
+\subsection{shared}
+\subsubsection{test configurations}
+This test checks the functionality of the loading of the configurations.
+It has following tests:
+
+\begin{itemize}
+
+\item test\_loading\_config\_values\_works
+
+\item test\_loading\_config\_has\_right\_value
+
+\end{itemize}
+
+\subsection{view}
+\subsubsection{test cli output service}
+This test checks the functionality of the view.
+It has following tests:
+
+\begin{itemize}
+
+\item test\_create\_observable\_to\_print\_three\_values
+
+\end{itemize}
 
 \section{Delays and Problems}
+\subsection{Labeling module}
 Our main problem was with the \gls{Ginkgo}. 
 It was bad documented what made working with it very hard and caused a delay in our implementation plan. 
-
-
+\subsection{MVC}
+The Basic structure for MVC was very easy to implement.
+Through preliminary work in the implementation phase, it was very easy to build the basic structure 
+However, there were some problems with integration with real modules later.
+\subsection{Training module}
+The problem with the labeling module caused a delay in the implementation of the training and classify module.
+testing the training / classify module, was difficult, because the data from labeling modules were needed
 \section{Lessons learned}
 First of all we thought the machine learning part of this software will be the hardest part.
 But it turned out to be on of the easiest.
@@ -293,20 +403,33 @@ The same time editing of latex documents was another issue.
 In future it would be better to use for example ShareLaTeX and start a new line for each sentence to minimize git problems.
 
 \section{Statistics}
+
 \begin{itemize}
+
 \item lines of Python code
+
 \item lines of C++ code
+
 \item commits
+
 \end{itemize}
 \subsection{Work Splitting}
 \begin{itemize}
+
 \item Collector module: Yannick and Anna
+
 \item Labeling module: Fabian and Dennis
+
 \item Training module: Yannick
+
 \item Classifier: Yannick
+
 \item Command parsing module: Simon
+
 \item Output service module: Simon
+
 \item Implementation report: Anna
+
 \end{itemize}
 %How many lines of code, how many commits, work splitting
 
@@ -319,6 +442,7 @@ Simon did the command parsing module and the output service module.
 As soon as the labeler module worked, Yannick implemented the training module and the classifier.
 \subsection{Git}
 %How was GIT used? Was the merging on the master branch restricted?
+Codeclimate helped to write leaner code and to take care of refactoring at an early stage
 
 
 
@@ -332,3 +456,4 @@ As soon as the labeler module worked, Yannick implemented the training module an
 \printnoidxglossaries
 
 \end{document}
+

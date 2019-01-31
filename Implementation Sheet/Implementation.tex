@@ -269,7 +269,10 @@ It must be able to predict for a given matrix (in arbitrary format), which of th
 
 \item Realization of a sustainable and quality-assured software development process. 
 This includes a software design document, in-code documentation, unit testing and a continuous integration (CI).
-
+\end{itemize}
+Following optional requirements are accomplished:
+\begin{itemize}
+\item The software must be able to utilize GPU accelerators for the training and prediction capabilities of the neural network.
 \end{itemize}
 
 \subsection{Following Requirements were accomplished as far as possible}
@@ -292,8 +295,6 @@ Instead we just implemented a generator that fetches and cuts Suite Sparse matri
 \item A web interface to the software that is able to select a single, a set or all matrices of an uploadable file for prediction by the neural network. The web interface may also be able to visualize the contained matrices, annotated labels as well as prediction results.
 
 \item The system must support at least five iterative solver algorithms. 
-
-\item The software must be able to utilize GPU accelerators for the training and prediction capabilities of the neural network.
 
 \item Scalability of the workflow including matrix generation, training, prediction in that multiple processors may be used in parallel.
 
@@ -382,10 +383,16 @@ It has following tests:
 \end{itemize}
 
 \section{Delays and Problems}
+\subsection{Labeling module}
 Our main problem was with the \gls{Ginkgo}. 
 It was bad documented what made working with it very hard and caused a delay in our implementation plan. 
-
-
+\subsection{MVC}
+The Basic structure for MVC was very easy to implement.
+Through preliminary work in the implementation phase, it was very easy to build the basic structure 
+However, there were some problems with integration with real modules later.
+\subsection{Training module}
+The problem with the labeling module caused a delay in the implementation of the training and classify module.
+testing the training / classify module, was difficult, because the data from labeling modules were needed
 \section{Lessons learned}
 First of all we thought the machine learning part of this software will be the hardest part.
 But it turned out to be on of the easiest.
@@ -435,6 +442,7 @@ Simon did the command parsing module and the output service module.
 As soon as the labeler module worked, Yannick implemented the training module and the classifier.
 \subsection{Git}
 %How was GIT used? Was the merging on the master branch restricted?
+Codeclimate helped to write leaner code and to take care of refactoring at an early stage
 
 
 

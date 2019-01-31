@@ -404,6 +404,13 @@ This we got to work with a remote interpreter.
 
 The high resolution clock function in c++ solved our next problem: the determination of the time the solvers need.
 
+The last problem was, that the cuda server wasn't working, because there was a bug in Ginkgo on the Server.
+So Markus has to help us again to fix that.
+
+After that we just had to clean up the methods to let them pass the codeclimate tests.
+Therefore we tried to outsource functions, especially out function that chooses which solver is to be selected.
+That we tried this by mapping with pointers.
+Because here the return type was not possible, so it didn't work, we finally handled the problems with templates, how Markus showed us.
 
 \subsection{MVC}
 The Basic structure for MVC was very easy to implement.

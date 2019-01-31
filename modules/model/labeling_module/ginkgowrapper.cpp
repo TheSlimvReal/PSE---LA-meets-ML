@@ -97,7 +97,7 @@ auto createSolver(std::shared_ptr<gko::matrix::Csr<double, int> >& A,int dp,auto
             .with_criteria(
                 gko::stop::Iteration::build().with_max_iters(dp).on(exec),
                 gko::stop::ResidualNormReduction<>::build()
-                    .with_reduction_factor(1e-20)
+                    .with_reduction_factor(1e-6)
                     .on(exec))
             .on(exec);
 

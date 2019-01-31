@@ -14,7 +14,7 @@ class Configurations:
         Key.PATH: "path",
         Key.SIZE: "size",
         Key.TRAIN: "train",
-        Key.SAVING_PATH: "saving-path",
+        Key.SAVING_PATH: "default_saving_path",
     }
 
     with open("config.json") as f:

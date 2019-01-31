@@ -386,6 +386,21 @@ It has following tests:
 \subsection{Labeling module}
 Our main problem was with the \gls{Ginkgo}. 
 It was bad documented what made working with it very hard and caused a delay in our implementation plan. 
+
+First we had to find out, how to use \gls{Ginkgo} and because there was not good documentation we just had examples of the repository to work with.
+
+The next difficulty was to integrate c++.
+We didn't managed to find that out by our own, but with ctypes and the help of markus (he wrote us a tutorial) we could integrate C++.
+
+After that we needed to figure out how to transfer the data to C++.
+With pointer in python, csr matrix format and more examples from Ginkgo repository we also solved this Problem.
+
+The following step was to find out how the server we use works so we can find out how to use Pycharm on the server.
+This we got to work with a remote interpreter.
+
+The high resolution clock function in c++ solved our next problem: the determination of the time the solvers need.
+
+
 \subsection{MVC}
 The Basic structure for MVC was very easy to implement.
 Through preliminary work in the implementation phase, it was very easy to build the basic structure 

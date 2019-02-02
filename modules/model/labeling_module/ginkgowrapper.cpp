@@ -42,11 +42,11 @@ int initExec(int argc, char *argv)
         exec = gko::OmpExecutor::create();
     } else if (argc == 2 && std::string(argv) == "cuda" &&
                gko::CudaExecutor::get_num_devices() > 0) {
-               printf("cuda");
+
 
         exec = gko::CudaExecutor::create(0, gko::OmpExecutor::create());
     } else {
-        printf("wrong");
+
         std::cerr << "Usage: " << argv[0] << " [executor]" << std::endl;
         std::exit(-1);
     }
@@ -100,6 +100,7 @@ auto createGinkgoMatrix(int dp, double a_values[], int a_row_indices[], int a_am
     //int* a_row_indices_p = createIntVectorPointer(a_row_indices,a_amount_of_values);
     //create the Pointer to Vector of the Pointers to the rows
     vector<int>  a_ptrs_data (a_ptrs,a_ptrs + (dp + 1));
+
     int *a_ptrs_p = a_ptrs_data.data();
     //int *a_ptrs_p = createIntVectorPointer(a_ptrs,dp+1);
 
@@ -169,31 +170,17 @@ calculates the time a certain solver takes to solve the system Ax=b, given by th
 
 
 */
-/*
-int getTime(gko::LinOp* solver2, auto b, auto x, int iterations_of_solvers) {
-    int sum;
-    //auto solver = solver2::build;
-    sum = 0;
-          for(unsigned i = 0; i < iterations_of_solvers; i++){
-                auto t1 = high_resolution_clock::now();
-                solver->apply(lend(b), lend(x));
-                auto t2 = high_resolution_clock::now();
-                sum += (duration_cast<microseconds>( t2 - t1 ).count())/iterations_of_solvers;
-          }
-     return sum;
-
-
-}*/
 
 int calculate_time_with_solver_on_square_matrix(int dp, double a_values[], int a_row_indices[], int a_amount_of_values,
     int a_ptrs[], double b_values[], double x_values[], int iterations_of_solvers, int whichSolver)
 {
 
-    m[0] = gen<gko::solver::Cg<> >;
-    m[1] = gen<gko::solver::Cgs<> >;
-    m[2] = gen<gko::solver::Bicgstab<> >;
+    m[0] = gen<gko::solver::Bicgstab<> >;
+    m[1] = gen<gko::solver::Cg<> >;
+    m[2] = gen<gko::solver::Cgs<> >;
     m[3] = gen<gko::solver::Fcg<> >;
-    m[4] = gen<gko::solver::Gmres<> >;
+    //m[4] = gen<gko::solver::Gmres<> >;
+
 
     //gko::LinOp* solver44 = gko::solver::Bicgstab<>;
     //map<string,int(*)()> int_map;

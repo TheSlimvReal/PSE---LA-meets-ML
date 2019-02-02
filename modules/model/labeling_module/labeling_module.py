@@ -15,6 +15,8 @@ import scipy.sparse
 import numpy as np
 import h5py
 import sys
+from modules.view.cli_output_service import CLIOutputService
+from modules.view.command_line_interface import CommandLineInterface
 
 
 ##  This class handles the labeling of the matrices
@@ -23,7 +25,7 @@ from modules.view.output_service import OutputService
 
 class LabelingModule:
 
-    __output_service: OutputService = OutputService()
+    __output_service: OutputService = CLIOutputService(CommandLineInterface())
     ginkgo = Ginkgowrapper
     solvers = [BicgstabSolver(), CgSolver(), CgsSolver(), FcgSolver(), GmresSolver()]
 
@@ -39,7 +41,7 @@ class LabelingModule:
 
         LabelingModule.ginkgo = Ginkgowrapper(2, "cuda", dataset_dense_format[0].shape[0])
         labeled_dataset = LabelingModule.__label(dataset_dense_format)
-        LabelingModule.__output_service.print_line("Finished labeling matrices. Saved at " + path + " under " + saving_name)
+        LabelingModule.__output_service.print_line("Finished labeling matrices. Saved at " + saving_path + " under " + saving_name)
         Saver.save(labeled_dataset, saving_name, saving_path, True)
         print(labeled_dataset)
 
@@ -47,9 +49,9 @@ class LabelingModule:
     #
     #   @param dataset which holds matrices that will be labeled
     @staticmethod
-    def __label(dataset):
+    def __label(dataset_dense_format):
 
-        dense_matrices = np.array(dataset, dtype=np.float64)
+        dense_matrices = np.array(dataset_dense_format, dtype=np.float64)
         csr_matrices = []
         for matrix in dense_matrices:
             csr_matrices.append(scipy.sparse.csr_matrix(matrix))
@@ -57,7 +59,7 @@ class LabelingModule:
         matrices = []
         labels = []
         observable: Observable = Observable()
-        LabelingModule.__output_service.print_stream("Labeling matrices %s/" + str(200), observable)
+        LabelingModule.__output_service.print_stream("Labeling matrices %s/" + str(len(csr_matrices)), observable)
         for i in range(len(csr_matrices)):
             label = LabelingModule.__calculate_label(csr_matrices[i])
             matrices.append(csr_matrices[i])
@@ -73,8 +75,8 @@ class LabelingModule:
     @staticmethod
     def __calculate_label(matrix):
         times = []
-        for i in range(len(LabelingModule.solvers)):
-            times.append(LabelingModule.solvers[i].execute(LabelingModule.ginkgo, matrix))
+        for solver in LabelingModule.solvers:
+            times.append(solver.execute(LabelingModule.ginkgo, matrix))
 
         label = np.array([0 for x in range(len(times))])
         label[times.index(min(times))] = 1

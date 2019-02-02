@@ -11,18 +11,21 @@ class CollectCommand(Command):
     def __init__(self):
         super().__init__()
         self.module_name = Module.COLLECT
-        self.valid_short_arguments: Dict[str, Key] = {
-            "a": Key.AMOUNT,
-            "n": Key.NAME,
-            "p": Key.PATH,
-            "s": Key.SIZE,
+        self.valid_arguments: Dict[str, Key] = {
+            ("a", "amount"): Key.AMOUNT,
+            ("n", "name"): Key.NAME,
+            ("p", "path"): Key.PATH,
+            ("s", "size"): Key.SIZE,
+            ("h", "help"): Key.HELP,
         }
-        self.valid_long_arguments: Dict[str, Key] = {
-            "amount": Key.AMOUNT,
-            "name": Key.NAME,
-            "path": Key.PATH,
-            "size": Key.SIZE
-        }
+
+        self.help_arguments = (
+            "-a Absolute amount of matrices the user wants to generate",
+            "-n <name> Name under which the matrices will be saved",
+            "-s <size> (optional) Absolute size the generated square matrices should have. Default is 128",
+            "-p <path> (optional) Path where the created/downloaded matrices will be saved",
+        )
+
         self.arguments = {
             Key.AMOUNT: None,
             Key.NAME: None,

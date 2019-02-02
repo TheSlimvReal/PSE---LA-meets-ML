@@ -12,6 +12,6 @@ def test_collect():
     for matrix in data:
         plt.spy(matrix.todense())
         plt.show()
-    created_file = h5py.File('modules/shared/data/unlabeled_matrices.hdf5','r')
+    created_file = h5py.File('modules/shared/data/unlabeled_matrices.hdf5', 'r')
     print(created_file['dense_matrices'])
 

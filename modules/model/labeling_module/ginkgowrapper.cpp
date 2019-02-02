@@ -17,6 +17,8 @@ The class will be compiled as a shared library which we will load from python wi
 //shortcuts
 using namespace std;
 using namespace std::chrono;
+std::unique_ptr<gko::LinOp> gen(std::shared_ptr<gko::matrix::Csr<double, int> >& A, int dp);
+typedef std::unique_ptr<gko::LinOp> (*solver_function) (std::shared_ptr<gko::matrix::Csr<double, int> >& A, int dp);
 using vec = gko::matrix::Dense<>;
 using val_array = gko::Array<double>;
 using idx_array = gko::Array<int>;
@@ -24,6 +26,8 @@ using mtxDoubleInteger = gko::matrix::Csr<double, int>;
 
 std::shared_ptr<gko::Executor> app_exec;
 std::shared_ptr<gko::Executor> exec;
+std::map<int, solver_function> m;
+
 /*
 Initialize the executor on which the execution will take place and the executor which specifies where the data is.
 @params argc either 1 or 2
@@ -48,6 +52,10 @@ int initExec(int argc, char *argv)
     }
 
     app_exec = gko::ReferenceExecutor::create();
+
+
+
+
 }
 /*
 create a Pointer to a vector which has doubles as values
@@ -133,6 +141,20 @@ auto createSolver(std::shared_ptr<gko::matrix::Csr<double, int> >& A,int dp,auto
     return solver;
 
 }
+
+
+template <typename T>
+std::unique_ptr<gko::LinOp> gen(std::shared_ptr<gko::matrix::Csr<double, int> >& A, int dp) {
+    return T::build()
+	.with_criteria(
+		gko::stop::Iteration::build().with_max_iters(dp).on(exec),
+                gko::stop::ResidualNormReduction<>::build()
+			.with_reduction_factor(1e-20)
+			.on(exec))
+        .on(exec)->generate(A);
+}
+typedef std::unique_ptr<gko::LinOp> (*solver_function) (std::shared_ptr<gko::matrix::Csr<double, int> >& A, int dp);
+
 /*
 calculates the time a certain solver takes to solve the system Ax=b, given by the inputs (A given in csr format)
 @params dp the discretization points
@@ -147,10 +169,10 @@ calculates the time a certain solver takes to solve the system Ax=b, given by th
 
 
 */
-
-int getTime(auto solver, auto b, auto x, int iterations_of_solvers) {
+/*
+int getTime(gko::LinOp* solver2, auto b, auto x, int iterations_of_solvers) {
     int sum;
-
+    //auto solver = solver2::build;
     sum = 0;
           for(unsigned i = 0; i < iterations_of_solvers; i++){
                 auto t1 = high_resolution_clock::now();
@@ -161,13 +183,20 @@ int getTime(auto solver, auto b, auto x, int iterations_of_solvers) {
      return sum;
 
 
-}
+}*/
+
 int calculate_time_with_solver_on_square_matrix(int dp, double a_values[], int a_row_indices[], int a_amount_of_values,
     int a_ptrs[], double b_values[], double x_values[], int iterations_of_solvers, int whichSolver)
 {
 
+    m[0] = gen<gko::solver::Cg<> >;
+    m[1] = gen<gko::solver::Cgs<> >;
+    m[2] = gen<gko::solver::Bicgstab<> >;
+    m[3] = gen<gko::solver::Fcg<> >;
+    m[4] = gen<gko::solver::Gmres<> >;
 
-    map<string,int(*)()> int_map;
+    //gko::LinOp* solver44 = gko::solver::Bicgstab<>;
+    //map<string,int(*)()> int_map;
     //create Ginkgo A Matrix
     auto A = share(createGinkgoMatrix(dp,a_values,a_row_indices,a_amount_of_values,a_ptrs));
 
@@ -179,12 +208,8 @@ int calculate_time_with_solver_on_square_matrix(int dp, double a_values[], int a
 
     high_resolution_clock::time_point t1,t2;
     double sum = 0;
-    switch ( whichSolver )
-    {
-    case 0:
-        {
-          auto solver = createSolver(A,dp,gko::solver::Bicgstab<>::build);
 
+    auto solver = m[whichSolver](A,dp);
           sum = 0;
           for(unsigned i = 0; i < iterations_of_solvers; i++){
 
@@ -194,69 +219,7 @@ int calculate_time_with_solver_on_square_matrix(int dp, double a_values[], int a
                 sum += (duration_cast<microseconds>( t2 - t1 ).count())/iterations_of_solvers;
           }
 
-          //sum = getTime(solver,b,x,iterations_of_solvers);
-          break;
-        }
-    case 1:
-        {
-            auto solver = createSolver(A,dp,gko::solver::Cg<>::build);
-
-            sum = 0;
-            for(unsigned i = 0; i < iterations_of_solvers; i++){
-                t1 = high_resolution_clock::now();
-                solver->apply(lend(b), lend(x));
-                t2 = high_resolution_clock::now();
-                sum += (duration_cast<microseconds>( t2 - t1 ).count())/iterations_of_solvers;
-            }
-            break;
-        }
-    case 2:
-        {
-            auto solver = createSolver(A,dp,gko::solver::Cgs<>::build);
-
-            sum = 0;
-            for(unsigned i = 0; i < iterations_of_solvers; i++){
-                t1 = high_resolution_clock::now();
-                solver->apply(lend(b), lend(x));
-                t2 = high_resolution_clock::now();
-                sum += (duration_cast<microseconds>( t2 - t1 ).count())/iterations_of_solvers;
-            }
-            break;
-        }
-    case 3:
-       {
-            auto solver = createSolver(A,dp,gko::solver::Fcg<>::build);
-
-            sum = 0;
-            for(unsigned i = 0; i < iterations_of_solvers; i++){
-                t1 = high_resolution_clock::now();
-                solver->apply(lend(b), lend(x));
-                t2 = high_resolution_clock::now();
-                sum += (duration_cast<microseconds>( t2 - t1 ).count())/iterations_of_solvers;
-            }
-            return sum;
-
-            break;
-       }
-    case 4:
-        {
-            auto solver = createSolver(A,dp,gko::solver::Gmres<>::build);
-
-            sum = 0;
-            for(unsigned i = 0; i < iterations_of_solvers; i++){
-                t1 = high_resolution_clock::now();
-                solver->apply(lend(b), lend(x));
-                t2 = high_resolution_clock::now();
-                sum += (duration_cast<microseconds>( t2 - t1 ).count())/iterations_of_solvers;
-            }
-
-
-            break;
-        }
-    default:
-            exit(1);
-    }
-
     return sum;
+
 }
 

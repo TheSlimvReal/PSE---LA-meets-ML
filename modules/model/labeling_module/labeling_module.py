@@ -25,7 +25,7 @@ class LabelingModule:
 
     __output_service: OutputService = OutputService()
     ginkgo = Ginkgowrapper
-    solvers = [BicgstabSolver(), CgSolver(), CgsSolver(), FcgSolver()]
+    solvers = [BicgstabSolver(), CgSolver(), CgsSolver(), FcgSolver(), GmresSolver()]
 
     ##  Sets up the the class for the labeling process
     #

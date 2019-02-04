@@ -12,6 +12,8 @@ from modules.controller.commands.module import Module
 # @param saving_name the path under which the labeled matrices should be saved, may be empty
 # @param saving_path the name under which the labeled matrices should be saved, may be empty
 # @return void
+
+
 def start(path, saving_name, saving_path):
     os.environ['CXX'] = '/usr/local/bin/g++-6.4'
     os.environ['CC'] = '/usr/local/bin/gcc-6.4'
@@ -19,7 +21,6 @@ def start(path, saving_name, saving_path):
     os.environ['LD_LIBRARY_PATH'] = '/usr/local/cuda/lib'
     os.environ['LD_LIBRARY_PATH'] = os.getenv("LD_LIBRARY_PATH", "fail") + ':/usr/local/lib'
     os.environ['LD_LIBRARY_PATH'] = os.getenv("LD_LIBRARY_PATH", "fail") + ':/usr/local/lib64'
-
 
     if path is None:
         path: str = Configurations.get_config(Module.LABEL, "default_path")

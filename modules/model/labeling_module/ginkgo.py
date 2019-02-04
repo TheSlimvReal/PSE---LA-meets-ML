@@ -21,6 +21,7 @@ class Ginkgowrapper:
         # @param argc a string which will determine the kind of executor which gets used in ginkgowrapper.cpp
         # @param argv a string which will determine the kind of executor which gets used in ginkgowrapper.cpp
         # @param shape the shape the b and s vector should have
+
         def __init__(self, argc, argv, shape):
                 self.b_vector = [random.uniform(0, 1) for x in range(shape)]
                 self.gingkowrapper = ctypes.CDLL("modules/model/labeling_module/ginkgowrapper.so", mode=ctypes.RTLD_GLOBAL)

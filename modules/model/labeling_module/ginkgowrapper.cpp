@@ -4,7 +4,7 @@ The class will be compiled as a shared library which we will load from python wi
 
 */
 
-#include </usr/local/include/ginkgo/ginkgo.hpp>
+#include <ginkgo/ginkgo.hpp>
 #include <fstream>
 #include <iostream>
 #include <string>

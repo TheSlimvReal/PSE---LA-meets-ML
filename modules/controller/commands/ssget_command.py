@@ -13,4 +13,5 @@ class SSGETCommand(Command):
 
     def execute(self) -> None:
         super().execute()
-        SSGet.update_indices()
+        if Key.UPDATE in self.arguments:
+            SSGet.new_search()

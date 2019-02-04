@@ -287,12 +287,16 @@ Following optional requirements are accomplished:
 
 \item All mandatory requirements were as far as possible accomplished despite the cross-platformed compatibility is not fully given. 
 This was not possible, because some used entities (ssget, gingko) where not Windows compatible.
-Compared to the specification sheet there is just the possibility to fetch and cut Suite Sparse matrices yet.
+
+\item Compared to the specification sheet there is just the possibility to fetch and cut Suite Sparse matrices yet.
 As we figured out our design we realized that generating random matrices is not that easy with our knowing.
 So as already realized in the design document, because in Suite Sparse it is very rare to have same sized matrices from Suite Sparse, it was not necessary to just fetch Suite Sparse matrices in one size. 
 Instead we just implemented a generator that fetches and cuts Suite Sparse matrices.
 
 \item We decided to let out the possibility to select a density as explained in the changes of design
+
+\item The system just supports four instead of five iterative solver algorithms.
+One solver was not working properly so for now we decided just to use the four working solver algorithms.
 
 \end{itemize}
 
@@ -300,8 +304,6 @@ Instead we just implemented a generator that fetches and cuts Suite Sparse matri
 \subsection{Following Requirements were not accomplished}
 \begin{itemize}
 \item A web interface to the software that is able to select a single, a set or all matrices of an uploadable file for prediction by the neural network. The web interface may also be able to visualize the contained matrices, annotated labels as well as prediction results.
-
-\item The system must support at least five iterative solver algorithms. 
 
 \item Scalability of the workflow including matrix generation, training, prediction in that multiple processors may be used in parallel.
 
@@ -462,7 +464,7 @@ In future it would be better to use for example ShareLaTeX and start a new line 
 
 \item Output service module: Simon
 
-\item Help classes: Yannick, Anna
+\item Help classes: Yannick
 
 \item Implementation report: Anna
 

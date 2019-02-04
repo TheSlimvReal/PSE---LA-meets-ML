@@ -389,9 +389,9 @@ It has following tests:
 \section{Delays and Problems}
 \subsection{Labeling module}
 Our main problem was with the \gls{Ginkgo}. 
-It was bad documented what made working with it very hard and caused a delay in our implementation plan. 
+It was barely documented what made working with it very hard and caused a delay in our implementation plan. 
 
-First we had to find out, how to use \gls{Ginkgo} and because there was not good documentation we just had examples of the repository to work with.
+First we had to find out, how to use \gls{Ginkgo} and because there was no good documentation we just had examples of the repository to work with.
 
 The next difficulty was to integrate c++.
 We didn't managed to find that out by our own, but with ctypes and the help of markus (he wrote us a tutorial) we could integrate C++.
@@ -408,7 +408,7 @@ The last problem was, that the cuda server wasn't working, because there was a b
 So Markus has to help us again to fix that.
 
 After that we just had to clean up the methods to let them pass the codeclimate tests.
-Therefore we tried to outsource functions, especially out function that chooses which solver is to be selected.
+Therefore we tried to outsource functions, especially our function that chooses which solver is to be selected.
 That we tried this by mapping with pointers.
 Because here the return type was not possible, so it didn't work, we finally handled the problems with templates, how Markus showed us.
 
@@ -419,6 +419,11 @@ However, there were some problems with integration with real modules later.
 \subsection{Training module}
 The problem with the labeling module caused a delay in the implementation of the training and classify module.
 testing the training / classify module, was difficult, because the data from labeling modules were needed
+\subsection{Collector}
+As we started implementing the collector our first barrier was \gls{ssget}. 
+Finding out how to download matrices was not the problem.
+But every matrix itself was saved on different places in the different .mat files, so the only way to find the matrices was with implementing a method that finds the file type every matrix is saved in.
+
 \section{Lessons learned}
 First of all we thought the machine learning part of this software will be the hardest part.
 But it turned out to be on of the easiest.

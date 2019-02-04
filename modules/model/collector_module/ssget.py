@@ -74,7 +74,3 @@ class SSGet:
                 for c in current:
                     todo.append(c)
         return found
-
-
-
-

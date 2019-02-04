@@ -234,11 +234,14 @@ Overall, our project now consists of lines of Python code and lines of C++ code.
 \item We didn't implemented a matrix class, because we realized it is not useful to handle every matrix by its own. 
 Instead we decided to handle it in numpy arrays.
 
-\item We decided to leave out the density because it wasn't
-
 \item We changed the command interface to an abstract class to reduce redundancy of the code.
 
 \item We decided to let out the possibility to select a density, because we couldn't guarantee that the fetched and cut matrices from Suite Sparse have the wanted density.
+
+\item We added a help command, so the user is able to get an overview which commands can be executed.
+
+\item We added a \gls{ssget} command so the user is able to update the file, where all the matrices ID's are listed.
+So when the Suite Sparse collection is extended the list can be updated to include the new matrices. 
 
 \end{itemize}
 
@@ -434,7 +437,7 @@ The same time editing of latex documents was another issue.
 In future it would be better to use for example ShareLaTeX and start a new line for each sentence to minimize git problems.
 
 \section{Statistics}
-
+ 
 \begin{itemize}
 
 \item lines of Python code

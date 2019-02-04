@@ -6,7 +6,6 @@ from modules.model.labeling_module.ginkgo import Ginkgowrapper
 import numpy as np
 
 
-
 class GmresSolver(Solver):
 
     # calculate the time it takes to solve the System Ax=b by calling the function in the c++ shared library

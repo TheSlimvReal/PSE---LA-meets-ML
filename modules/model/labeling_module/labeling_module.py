@@ -91,6 +91,7 @@ class LabelingModule:
     # Set the output service
     #
     # @param service the output service
+    
     @staticmethod
     def set_output_service(service: OutputService):
         LabelingModule.__output_service = service

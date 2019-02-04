@@ -1,6 +1,17 @@
+# This class is responsible for communcating with the command line.
+
+# It will call the os library and set the necessary environment variables.
+# It furthermore checks if any paths are empty and replaces them with the default paths from the config file
+# When everything is set, it will execute the labeling_module class
 import os
 from modules.shared.configurations import Configurations
 from modules.controller.commands.module import Module
+
+# the function which gets called from the controller
+# @param path the path where the matrices should be loaded from, may be empty
+# @param saving_name the path under which the labeled matrices should be saved, may be empty
+# @param saving_path the name under which the labeled matrices should be saved, may be empty
+# @return void
 
 
 def start(path, saving_name, saving_path):

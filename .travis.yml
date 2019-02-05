@@ -10,7 +10,7 @@ language: python
 
 python:
   - "3.6"
-  -
+
 install:
   - git clone https://github.com/ginkgo-project/ssget.git
   - cd ssget

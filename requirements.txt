@@ -16,7 +16,7 @@ py==1.7.0
 pyparsing==2.3.1
 pytest==4.1.0
 pytest-mock==1.10.0
-python-dattil==2.7.5
+python-dateutil==2.7.5
 scipy==1.2.0
 six==1.12.0
 tensorflow

@@ -31,8 +31,5 @@ def start(path, saving_name, saving_path):
     if saving_path is None:
         saving_path: str = Configurations.get_config(Module.LABEL, "default_saving_path")
 
-    os.system("$CXX  modules/model/labeling_module/ginkgowrapper.cpp -shared -fpic -I/usr/local/include/ "
-              "-L/usr/local/lib/ -lginkgo_omp -lginkgo_reference -lginkgo -lginkgo_cuda "
-              "-o modules/model/labeling_module/ginkgowrapper.so")
     os.system('python3.6 modules/model/labeling_module/labeling_module.py ' + path + " " + saving_name +
               " " + saving_path)

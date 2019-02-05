@@ -1,6 +1,17 @@
+# This class is responsible for communcating with the command line.
+
+# It will call the os library and set the necessary environment variables.
+# It furthermore checks if any paths are empty and replaces them with the default paths from the config file
+# When everything is set, it will execute the labeling_module class
 import os
 from modules.shared.configurations import Configurations
 from modules.controller.commands.module import Module
+
+# the function which gets called from the controller
+# @param path the path where the matrices should be loaded from, may be empty
+# @param saving_name the path under which the labeled matrices should be saved, may be empty
+# @param saving_path the name under which the labeled matrices should be saved, may be empty
+# @return void
 
 
 def start(path, saving_name, saving_path):
@@ -20,8 +31,5 @@ def start(path, saving_name, saving_path):
     if saving_path is None:
         saving_path: str = Configurations.get_config(Module.LABEL, "default_saving_path")
 
-    os.system("$CXX  modules/model/labeling_module/ginkgowrapper.cpp -shared -fpic -I/usr/local/include/ "
-              "-L/usr/local/lib/ -lginkgo_omp -lginkgo_reference -lginkgo -lginkgo_cuda "
-              "-o modules/model/labeling_module/ginkgowrapper.so")
     os.system('python3.6 modules/model/labeling_module/labeling_module.py ' + path + " " + saving_name +
               " " + saving_path)

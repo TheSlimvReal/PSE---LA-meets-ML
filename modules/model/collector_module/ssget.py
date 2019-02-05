@@ -4,19 +4,13 @@ from collections.abc import Iterable
 import os
 import random
 import numpy as np
+import csv
 
 
 ##  This class handles the communication with the suit sparse matrix collection using the ssget tool
 class SSGet:
 
-    #   Use this 2 attributes if you want to do a new search in the database
-    #   SEARCH_COMMAND = "ssget -s '[ @real ] && [ @rows -eq @cols ] && [ @rows -ge 129 ] && [ @rows -le 1000 ]'"
-    # command for searching for all matrix ids which are squared and real
-    # real_square_matrices_ids = os.popen(__SEARCH_COMMAND).read().split("\n")[:-1] #list of matrix ids
-
-    #   use this attribute if you want to fetch your ids from an already downlaoded list
-    __real_square_matrices_ids = my_list = open('modules/model/collector_module/matrix_ids.csv', 'r').read().split("\n")
-
+    __real_square_matrices_ids = open('modules/model/collector_module/matrix_ids.csv', 'r').read().split("\n")
     __CUTSIZE = 128
 
     ##  Gets you a matrix
@@ -30,10 +24,24 @@ class SSGet:
         seed = randint(0, downloaded_matrix.shape[0] - SSGet.__CUTSIZE)
         return SSGet.__cut_matrix(seed, downloaded_matrix)
 
+    ##  Does a new search in the database and updates the matrix_ids.csv file
+    #
+    #   @return none
+    @staticmethod
+    def new_search() -> None:
+        SEARCH_COMMAND = "ssget -s '[ @real ] && [ @rows -eq @cols ] && [ @rows -ge 129 ] && [ @rows -le 1000 ]'"
+        real_square_matrices_ids = os.popen(SEARCH_COMMAND).read().split("\n")[:-1]  # list of matrix ids
+        csvfile = 'matrix_ids.csv'
+        with open(csvfile, "w") as output:
+            writer = csv.writer(output, lineterminator='\n')
+            for val in real_square_matrices_ids:
+                writer.writerow([val])
+        SSGet.__real_square_matrices_ids = open('modules/model/collector_module/matrix_ids.csv', 'r').read().split("\n")
+
     @staticmethod
     def __download_matrix(size: int) -> np.ndarray:
         matrix_id = random.choice(SSGet.__real_square_matrices_ids)
-        download_command = "ssget -e -i " + matrix_id + " -t mat"
+        download_command = "ssget -e -i " + matrix_id + " -t mat 2>/dev/null"
         path = os.popen(download_command).read().strip()    # just an example
         if SSGet.__load(path) == []:
             return []
@@ -66,12 +74,3 @@ class SSGet:
                 for c in current:
                     todo.append(c)
         return found
-
-
-"""
-csvfile = 'matrix_ids.csv'
-with open(csvfile, "w") as output:
-    writer = csv.writer(output, lineterminator='\n')
-    for val in SSGet.real_square_matrices_ids:
-        writer.writerow([val])
-"""

@@ -129,3 +129,4 @@ def test_classify_command_with_missing_optional_arg_adds_default():
     command = CommandParser.parse_input(input_str)
     assert isinstance(command, TrainCommand)
     assert dicts_equal(command.arguments, expected) is True
+

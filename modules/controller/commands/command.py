@@ -44,7 +44,7 @@ class Command:
         return self.__valid_arguments
 
     @valid_arguments.setter
-    def valid_arguments(self, args: Dict[str, Key]) -> None:
+    def valid_arguments(self, args: Dict[Tuple[str, str], Key]) -> None:
         self.__valid_arguments = args
 
     @property
@@ -84,7 +84,7 @@ class Command:
         self.__add_default_args()
 
     def __get_key(self, next_key: str) -> Key:
-        key: Key
+        key: Key = None
         if next_key.startswith("--"):
             key = self.__get_arguments_key(next_key[2:])
         elif next_key.startswith("-"):

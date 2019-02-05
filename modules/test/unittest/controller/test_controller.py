@@ -63,3 +63,16 @@ def test_help_flag_print(mocked_input, mocked_print):
     con.start_interaction()
     mocked_print.assert_has_calls(expected2)
     mocked_print.assert_called()
+
+
+@patch("modules.model.collector_module.ssget.SSGet.new_search")
+@patch("builtins.input")
+def test_ssget_update_command_calls_new_search(mocked_input, mocked_search):
+    user_input = [
+        "ssget -u",
+        "quit"
+    ]
+    mocked_input.side_effect = user_input
+    Controller().start_interaction()
+    mocked_search.assert_called()
+

@@ -1,3 +1,4 @@
+matplotlib==3.0.2
 keras
 atomicwrites==1.2.1
 attrs==18.2.0
@@ -6,7 +7,6 @@ coverage==4.5.2
 cycler==0.10.0
 h5py==2.9.0
 kiwisolver==1.0.1
-matplotlib==3.0.2
 mock==2.0.0
 more-itertools==4.3.0
 numpy==1.15.4

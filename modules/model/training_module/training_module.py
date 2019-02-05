@@ -65,9 +65,8 @@ class TrainingModule:
         train_matrices = np.expand_dims(matrices[:index], axis=3)
         train_labels = labels[:index]
 
-        validation_matrices = np.expand_dims(matrices[index+1:], axis=3)
-        validation_labels = labels[index+1:]
-
+        validation_matrices = np.expand_dims(matrices[index + 1:], axis=3)
+        validation_labels = labels[index + 1:]
 
         # saves model after every training epoch in format "saving_path+name+epochnr+loss"
         if saving_path == "" or saving_path is None:

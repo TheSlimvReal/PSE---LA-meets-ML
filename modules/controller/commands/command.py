@@ -44,7 +44,7 @@ class Command:
         return self.__valid_arguments
 
     @valid_arguments.setter
-    def valid_arguments(self, args: Dict[str, Key]) -> None:
+    def valid_arguments(self, args: Dict[Tuple[str, str], Key]) -> None:
         self.__valid_arguments = args
 
     @property

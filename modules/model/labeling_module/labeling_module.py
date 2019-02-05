@@ -27,7 +27,7 @@ class LabelingModule:
 
     __output_service: OutputService = CLIOutputService(CommandLineInterface())
     ginkgo = Ginkgowrapper
-    solvers = [BicgstabSolver(), CgSolver(), CgsSolver(), FcgSolver(), GmresSolver()]
+    solvers = [BicgstabSolver(), CgSolver(), CgsSolver(), FcgSolver()]
 
     # The starting point for the interaction with the labeling module
     #
@@ -44,9 +44,9 @@ class LabelingModule:
 
         LabelingModule.ginkgo = Ginkgowrapper(2, "cuda", dataset_dense_format[0].shape[0])
         labeled_dataset = LabelingModule.__label(dataset_dense_format)
-        LabelingModule.__output_service.print_line("Finished labeling matrices. Saved at " + saving_path + " under " + saving_name)
         Saver.save(labeled_dataset, saving_name, saving_path, True)
-        print(labeled_dataset)
+        LabelingModule.__output_service.print_line(
+            "Finished labeling matrices. Saved at " + saving_path + " under " + saving_name)
 
     # Starts the labeling process
     #

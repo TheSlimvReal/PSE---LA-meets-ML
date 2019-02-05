@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Tuple
 
 from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
@@ -11,7 +11,7 @@ class CollectCommand(Command):
     def __init__(self):
         super().__init__()
         self.module_name = Module.COLLECT
-        self.valid_arguments: Dict[str, Key] = {
+        self.valid_arguments = {
             ("a", "amount"): Key.AMOUNT,
             ("n", "name"): Key.NAME,
             ("p", "path"): Key.PATH,

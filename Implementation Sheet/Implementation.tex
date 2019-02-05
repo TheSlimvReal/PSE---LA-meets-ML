@@ -225,7 +225,7 @@ The ecosystem should allow to train a \gls{neural network} on selecting a suitab
 Since we were dealing with a big Python project for the first time and we've never heard of Ginkgo before, getting into program environment was the first challenge.
 It turned out that our design was very good and we hardly had to make any changes.
 
-Overall, our project now consists of lines of Python code and lines of C++ code.
+Overall, our project now consists of around 1500 lines of Python code and around 200 lines of C++ code.
 
 \section{Changes on the Design}
 
@@ -234,11 +234,14 @@ Overall, our project now consists of lines of Python code and lines of C++ code.
 \item We didn't implemented a matrix class, because we realized it is not useful to handle every matrix by its own. 
 Instead we decided to handle it in numpy arrays.
 
-\item We decided to leave out the density because it wasn't
-
 \item We changed the command interface to an abstract class to reduce redundancy of the code.
 
 \item We decided to let out the possibility to select a density, because we couldn't guarantee that the fetched and cut matrices from Suite Sparse have the wanted density.
+
+\item We added a help command, so the user is able to get an overview which commands can be executed.
+
+\item We added a \gls{ssget} command so the user is able to update the file, where all the matrices ID's are listed.
+So when the Suite Sparse collection is extended the list can be updated to include the new matrices. 
 
 \end{itemize}
 
@@ -284,12 +287,16 @@ Following optional requirements are accomplished:
 
 \item All mandatory requirements were as far as possible accomplished despite the cross-platformed compatibility is not fully given. 
 This was not possible, because some used entities (ssget, gingko) where not Windows compatible.
-Compared to the specification sheet there is just the possibility to fetch and cut Suite Sparse matrices yet.
+
+\item Compared to the specification sheet there is just the possibility to fetch and cut Suite Sparse matrices yet.
 As we figured out our design we realized that generating random matrices is not that easy with our knowing.
 So as already realized in the design document, because in Suite Sparse it is very rare to have same sized matrices from Suite Sparse, it was not necessary to just fetch Suite Sparse matrices in one size. 
 Instead we just implemented a generator that fetches and cuts Suite Sparse matrices.
 
 \item We decided to let out the possibility to select a density as explained in the changes of design
+
+\item The system just supports four instead of five iterative solver algorithms.
+One solver was not working properly so for now we decided just to use the four working solver algorithms.
 
 \end{itemize}
 
@@ -297,8 +304,6 @@ Instead we just implemented a generator that fetches and cuts Suite Sparse matri
 \subsection{Following Requirements were not accomplished}
 \begin{itemize}
 \item A web interface to the software that is able to select a single, a set or all matrices of an uploadable file for prediction by the neural network. The web interface may also be able to visualize the contained matrices, annotated labels as well as prediction results.
-
-\item The system must support at least five iterative solver algorithms. 
 
 \item Scalability of the workflow including matrix generation, training, prediction in that multiple processors may be used in parallel.
 
@@ -389,9 +394,9 @@ It has following tests:
 \section{Delays and Problems}
 \subsection{Labeling module}
 Our main problem was with the \gls{Ginkgo}. 
-It was bad documented what made working with it very hard and caused a delay in our implementation plan. 
+It was barely documented what made working with it very hard and caused a delay in our implementation plan. 
 
-First we had to find out, how to use \gls{Ginkgo} and because there was not good documentation we just had examples of the repository to work with.
+First we had to find out, how to use \gls{Ginkgo} and because there was no good documentation we just had examples of the repository to work with.
 
 The next difficulty was to integrate c++.
 We didn't managed to find that out by our own, but with ctypes and the help of markus (he wrote us a tutorial) we could integrate C++.
@@ -408,7 +413,7 @@ The last problem was, that the cuda server wasn't working, because there was a b
 So Markus has to help us again to fix that.
 
 After that we just had to clean up the methods to let them pass the codeclimate tests.
-Therefore we tried to outsource functions, especially out function that chooses which solver is to be selected.
+Therefore we tried to outsource functions, especially our function that chooses which solver is to be selected.
 That we tried this by mapping with pointers.
 Because here the return type was not possible, so it didn't work, we finally handled the problems with templates, how Markus showed us.
 
@@ -419,6 +424,11 @@ However, there were some problems with integration with real modules later.
 \subsection{Training module}
 The problem with the labeling module caused a delay in the implementation of the training and classify module.
 testing the training / classify module, was difficult, because the data from labeling modules were needed
+\subsection{Collector}
+As we started implementing the collector our first barrier was \gls{ssget}. 
+Finding out how to download matrices was not the problem.
+But every matrix itself was saved on different places in the different .mat files, so the only way to find the matrices was with implementing a method that finds the file type every matrix is saved in.
+
 \section{Lessons learned}
 First of all we thought the machine learning part of this software will be the hardest part.
 But it turned out to be on of the easiest.
@@ -429,14 +439,14 @@ The same time editing of latex documents was another issue.
 In future it would be better to use for example ShareLaTeX and start a new line for each sentence to minimize git problems.
 
 \section{Statistics}
-
+ 
 \begin{itemize}
 
-\item lines of Python code
+\item lines of Python code: 1500
 
-\item lines of C++ code
+\item lines of C++ code: 200
 
-\item commits
+\item commits: 160
 
 \end{itemize}
 \subsection{Work Splitting}
@@ -454,7 +464,7 @@ In future it would be better to use for example ShareLaTeX and start a new line 
 
 \item Output service module: Simon
 
-\item Help classes: Yannick, Anna
+\item Help classes: Yannick
 
 \item Implementation report: Anna
 

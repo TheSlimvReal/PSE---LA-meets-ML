@@ -24,7 +24,7 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - py.test --cov=modules modules/test/
+  - py.test --cov=modules modules/test/ --cov-report xml:coverage.xml
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --debug --coverage-input-type coverage.py

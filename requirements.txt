@@ -21,3 +21,4 @@ scipy==1.2.0
 six==1.12.0
 tensorflow
 pytest-cov
+coverage

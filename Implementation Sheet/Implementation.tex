@@ -528,6 +528,18 @@ The build consists of the following steps:
 Travis will also send a report to the pull request on GitHub to show if the build and tests were successful.
 This helped to make sure that only code can be merged to the master, that doesn't brake existing tests.
 
+\subsection{Code Checking}
+Besides the continuous integration, we also integrated CodeClimate.
+CodeClimate is a code checking tool that looks at the code and uses some metrics to decide how readable and complex the code is.
+This tool is triggered when someone creates a pull request.
+It then will look at all the code that differs from the master branch and creates a report about all the problematic code passages that where added.
+We also added the PEP8 plugin to verify that our code is also PEP8 conform.
+The CodeClimate check was optional for a pull request, but we still tried to keep this test passing as well.
+We kept it optional, because for some code passages, like the C++ files, we didn't quite have the time to clean up this code.
+It still helped a lot to keep our code lean and readable.
+Thanks to the Travis test report, CodeClimate also shows the current test coverage on each pull request together with its difference to the master branch.
+When visiting the code climate website, you can also get a little summary of the code base of the master branch.
+
 
 
 \newpage

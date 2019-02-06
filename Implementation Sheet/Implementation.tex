@@ -39,7 +39,7 @@ bookmarks=true,%
 	Algorithms can perform calculation, data processing and automated reasoning tasks}
 }
 
-\newglossaryentry{classifier}
+\newglossaryentry{classify module}
 {
 	name=classifier,
 	plural= classifiers,
@@ -99,6 +99,13 @@ bookmarks=true,%
 	description={Keras is an open source deep learning library written in Python}
 }
 
+\newglossaryentry{C++}
+{
+	name=C++,
+	plural=C++,
+	description={C++ is a sophisticated, efficient and a general-purpose programming language based on C}
+}
+
 \newglossaryentry{labeling module}
 {
 	name=labeling module,
@@ -152,8 +159,8 @@ bookmarks=true,%
 
 \newglossaryentry{ssget}
 {
-	name=ssget,
-	plural=ssget,
+	name=Ssget,
+	plural=Ssget,
 	description={Ssget is a command line tool for downloading matrices from the Suite Sparse Matrix Collection}
 }
 
@@ -188,6 +195,120 @@ bookmarks=true,%
 	In other words, the values that the noise can take on are Gaussian-distributed}
 }
 
+\newglossaryentry{ctypes}
+{
+	name=ctype,
+	plural=ctypes,
+	description={ctypes is a foreign function library for Python}
+}
+
+\newglossaryentry{pointer}
+{
+	name=pointer,
+	plural=pointers,
+	description={a pointer is a programming language object that stores the memory address of another value located in computer memory}
+}
+
+\newglossaryentry{Pycharm}
+{
+	name=Pycharm,
+	plural=Pycharm,
+	description={PyCharm is an integrated development environment used in computer programming, specifically for the Python language}
+}
+
+\newglossaryentry{remote interpreter}
+{
+	name=remote interpreter,
+	plural=remote interpreter,
+	description={the code gets copied to a server where it will be compiled and run}
+}
+
+\newglossaryentry{CodeClimate}
+{
+	name= codeclimate,
+	plural= codeclimate,
+	description={Code Climate is an open, extensible platform for ensuring code health that analyzes trillions of lines of code per week.}
+}
+
+\newglossaryentry{.mat file}
+{
+	name= .mat file,
+	plural=.mat files,
+	description={.mat files contain MATLAB formatted data, and data can be loaded from or written to these files using the functions load and save, respectively.}
+}
+
+\newglossaryentry{LaTex}
+{
+	name=LaTex,
+	plural=LaTex,
+	description={LaTeX is a high-quality typesetting system; it includes features designed for the production of technical and scientific documentation. 
+	LaTeX is the de facto standard for the communication and publication of scientific documents. }
+}
+
+\newglossaryentry{GIT}
+{
+	name=GIT,
+	plural=GIT,
+	description={Git is a distributed version-control system for tracking changes in source code during software development. 
+	It is designed for coordinating work among programmers, but it can be used to track changes in any set of files.}
+}
+
+\newglossaryentry{GitHub}
+{
+	name=GitHub,
+	plural=GitHub,
+	description={GitHub Inc. is a web-based hosting service for version control using Git. 
+	It is mostly used for computer code. 
+	It offers all of the distributed version control and source code management functionality of Git as well as adding its own features. }
+}
+
+\newglossaryentry{ShareLaTeX}
+{
+	name=ShareLaTeX,
+	plural=ShareLaTeX,
+	description={ShareLaTeX is an online LaTeX editor that allows real-time collaboration and online compiling of projects to PDF format. In comparison to other LaTeX editors, ShareLaTeX is a server-based application, which is accessed through a web browser. }
+}
+
+\newglossaryentry{Slack}
+{
+	name=Slack,
+	plural=Slack,
+	description={Slack is an American cloud-based set of proprietary team collaboration tools and services, founded by Stewart Butterfield.}
+}
+
+\newglossaryentry{Travis}
+{
+	name=Travis,
+	plural=Travis,
+	description={Travis CI is a hosted, distributed continuous integration service used to build and test software projects hosted at GitHub. 
+	Open source projects may be tested at no charge via travis-ci.org. 
+	Private projects may be tested at travis-ci.com on a fee basis.}
+}
+
+\newglossaryentry{PEP8}
+{
+	name=PEP8,
+	plural=PEP8,
+	description={PEP 8 is Python's style guide. 
+	It's a set of rules for how to format your Python code to maximize its readability. 
+	Writing code to a specification helps to make large code bases, with lots of writers, more uniform and predictable, too.
+	PEP is actually an acronym that stands for Python Enhancement Proposal.}
+}
+
+\newglossaryentry{cuda}
+{
+	name=cuda,
+	plural=cuda,
+	description={CUDA is a parallel computing platform and programming model invented by NVIDIA. 
+	It enables dramatic increases in computing performance by harnessing the power of the graphics processing unit and it is used by Ginkgo}
+}
+
+\newglossaryentry{SSGet}
+{
+	name=SSGet,
+	plural=SSGet,
+	description={SSGet is a tool used for downloading matrices from Suite Sparse}
+}
 \begin{document}
 
 \begin{titlepage}
@@ -222,10 +343,10 @@ Markus G\"{o}tz
 Goal was the delivery of a consistent software stack that allows for employing \glspl{neural network} for the linear system. 
 The ecosystem should allow to train a \gls{neural network} on selecting a suitable \gls{iterative solver} depending on the linear system characteristics.
 
-Since we were dealing with a big Python project for the first time and we've never heard of Ginkgo before, getting into program environment was the first challenge.
+Since we were dealing with a big \gls{Python} project for the first time and we've never heard of \gls{Ginkgo} before, getting into program environment was the first challenge.
 It turned out that our design was very good and we hardly had to make any changes.
 
-Overall, our project now consists of around 1500 lines of Python code and around 200 lines of C++ code.
+Overall, our project now consists of around 1500 lines of \gls{Python} code and around 200 lines of \gls{C++} code.
 
 
 \section{Changes on the Design}
@@ -237,12 +358,12 @@ Instead we decided to handle it in numpy arrays.
 
 \item We changed the command interface to an abstract class to reduce redundancy of the code.
 
-\item We decided to let out the possibility to select a density, because we couldn't guarantee that the fetched and cut matrices from Suite Sparse have the wanted density.
+\item We decided to let out the possibility to select a density, because we couldn't guarantee that the fetched and cut matrices from \gls{Suite Sparse} have the wanted density.
 
 \item We added a help command, so the user is able to get an overview which commands can be executed.
 
 \item We added a \gls{ssget} command so the user is able to update the file, where all the matrices ID's are listed.
-So when the Suite Sparse collection is extended the list can be updated to include the new matrices. 
+So when the \gls{Suite Sparse} collection is extended the list can be updated to include the new matrices. 
 
 \end{itemize}
 
@@ -278,6 +399,7 @@ It must be able to predict for a given matrix (in arbitrary format), which of th
 
 \item Realization of a sustainable and quality-assured software development process. 
 This includes a software design document, in-code documentation, unit testing and a continuous integration (CI).
+
 \end{itemize}
 Following optional requirements are accomplished:
 \begin{itemize}
@@ -289,31 +411,35 @@ Following optional requirements are accomplished:
 \begin{itemize}
 
 \item All mandatory requirements were as far as possible accomplished despite the cross-platformed compatibility is not fully given. 
-This was not possible, because some used entities (ssget, gingko) where not Windows compatible.
+This was not possible, because some used entities (\gls{ssget}, \gls{Ginkgo}) where not \gls{Windows} compatible.
 
-\item Compared to the specification sheet there is just the possibility to fetch and cut Suite Sparse matrices yet.
+\item Compared to the specification sheet there is just the possibility to fetch and cut \gls{Suite Sparse} matrices yet.
 As we figured out our design we realized that generating random matrices is not that easy with our knowing.
-So as already realized in the design document, because in Suite Sparse it is very rare to have same sized matrices from Suite Sparse, it was not necessary to just fetch Suite Sparse matrices in one size. 
-Instead we just implemented a generator that fetches and cuts Suite Sparse matrices.
+So as already realized in the design document, because it is very rare to have same sized matrices from \gls{Suite Sparse}, it was not necessary to just fetch \gls{Suite Sparse} matrices in one size. 
+Instead we just implemented a generator that fetches and cuts \gls{Suite Sparse} matrices.
 
 \item We decided to let out the possibility to select a density as explained in the changes of design
 
-\item The system just supports four instead of five iterative solver algorithms.
-One solver was not working properly so for now we decided just to use the four working solver algorithms.
+\end{itemize}
+Following optional requirements were accomplished as far as possible
+\begin{itemize}
+\item The system just supports four instead of five iterative solver \glspl{algorithm}.
+One solver was not working properly so for now we decided just to use the four working solver \glspl{algorithm}.
 
 \end{itemize}
 
 
 \subsection{Following optional Requirements were not accomplished}
 \begin{itemize}
-\item A web interface to the software that is able to select a single, a set or all matrices of an uploadable file for prediction by the neural network. The web interface may also be able to visualize the contained matrices, annotated labels as well as prediction results.
+\item A web interface to the software that is able to select a single, a set or all matrices of an uploadable file for prediction by the \gls{neural network}. 
+The web interface may also be able to visualize the contained matrices, annotated labels as well as prediction results.
 
 \item Scalability of the workflow including matrix generation, training, prediction in that multiple processors may be used in parallel.
 
 \end{itemize}
 
 
-\section{Unittests}
+\section{Tests}
 
 \subsection{Controller}
 \subsubsection{test\_command\_parser}
@@ -402,23 +528,23 @@ It was barely documented what made working with it very hard and caused a delay 
 
 First we had to find out, how to use \gls{Ginkgo} and because there was no good documentation we just had examples of the repository to work with.
 
-The next difficulty was to integrate C++.
-We didn't managed to find that out by our own, but with ctypes and the help of markus (he wrote us a tutorial) we could integrate C++.
+The next difficulty was to integrate \gls{C++}.
+We didn't managed to find that out by our own, but with \gls{ctypes} and the help of Markus (he wrote us a tutorial) we could integrate \gls{C++}.
 
-After that we needed to figure out how to transfer the data to C++.
-With pointer in python, csr matrix format and more examples from Ginkgo repository we also solved this Problem.
+After that we needed to figure out how to transfer the data to \gls{C++}.
+With \gls{pointer} in \gls{Python}, csr matrix format and more examples from \gls{Ginkgo} repository we also solved this Problem.
 
-The following step was to find out how the server we use works so we can find out how to use Pycharm on the server.
-This we got to work with a remote interpreter.
+The following step was to find out how the server we use works so we can find out how to use \gls{Pycharm} on the server.
+This we got to work with a \gls{remote interpreter}.
 
-The high resolution clock function in C++ solved our next problem: the determination of the time the solvers need.
+The high resolution clock function in \gls{C++} solved our next problem: the determination of the time the solvers need.
 
-The last problem was, that the cuda server wasn't working, because there was a bug in Ginkgo on the Server.
+The last problem was, that the \gls{cuda} server wasn't working, because there was a bug in \gls{Ginkgo} on the Server.
 So Markus has to help us again to fix that.
 
-After that we just had to clean up the methods to let them pass the codeclimate tests.
+After that we just had to clean up the methods to let them pass the \gls{CodeClimate} tests.
 Therefore we tried to outsource functions, especially our function that chooses which solver is to be selected.
-That we tried this by mapping with pointers.
+That we tried this by mapping with \glspl{pointer}.
 Because here the return type was not possible, so it didn't work, we finally handled the problems with templates, how Markus showed us.
 
 
@@ -427,38 +553,37 @@ The Basic structure for MVC was very easy to implement.
 Through preliminary work in the implementation phase, it was very easy to build the basic structure 
 However, there were some problems with integration with real modules later.
 \subsection{Training module}
-The problem with the labeling module caused a delay in the implementation of the training and classify module.
-testing the training / classify module, was difficult, because the data from labeling modules were needed.
+The problem with the \gls{labeling module} caused a delay in the implementation of the \gls{training module} and the \gls{classify module}.
+testing the training / \gls{classify module}, was difficult, because the data from \gls{labeling module} were needed.
 
 \subsection{Collector}
-As we started implementing the collector our first barrier was \gls{ssget}. 
+As we started implementing the \gls{collector} our first barrier was \gls{ssget}. 
 Finding out how to download matrices was not the problem.
-But every matrix itself was saved on different places in the different .mat files, so the only way to find the matrices was with implementing a method that finds the file type every matrix is saved in.
+But every matrix itself was saved on different places in the different \glspl{.mat file}, so the only way to find the matrices was with implementing a method that finds the file type every matrix is saved in.
 
 \section{Lessons learned}
 First of all we thought the machine learning part of this software will be the hardest part.
 But it turned out to be on of the easiest.
 Instead of that \gls{Ginkgo} was the main problem.
 For other projects it probably will be easier to use of a better documented library.
-On the other hand did we need this specific GPU accelerated solvers, so there probably would have been no better or similar solution.
-
+On the other hand did we need this specific \gls{GPU} accelerated solvers, so there probably would have been no better or similar solution.
 
 It was also a lesson that it is not worth to spend much time in data
-preprocessing, because keras offers many possibilities.
+preprocessing, because \gls{Keras} offers many possibilities.
 
-Merging the LaTex documents was a problem, because we didn't had a good LaTex-Editer that supports versioning tools like GIT.
-Also we sometimes didn't start a new line for each sentence which resulted in bad readability on the pull requests on GitHub.
-In future it would be better to use for example ShareLaTeX that allows you to edit the same project simultaneously.
+Merging the \gls{LaTex} documents was a problem, because we didn't had a good \gls{LaTex}-Editor that supports versioning tools like \gls{GIT}.
+Also we sometimes didn't start a new line for each sentence which resulted in bad readability on the pull requests on \gls{GitHub}.
+In future it would be better to use for example \gls{ShareLaTeX} that allows you to edit the same project simultaneously.
 
 \section{Statistics}
  
 \begin{itemize}
 
-\item lines of Python code: 1500
+\item lines of \gls{Python} code: 1500
 
-\item lines of C++ code: 200
+\item lines of \gls{C++} code: 200
 
-\item commits: 160
+\item commits: 200
 
 \item test coverage: 80\%
 
@@ -466,13 +591,13 @@ In future it would be better to use for example ShareLaTeX that allows you to ed
 \subsection{Work Splitting}
 \begin{itemize}
 
-\item Collector module: Yannick and Anna
+\item \Gls{collector}: Yannick and Anna
 
-\item Labeling module: Fabian and Dennis
+\item \Gls{labeling module}: Fabian and Dennis
 
-\item Training module: Yannick
+\item \Gls{training module}: Yannick
 
-\item Classifier: Yannick
+\item \Gls{classify module}: Yannick
 
 \item Command parsing module: Simon
 
@@ -489,15 +614,15 @@ In future it would be better to use for example ShareLaTeX that allows you to ed
 \subsection{Communication in the team}
 %How was the communication in the team?
 For talking about the progress and following steps the whole team met one to two times a week and another time with the tutor.
-Dennis and Fabian worked on the Labeler module together while Yannick and Anna implemented the Collector.
+Dennis and Fabian worked on the \gls{labeling module} together while Yannick and Anna implemented the \gls{collector}.
 Simon did the command parsing module and the output service module.
-As soon as the labeler module worked, Yannick implemented the training module and the classifier.
+As soon as the \gls{labeling module} worked, Yannick implemented the \gls{training module} and the \gls{classify module}.
 \subsection{Git}
-For the previous steps, we already set up a GitHub project where we all committed our work on.
+For the previous steps, we already set up a \gls{GitHub} project where we all committed our work on.
 Merging on the master branch was restricted from the beginning on.
 If you think your changes are ready to be pushed to the master, you need to push your feature branch that is up-to-date with the master branch.
-On GitHub you can then create a pull request for this feature branch.
-This will create a notification on Slack.
+On \gls{GitHub} you can then create a pull request for this feature branch.
+This will create a notification on \gls{Slack}.
 Now one of the colleagues needs to review the pull request together with all the changes that happened to the code.
 He can either suggest some changes or, if he thinks everything is alright, approve the changes.
 For the implementation phase we also added two automatic checks that will run on all pull requests.
@@ -507,38 +632,38 @@ The other one is a code checking tool, which checks complexity and readability o
 This test is optional, but we still tried to keep this test passing.
 
 \subsection{Continuous Integration}
-For continuous integration we decided on Travis-CI. 
+For continuous integration we decided on \gls{Travis}-CI. 
 That is because it works very well with GitHub and also offers free workers for the build process.
 The build consists of the following steps:
 
 \begin{enumerate}
 
-\item download and install SSGet
+\item download and install \gls{SSGet}
 
-\item install required packages for Python
+\item install required packages for \gls{Python}
 
 \item download test reporter for test coverage report
 
 \item run pytest-cov and create a file with the report
 
-\item upload report to code climate
+\item upload report to \gls{CodeClimate}
 
 \end{enumerate}
 
-Travis will also send a report to the pull request on GitHub to show if the build and tests were successful.
+\gls{Travis} will also send a report to the pull request on \gls{GitHub} to show if the build and tests were successful.
 This helped to make sure that only code can be merged to the master, that doesn't brake existing tests.
 
 \subsection{Code Checking}
-Besides the continuous integration, we also integrated CodeClimate.
-CodeClimate is a code checking tool that looks at the code and uses some metrics to decide how readable and complex the code is.
+Besides the continuous integration, we also integrated \gls{CodeClimate}.
+\gls{CodeClimate} is a code checking tool that looks at the code and uses some metrics to decide how readable and complex the code is.
 This tool is triggered when someone creates a pull request.
 It then will look at all the code that differs from the master branch and creates a report about all the problematic code passages that where added.
-We also added the PEP8 plugin to verify that our code is also PEP8 conform.
-The CodeClimate check was optional for a pull request, but we still tried to keep this test passing as well.
-We kept it optional, because for some code passages, like the C++ files, we didn't quite have the time to clean up this code.
+We also added the \gls{PEP8} plugin to verify that our code is also \gls{PEP8} conform.
+The \gls{CodeClimate} check was optional for a pull request, but we still tried to keep this test passing as well.
+We kept it optional, because for some code passages, like the \gls{C++} files, we didn't quite have the time to clean up this code.
 It still helped a lot to keep our code lean and readable.
-Thanks to the Travis test report, CodeClimate also shows the current test coverage on each pull request together with its difference to the master branch.
-When visiting the code climate website, you can also get a little summary of the code base of the master branch.
+Thanks to the \gls{Travis} test report, \gls{CodeClimate} also shows the current test coverage on each pull request together with its difference to the master branch.
+When visiting the \gls{CodeClimate} website, you can also get a little summary of the code base of the master branch.
 
 
 

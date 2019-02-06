@@ -506,6 +506,28 @@ If this test fails, the branch can't be merged into the master.
 The other one is a code checking tool, which checks complexity and readability of the code.
 This test is optional, but we still tried to keep this test passing.
 
+\subsection{Continuous Integration}
+For continuous integration we decided on Travis-CI. 
+That is because it works very well with GitHub and also offers free workers for the build process.
+The build consists of the following steps:
+
+\begin{enumerate}
+
+\item download and install SSGet
+
+\item install required packages for Python
+
+\item download test reporter for test coverage report
+
+\item run pytest-cov and create a file with the report
+
+\item upload report to code climate
+
+\end{enumerate}
+
+Travis will also send a report to the pull request on GitHub to show if the build and tests were successful.
+This helped to make sure that only code can be merged to the master, that doesn't brake existing tests.
+
 
 
 \newpage

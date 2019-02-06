@@ -483,7 +483,7 @@ In future it would be better to use for example ShareLaTeX that allows you to ed
 \item Implementation report: Anna
 
 \end{itemize}
-%How many lines of code, how many commits, work splitting
+
 
 \section{Development model}
 \subsection{Communication in the team}
@@ -493,8 +493,18 @@ Dennis and Fabian worked on the Labeler module together while Yannick and Anna i
 Simon did the command parsing module and the output service module.
 As soon as the labeler module worked, Yannick implemented the training module and the classifier.
 \subsection{Git}
-%How was GIT used? Was the merging on the master branch restricted?
-Codeclimate helped to write leaner code and to take care of refactoring at an early stage
+For the previous steps, we already set up a GitHub project where we all committed our work on.
+Merging on the master branch was restricted from the beginning on.
+If you think your changes are ready to be pushed to the master, you need to push your feature branch that is up-to-date with the master branch.
+On GitHub you can then create a pull request for this feature branch.
+This will create a notification on Slack.
+Now one of the colleagues needs to review the pull request together with all the changes that happened to the code.
+He can either suggest some changes or, if he thinks everything is alright, approve the changes.
+For the implementation phase we also added two automatic checks that will run on all pull requests.
+The first one is a CI-Tool which runs all tests.
+If this test fails, the branch can't be merged into the master.
+The other one is a code checking tool, which checks complexity and readability of the code.
+This test is optional, but we still tried to keep this test passing.
 
 
 

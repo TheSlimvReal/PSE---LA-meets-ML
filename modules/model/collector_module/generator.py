@@ -1,5 +1,5 @@
 from modules.model.collector_module.ssget import SSGet
-from modules.shared.validator import Validator
+from modules.shared.regularity_calculator import RegularityCalculator
 import numpy as np
 
 
@@ -13,6 +13,6 @@ class Generator:
     @staticmethod
     def generate(size: int) -> np.ndarray:
         generated_matrix = SSGet.get_matrix(size)
-        while not Validator.validate(generated_matrix.todense()):
+        while not RegularityCalculator.is_regular(generated_matrix.todense()):
             generated_matrix = SSGet.get_matrix(size)
         return generated_matrix

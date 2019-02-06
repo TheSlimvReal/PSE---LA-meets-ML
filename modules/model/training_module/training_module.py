@@ -28,14 +28,15 @@ class TrainingModule:
     __num_dense_layers: int = Configurations.get_config(Module.TRAIN, "num_dense_layers")
     __layer_activation: str = Configurations.get_config(Module.TRAIN, "layer_activation")
     __final_activation: str = Configurations.get_config(Module.TRAIN, "final_activation")
-    __dropout: bool = Configurations.get_config(Module.TRAIN, "dropout")
-    __num_classes: int = 5
+    __dropout: int = Configurations.get_config(Module.TRAIN, "dropout")
+    __num_classes: int = 4
 
     # Hyper parameters:
     __batch_size: int = Configurations.get_config(Module.TRAIN, "batch_size")
     __training_test_split: float = Configurations.get_config(Module.TRAIN, "training_test_split")
     __learning_rate: float = Configurations.get_config(Module.TRAIN, "learning_rate")
     __loss: str = Configurations.get_config(Module.TRAIN, "loss")
+    __epochs: int = Configurations.get_config(Module.TRAIN, "epochs")
 
     ##  trains the neural network labeled matrices
     #
@@ -49,28 +50,39 @@ class TrainingModule:
         # model is defined by the config file or loaded from a path
         model = TrainingModule.__define_model(neural_network_path)
 
-        datagen = ImageDataGenerator()
+        train_datagen = ImageDataGenerator()
+        validation_datagen = ImageDataGenerator()
 
         # loads matrices and labels from hdf5 file
         dataset = h5py.File(matrices_path, 'r')
 
         # converts matrices and labels in keras conform shape (samples, height, width, channels)
-        matrices = np.expand_dims(np.array(dataset['dense_matrices']), axis=3)
+        matrices = np.array(dataset['dense_matrices'])
         labels = np.array(dataset['label_vectors'])
+
+        index = int(TrainingModule.__training_test_split * len(matrices))
+
+        train_matrices = np.expand_dims(matrices[:index], axis=3)
+        train_labels = labels[:index]
+
+        validation_matrices = np.expand_dims(matrices[index + 1:], axis=3)
+        validation_labels = labels[index + 1:]
 
         # saves model after every training epoch in format "saving_path+name+epochnr+loss"
         if saving_path == "" or saving_path is None:
             saving_path = TrainingModule.__default_saving_path
         if name == "" or name is None:
             name = TrainingModule.__default_saving_name
-        checkpointer = ModelCheckpoint(filepath=saving_path + name + "{epoch:02d}-{loss:.2f}.hdf5", monitor='loss',
+        checkpointer = ModelCheckpoint(filepath=saving_path + name + "{epoch:02d}-{val_loss:.2f}.hdf5", monitor='val_loss',
                                        verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
 
         # trains model
-        model.fit_generator(datagen.flow(matrices, labels, batch_size=TrainingModule.__batch_size),
+        validation_steps = len(validation_matrices) / TrainingModule.__batch_size
+        model.fit_generator(train_datagen.flow(train_matrices, train_labels, batch_size=TrainingModule.__batch_size),
                             steps_per_epoch=len(matrices) / TrainingModule.__batch_size,
-                            epochs=5, callbacks=[checkpointer], verbose=1)
-        model.summary()
+                            epochs=TrainingModule.__epochs, callbacks=[checkpointer], verbose=1,
+                            validation_data=validation_datagen.flow(validation_matrices, validation_labels),
+                            validation_steps=validation_steps)
 
     @staticmethod
     def __define_model(neural_network_path: str) -> keras.models.Sequential:
@@ -89,8 +101,7 @@ class TrainingModule:
                 model.add(Conv2D(output_size * (i + 1), (kernel_size, kernel_size)))
                 model.add(Activation(TrainingModule.__layer_activation))
                 new_output_size = output_size * (i + 1)
-            if TrainingModule.__dropout:
-                model.add(Dropout(0.1))
+
             model.add(Flatten())
 
             if TrainingModule.__num_dense_layers > 1:
@@ -99,6 +110,9 @@ class TrainingModule:
                 for i in range(1, TrainingModule.__num_dense_layers - 1):
                     model.add(Dense(int((new_output_size * 4) / i)))
                     model.add(Activation(TrainingModule.__layer_activation))
+
+            model.add(Dropout(TrainingModule.__dropout))
+
             model.add(Dense(TrainingModule.__num_classes))
             model.add(Activation(TrainingModule.__final_activation))
 

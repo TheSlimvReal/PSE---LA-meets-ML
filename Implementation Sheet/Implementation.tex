@@ -23,6 +23,7 @@ bookmarks=true,%
 %\documentclass[12pt, oneside]{book}
 \usepackage{wrapfig}
 \usepackage{epstopdf}
+\usepackage{caption, subcaption}
 
 
 
@@ -351,6 +352,25 @@ Overall, our project now consists of around 1500 lines of \gls{Python} code and 
 
 \section{Changes on the Design}
 
+\begin{figure}[!hbt]
+    \centering
+    \begin{subfigure}[b]{0.9\linewidth} 
+        \centering
+        \includegraphics[width=\textwidth]{../Big_classdiagram/Command_Changes.jpg}
+        \caption{Changes in the command parsing module}
+        \label{Changes in the command parsing module}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[b]{0.9\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{../Big_classdiagram/HelpClass_Changes.jpg}
+        \caption{Changes in the Help classes module}
+        \label{Changes in the Help classes module}
+    \end{subfigure}
+    \caption{Changes in the design}
+
+\end{figure}
+
 \begin{itemize}
 
 \item We didn't implemented a matrix class, because we realized it is not useful to handle every matrix on its own. 
@@ -365,10 +385,9 @@ Instead we decided to handle it in numpy arrays.
 \item We added a \gls{ssget} command so the user is able to update the file, where all the matrices ID's are listed.
 So when the \gls{Suite Sparse} collection is extended the list can be updated to include the new matrices. 
 
+\item We renamed the Validator class to RegularityCalculator
 \end{itemize}
 
-
-%collector class?
 
 \section{The Requirements}
 \subsection{Following Requirements are accomplished}

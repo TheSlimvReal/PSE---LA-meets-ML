@@ -1,12 +1,15 @@
 # This file holds the configuration for the automated builds on travis
-language: python
-python:
-  - "3.6"
 env:
   global:
     - CC_TEST_REPORTER_ID=0f253999c74ed8a21d7cf4ae8e99d7fd4727aeaf48af5a0a9024f097a7f97b0e
+
 os:
   - linux
+  -
+language: python
+
+python:
+  - "3.6"
 
 install:
   - git clone https://github.com/ginkgo-project/ssget.git
@@ -21,10 +24,10 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - py.test --cov=modules modules/test/
+  - py.test --cov=modules modules/test/ --cov-report xml:coverage.xml
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --coverage-input-type coverage.py
 
 notifications:
   email: false

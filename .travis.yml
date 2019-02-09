@@ -8,7 +8,8 @@ branches:
 env:
   global:
     - GH_REPO_NAME=PSE---LA-meets-ML
-    - DOXYFILE=$TRAVIS_BUILD_DIR/
+    - DOXYFILE=$TRAVIS_BUILD_DIR/Doxyfile
+    - GH_REPO_REF=https://github.com/TheSlimvReal/PSE---LA-meets-ML
     - CC_TEST_REPORTER_ID=f253999c74ed8a21d7cf4ae8e99d7fd4727aeaf48af5a0a9024f097a7f97b0e
 
 os:
@@ -18,6 +19,15 @@ language: python
 
 python:
   - "3.6"
+
+addons:
+  apt:
+    packages:
+      - doxygen
+      - doxygen-doc
+      - doxygen-latex
+      - doxygen-gui
+      - graphviz
 
 install:
   - git clone https://github.com/ginkgo-project/ssget.git
@@ -36,6 +46,11 @@ script:
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --coverage-input-type coverage.py
+
+after_success:
+  - cd $TRAVIS_BUILD_DIR
+  - chmod +x generateDocumentationAndDeploy.sh
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then ./generateDocumentationAndDeploy.sh fi
 
 notifications:
   email: false

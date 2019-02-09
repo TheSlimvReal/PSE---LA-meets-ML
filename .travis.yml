@@ -1,7 +1,15 @@
 # This file holds the configuration for the automated builds on travis
+sudo: false;
+
+branches:
+  except:
+    - gh-pages
+
 env:
   global:
-    - CC_TEST_REPORTER_ID=0f253999c74ed8a21d7cf4ae8e99d7fd4727aeaf48af5a0a9024f097a7f97b0e
+    - GH_REPO_NAME=PSE---LA-meets-ML
+    - DOXYFILE=$TRAVIS_BUILD_DIR/
+    - CC_TEST_REPORTER_ID=f253999c74ed8a21d7cf4ae8e99d7fd4727aeaf48af5a0a9024f097a7f97b0e
 
 os:
   - linux

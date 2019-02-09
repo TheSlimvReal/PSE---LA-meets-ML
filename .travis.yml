@@ -50,7 +50,7 @@ after_script:
 after_success:
   - cd $TRAVIS_BUILD_DIR
   - chmod +x generateDocumentationAndDeploy.sh
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then ./generateDocumentationAndDeploy.sh fi
+  - if [ "$TRAVIS_BRANCH" = "doxygen_pages_script" ]; then ./generateDocumentationAndDeploy.sh fi
 
 notifications:
   email: false

@@ -1,5 +1,5 @@
 # This file holds the configuration for the automated builds on travis
-sudo: false;
+sudo: false
 
 branches:
   except:

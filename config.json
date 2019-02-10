@@ -17,12 +17,13 @@
     "num_dense_layers": 3,
     "layer_activation": "relu",
     "final_activation": "softmax",
-    "dropout": false,
+    "dropout": 0.1,
 
     "batch_size": 25,
     "training_test_split": 0.8,
     "learning_rate": 0.001,
-    "loss": "categorical_crossentropy"
+    "loss": "categorical_crossentropy",
+    "epochs": 5
 
   },
   "classify": {

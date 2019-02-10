@@ -1,7 +1,9 @@
 # This file holds the configuration for the automated builds on travis
-env:
-  global:
-    - CC_TEST_REPORTER_ID=0f253999c74ed8a21d7cf4ae8e99d7fd4727aeaf48af5a0a9024f097a7f97b0e
+sudo: false
+
+branches:
+  except:
+    - gh-pages
 
 os:
   - linux
@@ -10,6 +12,11 @@ language: python
 
 python:
   - "3.6"
+
+addons:
+  apt:
+    packages:
+      - doxygen
 
 install:
   - git clone https://github.com/ginkgo-project/ssget.git
@@ -29,5 +36,16 @@ script:
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --coverage-input-type coverage.py
 
+after_success:
+  - doxygen Doxyfile
+
 notifications:
   email: false
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: docs/html
+  github_token: $GH_REPO_TOKEN
+  on:
+    branch: master

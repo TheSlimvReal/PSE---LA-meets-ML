@@ -36,12 +36,12 @@ before_script:
 
 script:
   - py.test --cov=modules modules/test/ --cov-report xml:coverage.xml
+  - doxygen Doxyfile
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --coverage-input-type coverage.py
 
 after_success:
-  - doxygen Doxyfile
   - if [ -d "docs/html" ] && [ -f "docs/html/index.html" ]; then
       echo "html exists";
     else

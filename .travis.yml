@@ -5,7 +5,7 @@ env:
 
 os:
   - linux
-  -
+
 language: python
 
 python:

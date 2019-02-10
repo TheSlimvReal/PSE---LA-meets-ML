@@ -3,7 +3,7 @@ from numpy.linalg import det
 
 
 ##  This class handles the validation of matrices
-class Validator:
+class RegularityCalculator:
 
     __THRESHOLD = 30000
 
@@ -11,7 +11,7 @@ class Validator:
     #
     #   @param matrix which will be checked
     @staticmethod
-    def validate(matrix: np.ndarray) -> bool:
+    def is_regular(matrix: np.ndarray) -> bool:
         if det(matrix) != 0:
             return True
         else:

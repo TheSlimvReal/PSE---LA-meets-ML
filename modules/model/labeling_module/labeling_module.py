@@ -39,8 +39,7 @@ class LabelingModule:
     # @param saving_path path to where the labeled matrices will be saved
     @staticmethod
     def start(path: str, saving_name: str, saving_path: str) -> None:
-        dataset_dense_format = h5py.File(path)["dense_matrices"]
-        # dataset_dense_format = Loader.load(path)["dense_matrices"]
+        dataset_dense_format = h5py.File(path + ".hdf5")["dense_matrices"]
 
         LabelingModule.ginkgo = Ginkgowrapper(2, "cuda", dataset_dense_format[0].shape[0])
         labeled_dataset = LabelingModule.__label(dataset_dense_format)

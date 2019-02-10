@@ -42,6 +42,7 @@ after_script:
 
 after_success:
   - doxygen Doxyfile
+  - if [ -d "$docs/html" ] && [ -f "html/index.html" ]; then echo "html exists" else echo "doesnt exist" fi
 
 notifications:
   email: false

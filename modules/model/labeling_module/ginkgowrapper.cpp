@@ -150,7 +150,7 @@ std::unique_ptr<gko::LinOp> gen(std::shared_ptr<gko::matrix::Csr<double, int> >&
 	.with_criteria(
 		gko::stop::Iteration::build().with_max_iters(dp).on(exec),
                 gko::stop::ResidualNormReduction<>::build()
-			.with_reduction_factor(1e-20)
+			.with_reduction_factor(1e-6)
 			.on(exec))
         .on(exec)->generate(A);
 }

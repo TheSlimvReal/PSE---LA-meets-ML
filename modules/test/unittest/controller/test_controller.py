@@ -44,6 +44,21 @@ def test_invalid_input_calls_print_error(mocked_input, mocked_print_error):
     mocked_print_error.assert_called_once()
 
 
+@patch("modules.view.cli_output_service.CLIOutputService.print_error")
+@patch("modules.view.cli_output_service.CLIOutputService.print_line")
+@patch("builtins.input")
+def test_invalid_input_calls_with_two_spaces(mocked_input, mocked_print_line, mocked_print_error):
+    user_input = [
+        "label  -n name",
+        "quit",
+    ]
+    mocked_input.side_effect = user_input
+    con = Controller()
+    con.start_interaction()
+    mocked_print_line.assert_called()
+    mocked_print_error.assert_not_called()
+
+
 @patch("modules.model.collector_module.ssget.SSGet.new_search")
 @patch("builtins.input")
 def test_ssget_update_command_calls_new_search(mocked_input, mocked_search):

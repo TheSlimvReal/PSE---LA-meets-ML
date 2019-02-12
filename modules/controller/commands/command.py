@@ -69,10 +69,12 @@ class Command:
     def __add_default_args(self) -> None:
         for key, value in self.arguments.items():
             if value is None:
-                self.arguments[key] = Configurations.get_config_with_key(self.module_name, key)
-                if key.NAME is None:
+                if key is Key.NAME:
                     current_dt = datetime.datetime.now()
-                    key.NAME = current_dt.strftime("%Y-%m-%d %H:%M:%S")
+                    print(current_dt)
+                    self.arguments[key] = current_dt.strftime("%Y-%m-%d %H:%M:%S")
+                else:
+                    self.arguments[key] = Configurations.get_config_with_key(self.module_name, key)
 
     ##  parses the string list into a dict of args
     #

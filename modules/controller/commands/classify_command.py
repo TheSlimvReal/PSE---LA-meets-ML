@@ -12,14 +12,13 @@ class ClassifyCommand(Command):
         self.valid_arguments = {
             ("p", "path"): Key.PATH,
             ("n", "network"): Key.NETWORK,
-            ("s", "solve"): Key.SOLVE,
             ("h", "help"): Key.HELP,
         }
 
         self.help_arguments = (
-            "-p <path> Path to the matrix the user wants to classify",
-            "-n <network> (optional) Path to the trained neural networks, if not set, uses the neural network shipped "
-            "with the program",
+            "-p <path> Path to the matrix the user wants to classify [default: modules/shared/data/MatrixToClassify]",
+            "-n <network> Path to the trained neural networks, if not set, uses the neural network shipped"
+            "with the program [default: modules/shared/data/NeuralNetwork/]",
         )
 
         self.arguments = {

@@ -1,3 +1,4 @@
+import datetime
 from typing import List, Dict, Optional, Tuple
 from modules.controller.commands.key import Key
 from modules.controller.commands.module import Module
@@ -69,6 +70,9 @@ class Command:
         for key, value in self.arguments.items():
             if value is None:
                 self.arguments[key] = Configurations.get_config_with_key(self.module_name, key)
+                if key.NAME is None:
+                    current_dt = datetime.datetime.now()
+                    key.NAME = current_dt.strftime("%Y-%m-%d %H:%M:%S")
 
     ##  parses the string list into a dict of args
     #

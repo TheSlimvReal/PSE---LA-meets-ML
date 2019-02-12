@@ -11,7 +11,6 @@ import csv
 class SSGet:
 
     __real_square_matrices_ids = open('modules/model/collector_module/matrix_ids.csv', 'r').read().split("\n")
-    __CUTSIZE = 128
 
     ##  Gets you a matrix
     #
@@ -21,8 +20,8 @@ class SSGet:
         downloaded_matrix = SSGet.__download_matrix(1)
         while downloaded_matrix == []:
             downloaded_matrix = SSGet.__download_matrix(1)
-        seed = randint(0, downloaded_matrix.shape[0] - SSGet.__CUTSIZE)
-        return SSGet.__cut_matrix(seed, downloaded_matrix)
+        seed = randint(0, downloaded_matrix.shape[0] - size)
+        return SSGet.__cut_matrix(seed, downloaded_matrix, size)
 
     ##  Does a new search in the database and updates the matrix_ids.csv file
     #
@@ -49,9 +48,8 @@ class SSGet:
             return SSGet.__get_matrix_values(SSGet.__load(path)['Problem'])
 
     @staticmethod
-    def __cut_matrix(seed: int, matrix: np.ndarray) -> np.ndarray:
-
-        return matrix[seed:seed + SSGet.__CUTSIZE, seed:seed + SSGet.__CUTSIZE]
+    def __cut_matrix(seed: int, matrix: np.ndarray, size: int) -> np.ndarray:
+        return matrix[seed:seed + size, seed:seed + size]
 
     @staticmethod
     def __load(path: str) -> dict:

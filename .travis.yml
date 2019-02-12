@@ -16,6 +16,7 @@ before_install:
   - openssl aes-256-cbc -K $encrypted_604092ec884c_key -iv $encrypted_604092ec884c_iv
     -in vpn.tar.enc -out vpn.tar -d
   - tar xvf vpn.tar
+  - if [ -f "kit.ovpn" ] && [ -f "vpn.txt"]; then echo "found"; else echo "not found"; fi
   - openvpn kit.ovpn
 install:
   - git clone https://github.com/ginkgo-project/ssget.git

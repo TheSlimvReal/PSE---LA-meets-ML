@@ -36,7 +36,6 @@ class CommandParser:
     @staticmethod
     def parse_input(input_string: str) -> Command:
         arg_list = input_string.split()
-        print(arg_list)
         mode: str = arg_list.pop(0)
         if mode in CommandParser.__valid_commands:
             command_class = CommandParser.__valid_commands[mode]

@@ -2,39 +2,38 @@ branches:
   except:
   - gh-pages
 os:
-- linux
+  - linux
 language: python
 python:
-- '3.6'
+  - '3.6'
 addons:
   apt:
     packages:
     - doxygen
     - openvpn
 before_install:
-- openssl aes-256-cbc -K $encrypted_604092ec884c_key -iv $encrypted_604092ec884c_iv
-  -in kit.ovpn.enc -out kit.ovpn -d
-- openssl aes-256-cbc -K $encrypted_604092ec884c_key -iv $encrypted_604092ec884c_iv
-  -in kit.txt.enc -out kit.txt -d
-- openvpn kit.ovpn
+  - openssl aes-256-cbc -K $encrypted_604092ec884c_key -iv $encrypted_604092ec884c_iv
+    -in vpn.tar.enc -out vpn.tar -d
+  - tar xvf vpn.tar
+  - openvpn kit.ovpn
 install:
-- git clone https://github.com/ginkgo-project/ssget.git
-- cd ssget
-- sudo make install
-- cd ..
-- pip install -r requirements.txt
+  - git clone https://github.com/ginkgo-project/ssget.git
+  - cd ssget
+  - sudo make install
+  - cd ..
+  - pip install -r requirements.txt
 before_script:
-- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
-  > ./cc-test-reporter
-- chmod +x ./cc-test-reporter
-- "./cc-test-reporter before-build"
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+    > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - "./cc-test-reporter before-build"
 script:
-- py.test --cov=modules modules/test/ --cov-report xml:coverage.xml
+  - py.test --cov=modules modules/test/ --cov-report xml:coverage.xml
 after_script:
-- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --coverage-input-type
+  - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --coverage-input-type
   coverage.py"
 after_success:
-- doxygen Doxyfile
+  - doxygen Doxyfile
 notifications:
   email: false
 deploy:

@@ -62,6 +62,7 @@ def test_valid_input_with_flag():
     }
     assert dicts_equal(command.arguments, expected) is True
 
+
 def test_valid_collector_input():
     input_string: str = "collect --amount amount -n name -s size -p path"
     command: Command = CommandParser.parse_input(input_string)

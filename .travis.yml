@@ -17,6 +17,12 @@ addons:
   apt:
     packages:
       - doxygen
+      - openvpn
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_604092ec884c_key -iv $encrypted_604092ec884c_iv -in kit.txt.enc -out kit.txt -d
+  - openssl aes-256-cbc -K $encrypted_604092ec884c_key -iv $encrypted_604092ec884c_iv -in kit.ovpn.enc -out kit.ovpn -d
+  - openvpn kit.ovpn
 
 install:
   - git clone https://github.com/ginkgo-project/ssget.git

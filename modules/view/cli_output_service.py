@@ -25,9 +25,6 @@ class CLIOutputService(OutputService, Subscriber):
     def print_error(self, error: MyException) -> None:
         self.print_line(error.get_info())
 
-    def print_matrix(self, matrix: np.ndarray):
-        pass
-
     def update(self, value: str) -> None:
         self.__view.print_overriding(self.__message % value)
 

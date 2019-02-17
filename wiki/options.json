@@ -16,7 +16,7 @@
     ]
   },
   "separator": "_",
-  "linkTemplate": "./%s",
+  "linkTemplate": "https://github.com/TheSlimvReal/PSE---LA-meets-ML/wiki/Contributing/%s",
   "menuFile": "_Sidebar.md",
   "multilang": false,
   "menuOnly": true

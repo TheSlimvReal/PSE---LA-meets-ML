@@ -18,6 +18,10 @@ addons:
     packages:
       - doxygen
 
+before_install:
+- openssl aes-256-cbc -K $encrypted_acc9ef9b2de1_key -iv $encrypted_acc9ef9b2de1_iv
+  -in wiki_deployment.sh.enc -out wiki_deployment.sh -d
+
 install:
   - git clone https://github.com/ginkgo-project/ssget.git
   - cd ssget
@@ -43,9 +47,13 @@ notifications:
   email: false
 
 deploy:
-  provider: pages
-  skip_cleanup: true
-  local_dir: docs/html
-  github_token: $GH_REPO_TOKEN
-  on:
-    branch: master
+  - provider: pages
+    skip_cleanup: true
+    local_dir: docs/html
+    github_token: $GH_REPO_TOKEN
+    on:
+      branch: master
+  - provider: script
+    script: bash wiki_deployment.sh
+    on:
+      branch: master

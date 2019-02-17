@@ -11,6 +11,7 @@ git config user.name "Wiki Deployment"
 git config user.email "Wiki-Deployment@bot.com"
 cp ../../wiki/* .
 github-wiki-sidebar --silent
-git add wiki_tmp/
+git add .
+git status
 git commit -m "Deploy wiki with commit: ${TRAVIS_COMMIT}"
 git push --force "https://${GH_REPO_TOKEN}@github.com/TheSlimvReal/PSE---LA-meets-ML.wiki.git"

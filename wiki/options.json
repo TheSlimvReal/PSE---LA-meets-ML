@@ -15,7 +15,7 @@
       "Setup_ WSL-in-PyCharm.md"
     ]
   },
-  "separator": "_-",
+  "separator": "_",
   "linkTemplate": "./%s",
   "menuFile": "_Sidebar.md",
   "multilang": false,

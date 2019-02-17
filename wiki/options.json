@@ -9,10 +9,10 @@
     "order": [
       "Home.md",
       "Contributing.md",
-      "Contributing_ Implementation-guidelines.md",
-      "Contributing_ Doxygen-Guide.md",
+      "Contributing_Implementation-Guidelines.md",
+      "Contributing_Doxygen-Guide.md",
       "Setup.md",
-      "Setup_ WSL-in-PyCharm.md"
+      "Setup_WSL-in-PyCharm.md"
     ]
   },
   "separator": "_",

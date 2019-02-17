@@ -18,10 +18,6 @@ addons:
     packages:
       - doxygen
 
-before_install:
-- openssl aes-256-cbc -K $encrypted_acc9ef9b2de1_key -iv $encrypted_acc9ef9b2de1_iv
-  -in wiki_deployment.sh.enc -out wiki_deployment.sh -d
-
 install:
   - git clone https://github.com/ginkgo-project/ssget.git
   - cd ssget

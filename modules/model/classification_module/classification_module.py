@@ -7,6 +7,7 @@ import keras
 from modules.view.output_service import OutputService
 from modules.shared.regularity_calculator import RegularityCalculator
 
+
 class Classifier:
 
     __path: str = ""

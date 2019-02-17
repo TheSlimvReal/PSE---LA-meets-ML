@@ -56,4 +56,4 @@ deploy:
   - provider: script
     script: bash wiki_deployment.sh
     on:
-      branch: master
+      branch: wiki_automation

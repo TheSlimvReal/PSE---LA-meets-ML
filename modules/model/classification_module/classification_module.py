@@ -5,7 +5,7 @@ import keras
 
 ##  This class handles the classification of matrices using a neural network
 from modules.view.output_service import OutputService
-
+from modules.shared.regularity_calculator import RegularityCalculator
 
 class Classifier:
 
@@ -21,6 +21,9 @@ class Classifier:
     def start(path: str, network: str):
         matrix_file = h5py.File(path, 'r')
         key = list(matrix_file.keys())[0]
+        for matrix in matrix_file[key]:
+            if not RegularityCalculator.is_regular(np.array(matrix), dtype=np.float64):
+                print("Matrix not regular!")
         matrix = np.expand_dims(np.array(matrix_file[key], dtype=np.float64), axis=3)
         model = Classifier.__load_network(network)
         predictions = list(np.argmax(model.predict(matrix), axis=1))

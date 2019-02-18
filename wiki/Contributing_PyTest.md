@@ -13,7 +13,7 @@ or just automatically install all our dependencies
 
 ## Create a test
 
-First you create a class the is called something like `test_name.py`.
+First you create a class that is called something like `test_name.py`.
 This is important because PyTest will search for files with a leading `test`.
 In that file you create your test function that also needs to have the leading `test_`.
 

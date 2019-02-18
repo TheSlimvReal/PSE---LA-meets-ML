@@ -1,12 +1,13 @@
 import numpy as np
-import h5py
 import keras
 
-
-##  This class handles the classification of matrices using a neural network
+from modules.exception.exceptions import IllegalArgumentException
+from modules.shared.loader import Loader
+from modules.shared.regularity_calculator import RegularityCalculator
 from modules.view.output_service import OutputService
 
 
+##  This class handles the classification of matrices using a neural network
 class Classifier:
 
     __path: str = ""
@@ -19,12 +20,13 @@ class Classifier:
     #   @param network path where the neural network is located
     @staticmethod
     def start(path: str, network: str):
-        matrix_file = h5py.File(path, 'r')
-        key = list(matrix_file.keys())[0]
-        matrix = np.expand_dims(np.array(matrix_file[key], dtype=np.float64), axis=3)
-        model = Classifier.__load_network(network)
-        predictions = list(np.argmax(model.predict(matrix), axis=1))
-        Classifier.__print(predictions)
+        matrix = Loader.load(path)
+        if RegularityCalculator.is_regular(matrix):
+            model = Classifier.__load_network(network)
+            predictions = list(np.argmax(model.predict(matrix), axis=1))
+            Classifier.__print(predictions)
+        else:
+            Classifier.__output_service.print_error(IllegalArgumentException("The matrix is not regular"))
 
     @staticmethod
     def __print(predictions: list):

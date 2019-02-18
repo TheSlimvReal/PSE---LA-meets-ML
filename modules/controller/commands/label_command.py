@@ -3,10 +3,13 @@ from typing import List
 from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
 from modules.controller.commands.module import Module
-from modules.model.labeling_module.labeling_module import LabelingModule
 from modules.model.labeling_module import cl
 
 
+##  command to execute the labeling process
+#
+#   this command will be created when entering label in the terminal
+#   @extends Command to use its parsing logic
 class LabelCommand(Command):
 
     def __init__(self):
@@ -42,7 +45,7 @@ class LabelCommand(Command):
     def execute(self):
         super().execute()
         cl.start(
-            self.arguments.get(Key.PATH),
-            self.arguments.get(Key.NAME),
-            self.arguments.get(Key.SAVING_PATH)
+            path=self.arguments.get(Key.PATH),
+            saving_name=self.arguments.get(Key.NAME),
+            saving_path=self.arguments.get(Key.SAVING_PATH)
         )

@@ -1,0 +1,25 @@
+{
+  "menu": {
+    "item": "{{#levelRepeat}}  {{/levelRepeat}}* [{{{title}}}]({{{link}}})\n",
+    "category": "{{#levelRepeat}}  {{/levelRepeat}}* {{#link}}[{{{title}}}]({{{link}}}){{/link}}{{^link}}{{{title}}}{{/link}}\n{{{subitems}}}",
+    "category-1": "{{{subitems}}}\n"
+  },
+  "rules": {
+    "exclude": [],
+    "order": [
+      "Home.md",
+      "Technologies",
+      "Contributing.md",
+      "Contributing_Implementation-Guidelines.md",
+      "Contributing_Doxygen-Guide.md",
+      "Setup.md",
+      "Setup_WSL-in-PyCharm.md",
+      "Setup_Remote-Interpreter"
+    ]
+  },
+  "separator": "_",
+  "linkTemplate": "https://github.com/TheSlimvReal/PSE---LA-meets-ML/wiki/%s",
+  "menuFile": "_Sidebar.md",
+  "multilang": false,
+  "menuOnly": true
+}

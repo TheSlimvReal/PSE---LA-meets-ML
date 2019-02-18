@@ -1,4 +1,5 @@
 import numpy as np
+import h5py
 import keras
 
 from modules.exception.exceptions import IllegalArgumentException

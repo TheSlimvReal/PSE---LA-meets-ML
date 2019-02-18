@@ -1,4 +1,4 @@
-This is a list of the technologies and models we use for planing and developing this project. 
+This is a list of the technologies and models we use for planning and developing this project. 
 
 ### Waterfall Model
 * [Wikipedia](https://en.wikipedia.org/wiki/Waterfall_model)

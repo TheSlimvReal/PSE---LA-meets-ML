@@ -1,5 +1,6 @@
 from mock import patch, call
 
+from modules.exception.exceptions import IllegalArgumentException
 from modules.view.cli_output_service import CLIOutputService
 from modules.view.observable import Observable
 
@@ -37,3 +38,17 @@ def test_print_overriding_with_incomplete_input(mocked_cli):
     [obs.next(str(i)) for i in values]
     mocked_cli.assert_has_calls(expected_calls)
 
+
+@patch("modules.view.command_line_interface.CommandLineInterface")
+def test_print_line(mocked_cli):
+    outputservice = CLIOutputService(mocked_cli)
+    outputservice.print_line("Hallo")
+    mocked_cli.assert_has_calls([call.print("Hallo")])
+
+
+@patch("modules.view.command_line_interface.CommandLineInterface")
+def test_print_error(mocked_cli):
+    error = IllegalArgumentException("Error")
+    outputservice = CLIOutputService(mocked_cli)
+    outputservice.print_error(error)
+    mocked_cli.assert_has_calls([call.print(error.get_type() + ": " + "Error")])

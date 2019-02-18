@@ -78,15 +78,13 @@ def test_help_flag_print(mocked_input, mocked_print):
         "label -h",
         "quit",
     ]
-    expected2 = [
-        call("These are the possible Tags for the label-command:"),
-        call("-p <path> Absolute path to the matrices in the local storage the user wants to have labeled"),
-        call("-n <name> Name under which the labeled matrices will be saved"),
-        call("-s <saving path> (optional) Path where the labeled matrices will be saved"),
-        call("Finished"),
-    ]
+    label_command = LabelCommand()
+    help_tuple = label_command.help_arguments
+    call_list = [call(help_text) for help_text in help_tuple]
+    expected = [call("These are the possible Tags for the label-command:")] + call_list + [call("Finished")]
+
     mocked_input.side_effect = user_input
     con = Controller()
     con.start_interaction()
-    mocked_print.assert_has_calls(expected2)
+    mocked_print.assert_has_calls(expected)
     mocked_print.assert_called()

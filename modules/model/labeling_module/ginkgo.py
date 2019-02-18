@@ -1,10 +1,9 @@
-# This class is responsible for communicating with the c++ file(ginkgowrapper.cpp)
-
 from ctypes import *
 import ctypes
 import random
 
 
+## This class is responsible for communicating with the c++ file(ginkgowrapper.cpp)
 class Ginkgowrapper:
 
         amount_of_iterations = 1

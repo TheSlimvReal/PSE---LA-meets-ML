@@ -1,5 +1,3 @@
-# This class is the main component of the module labeling module and controls the main working flow
-
 from modules.model.labeling_module.Solvers.cg_solver import CgSolver
 from modules.model.labeling_module.Solvers.bicgstab_solver import BicgstabSolver
 from modules.model.labeling_module.Solvers.fcg_solver import FcgSolver
@@ -23,6 +21,7 @@ from modules.view.command_line_interface import CommandLineInterface
 from modules.view.output_service import OutputService
 
 
+## This class is the main component of the module labeling module and controls the main working flow
 class LabelingModule:
 
     __output_service: OutputService = CLIOutputService(CommandLineInterface())

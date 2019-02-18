@@ -4,6 +4,10 @@ from modules.controller.commands.module import Module
 from modules.model.training_module.training_module import TrainingModule
 
 
+##  command to execute the training module
+#
+#   this command will be created when entering collect in the terminal
+#   @extends Command to use its parsing logic
 class TrainCommand(Command):
 
     def __init__(self):

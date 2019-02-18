@@ -4,6 +4,10 @@ from modules.controller.commands.module import Module
 from modules.model.classification_module.classification_module import Classifier
 
 
+##  command to execute the classification module
+#
+#   this command will be created when entering classify in the command line
+#   @extends Command to use its parsing logic
 class ClassifyCommand(Command):
 
     def __init__(self):
@@ -31,6 +35,6 @@ class ClassifyCommand(Command):
     def execute(self):
         super().execute()
         Classifier.start(
-            self.arguments.get(Key.PATH),
-            self.arguments.get(Key.NETWORK)
+            path=self.arguments.get(Key.PATH),
+            network=self.arguments.get(Key.NETWORK)
         )

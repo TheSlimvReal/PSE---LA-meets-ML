@@ -2,7 +2,7 @@ import datetime
 from typing import List, Dict, Optional, Tuple
 from modules.controller.commands.key import Key
 from modules.controller.commands.module import Module
-from modules.exception.excpetions import IllegalArgumentException
+from modules.exception.exceptions import IllegalArgumentException
 from modules.shared.configurations import Configurations
 
 

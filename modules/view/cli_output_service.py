@@ -1,4 +1,4 @@
-from modules.exception.excpetions import MyException
+from modules.exception.exceptions import MyException
 from modules.view.command_line_interface import CommandLineInterface
 from modules.view.observable import Observable
 from modules.view.output_service import OutputService

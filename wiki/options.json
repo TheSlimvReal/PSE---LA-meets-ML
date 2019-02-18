@@ -8,11 +8,13 @@
     "exclude": [],
     "order": [
       "Home.md",
+      "Technologies",
       "Contributing.md",
       "Contributing_Implementation-Guidelines.md",
       "Contributing_Doxygen-Guide.md",
       "Setup.md",
-      "Setup_WSL-in-PyCharm.md"
+      "Setup_WSL-in-PyCharm.md",
+      "Setup_Remote-Interpreter"
     ]
   },
   "separator": "_",

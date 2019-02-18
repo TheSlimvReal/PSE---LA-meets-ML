@@ -10,4 +10,3 @@
 #
 # For more information please refer to our [GitHub repository](https://github.com/TheSlimvReal/PSE---LA-meets-ML)
 # and the [GitHub Wiki](https://github.com/TheSlimvReal/PSE---LA-meets-ML/wiki).
-

@@ -1,13 +1,11 @@
 import numpy as np
 import h5py
 import keras
-
-
-##  This class handles the classification of matrices using a neural network
 from modules.view.output_service import OutputService
 from modules.shared.regularity_calculator import RegularityCalculator
 
 
+##  This class handles the classification of matrices using a neural network
 class Classifier:
 
     __path: str = ""

@@ -10,6 +10,7 @@ os:
 
 language: python
 
+# only version that supports everything we need
 python:
   - "3.6"
 
@@ -18,6 +19,7 @@ addons:
     packages:
       - doxygen
 
+# install SSGet and all python requirements
 install:
   - git clone https://github.com/ginkgo-project/ssget.git
   - cd ssget
@@ -25,17 +27,21 @@ install:
   - cd ..
   - pip install -r requirements.txt
 
+# download the test reporter binary that takes care of uploading the test coverage results to code climate
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 
+# run pytest and create a coverage report
 script:
   - py.test --cov=modules modules/test/ --cov-report xml:coverage.xml
 
+# this uploads the final results to coverage py
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --coverage-input-type coverage.py
 
+# create the documentation of our classes and funtions
 after_success:
   - doxygen Doxyfile
 
@@ -43,12 +49,14 @@ notifications:
   email: false
 
 deploy:
+# deploy the documentation to GitHub-Pages
   - provider: pages
     skip_cleanup: true
     local_dir: docs/html
     github_token: $GH_REPO_TOKEN
     on:
       branch: master
+# run script that creates the GitHub wiki
   - provider: script
     script: bash wiki_deployment.sh
     on:

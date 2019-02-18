@@ -8,15 +8,17 @@
     "exclude": [],
     "order": [
       "Home.md",
+      "Technologies",
       "Contributing.md",
       "Contributing_Implementation-Guidelines.md",
       "Contributing_Doxygen-Guide.md",
       "Setup.md",
-      "Setup_WSL-in-PyCharm.md"
+      "Setup_WSL-in-PyCharm.md",
+      "Setup_Remote-Interpreter"
     ]
   },
   "separator": "_",
-  "linkTemplate": "https://github.com/TheSlimvReal/PSE---LA-meets-ML/wiki/Contributing/%s",
+  "linkTemplate": "https://github.com/TheSlimvReal/PSE---LA-meets-ML/wiki/%s",
   "menuFile": "_Sidebar.md",
   "multilang": false,
   "menuOnly": true

@@ -1,6 +1,9 @@
 from enum import Enum
 
 
+##  enum that represents the possible keys a user can enter
+#
+#   @extends Enum to get the enum logic
 class Key(Enum):
     QUIT = 0
     AMOUNT = 1

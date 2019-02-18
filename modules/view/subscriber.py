@@ -1,6 +1,6 @@
 
 
-##  Class than can be registered to an observable
+##  abstract class than can be registered to an observable
 class Subscriber:
 
     ##  Will be triggered when new values arrive

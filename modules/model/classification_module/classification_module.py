@@ -1,6 +1,7 @@
 import numpy as np
 import h5py
 import keras
+from h5py import File
 
 from modules.exception.exceptions import IllegalArgumentException
 from modules.shared.loader import Loader
@@ -21,8 +22,10 @@ class Classifier:
     #   @param network path where the neural network is located
     @staticmethod
     def start(path: str, network: str):
-        matrix = Loader.load(path)
-        if RegularityCalculator.is_regular(matrix):
+        matrix_file = h5py.File(path, 'r')
+        key = list(matrix_file.keys())[0]
+        if Classifier.__check_regularity(matrix_file, key):
+            matrix = np.expand_dims(np.array(matrix_file[key], dtype=np.float64), axis=3)
             model = Classifier.__load_network(network)
             predictions = list(np.argmax(model.predict(matrix), axis=1))
             Classifier.__print(predictions)
@@ -54,3 +57,9 @@ class Classifier:
     @staticmethod
     def set_output_service(service: OutputService):
         Classifier.__output_service = service
+
+    def __check_regularity(self, matrix_file: File, key) -> bool:
+        for matrix in matrix_file[key]:
+            if not RegularityCalculator.is_regular(np.array(matrix), dtype=np.float64):
+                return False
+        return True

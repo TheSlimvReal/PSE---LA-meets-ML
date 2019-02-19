@@ -44,7 +44,8 @@ This is where your project is uploaded to.
 * open this folder 
 * enter the command
 
-> wget https://bootstrap.pypa.io/get-pip.py && python3.6 -m get-pip.py --user
+> wget https://bootstrap.pypa.io/get-pip.py && python3.6 get-pip.py --user
+
 > python3.6 -m pip install -r requirements.txt --user
 
 This will allow you install all necessary dependencies without having root access on the server.

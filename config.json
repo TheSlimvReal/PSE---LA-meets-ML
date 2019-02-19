@@ -12,7 +12,7 @@
   "train": {
     "network_path": "modules/shared/data/NeuralNetwork/",
     "default_saving_name": "trained_net",
-	"default_path": "modules/shared/data/LabeledMatrices/"
+	"default_path": "modules/shared/data/LabeledMatrices/",
 
     "num_conv_layers": 1,
     "num_dense_layers": 3,
@@ -29,6 +29,6 @@
   },
   "classify": {
     "path": "modules/shared/data/MatrixToClassify/matrix_to_classify",
-	"network_path": "modules/shared/data/NeuralNetwork/",
+	"network_path": "modules/shared/data/NeuralNetwork/"
   }
 }

@@ -1,4 +1,4 @@
-# This class is responsible for communcating with the command line.
+## This class is responsible for communicating with the command line.
 
 # It will call the os library and set the necessary environment variables.
 # It furthermore checks if any paths are empty and replaces them with the default paths from the config file

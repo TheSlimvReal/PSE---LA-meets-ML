@@ -4,6 +4,10 @@ from modules.controller.commands.module import Module
 from modules.model.classification_module.classification_module import Classifier
 
 
+##  command to execute the classification module
+#
+#   this command will be created when entering classify in the command line
+#   @extends Command to use its parsing logic
 class ClassifyCommand(Command):
 
     def __init__(self):
@@ -12,14 +16,13 @@ class ClassifyCommand(Command):
         self.valid_arguments = {
             ("p", "path"): Key.PATH,
             ("n", "network"): Key.NETWORK,
-            ("s", "solve"): Key.SOLVE,
             ("h", "help"): Key.HELP,
         }
 
         self.help_arguments = (
-            "-p <path> Path to the matrix the user wants to classify",
-            "-n <network> (optional) Path to the trained neural networks, if not set, uses the neural network shipped "
-            "with the program",
+            "-p <path> Path to the matrix the user wants to classify [default: modules/shared/data/MatrixToClassify]",
+            "-n <network> Path to the trained neural networks, if not set, uses the neural network shipped"
+            "with the program [default: modules/shared/data/NeuralNetwork/]",
         )
 
         self.arguments = {
@@ -31,6 +34,6 @@ class ClassifyCommand(Command):
     def execute(self):
         super().execute()
         Classifier.start(
-            self.arguments.get(Key.PATH),
-            self.arguments.get(Key.NETWORK)
+            path=self.arguments.get(Key.PATH),
+            network=self.arguments.get(Key.NETWORK)
         )

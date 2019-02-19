@@ -20,6 +20,9 @@ class CommandLineInterface:
         input_line: str = input(message + "\n")
         return input_line
 
+    ##  prints a string that overrides the last line on the view
+    #
+    #   @param line that should be printed
     def print_overriding(self, line: str) -> None:
         sys.stdout.write("\r" + line)
         sys.stdout.flush()

@@ -1,7 +1,8 @@
+import datetime
 from typing import List, Dict, Optional, Tuple
 from modules.controller.commands.key import Key
 from modules.controller.commands.module import Module
-from modules.exception.excpetions import IllegalArgumentException
+from modules.exception.exceptions import IllegalArgumentException
 from modules.shared.configurations import Configurations
 
 
@@ -68,7 +69,7 @@ class Command:
     def __add_default_args(self) -> None:
         for key, value in self.arguments.items():
             if value is None:
-                self.arguments[key] = Configurations.get_config_with_key(self.module_name, key)
+                self.set_values(key)
 
     ##  parses the string list into a dict of args
     #
@@ -102,3 +103,10 @@ class Command:
         if key in self.arguments:
             return int(self.arguments.get(key))
         return None
+
+    def set_values(self, key):
+        if key is Key.NAME:
+            current_dt = datetime.datetime.now()
+            self.arguments[key] = current_dt.strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            self.arguments[key] = Configurations.get_config_with_key(self.module_name, key)

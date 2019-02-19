@@ -1,4 +1,4 @@
-from modules.exception.excpetions import MyException
+from modules.exception.exceptions import MyException
 import numpy as np
 from modules.view.observable import Observable
 

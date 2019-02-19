@@ -11,7 +11,7 @@ from modules.controller.commands.key import Key
 from modules.controller.commands.label_command import LabelCommand
 from modules.controller.commands.module import Module
 from modules.controller.commands.train_command import TrainCommand
-from modules.exception.excpetions import IllegalArgumentException
+from modules.exception.exceptions import IllegalArgumentException
 from modules.shared.configurations import Configurations
 
 
@@ -52,15 +52,15 @@ def test_valid_input_with_arguments():
 
 
 def test_valid_input_with_flag():
-    input_string: str = "classify -p path -s -n network"
+    input_string: str = "classify -p path -n network"
     command: Command = CommandParser.parse_input(input_string)
     assert isinstance(command, ClassifyCommand)
     expected: Dict[Key, str] = {
         Key.PATH: "path",
-        Key.SOLVE: "",
         Key.NETWORK: "network"
     }
     assert dicts_equal(command.arguments, expected) is True
+
 
 def test_valid_collector_input():
     input_string: str = "collect --amount amount -n name -s size -p path"

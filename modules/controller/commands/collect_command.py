@@ -4,6 +4,10 @@ from modules.controller.commands.module import Module
 from modules.model.collector_module.collector import Collector
 
 
+##  command to execute the collector module
+#
+#   this command class will be created when entering collect in the command line
+#   @extends Command to use its parsing logic
 class CollectCommand(Command):
 
     def __init__(self):
@@ -18,10 +22,11 @@ class CollectCommand(Command):
         }
 
         self.help_arguments = (
-            "-a Absolute amount of matrices the user wants to generate",
-            "-n <name> Name under which the matrices will be saved",
-            "-s <size> (optional) Absolute size the generated square matrices should have. Default is 128",
-            "-p <path> (optional) Path where the created/downloaded matrices will be saved",
+            "-a <amount> Absolute amount of matrices the user wants to generate [default: 100]",
+            "-n <name> Name under which the matrices will be saved [default: current date and time]",
+            "-s <size> Absolute size the generated square matrices should have. [default: 128]",
+            "-p <path> Path where the created/downloaded matrices will be saved "
+            "[default: modules/shared/data/UnlabeledMatrices/]",
         )
 
         self.arguments = {
@@ -34,8 +39,8 @@ class CollectCommand(Command):
     def execute(self):
         super().execute()
         Collector.collect(
-            self.get_int_value(Key.AMOUNT),
-            self.get_int_value(Key.SIZE),
-            self.arguments.get(Key.NAME),
-            self.arguments.get(Key.PATH),
+            amount=self.get_int_value(Key.AMOUNT),
+            size=self.get_int_value(Key.SIZE),
+            name=self.arguments.get(Key.NAME),
+            path=self.arguments.get(Key.PATH),
         )

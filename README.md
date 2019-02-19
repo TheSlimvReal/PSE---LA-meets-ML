@@ -48,8 +48,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Credit 
 
-This Project was created by Anna Ricker, Simon Hanselmann, Yannick Funk, Fabian Koffer and Dennis Grötzinger
+This Project was created by Anna Ricker, Simon Hanselmann, Yannick Funk, Fabian Koffer and Dennis Grï¿½tzinger
 
-with the help and overseeing of the supervisors Hartwig Anzt and Markus Götz.
+with the help and overseeing of the supervisors Hartwig Anzt and Markus Gï¿½tz.
 
 

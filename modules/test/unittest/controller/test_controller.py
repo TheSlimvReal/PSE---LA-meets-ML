@@ -44,25 +44,19 @@ def test_invalid_input_calls_print_error(mocked_input, mocked_print_error):
     mocked_print_error.assert_called_once()
 
 
+@patch("modules.view.cli_output_service.CLIOutputService.print_error")
 @patch("modules.view.cli_output_service.CLIOutputService.print_line")
 @patch("builtins.input")
-def test_help_flag_print(mocked_input, mocked_print):
+def test_input_calls_with_two_spaces(mocked_input, mocked_print_line, mocked_print_error):
     user_input = [
-        "label -h",
+        "label  -n name",
         "quit",
-    ]
-    expected2 = [
-        call("These are the possible Tags for the label-command:"),
-        call("-p <path> Absolute path to the matrices in the local storage the user wants to have labeled"),
-        call("-n <name> Name under which the labeled matrices will be saved"),
-        call("-s <saving path> (optional) Path where the labeled matrices will be saved"),
-        call("Finished"),
     ]
     mocked_input.side_effect = user_input
     con = Controller()
     con.start_interaction()
-    mocked_print.assert_has_calls(expected2)
-    mocked_print.assert_called()
+    mocked_print_line.assert_called()
+    mocked_print_error.assert_not_called()
 
 
 @patch("modules.model.collector_module.ssget.SSGet.new_search")
@@ -76,3 +70,21 @@ def test_ssget_update_command_calls_new_search(mocked_input, mocked_search):
     Controller().start_interaction()
     mocked_search.assert_called()
 
+
+@patch("modules.view.cli_output_service.CLIOutputService.print_line")
+@patch("builtins.input")
+def test_help_flag_print(mocked_input, mocked_print):
+    user_input = [
+        "label -h",
+        "quit",
+    ]
+    label_command = LabelCommand()
+    help_tuple = label_command.help_arguments
+    call_list = [call(help_text) for help_text in help_tuple]
+    expected = [call("These are the possible Tags for the label-command:")] + call_list + [call("Finished")]
+
+    mocked_input.side_effect = user_input
+    con = Controller()
+    con.start_interaction()
+    mocked_print.assert_has_calls(expected)
+    mocked_print.assert_called()

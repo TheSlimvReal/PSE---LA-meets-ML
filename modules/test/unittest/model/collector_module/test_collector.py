@@ -1,13 +1,9 @@
-import matplotlib.pyplot as plt
-import pytest
+from mock import patch, call
 
 from modules.model.collector_module.collector import Collector
-import h5py
-import numpy as np
 
 
-def test_collect():
-    data = Collector.collect(5, 128, 'unlabeled_matrices', 'modules/shared/data/')
-    assert len(data) == 5
-    created_file = h5py.File('modules/shared/data/unlabeled_matrices.hdf5', 'r')
-    print(created_file['dense_matrices'])
+@patch("modules.shared.saver.Saver.save")
+def test_saver_has_calls(mocked_saver):
+    Collector.collect(5, 128, "name"," path")
+    mocked_saver.assert_called_once()

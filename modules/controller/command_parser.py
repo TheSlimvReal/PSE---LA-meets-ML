@@ -9,7 +9,7 @@ from modules.controller.commands.label_command import LabelCommand
 from modules.controller.commands.quit_command import QuitCommand
 from modules.controller.commands.ssget_command import SSGETCommand
 from modules.controller.commands.train_command import TrainCommand
-from modules.exception.excpetions import IllegalArgumentException
+from modules.exception.exceptions import IllegalArgumentException
 
 
 ##  Class for parsing strings to a command
@@ -36,7 +36,6 @@ class CommandParser:
     @staticmethod
     def parse_input(input_string: str) -> Command:
         arg_list = input_string.split()
-        print(arg_list)
         mode: str = arg_list.pop(0)
         if mode in CommandParser.__valid_commands:
             command_class = CommandParser.__valid_commands[mode]

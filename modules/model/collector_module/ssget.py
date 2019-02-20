@@ -5,6 +5,7 @@ import os
 import random
 import numpy as np
 import csv
+import scipy
 
 
 ##  This class handles the communication with the suit sparse matrix collection using the ssget tool
@@ -65,10 +66,10 @@ class SSGet:
         todo = [matrix_dict]
         while len(todo) != 0:
             current = todo.pop(0)
-            if str(type(current)) == "<class 'scipy.sparse.csc.csc_matrix'>":
+            if isinstance(current, scipy.sparse.csc.csc_matrix):
                 found = current
                 todo = []
-            elif isinstance(current, Iterable) or str(type(current)) == "<class 'numpy.void'>":
+            elif isinstance(current, Iterable) or isinstance(current, np.void):
                 for c in current:
                     todo.append(c)
         return found

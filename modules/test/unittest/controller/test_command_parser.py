@@ -130,3 +130,14 @@ def test_classify_command_with_missing_optional_arg_adds_default():
     assert isinstance(command, TrainCommand)
     assert dicts_equal(command.arguments, expected) is True
 
+
+def test_input_calls_with_two_spaces():
+    input_str = "label  -n name -p path -s saving_path"
+    expected = {
+        Key.PATH: "path",
+        Key.NAME: "name",
+        Key.SAVING_PATH: "saving_path",
+    }
+    command = CommandParser.parse_input(input_str)
+    assert isinstance(command, LabelCommand)
+    assert dicts_equal(command.arguments, expected) is True

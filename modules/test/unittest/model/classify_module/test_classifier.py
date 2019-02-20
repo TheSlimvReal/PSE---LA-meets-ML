@@ -1,3 +1,4 @@
+
 from mock import patch, call
 
 from modules.exception.exceptions import IllegalArgumentException

@@ -40,7 +40,7 @@ class TrainingModule:
     #   @param name under which the trained network will be saved
     #   @param saving_path path to where the trained network will be saved
     @staticmethod
-    def train(matrices_path: str, neural_network_path: str, name: str, saving_path: str, training_test_split: int) -> None:
+    def train(matrices_path: str, neural_network_path: str, name: str, saving_path: str, training_test_split: float) -> None:
 
         # model is defined by the config file or loaded from a path
         model = TrainingModule.__define_model(neural_network_path)

@@ -104,6 +104,11 @@ class Command:
             return int(self.arguments.get(key))
         return None
 
+    def get_float_value(self, key: Key) -> Optional[float]:
+        if key in self.arguments:
+            return float(self.arguments.get(key))
+        return None
+
     def set_values(self, key):
         if key is Key.NAME:
             current_dt = datetime.datetime.now()

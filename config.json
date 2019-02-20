@@ -5,14 +5,16 @@
     "amount": 100
   },
   "label": {
-    "default_saving_path": "modules/shared/data/LabeledMatrices/",
-    "default_saving_name": "labeled_matrices",
-    "default_path": "modules/shared/data/UnlabeledMatrices/unlabeled_matrices"
+    "saving_path": "modules/shared/data/LabeledMatrices/",
+    "name": "labeled_matrices",
+    "path": "modules/shared/data/UnlabeledMatrices/unlabeled_matrices"
   },
   "train": {
-    "network_path": "modules/shared/data/NeuralNetwork/",
-    "default_saving_name": "trained_net",
-	"default_path": "modules/shared/data/LabeledMatrices/",
+    "name": "trained_net",
+	"path": "modules/shared/data/LabeledMatrices/",
+    "saving_path": "modules/shared/data/TrainedNetwork",
+    "train_split": 0.8,
+
 
     "num_conv_layers": 1,
     "num_dense_layers": 3,
@@ -21,7 +23,6 @@
     "dropout": 0.1,
 
     "batch_size": 25,
-    "training_test_split": 0.8,
     "learning_rate": 0.001,
     "loss": "categorical_crossentropy",
     "epochs": 5

@@ -58,8 +58,9 @@ class Classifier:
     def set_output_service(service: OutputService):
         Classifier.__output_service = service
 
-    def __check_regularity(self, matrix_file: File, key) -> bool:
+    @staticmethod
+    def __check_regularity(matrix_file, key) -> bool:
         for matrix in matrix_file[key]:
-            if not RegularityCalculator.is_regular(np.array(matrix), dtype=np.float64):
+            if not RegularityCalculator.is_regular(np.array(matrix, dtype=np.float64)):
                 return False
         return True

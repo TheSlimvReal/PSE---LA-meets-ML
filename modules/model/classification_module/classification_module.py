@@ -59,7 +59,7 @@ class Classifier:
         Classifier.__output_service = service
 
     @staticmethod
-    def __check_regularity(matrix_file, key) -> bool:
+    def check_regularity(matrix_file, key) -> bool:
         for matrix in matrix_file[key]:
             if not RegularityCalculator.is_regular(np.array(matrix, dtype=np.float64)):
                 return False
@@ -67,7 +67,7 @@ class Classifier:
 
     @staticmethod
     def __print_prediction(matrix_info, network):
-        if not Classifier.__check_regularity(matrix_info[0], matrix_info[1]):
+        if not Classifier.check_regularity(matrix_info[0], matrix_info[1]):
             raise IllegalArgumentException("The matrix is not regular")
         model = Classifier.__load_network(network)
         predictions = list(np.argmax(model.predict(matrix_info[2]), axis=1))

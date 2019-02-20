@@ -61,6 +61,6 @@ class Classifier:
     @staticmethod
     def __check_regularity(matrix_file, key) -> bool:
         for matrix in matrix_file[key]:
-            if not RegularityCalculator.is_regular(np.array(matrix)):
+            if not RegularityCalculator.is_regular(np.array(matrix, dtype=np.float64)):
                 return False
         return True

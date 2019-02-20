@@ -36,7 +36,7 @@ class Classifier:
     def __print(predictions: list):
         counter = 0
         for prediction in predictions:
-            print("matrix: " + str(counter) + ", predicted solver: " + Classifier.__solvers[prediction])
+            Classifier.__output_service.print_line("matrix: " + str(counter) + ", predicted solver: " + Classifier.__solvers[prediction])
             counter += 1
 
     ##  Load the neural network

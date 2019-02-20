@@ -13,8 +13,7 @@ class Loader:
     def load(path: str):
         try:
             matrix_file = h5py.File(path, 'r')
-        except ValueError:
+        except Exception:
             raise IOException("The path is not correct.")
-        key = list(matrix_file.keys())[0]
-        matrix = np.expand_dims(np.array(matrix_file[key], dtype=np.float64), axis=3)
-        return [matrix_file, key, matrix]
+
+        return matrix_file

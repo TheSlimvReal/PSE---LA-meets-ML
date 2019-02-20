@@ -13,7 +13,6 @@ class Command:
         self.__module_name: Module = Module.UNDEFINED
         self.__arguments: Dict[Key, str] = {}
         self.__valid_arguments: Dict[Tuple[str, str], Key] = {}
-        self.__required_arguments: Tuple[Key] = ()
         self.__help_arguments: Tuple[str] = ()
 
     @property
@@ -33,14 +32,6 @@ class Command:
         self.__arguments = arguments
 
     @property
-    def required_arguments(self) -> Tuple[Key]:
-        return self.__required_arguments
-
-    @required_arguments.setter
-    def required_arguments(self, args: Tuple[Key]) -> None:
-        self.__required_arguments = args
-
-    @property
     def valid_arguments(self) -> Dict[Tuple[str, str], Key]:
         return self.__valid_arguments
 
@@ -58,18 +49,12 @@ class Command:
 
     ##  can be called the execute the module
     def execute(self) -> None:
-        self.validate()
-
-    ##  will be called in the command execution
-    def validate(self) -> None:
-        for arg in self.required_arguments:
-            if arg not in self.arguments:
-                raise IllegalArgumentException("%s is required" % arg)
+        pass
 
     def __add_default_args(self) -> None:
         for key, value in self.arguments.items():
             if value is None:
-                self.set_values(key)
+                self.__set_values(key)
 
     ##  parses the string list into a dict of args
     #
@@ -99,12 +84,13 @@ class Command:
             if tag in key:
                 return value
 
+    ##  Gives you the integer value associated with that key
     def get_int_value(self, key: Key) -> Optional[int]:
         if key in self.arguments:
             return int(self.arguments.get(key))
         return None
 
-    def set_values(self, key):
+    def __set_values(self, key):
         if key is Key.NAME:
             current_dt = datetime.datetime.now()
             self.arguments[key] = current_dt.strftime("%Y-%m-%d %H:%M:%S")

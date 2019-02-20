@@ -1,7 +1,5 @@
-from mock import patch, call
+from mock import patch
 
-from modules.controller.commands.label_command import LabelCommand
-from modules.controller.commands.quit_command import QuitCommand
 from modules.controller.controller import Controller
 
 

@@ -1,9 +1,5 @@
-import matplotlib.pyplot as plt
-import pytest
-
 from modules.model.collector_module.collector import Collector
 import h5py
-import numpy as np
 
 
 def test_collect():

@@ -124,7 +124,7 @@ def test_classify_command_with_missing_optional_arg_adds_default():
         Key.NAME: "network",
         Key.TRAIN: train,
         Key.SAVING_PATH: saving_path,
-        Key.EXISTING_NETWORK: None,
+        Key.NETWORK: None,
     }
     command = CommandParser.parse_input(input_str)
     assert isinstance(command, TrainCommand)

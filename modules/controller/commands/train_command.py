@@ -18,7 +18,7 @@ class TrainCommand(Command):
             ("p", "path"): Key.PATH,
             ("s", "saving-path"): Key.SAVING_PATH,
             ("t", "train"): Key.TRAIN,
-            ("e", "existing-network"): Key.EXISTING_NETWORK,
+            ("e", "existing-network"): Key.NETWORK,
             "h": Key.HELP,
         }
 
@@ -27,7 +27,6 @@ class TrainCommand(Command):
             Key.PATH: None,
             Key.SAVING_PATH: None,
             Key.TRAIN: None,
-            Key.EXISTING_NETWORK: None,
         }
 
         self.help_arguments = (
@@ -45,7 +44,7 @@ class TrainCommand(Command):
         super().execute()
         TrainingModule.train(
             matrices_path=self.arguments.get(Key.PATH),
-            neural_network_path=self.arguments.get(Key.EXISTING_NETWORK),
+            neural_network_path=self.arguments.get(Key.NETWORK),
             name=self.arguments.get(Key.NAME),
             saving_path=self.arguments.get(Key.SAVING_PATH),
         )

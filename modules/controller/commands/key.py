@@ -16,5 +16,4 @@ class Key(Enum):
     NETWORK = 8
     SOLVE = 9
     HELP = 10
-    EXISTING_NETWORK = 11
-    UPDATE = 12
+    UPDATE = 11

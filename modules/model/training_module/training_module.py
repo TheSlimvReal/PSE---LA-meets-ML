@@ -19,10 +19,6 @@ class TrainingModule:
 
     __output_service: OutputService = OutputService()
 
-    # Saving path and name
-    __default_saving_path: str = Configurations.get_config(Module.TRAIN, "default_saving_path")
-    __default_saving_name: str = Configurations.get_config(Module.TRAIN, "default_saving_name")
-
     # Network Structure:
     __num_conv_lavers: int = Configurations.get_config(Module.TRAIN, "num_conv_layers")
     __num_dense_layers: int = Configurations.get_config(Module.TRAIN, "num_dense_layers")
@@ -69,10 +65,6 @@ class TrainingModule:
         validation_labels = labels[index + 1:]
 
         # saves model after every training epoch in format "saving_path+name+epochnr+loss"
-        if saving_path == "" or saving_path is None:
-            saving_path = TrainingModule.__default_saving_path
-        if name == "" or name is None:
-            name = TrainingModule.__default_saving_name
         checkpointer = ModelCheckpoint(filepath=saving_path + name + "{epoch:02d}-{val_loss:.2f}.hdf5", monitor='val_loss',
                                        verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
 

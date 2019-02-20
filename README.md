@@ -1,4 +1,4 @@
-# Linear Algebra meets Machine Learning - PSE Project
+# Linear Algebra meets Machine Learning - PSE Project [![Build Status](https://travis-ci.org/TheSlimvReal/PSE---LA-meets-ML.svg?branch=master)](https://travis-ci.org/TheSlimvReal/PSE---LA-meets-ML)
 
 Linear Algebra meets Machine Learning is PSE Project from the Karlsruhe Institute of Technology. It uses a Convolutional Neural Network to find the fastest iterative solver for a given sparse linear system. A part of our program relies on the C++ library ginkgo and the ssget tool.
 ## Motivation

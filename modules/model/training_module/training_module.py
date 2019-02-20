@@ -39,6 +39,8 @@ class TrainingModule:
     #   @param neural_network_path path where are existing neural network is located if you want to improve one
     #   @param name under which the trained network will be saved
     #   @param saving_path path to where the trained network will be saved
+    #   @param training_test_split float no how much of the data should be for training purposes, the
+    #           rest will be used for testing
     @staticmethod
     def train(matrices_path: str, neural_network_path: str, name: str, saving_path: str, training_test_split: float) -> None:
 

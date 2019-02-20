@@ -20,7 +20,7 @@ class TrainingModule:
     __output_service: OutputService = OutputService()
 
     # Saving path and name
-    __default_saving_path: str = Configurations.get_config(Module.TRAIN, "default_saving_path")
+    __default_saving_path: str = Configurations.get_config(Module.TRAIN, "default_path")
     __default_saving_name: str = Configurations.get_config(Module.TRAIN, "default_saving_name")
 
     # Network Structure:
@@ -69,10 +69,13 @@ class TrainingModule:
         validation_labels = labels[index + 1:]
 
         # saves model after every training epoch in format "saving_path+name+epochnr+loss"
+        print(TrainingModule.__default_saving_name)
         if saving_path == "" or saving_path is None:
             saving_path = TrainingModule.__default_saving_path
         if name == "" or name is None:
             name = TrainingModule.__default_saving_name
+
+        print(saving_path)
         checkpointer = ModelCheckpoint(filepath=saving_path + name + "{epoch:02d}-{val_loss:.2f}.hdf5", monitor='val_loss',
                                        verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
 
@@ -87,42 +90,47 @@ class TrainingModule:
     @staticmethod
     def __define_model(neural_network_path: str) -> keras.models.Sequential:
         if not neural_network_path or neural_network_path == "":
-            model = Sequential()
-            output_size = 32
-            kernel_size = 3
-            new_output_size = 0
-
-            if TrainingModule.__num_conv_lavers != 0:
-                model.add(Conv2D(output_size, (kernel_size, kernel_size), input_shape=(128, 128, 1)))
-                model.add(Activation(TrainingModule.__layer_activation))
-                new_output_size = output_size
-
-            for i in range(1, TrainingModule.__num_conv_lavers):
-                model.add(Conv2D(output_size * (i + 1), (kernel_size, kernel_size)))
-                model.add(Activation(TrainingModule.__layer_activation))
-                new_output_size = output_size * (i + 1)
-
-            model.add(Flatten())
-
-            if TrainingModule.__num_dense_layers > 1:
-                model.add(Dense(new_output_size * 4))
-                model.add(Activation(TrainingModule.__layer_activation))
-                for i in range(1, TrainingModule.__num_dense_layers - 1):
-                    model.add(Dense(int((new_output_size * 4) / i)))
-                    model.add(Activation(TrainingModule.__layer_activation))
-
-            model.add(Dropout(TrainingModule.__dropout))
-
-            model.add(Dense(TrainingModule.__num_classes))
-            model.add(Activation(TrainingModule.__final_activation))
-
-            optimizer = optimizers.SGD(lr=TrainingModule.__learning_rate)
-            model.compile(loss=TrainingModule.__loss,
-                          optimizer=optimizer, metrics=['accuracy'])
+            model = TrainingModule.__build_model()
         else:
             # loads a compiled model from the specified path
             model = load_model(neural_network_path)
 
+        return model
+
+    @staticmethod
+    def __build_model() -> keras.models.Sequential:
+        model = Sequential()
+        output_size = 32
+        kernel_size = 3
+        new_output_size = 0
+
+        if TrainingModule.__num_conv_lavers != 0:
+            model.add(Conv2D(output_size, (kernel_size, kernel_size), input_shape=(128, 128, 1)))
+            model.add(Activation(TrainingModule.__layer_activation))
+            new_output_size = output_size
+
+        for i in range(1, TrainingModule.__num_conv_lavers):
+            model.add(Conv2D(output_size * (i + 1), (kernel_size, kernel_size)))
+            model.add(Activation(TrainingModule.__layer_activation))
+            new_output_size = output_size * (i + 1)
+
+        model.add(Flatten())
+
+        if TrainingModule.__num_dense_layers > 1:
+            model.add(Dense(new_output_size * 4))
+            model.add(Activation(TrainingModule.__layer_activation))
+            for i in range(1, TrainingModule.__num_dense_layers - 1):
+                model.add(Dense(int((new_output_size * 4) / i)))
+                model.add(Activation(TrainingModule.__layer_activation))
+
+        model.add(Dropout(TrainingModule.__dropout))
+
+        model.add(Dense(TrainingModule.__num_classes))
+        model.add(Activation(TrainingModule.__final_activation))
+
+        optimizer = optimizers.SGD(lr=TrainingModule.__learning_rate)
+        model.compile(loss=TrainingModule.__loss,
+                      optimizer=optimizer, metrics=['accuracy'])
         return model
 
     @staticmethod

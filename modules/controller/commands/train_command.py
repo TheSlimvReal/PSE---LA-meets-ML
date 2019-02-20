@@ -47,4 +47,5 @@ class TrainCommand(Command):
             neural_network_path=self.arguments.get(Key.NETWORK),
             name=self.arguments.get(Key.NAME),
             saving_path=self.arguments.get(Key.SAVING_PATH),
+            training_test_split=self.get_int_value(Key.TRAIN),
         )

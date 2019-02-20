@@ -29,7 +29,6 @@ class TrainingModule:
 
     # Hyper parameters:
     __batch_size: int = Configurations.get_config(Module.TRAIN, "batch_size")
-    __training_test_split: float = Configurations.get_config(Module.TRAIN, "training_test_split")
     __learning_rate: float = Configurations.get_config(Module.TRAIN, "learning_rate")
     __loss: str = Configurations.get_config(Module.TRAIN, "loss")
     __epochs: int = Configurations.get_config(Module.TRAIN, "epochs")
@@ -41,7 +40,7 @@ class TrainingModule:
     #   @param name under which the trained network will be saved
     #   @param saving_path path to where the trained network will be saved
     @staticmethod
-    def train(matrices_path: str, neural_network_path: str, name: str, saving_path: str) -> None:
+    def train(matrices_path: str, neural_network_path: str, name: str, saving_path: str, training_test_split: int) -> None:
 
         # model is defined by the config file or loaded from a path
         model = TrainingModule.__define_model(neural_network_path)
@@ -56,7 +55,7 @@ class TrainingModule:
         matrices = np.array(dataset['dense_matrices'])
         labels = np.array(dataset['label_vectors'])
 
-        index = int(TrainingModule.__training_test_split * len(matrices))
+        index = int(training_test_split * len(matrices))
 
         train_matrices = np.expand_dims(matrices[:index], axis=3)
         train_labels = labels[:index]

@@ -19,10 +19,6 @@ class TrainingModule:
 
     __output_service: OutputService = OutputService()
 
-    # Saving path and name
-    __default_saving_path: str = Configurations.get_config(Module.TRAIN, "default_saving_path")
-    __default_saving_name: str = Configurations.get_config(Module.TRAIN, "default_saving_name")
-
     # Network Structure:
     __num_conv_lavers: int = Configurations.get_config(Module.TRAIN, "num_conv_layers")
     __num_dense_layers: int = Configurations.get_config(Module.TRAIN, "num_dense_layers")
@@ -33,7 +29,6 @@ class TrainingModule:
 
     # Hyper parameters:
     __batch_size: int = Configurations.get_config(Module.TRAIN, "batch_size")
-    __training_test_split: float = Configurations.get_config(Module.TRAIN, "training_test_split")
     __learning_rate: float = Configurations.get_config(Module.TRAIN, "learning_rate")
     __loss: str = Configurations.get_config(Module.TRAIN, "loss")
     __epochs: int = Configurations.get_config(Module.TRAIN, "epochs")
@@ -44,8 +39,10 @@ class TrainingModule:
     #   @param neural_network_path path where are existing neural network is located if you want to improve one
     #   @param name under which the trained network will be saved
     #   @param saving_path path to where the trained network will be saved
+    #   @param training_test_split float no how much of the data should be for training purposes, the
+    #           rest will be used for testing
     @staticmethod
-    def train(matrices_path: str, neural_network_path: str, name: str, saving_path: str) -> None:
+    def train(matrices_path: str, neural_network_path: str, name: str, saving_path: str, training_test_split: float) -> None:
 
         # model is defined by the config file or loaded from a path
         model = TrainingModule.__define_model(neural_network_path)
@@ -60,7 +57,7 @@ class TrainingModule:
         matrices = np.array(dataset['dense_matrices'])
         labels = np.array(dataset['label_vectors'])
 
-        index = int(TrainingModule.__training_test_split * len(matrices))
+        index = int(training_test_split * len(matrices))
 
         train_matrices = np.expand_dims(matrices[:index], axis=3)
         train_labels = labels[:index]
@@ -69,10 +66,6 @@ class TrainingModule:
         validation_labels = labels[index + 1:]
 
         # saves model after every training epoch in format "saving_path+name+epochnr+loss"
-        if saving_path == "" or saving_path is None:
-            saving_path = TrainingModule.__default_saving_path
-        if name == "" or name is None:
-            name = TrainingModule.__default_saving_name
         checkpointer = ModelCheckpoint(filepath=saving_path + name + "{epoch:02d}-{val_loss:.2f}.hdf5", monitor='val_loss',
                                        verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
 

@@ -36,7 +36,7 @@ class Classifier:
     def __print(predictions: list):
         counter = 0
         for prediction in predictions:
-            print("matrix: " + str(counter) + ", predicted solver: " + Classifier.__solvers[prediction])
+            Classifier.__output_service.print_line("matrix: " + str(counter) + ", predicted solver: " + Classifier.__solvers[prediction])
             counter += 1
 
     ##  Load the neural network
@@ -61,7 +61,7 @@ class Classifier:
     @staticmethod
     def __check_regularity(matrix_file, key) -> bool:
         for matrix in matrix_file[key]:
-            if not RegularityCalculator.is_regular(np.array(matrix)):
+            if not RegularityCalculator.is_regular(np.array(matrix, dtype=np.float64)):
                 return False
         return True
 

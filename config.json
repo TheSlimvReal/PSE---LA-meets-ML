@@ -28,7 +28,6 @@
 
   },
   "classify": {
-    "path": "modules/shared/data/MatrixToClassify/matrix_to_classify",
 	"network_path": "modules/shared/data/NeuralNetwork/"
   }
 }

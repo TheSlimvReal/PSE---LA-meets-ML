@@ -23,12 +23,12 @@ class Classifier:
     @staticmethod
     def start(path: str, network: str):
         try:
-            matrix_info = Loader.load(path)
+            matrix_file = Loader.load(path)
         except IOException as e:
             Classifier.__output_service.print_error(e)
             return
         try:
-            Classifier.__print_prediction(matrix_info, network)
+            Classifier.__print_prediction(matrix_file, network)
         except IllegalArgumentException as e:
             Classifier.__output_service.print_error(e)
 
@@ -59,16 +59,18 @@ class Classifier:
         Classifier.__output_service = service
 
     @staticmethod
-    def check_regularity(matrix_file, key) -> bool:
+    def __check_regularity(matrix_file, key) -> bool:
         for matrix in matrix_file[key]:
             if not RegularityCalculator.is_regular(np.array(matrix, dtype=np.float64)):
                 return False
         return True
 
     @staticmethod
-    def __print_prediction(matrix_info, network):
-        if not Classifier.check_regularity(matrix_info[0], matrix_info[1]):
+    def __print_prediction(matrix_file, network):
+        key = list(matrix_file.keys())[0]
+        matrix = np.expand_dims(np.array(matrix_file[key], dtype=np.float64), axis=3)
+        if not Classifier.check_regularity(key, matrix):
             raise IllegalArgumentException("The matrix is not regular")
         model = Classifier.__load_network(network)
-        predictions = list(np.argmax(model.predict(matrix_info[2]), axis=1))
+        predictions = list(np.argmax(model.predict(matrix), axis=1))
         Classifier.__print(predictions)

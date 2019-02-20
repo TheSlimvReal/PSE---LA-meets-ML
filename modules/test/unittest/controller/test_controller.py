@@ -35,7 +35,7 @@ def test_controller_with_two_iterations(mocked_input, mocked_parser, mocked_labe
 @patch("builtins.input")
 def test_invalid_input_calls_print_error(mocked_input, mocked_print_error):
     user_input = [
-        "labeler -n name",
+        "notLabel -n name",
         "quit",
     ]
     mocked_input.side_effect = user_input

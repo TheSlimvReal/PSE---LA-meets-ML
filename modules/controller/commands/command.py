@@ -112,6 +112,6 @@ class Command:
     def set_values(self, key):
         if key is Key.NAME:
             current_dt = datetime.datetime.now()
-            self.arguments[key] = current_dt.strftime("%Y-%m-%d.%H:%M:%S")
+            self.arguments[key] = current_dt.strftime("%Y-%m-%d_%H:%M:%S")
         else:
             self.arguments[key] = Configurations.get_config_with_key(self.module_name, key)

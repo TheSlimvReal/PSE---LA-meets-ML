@@ -67,15 +67,17 @@ class LabelingModule:
 
         matrices = []
         labels = []
+        times = []
         observable: Observable = Observable()
         LabelingModule.__output_service.print_stream("Labeling matrices %s/" + str(len(csr_matrices)), observable)
         for i in range(len(csr_matrices)):
-            label = LabelingModule.__calculate_label(csr_matrices[i])
+            label_and_times = LabelingModule.__calculate_label(csr_matrices[i])
             matrices.append(csr_matrices[i])
-            labels.append(label)
+            labels.append(label_and_times[0])
+            times.append(label_and_times[1])
             observable.next(str(i + 1))
         observable.complete()
-        labeled_dataset = [matrices, labels]
+        labeled_dataset = [matrices, labels, times]
         return labeled_dataset
 
     # Calculated the label for a single matrix
@@ -90,11 +92,11 @@ class LabelingModule:
 
         label = np.array([0 for x in range(len(times))])
         label[times.index(min(times))] = 1
-        return label
+        return [label, times]
+
     # Set the output service
     #
     # @param service the output service
-
     @staticmethod
     def set_output_service(service: OutputService):
         LabelingModule.__output_service = service

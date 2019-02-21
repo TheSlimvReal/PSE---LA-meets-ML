@@ -7,7 +7,7 @@
   "label": {
     "saving_path": "modules/shared/data/LabeledMatrices/",
     "name": "labeled_matrices",
-    "path": "modules/shared/data/UnlabeledMatrices/unlabeled_matrices"
+    "path": "modules/shared/data/UnlabeledMatrices/unlabeled_matrices.hdf5"
   },
   "train": {
     "name": "trained_net",

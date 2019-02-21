@@ -92,7 +92,7 @@ class LabelingModule:
 
         label = np.array([0 for x in range(len(times))])
         label[times.index(min(times))] = 1
-        return [label, times]
+        return [label, np.array(times)]
 
     # Set the output service
     #

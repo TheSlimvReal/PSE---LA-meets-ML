@@ -5,6 +5,7 @@ from modules.model.labeling_module.Solvers.cgs_solver import CgsSolver
 from modules.model.labeling_module.Solvers.gmres_solver import GmresSolver
 from modules.view.observable import Observable
 from modules.view.output_service import OutputService
+from modules.exception.exceptions import IOException
 
 from modules.shared.loader import Loader
 from modules.shared.saver import Saver
@@ -13,7 +14,6 @@ from modules.model.labeling_module.ginkgo import Ginkgowrapper
 import scipy.io
 import scipy.sparse
 import numpy as np
-import h5py
 import sys
 from modules.view.cli_output_service import CLIOutputService
 from modules.view.command_line_interface import CommandLineInterface
@@ -25,8 +25,8 @@ from modules.view.output_service import OutputService
 class LabelingModule:
 
     __output_service: OutputService = CLIOutputService(CommandLineInterface())
-    ginkgo = Ginkgowrapper
-    solvers = [BicgstabSolver(), CgSolver(), CgsSolver(), FcgSolver()]
+    __ginkgo = Ginkgowrapper
+    __solvers = [BicgstabSolver(), CgSolver(), CgsSolver(), FcgSolver()]
 
     # The starting point for the interaction with the labeling module
     #
@@ -38,9 +38,14 @@ class LabelingModule:
     # @param saving_path path to where the labeled matrices will be saved
     @staticmethod
     def start(path: str, saving_name: str, saving_path: str) -> None:
-        dataset_dense_format = h5py.File(path + ".hdf5")["dense_matrices"]
+        try:
+            dataset = Loader.load(path)
+        except IOException as e:
+            LabelingModule.__output_service.print_error(e)
+            return
 
-        LabelingModule.ginkgo = Ginkgowrapper(2, "cuda", dataset_dense_format[0].shape[0])
+        dataset_dense_format = dataset["dense_matrices"]
+        LabelingModule.__ginkgo = Ginkgowrapper(2, "cuda", dataset_dense_format[0].shape[0])
         labeled_dataset = LabelingModule.__label(dataset_dense_format)
         Saver.save(labeled_dataset, saving_name, saving_path, True)
         LabelingModule.__output_service.print_line(
@@ -80,8 +85,8 @@ class LabelingModule:
     @staticmethod
     def __calculate_label(matrix):
         times = []
-        for solver in LabelingModule.solvers:
-            times.append(solver.execute(LabelingModule.ginkgo, matrix))
+        for solver in LabelingModule.__solvers:
+            times.append(solver.execute(LabelingModule.__ginkgo, matrix))
 
         label = np.array([0 for x in range(len(times))])
         label[times.index(min(times))] = 1

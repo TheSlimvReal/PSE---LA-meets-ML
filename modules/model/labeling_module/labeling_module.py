@@ -78,7 +78,7 @@ class LabelingModule:
     # This is achieved by calling the execute methods of the individual solvers
     # @param matrix for which a label will be created
     @staticmethod
-    def __calculate_label(matrix):
+    def calculate_label(matrix):
         times = []
         for solver in LabelingModule.solvers:
             times.append(solver.execute(LabelingModule.ginkgo, matrix))

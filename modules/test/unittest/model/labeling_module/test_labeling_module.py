@@ -4,24 +4,19 @@ import numpy as np
 from modules.model.labeling_module.labeling_module import LabelingModule
 from modules.model.labeling_module.ginkgo import Ginkgowrapper
 
-"""
-from mock import patch, call
-import scipy
-import numpy as np
-
-from modules.model.labeling_module import labeling_module
-
-@patch("modules.labeling_module_ginkgo.calculate_time_to_solve")
-def test_controller_with_two_iterations(mocked_ginkgo_py):
-    mocked_ginkgo_py.side_effects = 3
-    matrix = np.random((128,128))
-    sparse_matrix = scipy.sparse.csr_matrix(matrix)
-    returnV = labeling_module.calculate_label(sparse_matrix)
-
-    print(returnV)
 
 
-"""
+
+def test_labeling_module_returns_valid_times():
+    LabelingModule.start("modules/shared/data/UnlabeledMatrices/unlabeled_matrices.hdf5", "testLocation",
+                         "modules/test/unittest/shared/data/")
+
+    labels = h5py.File("modules/test/unittest/shared/data/testLocation.hdf5", 'r')["label_vectors"]
+    times = h5py.File("modules/test/unittest/shared/data/testLocation.hdf5", 'r')["calculated_times"]
+
+    index = times.index(min(times))
+    assert(labels[index] == 1, "did not get the right minimum")
+
 
 
 @patch("modules.model.labeling_module.ginkgo.Ginkgowrapper.__init__", return_value=None)

@@ -20,8 +20,8 @@ def test_controller_with_two_iterations(mocked_ginkgo_py):
 
     print(returnV)
 
-"""
 
+"""
 
 
 @patch("modules.model.labeling_module.ginkgo.Ginkgowrapper.__init__", return_value=None)

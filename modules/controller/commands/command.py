@@ -94,12 +94,13 @@ class Command:
     #   @param key which you want a integer value for
     #   @throws IllegalArgumentException when self.argument[key] is not a integer (e.g. 4, 3000, ...)
     def get_int_value(self, key: Key) -> Optional[int]:
+        result: int = None
         if key in self.arguments:
             try:
-                return int(self.arguments.get(key))
+                result = int(self.arguments.get(key))
             except ValueError:
                 raise IllegalArgumentException(self.arguments.get(key) + " is not a integer")
-        return None
+        return result
 
     ##  Gives you the the float value associated with that key
     #
@@ -111,12 +112,13 @@ class Command:
     #   @param key which you want a float value for
     #   @throws IllegalArgumentException when self.arguments[key] is not float (e.g. 0.6, 3, ...)
     def get_float_value(self, key: Key) -> Optional[float]:
+        result: float = None
         if key in self.arguments:
             try:
-                return float(self.arguments.get(key))
+                result = float(self.arguments.get(key))
             except ValueError:
                 raise IllegalArgumentException(self.arguments.get(key) + " is not a float")
-        return None
+        return result
 
     def __set_values(self, key):
         if key is Key.NAME:

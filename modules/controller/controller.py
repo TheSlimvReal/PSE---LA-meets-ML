@@ -3,7 +3,7 @@ from modules.controller.commands.command import Command
 from modules.controller.commands.help_command import HelpCommand
 from modules.controller.commands.key import Key
 from modules.controller.commands.quit_command import QuitCommand
-from modules.exception.exceptions import IllegalArgumentException
+from modules.exception.exceptions import IllegalArgumentException, MyException
 from modules.model.classification_module.classification_module import Classifier
 from modules.model.collector_module.collector import Collector
 from modules.model.labeling_module.labeling_module import LabelingModule
@@ -36,7 +36,10 @@ class Controller:
             elif Key.HELP in command.arguments:
                 self.__print_help_information(command)
             else:
-                command.execute()
+                try:
+                    command.execute()
+                except MyException as e:
+                    self.__output_service.print_error(e)
         self.__output_service.print_line("Finished")
 
     def __get_command(self) -> Command:

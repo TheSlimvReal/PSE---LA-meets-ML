@@ -3,8 +3,9 @@ import numpy as np
 from modules.view.observable import Observable
 
 
-##  Interface for services that can be registered to a module
+##  Abstract class for services that can be registered to a module
 #
+#   This class has offers no functionality but is a placeholder for any implementations
 #   Use this as default and any other OutputService can be registered during runtime
 class OutputService:
 

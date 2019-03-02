@@ -51,3 +51,12 @@ class InvalidOSException(MyException):
 
     def get_type(self) -> str:
         return "InvalidOSException"
+
+
+##  exception that should be thrown in the body of each function in an interface
+#
+#   @extends MyException for general usage
+class NotImplementedException(MyException):
+
+    def get_type(self) -> str:
+        return "NotImplementedException"

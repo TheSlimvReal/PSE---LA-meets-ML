@@ -41,8 +41,8 @@ def test_print_overriding_with_incomplete_input(mocked_cli):
 
 @patch("modules.view.command_line_interface.CommandLineInterface")
 def test_print_line(mocked_cli):
-    outputservice = CLIOutputService(mocked_cli)
-    outputservice.print_line("Hallo")
+    output_service = CLIOutputService(mocked_cli)
+    output_service.print_line("Hallo")
     mocked_cli.assert_has_calls([call.print("Hallo")])
 
 

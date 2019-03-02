@@ -7,4 +7,3 @@ from modules.controller.commands.command import Command
 #   @extends Command to be treated as a standard command
 class QuitCommand(Command):
     pass
-

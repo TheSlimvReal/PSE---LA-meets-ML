@@ -3,12 +3,10 @@ from typing import Dict
 
 from modules.controller.commands.key import Key
 from modules.controller.commands.module import Module
-
-
-##  This class fetches default values from the config.json
 from modules.exception.exceptions import InvalidConfigException
 
 
+##  This class fetches default values from the config.json
 class Configurations:
 
     __mapping: Dict[Key, str] = {
@@ -33,7 +31,6 @@ class Configurations:
                 Configurations.__data = json.load(f)
         except Exception:
             raise InvalidConfigException("config file could not be loaded")
-
 
     ##  Gets you a default value for the argument
     #

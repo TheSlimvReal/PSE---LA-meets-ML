@@ -27,9 +27,3 @@ class OutputService:
     #   @param error the error holding a message
     def print_error(self, error: MyException) -> None:
         pass
-
-    ##  Prints a matrix to the view
-    #
-    #   @param matrix that will be displayed
-    def print_matrix(self, matrix: np.ndarray) -> None:
-        pass

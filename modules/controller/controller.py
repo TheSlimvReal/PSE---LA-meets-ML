@@ -3,11 +3,12 @@ from modules.controller.commands.command import Command
 from modules.controller.commands.help_command import HelpCommand
 from modules.controller.commands.key import Key
 from modules.controller.commands.quit_command import QuitCommand
-from modules.exception.exceptions import IllegalArgumentException, MyException
+from modules.exception.exceptions import IllegalArgumentException, MyException, InvalidConfigException
 from modules.model.classification_module.classification_module import Classifier
 from modules.model.collector_module.collector import Collector
 from modules.model.labeling_module.labeling_module import LabelingModule
 from modules.model.training_module.training_module import TrainingModule
+from modules.shared.configurations import Configurations
 from modules.view.cli_output_service import CLIOutputService
 from modules.view.command_line_interface import CommandLineInterface
 from modules.view.output_service import OutputService
@@ -23,6 +24,10 @@ class Controller:
         self.__view: CommandLineInterface = CommandLineInterface()
         self.__output_service: OutputService = CLIOutputService(self.__view)
         self.__register_output_service()
+        try:
+            Configurations.load_config_file()
+        except InvalidConfigException as e:
+            self.__output_service.print_error(e)
 
     ##  Starts user interaction with the command line
     def start_interaction(self):

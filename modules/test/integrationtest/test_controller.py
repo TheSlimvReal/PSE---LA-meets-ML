@@ -86,3 +86,61 @@ def test_wrong_float_format_prints_error_message(mocked_input, mocked_print):
     mocked_input.side_effect = user_input
     Controller().start_interaction()
     mocked_print.assert_has_calls(expected_calls)
+
+
+@patch("modules.model.training_module.training_module.TrainingModule.train")
+@patch("builtins.input")
+def test_train_module_is_called_with_correct_arguments(mocked_input, mocked_train):
+    user_input = [
+        "train -n name -p path -s saving-path -t 0.8",
+        "quit"
+    ]
+    expected_call = [
+        call(
+            name="name",
+            matrices_path="path",
+            neural_network_path=None,
+            saving_path="saving-path",
+            training_test_split=0.8)
+    ]
+    mocked_input.side_effect = user_input
+    con = Controller()
+    con.start_interaction()
+    mocked_train.assert_has_calls(expected_call)
+
+
+@patch("modules.model.classification_module.classification_module.Classifier.start")
+@patch("builtins.input")
+def test_classifier_is_called_with_correct_arguments(mocked_input, mocked_start):
+    user_input = [
+        "classify --network network -p path",
+        "quit"
+    ]
+    expected_call = [
+        call(
+            path="path",
+            network="network")
+    ]
+    mocked_input.side_effect = user_input
+    con = Controller()
+    con.start_interaction()
+    mocked_start.assert_has_calls(expected_call)
+
+
+@patch("modules.model.labeling_module.cl.start")
+@patch("builtins.input")
+def test_label_is_called_with_correct_arguments(mocked_input, mocked_start):
+    user_input = [
+        "label -name name --saving-path saving-path -p path",
+        "quit"
+    ]
+    expected_call = [
+        call(
+            path="path",
+            saving_path="saving-path",
+            saving_name="name")
+    ]
+    mocked_input.side_effect = user_input
+    con = Controller()
+    con.start_interaction()
+    mocked_start.assert_has_calls(expected_call)

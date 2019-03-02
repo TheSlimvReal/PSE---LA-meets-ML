@@ -6,6 +6,9 @@ from modules.controller.commands.module import Module
 
 
 ##  This class fetches default values from the config.json
+from modules.exception.exceptions import InvalidConfigException
+
+
 class Configurations:
 
     __mapping: Dict[Key, str] = {
@@ -18,8 +21,19 @@ class Configurations:
         Key.NETWORK: "network_path",
     }
 
-    with open("config.json") as f:
-        __data = json.load(f)
+    __data = {}
+
+    ##  Load the config file for further use
+    #
+    #   @throws InvalidConfigException when config file could not be loaded/parsed
+    @staticmethod
+    def load_config_file():
+        try:
+            with open("config.json") as f:
+                Configurations.__data = json.load(f)
+        except Exception:
+            raise InvalidConfigException("config file could not be loaded")
+
 
     ##  Gets you a default value for the argument
     #

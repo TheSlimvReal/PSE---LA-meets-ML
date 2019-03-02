@@ -1,11 +1,10 @@
 from modules.exception.exceptions import MyException
-import numpy as np
 from modules.view.observable import Observable
 
 
-##  Abstract class for services that can be registered to a module
+##  Empty class for services that can be registered to a module
 #
-#   This class has offers no functionality but is a placeholder for any implementations
+#   This class offers no functionality but is a placeholder for any implementations
 #   Use this as default and any other OutputService can be registered during runtime
 class OutputService:
 

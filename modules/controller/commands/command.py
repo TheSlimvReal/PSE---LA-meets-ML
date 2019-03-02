@@ -92,9 +92,13 @@ class Command:
     #       command.get_int_value(Key.AMOUNT)   //  returns 100 as integer
     #
     #   @param key which you want a integer value for
+    #   @throws IllegalArgumentException when self.argument[key] is not a integer (e.g. 4, 3000, ...)
     def get_int_value(self, key: Key) -> Optional[int]:
         if key in self.arguments:
-            return int(self.arguments.get(key))
+            try:
+                return int(self.arguments.get(key))
+            except ValueError:
+                raise IllegalArgumentException(self.arguments.get(key) + " is not a integer")
         return None
 
     ##  Gives you the the float value associated with that key
@@ -105,9 +109,13 @@ class Command:
     #       command.get_int_value(Key.TRAIN)   //  returns 0.8 as a float
     #
     #   @param key which you want a float value for
+    #   @throws IllegalArgumentException when self.arguments[key] is not float (e.g. 0.6, 3, ...)
     def get_float_value(self, key: Key) -> Optional[float]:
         if key in self.arguments:
-            return float(self.arguments.get(key))
+            try:
+                return float(self.arguments.get(key))
+            except ValueError:
+                raise IllegalArgumentException(self.arguments.get(key) + " is not a float")
         return None
 
     def __set_values(self, key):

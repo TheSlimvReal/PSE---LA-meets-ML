@@ -13,6 +13,7 @@ class Saver:
     #   @param labeled if dataset is labeled
     @staticmethod
     def save(dataset: list, name: str, path: str, labeled: bool) -> None:
+        np.seterr(all='ignore')
         path = path.replace('\\', '/')
         if not path.endswith('/'):
             path += '/'

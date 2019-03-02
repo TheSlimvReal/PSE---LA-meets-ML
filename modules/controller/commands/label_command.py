@@ -26,6 +26,7 @@ class LabelCommand(Command):
             Key.NAME: None,
             Key.PATH: None,
             Key.SIZE: None,
+            Key.SAVING_PATH: None,
         }
 
         self.help_arguments = (

@@ -13,8 +13,8 @@ class Configurations:
         Key.NAME: "name",
         Key.PATH: "path",
         Key.SIZE: "size",
-        Key.TRAIN: "train",
-        Key.SAVING_PATH: "default_saving_path",
+        Key.TRAIN: "train_split",
+        Key.SAVING_PATH: "saving_path",
         Key.NETWORK: "network_path",
     }
 

@@ -3,7 +3,7 @@ import h5py
 import keras
 from h5py import File
 
-from modules.exception.exceptions import IllegalArgumentException
+from modules.exception.exceptions import IllegalArgumentException, IOException
 from modules.shared.loader import Loader
 from modules.shared.regularity_calculator import RegularityCalculator
 from modules.view.output_service import OutputService
@@ -22,21 +22,21 @@ class Classifier:
     #   @param network path where the neural network is located
     @staticmethod
     def start(path: str, network: str):
-        matrix_file = h5py.File(path, 'r')
-        key = list(matrix_file.keys())[0]
-        if Classifier.__check_regularity(matrix_file, key):
-            matrix = np.expand_dims(np.array(matrix_file[key], dtype=np.float64), axis=3)
-            model = Classifier.__load_network(network)
-            predictions = list(np.argmax(model.predict(matrix), axis=1))
-            Classifier.__print(predictions)
-        else:
-            Classifier.__output_service.print_error(IllegalArgumentException("The matrix is not regular"))
+        try:
+            matrix_file = Loader.load(path)
+        except IOException as e:
+            Classifier.__output_service.print_error(e)
+            return
+        try:
+            Classifier.__print_prediction(matrix_file, network)
+        except IllegalArgumentException as e:
+            Classifier.__output_service.print_error(e)
 
     @staticmethod
     def __print(predictions: list):
         counter = 0
         for prediction in predictions:
-            print("matrix: " + str(counter) + ", predicted solver: " + Classifier.__solvers[prediction])
+            Classifier.__output_service.print_line("matrix: " + str(counter) + ", predicted solver: " + Classifier.__solvers[prediction])
             counter += 1
 
     ##  Load the neural network
@@ -58,8 +58,19 @@ class Classifier:
     def set_output_service(service: OutputService):
         Classifier.__output_service = service
 
-    def __check_regularity(self, matrix_file: File, key) -> bool:
+    @staticmethod
+    def __check_regularity(matrix_file, key) -> bool:
         for matrix in matrix_file[key]:
-            if not RegularityCalculator.is_regular(np.array(matrix), dtype=np.float64):
+            if not RegularityCalculator.is_regular(np.array(matrix, dtype=np.float64)):
                 return False
         return True
+
+    @staticmethod
+    def __print_prediction(matrix_file, network):
+        key = list(matrix_file.keys())[0]
+        matrix = np.expand_dims(np.array(matrix_file[key], dtype=np.float64), axis=3)
+        if not Classifier.check_regularity(key, matrix):
+            raise IllegalArgumentException("The matrix is not regular")
+        model = Classifier.__load_network(network)
+        predictions = list(np.argmax(model.predict(matrix), axis=1))
+        Classifier.__print(predictions)

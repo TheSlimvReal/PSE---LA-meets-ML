@@ -29,17 +29,10 @@ class Controller:
         finished: bool = False
         while not finished:
             command: Command = self.__get_command()
-            if isinstance(command, QuitCommand):
-                finished = True
-            elif isinstance(command, HelpCommand):
-                self.__print_main_help_information()
-            elif Key.HELP in command.arguments:
-                self.__print_help_information(command)
-            else:
-                try:
-                    command.execute()
-                except MyException as e:
-                    self.__output_service.print_error(e)
+            try:
+                finished = self.__run_command_handler(command)
+            except MyException as e:
+                self.__output_service.print_error(e)
         self.__output_service.print_line("Finished")
 
     def __get_command(self) -> Command:
@@ -67,3 +60,15 @@ class Controller:
         for command in CommandParser.get_valid_commands():
             self.__output_service.print_line(command)
         self.__output_service.print_line("for more information type in the command and -h or --help.")
+
+    def __run_command_handler(self, command: Command) -> bool:
+        finished = False
+        if isinstance(command, QuitCommand):
+            finished = True
+        elif isinstance(command, HelpCommand):
+            self.__print_main_help_information()
+        elif Key.HELP in command.arguments:
+            self.__print_help_information(command)
+        else:
+            command.execute()
+        return finished

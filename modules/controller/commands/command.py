@@ -90,6 +90,7 @@ class Command:
     #   '''
     #       arguments = {Key.AMOUNT: "100"}
     #       command.get_int_value(Key.AMOUNT)   //  returns 100 as integer
+    #   '''
     #
     #   @param key which you want a integer value for
     #   @throws IllegalArgumentException when self.argument[key] is not a integer (e.g. 4, 3000, ...)
@@ -108,6 +109,7 @@ class Command:
     #   '''
     #       arguments = {Key.TRAIN: "0.8"}
     #       command.get_int_value(Key.TRAIN)   //  returns 0.8 as a float
+    #   '''
     #
     #   @param key which you want a float value for
     #   @throws IllegalArgumentException when self.arguments[key] is not float (e.g. 0.6, 3, ...)

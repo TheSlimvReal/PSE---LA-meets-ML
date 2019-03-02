@@ -7,6 +7,7 @@ from modules.controller.commands.module import Module
 from modules.shared.configurations import Configurations
 
 
+##  Runs before each test to setup config file
 @fixture(autouse=True)
 def setup():
     Configurations.load_config_file()

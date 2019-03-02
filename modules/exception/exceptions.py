@@ -14,7 +14,7 @@ class MyException(Exception):
 
     ## abstract method to get type of the specific exception
     def get_type(self) -> str:
-        raise NotImplementedException("MyException is an abstract class an should not be instantiated.")
+        raise NotImplementedException("Method GET_TYPE not implemented in class MyException")
 
 
 ##  exception that should be thrown when the passed arguments are invalid

@@ -28,7 +28,6 @@ class ClassifyCommand(Command):
         self.arguments = {
             Key.PATH: None,
             Key.NETWORK: None,
-            Key.SOLVE: None,
         }
 
     def execute(self):

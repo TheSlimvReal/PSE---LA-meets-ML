@@ -1,7 +1,5 @@
 import numpy as np
-import h5py
 import keras
-from h5py import File
 
 from modules.exception.exceptions import IllegalArgumentException, IOException
 from modules.shared.loader import Loader

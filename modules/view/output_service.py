@@ -1,10 +1,10 @@
 from modules.exception.exceptions import MyException
-import numpy as np
 from modules.view.observable import Observable
 
 
-##  Interface for services that can be registered to a module
+##  Empty class for services that can be registered to a module
 #
+#   This class offers no functionality but is a placeholder for any implementations
 #   Use this as default and any other OutputService can be registered during runtime
 class OutputService:
 
@@ -25,10 +25,4 @@ class OutputService:
     #
     #   @param error the error holding a message
     def print_error(self, error: MyException) -> None:
-        pass
-
-    ##  Prints a matrix to the view
-    #
-    #   @param matrix that will be displayed
-    def print_matrix(self, matrix: np.ndarray) -> None:
         pass

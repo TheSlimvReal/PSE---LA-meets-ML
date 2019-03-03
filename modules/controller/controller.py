@@ -3,11 +3,12 @@ from modules.controller.commands.command import Command
 from modules.controller.commands.help_command import HelpCommand
 from modules.controller.commands.key import Key
 from modules.controller.commands.quit_command import QuitCommand
-from modules.exception.exceptions import IllegalArgumentException
+from modules.exception.exceptions import IllegalArgumentException, MyException, InvalidConfigException
 from modules.model.classification_module.classification_module import Classifier
 from modules.model.collector_module.collector import Collector
 from modules.model.labeling_module.labeling_module import LabelingModule
 from modules.model.training_module.training_module import TrainingModule
+from modules.shared.configurations import Configurations
 from modules.view.cli_output_service import CLIOutputService
 from modules.view.command_line_interface import CommandLineInterface
 from modules.view.output_service import OutputService
@@ -23,20 +24,20 @@ class Controller:
         self.__view: CommandLineInterface = CommandLineInterface()
         self.__output_service: OutputService = CLIOutputService(self.__view)
         self.__register_output_service()
+        try:
+            Configurations.load_config_file()
+        except InvalidConfigException as e:
+            self.__output_service.print_error(e)
 
     ##  Starts user interaction with the command line
     def start_interaction(self):
         finished: bool = False
         while not finished:
             command: Command = self.__get_command()
-            if isinstance(command, QuitCommand):
-                finished = True
-            elif isinstance(command, HelpCommand):
-                self.__print_main_help_information()
-            elif Key.HELP in command.arguments:
-                self.__print_help_information(command)
-            else:
-                command.execute()
+            try:
+                finished = self.__run_command_handler(command)
+            except MyException as e:
+                self.__output_service.print_error(e)
         self.__output_service.print_line("Finished")
 
     def __get_command(self) -> Command:
@@ -64,3 +65,15 @@ class Controller:
         for command in CommandParser.get_valid_commands():
             self.__output_service.print_line(command)
         self.__output_service.print_line("for more information type in the command and -h or --help.")
+
+    def __run_command_handler(self, command: Command) -> bool:
+        finished = False
+        if isinstance(command, QuitCommand):
+            finished = True
+        elif isinstance(command, HelpCommand):
+            self.__print_main_help_information()
+        elif Key.HELP in command.arguments:
+            self.__print_help_information(command)
+        else:
+            command.execute()
+        return finished

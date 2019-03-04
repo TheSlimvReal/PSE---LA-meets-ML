@@ -29,6 +29,4 @@ def start(path, saving_name, saving_path):
 
 
 def __is_linux() -> bool:
-    platform = sys.platform
-    print(platform, str(platform), platform == 'linux', str(platform) == 'linux')
     return str(sys.platform) == 'linux'

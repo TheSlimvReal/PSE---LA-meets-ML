@@ -94,9 +94,11 @@ class LabelingModule:
         label[times.index(min(times))] = 1
         return [label, np.array(times)]
 
-    # Set the output service
+    ##  sets the static output service
     #
-    # @param service the output service
+    #   use this to register your own output service at the start of the program
+    #   this output service will be for called logs and results
+    #   @param service OutputService that should be registered
     @staticmethod
     def set_output_service(service: OutputService):
         LabelingModule.__output_service = service

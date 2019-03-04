@@ -30,6 +30,11 @@ class Collector:
         Collector.__output_service.print_line("Finished collecting matrices. Saved at " + path + " under " + name)
         return collected_dataset
 
+    ##  sets the static output service
+    #
+    #   use this to register your own output service at the start of the program
+    #   this output service will be for called logs and results
+    #   @param service OutputService that should be registered
     @staticmethod
     def set_output_service(service: OutputService):
         Collector.__output_service = service

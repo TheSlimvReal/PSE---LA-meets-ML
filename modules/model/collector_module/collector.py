@@ -1,3 +1,6 @@
+import sys
+
+from modules.exception.exceptions import InvalidOSException
 from modules.model.collector_module.generator import Generator
 from modules.shared.saver import Saver
 from modules.view.observable import Observable
@@ -16,8 +19,10 @@ class Collector:
     #   @param density of the matrices that will be created
     #   @param name of dataset under which matrices will be saved
     #   @param path where the matrices will be saved
+    #   @throws InvalidOSException when trying to label on operating system other than linux
     @staticmethod
     def collect(amount: int, size: int, name: str, path: str):
+        Collector.__check_operating_system()    # Check if current operating system is linux if not raise exception
         collected_dataset = []
         observable: Observable = Observable()
         Collector.__output_service.print_stream("Collecting matrices %s/" + str(amount), observable)
@@ -30,6 +35,16 @@ class Collector:
         Collector.__output_service.print_line("Finished collecting matrices. Saved at " + path + " under " + name)
         return collected_dataset
 
+    ##  sets the static output service
+    #
+    #   use this to register your own output service at the start of the program
+    #   this output service will be for called logs and results
+    #   @param service OutputService that should be registered
     @staticmethod
     def set_output_service(service: OutputService):
         Collector.__output_service = service
+
+    @staticmethod
+    def __check_operating_system():
+        if sys.platform != 'linux':
+            raise InvalidOSException("Collecting only works on linux with SSGet installed")

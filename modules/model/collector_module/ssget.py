@@ -72,7 +72,7 @@ class SSGet:
                 todo = []
             elif SSGet.__is_iterable(current):
                 # found iterable, append values and continue loop
-                [todo.append(c) for c in current]
+                todo += list(current)
         return found
 
     @staticmethod

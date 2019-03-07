@@ -37,12 +37,6 @@ class LabelCommand(Command):
             "[default: modules/shared/data/LabeledMatrices/] ",
         )
 
-        self.__config: List[str] = []
-
-    @property
-    def config(self) -> List[str]:
-        return self.__config
-
     def execute(self):
         super().execute()
         cl.start(

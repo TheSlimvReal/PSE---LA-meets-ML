@@ -1,7 +1,5 @@
 import numpy as np
-import h5py
 import keras
-from h5py import File
 
 from modules.exception.exceptions import IllegalArgumentException, IOException
 from modules.shared.loader import Loader
@@ -54,6 +52,11 @@ class Classifier:
     def __normalize(matrix: np.ndarray) -> np.ndarray:
         pass
 
+    ##  sets the static output service
+    #
+    #   use this to register your own output service at the start of the program
+    #   this output service will be for called logs and results
+    #   @param service OutputService that should be registered
     @staticmethod
     def set_output_service(service: OutputService):
         Classifier.__output_service = service

@@ -36,6 +36,8 @@ class CommandParser:
     @staticmethod
     def parse_input(input_string: str) -> Command:
         arg_list = input_string.split()
+        if not arg_list:
+            raise IllegalArgumentException("Please enter enter the module you want to execute")
         mode: str = arg_list.pop(0)
         if mode in CommandParser.__valid_commands:
             command_class = CommandParser.__valid_commands[mode]

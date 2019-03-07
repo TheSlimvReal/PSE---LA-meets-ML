@@ -33,4 +33,5 @@ class Observable:
     #
     #   @param subscriber the subscriber who wants to be removed from receiving status updates
     def remove_subscriber(self, subscriber: Subscriber) -> None:
+        subscriber.finished()
         self.__subscribers.remove(subscriber)

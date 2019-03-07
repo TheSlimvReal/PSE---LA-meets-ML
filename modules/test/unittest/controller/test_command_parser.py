@@ -1,7 +1,6 @@
 from typing import Dict
 
 import pytest
-from mock import patch
 
 from modules.controller.command_parser import CommandParser
 from modules.controller.commands.classify_command import ClassifyCommand

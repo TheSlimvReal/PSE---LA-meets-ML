@@ -2,18 +2,24 @@ from mock import patch
 import h5py
 import numpy as np
 from modules.model.labeling_module.labeling_module import LabelingModule
+from modules.model.labeling_module import cl
+
+from random import randint
+
 from modules.model.labeling_module.ginkgo import Ginkgowrapper
 
 
 
-
-def test_labeling_module_returns_valid_times():
+@patch("modules.model.labeling_module.ginkgo.Ginkgowrapper.__init__", return_value=None)
+@patch("modules.model.labeling_module.ginkgo.Ginkgowrapper.calculate_time_to_solve", return_value=randint(0, 100))
+def test_labeling_module_returns_valid_times(mocked_ginkgo_calculate, mocked_ginkgo_init):
     LabelingModule.start("modules/shared/data/UnlabeledMatrices/unlabeled_matrices.hdf5", "testLocation",
                          "modules/test/unittest/shared/data/")
 
     labels = h5py.File("modules/test/unittest/shared/data/testLocation.hdf5", 'r')["label_vectors"]
     times = h5py.File("modules/test/unittest/shared/data/testLocation.hdf5", 'r')["calculated_times"]
 
+    times = np.array(times).tolist();
     index = times.index(min(times))
     assert(labels[index] == 1, "did not get the right minimum")
 

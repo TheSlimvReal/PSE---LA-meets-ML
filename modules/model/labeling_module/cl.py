@@ -21,6 +21,7 @@ def start(path, saving_name, saving_path):
     os.environ['LD_LIBRARY_PATH'] = '/usr/local/cuda/lib'
     os.environ['LD_LIBRARY_PATH'] = os.getenv("LD_LIBRARY_PATH", "fail") + ':/usr/local/lib'
     os.environ['LD_LIBRARY_PATH'] = os.getenv("LD_LIBRARY_PATH", "fail") + ':/usr/local/lib64'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
     os.system('python3.6 modules/model/labeling_module/labeling_module.py ' + path + " " + saving_name +
-              " " + saving_path)
+                " " + saving_path)

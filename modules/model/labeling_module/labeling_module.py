@@ -21,8 +21,6 @@ from modules.view.command_line_interface import CommandLineInterface
 from modules.view.output_service import OutputService
 
 
-
-
 ## This class is the main component of the module labeling module and controls the main working flow
 class LabelingModule:
 

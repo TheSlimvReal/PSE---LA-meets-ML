@@ -30,7 +30,7 @@ class Saver:
 
             saving_file.create_dataset(
                 'calculated_times',
-                data=np.array(dataset[2],dtype=np.int_),
+                data=np.array(dataset[2], dtype=np.int_),
                 compression='gzip'
             )
         else:

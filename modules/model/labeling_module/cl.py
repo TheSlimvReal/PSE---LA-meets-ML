@@ -26,7 +26,7 @@ def start(path, saving_name, saving_path):
     os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
     os.system('python3.6 modules/model/labeling_module/labeling_module.py ' + path + " " + saving_name +
-                " " + saving_path)
+              " " + saving_path)
 
 
 def __is_linux() -> bool:

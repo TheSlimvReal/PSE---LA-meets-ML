@@ -26,7 +26,7 @@ class CollectCommand(Command):
             "-n <name> Name under which the matrices will be saved [default: current date and time]",
             "-s <size> Absolute size the generated square matrices should have. [default: 128]",
             "-p <path> Path where the created/downloaded matrices will be saved "
-            "[default: modules/shared/data/UnlabeledMatrices/]",
+            "[default: data/UnlabeledMatrices/]",
         )
 
         self.arguments = {

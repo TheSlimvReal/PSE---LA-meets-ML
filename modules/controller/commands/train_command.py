@@ -31,13 +31,13 @@ class TrainCommand(Command):
 
         self.help_arguments = (
             "-p <path> Absolute path to the labeled matrices on the local storage "
-            "[default: modules/shared/data/LabeledMatrices/]",
+            "[default: data/LabeledMatrices/]",
             "-n <name> Name under which the neural networks will be saved after training has finished "
             "[default: current date and time]",
             "-t <train> Float between 0 and 1. Amount of matrices used for training where 1 means all. "
             "[default: 0.8]",
             "-s <saving path> (optional) Path where the neural network state will be saved "
-            "[default: modules/shared/data/NeuralNetwork/]",
+            "[default: data/NeuralNetwork/]",
         )
 
     def execute(self):

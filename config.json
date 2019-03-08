@@ -1,17 +1,19 @@
 {
   "collect": {
+    "name": "unlabeled_matrices_",
     "path": "data/UnlabeledMatrices/",
     "size": 128,
     "amount": 100
   },
   "label": {
+    "name": "labeled_matrices_",
     "saving_path": "data/LabeledMatrices/",
     "name": "labeled_matrices",
     "path": "data/UnlabeledMatrices/unlabeled_matrices.hdf5"
   },
   "train": {
-    "name": "trained_net",
-	"path": "data/LabeledMatrices/",
+    "name": "trained_net_",
+    "path": "data/LabeledMatrices/",
     "saving_path": "data/TrainedNetwork",
     "train_split": 0.8,
 
@@ -29,6 +31,6 @@
 
   },
   "classify": {
-	"network_path": "data/NeuralNetwork/"
+    "network_path": "data/NeuralNetwork/"
   }
 }

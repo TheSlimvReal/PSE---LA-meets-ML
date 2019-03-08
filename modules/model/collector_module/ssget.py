@@ -18,7 +18,7 @@ class SSGet:
     @staticmethod
     def get_matrix(size: int) -> np.ndarray:
         downloaded_matrix = SSGet.__download_matrix(1)
-        while not downloaded_matrix:
+        while downloaded_matrix == []:
             downloaded_matrix = SSGet.__download_matrix(1)
         seed = randint(0, downloaded_matrix.shape[0] - size)
         return SSGet.__cut_matrix(seed, downloaded_matrix, size)

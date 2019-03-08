@@ -124,7 +124,8 @@ class Command:
 
     def __set_values(self, key):
         if key is Key.NAME:
-            current_dt = datetime.datetime.now()
-            self.arguments[key] = current_dt.strftime("%Y-%m-%d_%H:%M:%S")
+            standard_name = Configurations.get_config_with_key(self.module_name, key)
+            current_dt = datetime.datetime.now().strftime("%Y_%m_%d_%H:%M:%S")
+            self.arguments[key] = standard_name + current_dt
         else:
             self.arguments[key] = Configurations.get_config_with_key(self.module_name, key)

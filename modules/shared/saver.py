@@ -27,6 +27,12 @@ class Saver:
                 'label_vectors',
                 data=np.array(dataset[1], dtype=np.float64),
                 compression='gzip')
+
+            saving_file.create_dataset(
+                'calculated_times',
+                data=np.array(dataset[2], dtype=np.int_),
+                compression='gzip'
+            )
         else:
             dense_dataset = Saver.__to_dense_array(dataset)
         saving_file.create_dataset(

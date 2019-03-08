@@ -1,18 +1,18 @@
 {
   "collect": {
-    "path": "modules/shared/data/UnlabeledMatrices/",
+    "path": "data/UnlabeledMatrices/",
     "size": 128,
     "amount": 100
   },
   "label": {
-    "saving_path": "modules/shared/data/LabeledMatrices/",
+    "saving_path": "data/LabeledMatrices/",
     "name": "labeled_matrices",
-    "path": "modules/shared/data/UnlabeledMatrices/unlabeled_matrices.hdf5"
+    "path": "data/UnlabeledMatrices/unlabeled_matrices.hdf5"
   },
   "train": {
     "name": "trained_net",
-	"path": "modules/shared/data/LabeledMatrices/",
-    "saving_path": "modules/shared/data/TrainedNetwork",
+	"path": "data/LabeledMatrices/",
+    "saving_path": "data/TrainedNetwork",
     "train_split": 0.8,
 
 
@@ -29,6 +29,6 @@
 
   },
   "classify": {
-	"network_path": "modules/shared/data/NeuralNetwork/"
+	"network_path": "data/NeuralNetwork/"
   }
 }

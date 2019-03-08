@@ -1,4 +1,3 @@
-import h5py
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
@@ -13,6 +12,8 @@ from modules.controller.commands.module import Module
 from modules.shared.loader import Loader
 from modules.view.output_service import OutputService
 from modules.shared.configurations import Configurations
+import os
+import tensorflow as tf
 
 
 ##  This class handles the training of the neural network
@@ -44,7 +45,8 @@ class TrainingModule:
     #           rest will be used for testing
     @staticmethod
     def train(matrices_path: str, neural_network_path: str, name: str, saving_path: str, training_test_split: float) -> None:
-
+        os.environ['TF_CPP_MIN_LOG_LEVEL'] = '0'
+        tf.logging.set_verbosity(tf.logging.ERROR)
         TrainingModule.__set_parameters()
 
         # model is defined by the config file or loaded from a path

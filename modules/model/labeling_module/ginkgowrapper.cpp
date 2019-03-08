@@ -181,9 +181,6 @@ int calculate_time_with_solver_on_square_matrix(int dp, double a_values[], int a
     m[3] = gen<gko::solver::Fcg<> >;
     //m[4] = gen<gko::solver::Gmres<> >;
 
-
-    //gko::LinOp* solver44 = gko::solver::Bicgstab<>;
-    //map<string,int(*)()> int_map;
     //create Ginkgo A Matrix
     auto A = share(createGinkgoMatrix(dp,a_values,a_row_indices,a_amount_of_values,a_ptrs));
 

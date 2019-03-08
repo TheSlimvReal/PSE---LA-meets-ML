@@ -3,6 +3,7 @@ from typing import Dict
 
 from modules.controller.commands.key import Key
 from modules.controller.commands.module import Module
+from modules.exception.exceptions import InvalidConfigException
 
 
 ##  This class fetches default values from the config.json
@@ -13,13 +14,23 @@ class Configurations:
         Key.NAME: "name",
         Key.PATH: "path",
         Key.SIZE: "size",
-        Key.TRAIN: "train",
-        Key.SAVING_PATH: "default_saving_path",
+        Key.TRAIN: "train_split",
+        Key.SAVING_PATH: "saving_path",
         Key.NETWORK: "network_path",
     }
 
-    with open("config.json") as f:
-        __data = json.load(f)
+    __data = {}
+
+    ##  Load the config file for further use
+    #
+    #   @throws InvalidConfigException when config file could not be loaded/parsed
+    @staticmethod
+    def load_config_file():
+        try:
+            with open("config.json") as f:
+                Configurations.__data = json.load(f)
+        except Exception:
+            raise InvalidConfigException("config file could not be loaded")
 
     ##  Gets you a default value for the argument
     #

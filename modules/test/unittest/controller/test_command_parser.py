@@ -1,7 +1,6 @@
 from typing import Dict
 
 import pytest
-from mock import patch
 
 from modules.controller.command_parser import CommandParser
 from modules.controller.commands.classify_command import ClassifyCommand
@@ -124,9 +123,20 @@ def test_classify_command_with_missing_optional_arg_adds_default():
         Key.NAME: "network",
         Key.TRAIN: train,
         Key.SAVING_PATH: saving_path,
-        Key.EXISTING_NETWORK: None,
+        Key.NETWORK: None,
     }
     command = CommandParser.parse_input(input_str)
     assert isinstance(command, TrainCommand)
     assert dicts_equal(command.arguments, expected) is True
 
+
+def test_input_calls_with_two_spaces():
+    input_str = "label  -n name -p path -s saving_path"
+    expected = {
+        Key.PATH: "path",
+        Key.NAME: "name",
+        Key.SAVING_PATH: "saving_path",
+    }
+    command = CommandParser.parse_input(input_str)
+    assert isinstance(command, LabelCommand)
+    assert dicts_equal(command.arguments, expected) is True

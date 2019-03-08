@@ -18,7 +18,7 @@ class TrainCommand(Command):
             ("p", "path"): Key.PATH,
             ("s", "saving-path"): Key.SAVING_PATH,
             ("t", "train"): Key.TRAIN,
-            ("e", "existing-network"): Key.EXISTING_NETWORK,
+            ("e", "existing-network"): Key.NETWORK,
             "h": Key.HELP,
         }
 
@@ -27,25 +27,25 @@ class TrainCommand(Command):
             Key.PATH: None,
             Key.SAVING_PATH: None,
             Key.TRAIN: None,
-            Key.EXISTING_NETWORK: None,
         }
 
         self.help_arguments = (
             "-p <path> Absolute path to the labeled matrices on the local storage "
-            "[default: modules/shared/data/LabeledMatrices/]",
+            "[default: data/LabeledMatrices/]",
             "-n <name> Name under which the neural networks will be saved after training has finished "
             "[default: current date and time]",
             "-t <train> Float between 0 and 1. Amount of matrices used for training where 1 means all. "
             "[default: 0.8]",
             "-s <saving path> (optional) Path where the neural network state will be saved "
-            "[default: modules/shared/data/NeuralNetwork/]",
+            "[default: data/NeuralNetwork/]",
         )
 
     def execute(self):
         super().execute()
         TrainingModule.train(
             matrices_path=self.arguments.get(Key.PATH),
-            neural_network_path=self.arguments.get(Key.EXISTING_NETWORK),
+            neural_network_path=self.arguments.get(Key.NETWORK),
             name=self.arguments.get(Key.NAME),
             saving_path=self.arguments.get(Key.SAVING_PATH),
+            training_test_split=self.get_float_value(Key.TRAIN),
         )

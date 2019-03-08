@@ -1,18 +1,22 @@
 {
   "collect": {
-    "path": "modules/shared/data/UnlabeledMatrices/",
+    "name": "unlabeled_matrices_",
+    "path": "data/UnlabeledMatrices/",
     "size": 128,
     "amount": 100
   },
   "label": {
-    "default_saving_path": "modules/shared/data/LabeledMatrices/",
-    "default_saving_name": "labeled_matrices",
-    "default_path": "modules/shared/data/UnlabeledMatrices/unlabeled_matrices"
+    "name": "labeled_matrices_",
+    "saving_path": "data/LabeledMatrices/",
+    "name": "labeled_matrices",
+    "path": "data/UnlabeledMatrices/unlabeled_matrices.hdf5"
   },
   "train": {
-    "network_path": "modules/shared/data/NeuralNetwork/",
-    "default_saving_name": "trained_net",
-	"default_path": "modules/shared/data/LabeledMatrices/",
+    "name": "trained_net_",
+    "path": "data/LabeledMatrices/",
+    "saving_path": "data/TrainedNetwork",
+    "train_split": 0.8,
+
 
     "num_conv_layers": 1,
     "num_dense_layers": 3,
@@ -21,14 +25,12 @@
     "dropout": 0.1,
 
     "batch_size": 25,
-    "training_test_split": 0.8,
     "learning_rate": 0.001,
     "loss": "categorical_crossentropy",
     "epochs": 5
 
   },
   "classify": {
-    "path": "modules/shared/data/MatrixToClassify/matrix_to_classify",
-	"network_path": "modules/shared/data/NeuralNetwork/"
+    "network_path": "data/NeuralNetwork/"
   }
 }

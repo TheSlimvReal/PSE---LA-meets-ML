@@ -29,10 +29,10 @@ class SSGet:
     #   @return none
     @staticmethod
     def new_search() -> None:
-        SEARCH_COMMAND = "ssget -s '[ @real ] && [ @rows -eq @cols ] && [ @rows -ge 129 ] && [ @rows -le 1000 ]'"
-        real_square_matrices_ids = os.popen(SEARCH_COMMAND).read().split("\n")[:-1]  # list of matrix ids
-        csvfile = 'matrix_ids.csv'
-        with open(csvfile, "w") as output:
+        search_command = "ssget -s '[ @real ] && [ @rows -eq @cols ] && [ @rows -ge 129 ] && [ @rows -le 1000 ]'"
+        real_square_matrices_ids = os.popen(search_command).read().split("\n")[:-1]  # list of matrix ids
+        csv_file = 'matrix_ids.csv'
+        with open(csv_file, "w") as output:
             writer = csv.writer(output, lineterminator='\n')
             for val in real_square_matrices_ids:
                 writer.writerow([val])
@@ -64,12 +64,23 @@ class SSGet:
     def __get_matrix_values(matrix_dict: dict) -> np.ndarray:
         found = None
         todo = [matrix_dict]
+        # breadth first search to find matrix data structure
         while len(todo) != 0:
             current = todo.pop(0)
-            if isinstance(current, scipy.sparse.csc.csc_matrix):
+
+            if SSGet.__is_matrix(current):
+                # found matrix, set return value and escape loop
                 found = current
                 todo = []
-            elif isinstance(current, Iterable) or isinstance(current, np.void):
-                for c in current:
-                    todo.append(c)
+            elif SSGet.__is_iterable(current):
+                # found iterable, append values and continue loop
+                todo += list(current)
         return found
+
+    @staticmethod
+    def __is_matrix(obj) -> bool:
+        return str(type(obj)) == "<class 'scipy.sparse.csc.csc_matrix'>"
+
+    @staticmethod
+    def __is_iterable(obj) -> bool:
+        return isinstance(obj, Iterable) or str(type(obj)) == "<class 'numpy.void'>"

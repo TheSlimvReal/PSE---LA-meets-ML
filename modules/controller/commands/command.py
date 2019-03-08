@@ -13,7 +13,6 @@ class Command:
         self.__module_name: Module = Module.UNDEFINED
         self.__arguments: Dict[Key, str] = {}
         self.__valid_arguments: Dict[Tuple[str, str], Key] = {}
-        self.__required_arguments: Tuple[Key] = ()
         self.__help_arguments: Tuple[str] = ()
 
     @property
@@ -33,14 +32,6 @@ class Command:
         self.__arguments = arguments
 
     @property
-    def required_arguments(self) -> Tuple[Key]:
-        return self.__required_arguments
-
-    @required_arguments.setter
-    def required_arguments(self, args: Tuple[Key]) -> None:
-        self.__required_arguments = args
-
-    @property
     def valid_arguments(self) -> Dict[Tuple[str, str], Key]:
         return self.__valid_arguments
 
@@ -58,18 +49,12 @@ class Command:
 
     ##  can be called the execute the module
     def execute(self) -> None:
-        self.validate()
-
-    ##  will be called in the command execution
-    def validate(self) -> None:
-        for arg in self.required_arguments:
-            if arg not in self.arguments:
-                raise IllegalArgumentException("%s is required" % arg)
+        pass
 
     def __add_default_args(self) -> None:
         for key, value in self.arguments.items():
             if value is None:
-                self.set_values(key)
+                self.__set_values(key)
 
     ##  parses the string list into a dict of args
     #
@@ -99,14 +84,48 @@ class Command:
             if tag in key:
                 return value
 
+    ##  Gives you the integer value associated with that key
+    #
+    #   Example:
+    #   '''
+    #       arguments = {Key.AMOUNT: "100"}
+    #       command.get_int_value(Key.AMOUNT)   //  returns 100 as integer
+    #   '''
+    #
+    #   @param key which you want a integer value for
+    #   @throws IllegalArgumentException when self.argument[key] is not a integer (e.g. 4, 3000, ...)
     def get_int_value(self, key: Key) -> Optional[int]:
+        result: int = None
         if key in self.arguments:
-            return int(self.arguments.get(key))
-        return None
+            try:
+                result = int(self.arguments.get(key))
+            except ValueError:
+                raise IllegalArgumentException(self.arguments.get(key) + " is not a integer")
+        return result
 
-    def set_values(self, key):
+    ##  Gives you the the float value associated with that key
+    #
+    #   Example:
+    #   '''
+    #       arguments = {Key.TRAIN: "0.8"}
+    #       command.get_int_value(Key.TRAIN)   //  returns 0.8 as a float
+    #   '''
+    #
+    #   @param key which you want a float value for
+    #   @throws IllegalArgumentException when self.arguments[key] is not float (e.g. 0.6, 3, ...)
+    def get_float_value(self, key: Key) -> Optional[float]:
+        result: float = None
+        if key in self.arguments:
+            try:
+                result = float(self.arguments.get(key))
+            except ValueError:
+                raise IllegalArgumentException(self.arguments.get(key) + " is not a float")
+        return result
+
+    def __set_values(self, key):
         if key is Key.NAME:
-            current_dt = datetime.datetime.now()
-            self.arguments[key] = current_dt.strftime("%Y-%m-%d %H:%M:%S")
+            standard_name = Configurations.get_config_with_key(self.module_name, key)
+            current_dt = datetime.datetime.now().strftime("%Y_%m_%d_%H:%M:%S")
+            self.arguments[key] = standard_name + current_dt
         else:
             self.arguments[key] = Configurations.get_config_with_key(self.module_name, key)

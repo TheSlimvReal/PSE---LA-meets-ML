@@ -26,21 +26,16 @@ class LabelCommand(Command):
             Key.NAME: None,
             Key.PATH: None,
             Key.SIZE: None,
+            Key.SAVING_PATH: None,
         }
 
         self.help_arguments = (
             "-p <path> Absolute path to the matrices in the local storage the user wants to have labeled "
-            "[default: modules/shared/data/UnlabeledMatrices/unlabeled_matrices]",
+            "[default: data/UnlabeledMatrices/unlabeled_matrices]",
             "-n <name> Name under which the labeled matrices will be saved [default: current date and time]",
             "-s <saving path> Path where the labeled matrices will be saved "
-            "[default: modules/shared/data/LabeledMatrices/] ",
+            "[default: data/LabeledMatrices/] ",
         )
-
-        self.__config: List[str] = []
-
-    @property
-    def config(self) -> List[str]:
-        return self.__config
 
     def execute(self):
         super().execute()

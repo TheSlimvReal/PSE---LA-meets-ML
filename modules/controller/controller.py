@@ -56,7 +56,8 @@ class Controller:
         Classifier.set_output_service(self.__output_service)
 
     def __print_help_information(self, command: Command):
-        self.__output_service.print_line("These are the possible Tags for the " + command.module_name.value + "-command:")
+        self.__output_service.print_line("These are the possible Tags for the "
+                                         + command.module_name.value + "-command:")
         for info in command.help_arguments:
             self.__output_service.print_line(info)
 

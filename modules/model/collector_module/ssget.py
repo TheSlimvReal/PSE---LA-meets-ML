@@ -18,7 +18,7 @@ class SSGet:
     @staticmethod
     def get_matrix(size: int) -> np.ndarray:
         downloaded_matrix = SSGet.__download_matrix(1)
-        while downloaded_matrix == []:
+        while not downloaded_matrix:
             downloaded_matrix = SSGet.__download_matrix(1)
         seed = randint(0, downloaded_matrix.shape[0] - size)
         return SSGet.__cut_matrix(seed, downloaded_matrix, size)
@@ -42,7 +42,7 @@ class SSGet:
         matrix_id = random.choice(SSGet.__real_square_matrices_ids)
         download_command = "ssget -e -i " + matrix_id + " -t mat 2>/dev/null"
         path = os.popen(download_command).read().strip()    # just an example
-        if SSGet.__load(path) == []:
+        if not SSGet.__load(path):
             return []
         else:
             return SSGet.__get_matrix_values(SSGet.__load(path)['Problem'])

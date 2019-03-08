@@ -1,5 +1,5 @@
 import pytest
-from mock import patch, call
+from mock import patch
 
 from modules.exception.exceptions import InvalidOSException
 from modules.model.collector_module.collector import Collector

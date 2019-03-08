@@ -1,4 +1,3 @@
-import numpy as np
 import h5py
 
 from modules.exception.exceptions import IOException

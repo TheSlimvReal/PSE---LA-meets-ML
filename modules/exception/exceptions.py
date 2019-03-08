@@ -19,7 +19,7 @@ class MyException(Exception):
 
 ##  exception that should be thrown when the passed arguments are invalid
 #
-#   @extends MyException for generacl usage
+#   @extends MyException for general usage
 class IllegalArgumentException(MyException):
 
     def get_type(self) -> str:

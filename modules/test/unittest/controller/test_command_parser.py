@@ -148,4 +148,4 @@ def test_input_is_empty(mocked_cli):
     with pytest.raises(IllegalArgumentException):
         input_str = ""
         CommandParser.parse_input(input_str)
-        mocked_cli.has_calls("IllegalArgumentException: Please enter enter the module you want to execute")
+        mocked_cli.has_calls("IllegalArgumentException: Please enter the module you want to execute")

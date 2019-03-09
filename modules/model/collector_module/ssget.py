@@ -42,7 +42,7 @@ class SSGet:
         matrix_id = random.choice(SSGet.__real_square_matrices_ids)
         download_command = "ssget -e -i " + matrix_id + " -t mat 2>/dev/null"
         path = os.popen(download_command).read().strip()    # just an example
-        if not SSGet.__load(path):
+        if SSGet.__load(path) == []:
             return []
         else:
             return SSGet.__get_matrix_values(SSGet.__load(path)['Problem'])

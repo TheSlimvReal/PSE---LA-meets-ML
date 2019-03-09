@@ -2,9 +2,7 @@ from modules.model.labeling_module.Solvers.cg_solver import CgSolver
 from modules.model.labeling_module.Solvers.bicgstab_solver import BicgstabSolver
 from modules.model.labeling_module.Solvers.fcg_solver import FcgSolver
 from modules.model.labeling_module.Solvers.cgs_solver import CgsSolver
-from modules.model.labeling_module.Solvers.gmres_solver import GmresSolver
 from modules.view.observable import Observable
-from modules.view.output_service import OutputService
 from modules.exception.exceptions import IOException
 
 from modules.shared.loader import Loader

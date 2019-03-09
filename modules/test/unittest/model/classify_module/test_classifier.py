@@ -1,9 +1,7 @@
 
-from mock import patch, call
+from mock import patch
 
-from modules.exception.exceptions import IllegalArgumentException
 from modules.model.classification_module.classification_module import Classifier
-from modules.view import cli_output_service
 from modules.view.cli_output_service import CLIOutputService
 
 

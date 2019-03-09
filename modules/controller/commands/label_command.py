@@ -1,5 +1,3 @@
-from typing import List
-
 from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
 from modules.controller.commands.module import Module

@@ -44,7 +44,8 @@ class TrainingModule:
     #   @param training_test_split float no how much of the data should be for training purposes, the
     #           rest will be used for testing
     @staticmethod
-    def train(matrices_path: str, neural_network_path: str, name: str, saving_path: str, training_test_split: float) -> None:
+    def train(matrices_path: str, neural_network_path: str, name: str,
+              saving_path: str, training_test_split: float) -> None:
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '0'
         tf.logging.set_verbosity(tf.logging.ERROR)
         TrainingModule.__set_parameters()

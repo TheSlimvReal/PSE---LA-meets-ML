@@ -9,7 +9,7 @@ from random import randint
 @patch("modules.model.labeling_module.ginkgo.Ginkgowrapper.__init__", return_value=None)
 @patch("modules.model.labeling_module.ginkgo.Ginkgowrapper.calculate_time_to_solve", return_value=randint(0, 100))
 def test_labeling_module_returns_valid_times(mocked_ginkgo_calculate, mocked_ginkgo_init):
-    LabelingModule.start("UnlabeledMatrices/unlabeled_matrices.hdf5", "testLocation",
+    LabelingModule.start("modules/test/unittest/shared/data/test_unlabeled_matrices.hdf5", "testLocation",
                          "modules/test/unittest/shared/data/")
 
     labels = h5py.File("modules/test/unittest/shared/data/testLocation.hdf5", 'r')["label_vectors"]
@@ -23,7 +23,7 @@ def test_labeling_module_returns_valid_times(mocked_ginkgo_calculate, mocked_gin
 @patch("modules.model.labeling_module.ginkgo.Ginkgowrapper.__init__", return_value=None)
 @patch("modules.model.labeling_module.ginkgo.Ginkgowrapper.calculate_time_to_solve", return_value=1)
 def test_labeling_module_saves_at_the_right_location(mocked_ginkgo_calculate, mocked_ginkgo_init):
-    LabelingModule.start("data/UnlabeledMatrices/unlabeled_matrices.hdf5", "testLocation",
+    LabelingModule.start("modules/test/unittest/shared/data/test_unlabeled_matrices.hdf5", "testLocation",
                          "modules/test/unittest/shared/data/")
 
     matrices = h5py.File("data/UnlabeledMatrices/unlabeled_matrices.hdf5", 'r')["dense_matrices"]
@@ -35,7 +35,7 @@ def test_labeling_module_saves_at_the_right_location(mocked_ginkgo_calculate, mo
 @patch("modules.model.labeling_module.ginkgo.Ginkgowrapper.__init__", return_value=None)
 @patch("modules.model.labeling_module.ginkgo.Ginkgowrapper.calculate_time_to_solve", return_value=1)
 def test_labeling_module_each_label_is_a_vector_with_one_one_and_zeros(mocked_ginkgo_calculate, mocked_ginkgo_init):
-    LabelingModule.start("data/UnlabeledMatrices/unlabeled_matrices.hdf5", "testLocation",
+    LabelingModule.start("modules/test/unittest/shared/data/test_unlabeled_matrices.hdf5", "testLocation",
                          "modules/test/unittest/shared/data/")
     labels = h5py.File("modules/test/unittest/shared/data/testLocation.hdf5", 'r')["label_vectors"]
 

@@ -32,6 +32,49 @@ bookmarks=true,%
 %%Glossary
 %
 
+\newglossaryentry{github}
+{
+	name=GitHub,
+	description={A web based hosting service for the versioning control system \gls{git}}
+}
+
+\newglossaryentry{git}
+{
+	name=GIT,
+	description={A version control system that can be used for tracking changes in a code repository}
+}
+
+\newglossaryentry{travis}
+{
+	name=Travis,
+	description={A tool for continuous integration that is easy to integrate with \gls{github}}
+}
+
+\newglossaryentry{codeclimate}
+{
+	name=CodeClimate,
+	description={A tool that monitors statistics about your code like coverage and displays it on each pull request on \gls{github}}
+}
+
+\newglossaryentry{doxygen}
+{
+	name=Doxygen,
+	description={A tool which uses you comments in the code to generate a documentation of the code}
+}
+
+\newglossaryentry{githubpages}
+{
+	name=GitHub pages,
+	description={A web storage hosted by \gls{github} where you get a personal domain for your \gls{github} repository}
+}
+
+\newglossaryentry{os}
+{
+	name=operating system,
+	plural=operating systems,
+	description={A system software that manages computer hardware and software resources}
+}
+
 \begin{document}
 
 \begin{titlepage}
@@ -62,6 +105,18 @@ Markus G\"{o}tz
 \tableofcontents
 \newpage
 
+\section{Overview}
+
+In this last section of our project, we wanted to get our project ready for usage by others. 
+Therefore we first took a look at all the things we wanted to get finished before the project is being closed.
+After we got a list of tasks together, we created issues on \gls{github} together with a detailed descriptions on what needs to be done.
+This didn't just include bugs, but we also wanted to increase test coverage, remove code issues and set up some necessary things like a Wiki and documentation.
+After we created this issues, everybody could assign himself the issues he wanted to take care of.
+While doing so we also discovered some bugs.
+For these bugs we either created a issue or directly fixed them and wrote them into the bugs-report-table.
+
+\newpage
+
 \section{Stats}
 
 Lines of Code:
@@ -79,26 +134,26 @@ Test Coverage:
 
 To ensure a high quality on our code, we increased the building process of our code.
 
-%\includepdf[width=\textwidth, keepaspectratio]{build_process.pdf} bad ratio
-
-When pushing a branch, not just the test are ran on Travis, but also we generate a coverage report that will be sent to CodeClimate.
+When pushing a branch, not just the test are ran on \gls{travis}, but also we generate a coverage report that will be sent to \gls{codeclimate}.
 This way you get a small overview on each pull request about the current coverage and the coverage on the newly committed lines.
 Added to that, you can get a complete overview on the
 \href{https://codeclimate.com/github/TheSlimvReal/PSE---LA-meets-ML}{CodeClimate Webpage}.
 
 After a successful merge to the master, we also introduced two new deployment steps.
 The first is that the wiki pages on GitHub are build again in case a change happened on this files.
-The second step is that we generate a code documentation is generated and uploaded to GitHub pages.
+The second step is that we generate a code documentation is generated and uploaded to \gls{githubpages}.
 
 \newpage
 
+\includepdf[angle=90, scale=0.9]{build_process.pdf}
+
 \section{Code Documentation}
 
-In the first phases we already decided to comment our code with the Doxygen-Syntax.
+In the first phases we already decided to comment our code with the \gls{doxygen}-Syntax.
 In the implementation phase we took good care in documenting our code properly.
 The problem now was that everyone would have to generate this documentation for himself, which is a lot of work.
 
-To easy things up, we added a deployment step, which generates this documentation and deploys it to GitHub pages.
+To easy things up, we added a deployment step, which generates this documentation and deploys it to \gls{githubpages}.
 
 This way everybody can have a look at the latest version of the documentation only be opening a link.
 
@@ -106,67 +161,74 @@ This way everybody can have a look at the latest version of the documentation on
 
 \section{Wiki}
 
-We already collected some documentations for working with our project in the previous phases and decided to make them available in the GitHub wiki.
-Because the GitHub wiki holds its own git structure and we wanted to keep all our files in one place, we decided to integrate the wiki in our build process.
+We already collected some documentations for working with our project in the previous phases and decided to make them available in the \gls{github} wiki.
+Because the \gls{github} wiki holds its own \gls{git} structure and we wanted to keep all our files in one place, we decided to integrate the wiki in our build process.
 
 Therefore we created a folder in the projects root which holds all the wiki's entries in markdown files together with an configuration file.
 This configuration file is used to dynamically generate a sidebar that holds a navigation for the wiki entries.
 All the contents of this folder together with the generated sidebar are then copied to the wiki's git.
 
-After this is done, the new wiki entries can be found on GitHub.
+After this is done, the new wiki entries can be found on \gls{github}.
 
 \newpage
 
 \section{Bugs}
-\begin{tabular}{|p{4.5cm}|p{4.5cm}|p{2cm}|p{1.5cm}|}
+\begin{tabular}{|p{4.5cm}|p{4.5cm}|p{4.5cm}|}
 
 \hline
 
- Description  & Fix & Time to Fix & Reporter  \\
+ Fault Symptom  & Reason & Fix  \\
 
 \hline
 
-Command line input with more than one space between arguments resulted in program crash & 
-Changed the parameters of the string-split function for the expected behavior (remove spaces) &
-2 hours &
-Anna \\
+Command line input with more than one space between arguments resulted in program crash &
+Input string would be split into a string list which had empty elements that caused problems &
+Changed the parameters of the string-split function for the expected behavior (remove spaces) \\
 
 \hline
 
-Corrupted configuration file results in a program crash &
-Opening config file now happens in a try-except block and errors are reported to user (no crash) &
-1.5 hours &
-Simon \\
+A corrupted configuration file caused the program to crash &
+Errors that are thrown while opening the file were not caught &
+Opening config file now happens in a try-except block and errors are reported to user (no crash) \\
 
 \hline
 
 Labeling or collection on operating systems other than linux resulted in crashes &
-Current OS is checked at start of module and wrong OS's are reported to user &
-2 hours &
-Simon\\
+The operating system was not checked when using the labeling or collecting module &
+Current \gls{os} is checked at start of module and wrong \glspl{os} are reported to user \\
 
 \hline
 
+Changing the size of the collected matrices was not possible &
 User entered size parameter was not used in collector &
-Removed static size declaration and started using the size input parameter &
-1 hour &
-Anna \\
+Removed static size declaration and started using the size input parameter \\
 
 \hline
 
 Default parameters are not correctly passed to the modules &
-Config file had wrong format, needed to be fixed/standardized &
-3 hours &
-Simon \\
+The configuration file had a wrong format and could not be read properly &
+The configuration file got restructured and has it's default keys for each module \\
 
 \hline
 
 When not entering anything, the program crashes &
-Added extra check to prevent a invalid operation and displaying error message if check fails &
-0.5 hours &
-Simon \\
+The command parser tried to access a element in an empty array &
+Added extra check to prevent the invalid operation and displaying error message if check fails \\
 
 \hline
+
+Passing a not regular matrix to the classifier causes in unexpected behavior &
+The regularity was not checked on the received matrix in the classifier &
+We added the regularity check to the classifier and a failure is reported to the screen is this check fails \\
+
+\hline
+
+Trying to open a not existing file in the loader results in a crash &
+The errors when opening a file where not caught properly &
+The loader now catches all errors and raises a IOException that can be caught when using the loader \\
+
+\hline
+
 \end{tabular}
 
 \newpage

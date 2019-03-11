@@ -9,6 +9,7 @@ from keras.callbacks import ModelCheckpoint
 import keras
 
 from modules.controller.commands.module import Module
+from modules.exception.exceptions import IOException
 from modules.shared.loader import Loader
 from modules.view.output_service import OutputService
 from modules.shared.configurations import Configurations
@@ -57,7 +58,11 @@ class TrainingModule:
         validation_datagen = ImageDataGenerator()
 
         # loads matrices and labels from hdf5 file
-        dataset = Loader.load(matrices_path)
+        try:
+            dataset = Loader.load(matrices_path)
+        except IOException as e:
+            TrainingModule.__output_service.print_error(e)
+            return
 
         # converts matrices and labels in keras conform shape (samples, height, width, channels)
         matrices = np.array(dataset['dense_matrices'])

@@ -104,6 +104,5 @@ class TestTrainingModule:
     @patch("modules.shared.configurations.Configurations.get_config")
     def test_training_no_valid_dataset(mocked_config):
         mocked_config.side_effect = TestTrainingModule.parse
-        with pytest.raises(IOException):
-            TrainingModule.train("modules/test/unittest/model/training_module/notvalid.hdf5",
+        TrainingModule.train("modules/test/unittest/model/training_module/notvalid.hdf5",
                              "", "", "modules/test/unittest/model/training_module/", 0.5)

@@ -106,3 +106,12 @@ class TestTrainingModule:
         mocked_config.side_effect = TestTrainingModule.parse
         TrainingModule.train("modules/test/unittest/model/training_module/notvalid.hdf5",
                              "", "", "modules/test/unittest/model/training_module/", 0.5)
+
+    @staticmethod
+    @patch("modules.shared.configurations.Configurations.get_config")
+    def test_training_moreconv(mocked_config):
+        mocked_config.side_effect = TestTrainingModule.parse
+        TestTrainingModule.num_conv_layers = 3
+        TrainingModule.train("modules/test/unittest/model/training_module/test.hdf5",
+                             "", "", "modules/test/unittest/model/training_module/", 0.5)
+

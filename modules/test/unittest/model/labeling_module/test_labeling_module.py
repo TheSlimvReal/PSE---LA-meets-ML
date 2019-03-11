@@ -1,8 +1,9 @@
-from mock import patch
+from mock import patch, call
 import h5py
 import numpy as np
 from modules.model.labeling_module.labeling_module import LabelingModule
-
+from modules.view.cli_output_service import CLIOutputService
+from modules.exception.exceptions import IOException
 from random import randint
 
 
@@ -45,4 +46,9 @@ def test_labeling_module_each_label_is_a_vector_with_one_one_and_zeros(mocked_gi
         assert (label.count(1) == 1), "more or less 1s than 1 in a label"
         assert (label.count(0) == len(label) - 1), "more or less 0s in a label than expected"
 
+
+@patch("modules.view.cli_output_service.CLIOutputService.print_line")
+def test_labeling_module_wrong_path(mocked_cli_print_line):
+    LabelingModule.start("modules/shared/FalsePath.hdf5", "name", "path")
+    mocked_cli_print_line.assert_called_once_with("IOException: The path is not correct.")
 

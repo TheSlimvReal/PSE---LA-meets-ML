@@ -2,6 +2,7 @@ from modules.model.training_module.training_module import TrainingModule
 from mock import patch
 import os
 import pytest
+from modules.exception.exceptions import IOException
 
 class TestTrainingModule:
     name: str
@@ -99,12 +100,9 @@ class TestTrainingModule:
                              "modules/test/unittest/model/training_module/testnetwork.hdf5",
                              "", "modules/test/unittest/model/training_module/", 0.5)
 
-
-
-
-
-
-
-
-
-
+    @staticmethod
+    @patch("modules.shared.configurations.Configurations.get_config")
+    def test_training_no_valid_dataset(mocked_config):
+        mocked_config.side_effect = TestTrainingModule.parse
+        TrainingModule.train("modules/test/unittest/model/training_module/notvalid.hdf5",
+                             "", "", "modules/test/unittest/model/training_module/", 0.5)

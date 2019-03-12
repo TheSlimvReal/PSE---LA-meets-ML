@@ -10,7 +10,7 @@
 \usepackage{hyperref}       % detailed hyperlink/pdf configuration
 \hypersetup{                % ‘texdoc hyperref‘ for options
 pdftitle={PSE : LAMeetsML},%
-bookmarks=true,%
+%bookmarks=true,%
 }
 \usepackage{csquotes}       % provides \enquote{} macro for "quotes"
 \usepackage[nonumberlist, acronym]{glossaries} % provides glossary commands
@@ -115,13 +115,13 @@ After we created this issues, everybody could assign himself the issues he wante
 While doing so we also discovered some bugs.
 For these bugs we either created a issue or directly fixed them and wrote them into the bugs-report-table.
 
-\newpage
 
-\section{Stats}
+\section{Statistics}
 
 Lines of Code:
 
 Python:
+
 C++:
 
 others:
@@ -141,7 +141,7 @@ Added to that, you can get a complete overview on the
 
 After a successful merge to the master, we also introduced two new deployment steps.
 The first is that the wiki pages on GitHub are build again in case a change happened on this files.
-The second step is that we generate a code documentation is generated and uploaded to \gls{githubpages}.
+The second step is that we generate a code documentation that is generated and uploaded to \gls{githubpages}.
 
 \newpage
 
@@ -170,7 +170,6 @@ All the contents of this folder together with the generated sidebar are then cop
 
 After this is done, the new wiki entries can be found on \gls{github}.
 
-\newpage
 
 \section{Bugs}
 \begin{tabular}{|p{4.5cm}|p{4.5cm}|p{4.5cm}|}
@@ -217,7 +216,7 @@ Added extra check to prevent the invalid operation and displaying error message 
 
 \hline
 
-Passing a not regular matrix to the classifier causes in unexpected behavior &
+Passing a not regular matrix to the classifier causes unexpected behavior &
 The regularity was not checked on the received matrix in the classifier &
 We added the regularity check to the classifier and a failure is reported to the screen is this check fails \\
 
@@ -226,6 +225,18 @@ We added the regularity check to the classifier and a failure is reported to the
 Trying to open a not existing file in the loader results in a crash &
 The errors when opening a file where not caught properly &
 The loader now catches all errors and raises a IOException that can be caught when using the loader \\
+
+\hline
+
+Trying to enter different commands without setting the name flag, the program crashes &
+There is no default value for the name, so no default value was set &
+We added a method that sets a default name as a combination of a defaut name from the config file and the current date and time \\
+
+\hline
+
+The collector prints his own warnings &
+numpy prints his own warnings in the regularity calculator &
+Suppressed numpy warnings \\
 
 \hline
 

@@ -75,6 +75,32 @@ pdftitle={PSE : LAMeetsML},%
 	description={A system software that manages computer hardware and software resources}
 }
 
+\newglossaryentry{unittest}
+{
+	name=unit test,
+	plural=unit tests,
+	description={A test that only covers one public function and should try to find bugs in this function}
+}
+
+\newglossaryentry{integrationtest}
+{
+	name=integration test,
+	plural=integration tests,
+	description={A test that covers a interaction with the system that contains many modules}
+}
+
+\newglossaryentry{ginkgo}
+{
+	name=Ginkgo,
+	description={The ginkgo library is a  c++ library which among other things enables an user to solve a linear system with a specified iterative solver and  					preconditioner. We will be using this library to solve our systems.}
+}
+
+\newglossaryentry{ssget}
+{
+	name=ssget,
+	description={A library by the Ginkgo group which lets you download matrices from the suite sparse matrix collection}
+}
+
 \begin{document}
 
 \begin{titlepage}
@@ -127,6 +153,10 @@ C++:
 others:
 
 Test Coverage:	
+
+Number of \glspl{unittest}:
+
+Number of \glspl{integrationtest}:
 
 \newpage
 
@@ -243,6 +273,36 @@ Suppressed numpy warnings \\
 \end{tabular}
 
 \newpage
+
+\section{Challenges}
+
+Even though we already had some \glspl{unittest} after the implementation phase, it was not that easy to get the coverage as high as it is now.
+
+
+Where it was quite easy to write tests against the view and the controller, we had a hard time doing the same for the modules.
+This was because we had a lot of dependencies to other libraries or even environments that we could not automate.
+One example is that we can only use the labeling module on a system where \gls{ginkgo} is properly installed.
+Theoretically it would be possible to install this in the build process of \gls{travis} but our supervisors decided that this would be taking to much time and is not necessary.
+If we now wanted to test the labeling module, we always had to mock the \gls{ginkgo} library.
+Similar problems we had in the collector which had the dependency to the \gls{ssget} library.
+This library was easier to set up and was also installed in the build process, so it is possible to write tests against it, but you still end up with more integration tests than unit tests.
+Another problem concerning the testing was the fact, that most of the modules directly access the memory instead of returning something.
+This way you could not just assert something of the returning object but you had to mock the file system and assert calls to this.
+
+
+Finally the last big problem is the whole structure of the machine learning it self.
+That is, because a big problems of the neural networks is the fact, that you don't have any guaranty on how well it will perform.
+There is always a big improbability factor in the learning and the classification process.
+Knowing that, it is difficult to test the process of learning and classification because it will not always perform as expected.
+You could only assert that the results will be in a certain range, which you would have to define with some heuristics.
+If you now have this heuristics, the next problem comes up.
+To get a good result on the training process you need to use a big data set which will result in very slow test suites which in turn will result in a generally slower workflow.
+
+
+This reasons together show the big difficulty of using normal testing and development methods with new technologies like the neural networks.
+
+\newpage
+
 \section{Glossary}
 %\glspl{collector}, labeling modle, neural network, classifier, default settings  \glspl{Dateiformat}
 

@@ -32,7 +32,7 @@ class Classifier:
 
     @staticmethod
     def __print(predictions: list):
-        counter = 0
+        counter = 1
         for prediction in predictions:
             Classifier.__output_service.print_line("matrix: " + str(counter) + ", predicted solver: " + Classifier.__solvers[prediction])
             counter += 1
@@ -62,7 +62,7 @@ class Classifier:
         Classifier.__output_service = service
 
     @staticmethod
-    def __check_regularity(matrix_file, key) -> bool:
+    def __check_regularity(key, matrix_file) -> bool:
         for matrix in matrix_file[key]:
             if not RegularityCalculator.is_regular(np.array(matrix, dtype=np.float64)):
                 return False
@@ -72,7 +72,7 @@ class Classifier:
     def __print_prediction(matrix_file, network):
         key = list(matrix_file.keys())[0]
         matrix = np.expand_dims(np.array(matrix_file[key], dtype=np.float64), axis=3)
-        if not Classifier.check_regularity(key, matrix):
+        if not Classifier.__check_regularity(key, matrix):
             raise IllegalArgumentException("The matrix is not regular")
         model = Classifier.__load_network(network)
         predictions = list(np.argmax(model.predict(matrix), axis=1))

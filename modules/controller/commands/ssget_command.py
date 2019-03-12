@@ -1,6 +1,7 @@
 from modules.controller.commands.command import Command
 from modules.controller.commands.key import Key
 from modules.model.collector_module.ssget import SSGet
+from modules.controller.commands.module import Module
 
 
 ##  command to interact with the ssget tool
@@ -10,6 +11,7 @@ from modules.model.collector_module.ssget import SSGet
 class SSGETCommand(Command):
     def __init__(self):
         super().__init__()
+        self.module_name = Module.SSGET
         self.valid_arguments = {
             ("u", "update"): Key.UPDATE,
             ("h", "help"): Key.HELP,

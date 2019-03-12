@@ -10,3 +10,5 @@ class Module(Enum):
     LABEL = "label"
     TRAIN = "train"
     CLASSIFY = "classify"
+    SSGET = "ssget"
+

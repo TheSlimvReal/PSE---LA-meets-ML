@@ -32,7 +32,7 @@ class LabelCommand(Command):
             "[default: data/UnlabeledMatrices/default_unlabeled.hdf5]",
             "-n <name> (optional) Name under which the labeled matrices will be saved "
             "[default: \"labeled_matrices_\" + current date and time]",
-            "-s <saving path> Path where the labeled matrices will be saved "
+            "-s <saving path> (optional) Path where the labeled matrices will be saved "
             "[default: data/LabeledMatrices/] ",
         )
 

@@ -2,12 +2,15 @@
 sudo: false
 
 branches:
+#  Exclude the github pages branch because this branch is only used for uploading the documentation
   except:
     - gh-pages
 
+#  Only linux works because ssget is only available on linux or mac and mac together with python is not supported by travis
 os:
   - linux
 
+#  Python is the main coding language, we left out c++ because we do not compile or test it dynamically
 language: python
 
 # only version that supports everything we need
@@ -16,15 +19,17 @@ python:
 
 addons:
   apt:
+#    Add package doxygen to generate the documentation afterwards
     packages:
       - doxygen
 
-# install SSGet and all python requirements
 install:
+#  Install and download ssget
   - git clone https://github.com/ginkgo-project/ssget.git
   - cd ssget
   - sudo make install
   - cd ..
+#  Install all required python packages
   - pip install -r requirements.txt
 
 # download the test reporter binary that takes care of uploading the test coverage results to code climate

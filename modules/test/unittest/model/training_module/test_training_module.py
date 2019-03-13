@@ -98,7 +98,7 @@ class TestTrainingModule:
         mocked_config.side_effect = TestTrainingModule.parse
         TrainingModule.train("modules/test/unittest/model/training_module/test.hdf5",
                              "modules/test/unittest/model/training_module/testnetwork.hdf5",
-                             "", "modules/test/unittest/model/training_module/", 0.5)
+                             "name", "modules/test/unittest/model/training_module/", 0.5)
 
     @staticmethod
     @patch("modules.shared.configurations.Configurations.get_config")

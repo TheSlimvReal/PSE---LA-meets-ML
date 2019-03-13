@@ -11,4 +11,3 @@ class Module(Enum):
     TRAIN = "train"
     CLASSIFY = "classify"
     SSGET = "ssget"
-

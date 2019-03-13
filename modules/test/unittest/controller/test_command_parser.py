@@ -12,6 +12,7 @@ from modules.controller.commands.module import Module
 from modules.controller.commands.train_command import TrainCommand
 from modules.exception.exceptions import IllegalArgumentException
 from modules.shared.configurations import Configurations
+from mock import patch, call
 
 
 def dicts_equal(actual: Dict[Key, str], expected: Dict[Key, str]) -> bool:
@@ -140,3 +141,11 @@ def test_input_calls_with_two_spaces():
     command = CommandParser.parse_input(input_str)
     assert isinstance(command, LabelCommand)
     assert dicts_equal(command.arguments, expected) is True
+
+
+@patch("modules.view.command_line_interface.CommandLineInterface")
+def test_input_is_empty(mocked_cli):
+    with pytest.raises(IllegalArgumentException):
+        input_str = ""
+        CommandParser.parse_input(input_str)
+        mocked_cli.has_calls("IllegalArgumentException: Please enter the module you want to execute")

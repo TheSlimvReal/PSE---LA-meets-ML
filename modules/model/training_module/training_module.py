@@ -1,4 +1,3 @@
-import h5py
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
@@ -10,8 +9,12 @@ from keras.callbacks import ModelCheckpoint
 import keras
 
 from modules.controller.commands.module import Module
+from modules.exception.exceptions import IOException
+from modules.shared.loader import Loader
 from modules.view.output_service import OutputService
 from modules.shared.configurations import Configurations
+import os
+import tensorflow as tf
 
 
 ##  This class handles the training of the neural network
@@ -20,18 +23,18 @@ class TrainingModule:
     __output_service: OutputService = OutputService()
 
     # Network Structure:
-    __num_conv_layers: int = Configurations.get_config(Module.TRAIN, "num_conv_layers")
-    __num_dense_layers: int = Configurations.get_config(Module.TRAIN, "num_dense_layers")
-    __layer_activation: str = Configurations.get_config(Module.TRAIN, "layer_activation")
-    __final_activation: str = Configurations.get_config(Module.TRAIN, "final_activation")
-    __dropout: int = Configurations.get_config(Module.TRAIN, "dropout")
-    __num_classes: int = 4
+    __num_conv_layers: int
+    __num_dense_layers: int
+    __layer_activation: str
+    __final_activation: str
+    __dropout: int
+    __num_classes: int
 
     # Hyper parameters:
-    __batch_size: int = Configurations.get_config(Module.TRAIN, "batch_size")
-    __learning_rate: float = Configurations.get_config(Module.TRAIN, "learning_rate")
-    __loss: str = Configurations.get_config(Module.TRAIN, "loss")
-    __epochs: int = Configurations.get_config(Module.TRAIN, "epochs")
+    __batch_size: int
+    __learning_rate: float
+    __loss: str
+    __epochs: int
 
     ##  trains the neural network labeled matrices
     #
@@ -42,7 +45,11 @@ class TrainingModule:
     #   @param training_test_split float no how much of the data should be for training purposes, the
     #           rest will be used for testing
     @staticmethod
-    def train(matrices_path: str, neural_network_path: str, name: str, saving_path: str, training_test_split: float) -> None:
+    def train(matrices_path: str, neural_network_path: str, name: str,
+              saving_path: str, training_test_split: float) -> None:
+        os.environ['TF_CPP_MIN_LOG_LEVEL'] = '0'
+        tf.logging.set_verbosity(tf.logging.ERROR)
+        TrainingModule.__set_parameters()
 
         # model is defined by the config file or loaded from a path
         model = TrainingModule.__get_model(neural_network_path)
@@ -51,7 +58,11 @@ class TrainingModule:
         validation_datagen = ImageDataGenerator()
 
         # loads matrices and labels from hdf5 file
-        dataset = h5py.File(matrices_path, 'r')
+        try:
+            dataset = Loader.load(matrices_path)
+        except IOException as e:
+            TrainingModule.__output_service.print_error(e)
+            return
 
         # converts matrices and labels in keras conform shape (samples, height, width, channels)
         matrices = np.array(dataset['dense_matrices'])
@@ -131,3 +142,19 @@ class TrainingModule:
         model.compile(loss=TrainingModule.__loss,
                       optimizer=optimizer, metrics=['accuracy'])
         return model
+
+    @staticmethod
+    def __set_parameters():
+        # Network Structure:
+        TrainingModule.__num_conv_layers = Configurations.get_config(Module.TRAIN, "num_conv_layers")
+        TrainingModule.__num_dense_layers = Configurations.get_config(Module.TRAIN, "num_dense_layers")
+        TrainingModule.__layer_activation = Configurations.get_config(Module.TRAIN, "layer_activation")
+        TrainingModule.__final_activation = Configurations.get_config(Module.TRAIN, "final_activation")
+        TrainingModule.__dropout = Configurations.get_config(Module.TRAIN, "dropout")
+        TrainingModule.__num_classes = 4
+
+        # Hyper parameters:
+        TrainingModule.__batch_size = Configurations.get_config(Module.TRAIN, "batch_size")
+        TrainingModule.__learning_rate = Configurations.get_config(Module.TRAIN, "learning_rate")
+        TrainingModule.__loss = Configurations.get_config(Module.TRAIN, "loss")
+        TrainingModule.__epochs = Configurations.get_config(Module.TRAIN, "epochs")

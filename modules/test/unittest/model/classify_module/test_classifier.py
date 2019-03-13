@@ -1,6 +1,5 @@
 
 from mock import patch
-
 from modules.model.classification_module.classification_module import Classifier
 from modules.view.cli_output_service import CLIOutputService
 

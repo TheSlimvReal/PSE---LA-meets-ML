@@ -10,7 +10,7 @@
 \usepackage{hyperref}       % detailed hyperlink/pdf configuration
 \hypersetup{                % ‘texdoc hyperref‘ for options
 pdftitle={PSE : LAMeetsML},%
-bookmarks=true,%
+%bookmarks=true,%
 }
 \usepackage{csquotes}       % provides \enquote{} macro for "quotes"
 \usepackage[nonumberlist, acronym]{glossaries} % provides glossary commands
@@ -144,6 +144,7 @@ For these bugs we either created a issue or directly fixed them and wrote them i
 
 \section{Statistics}
 
+\subsection{Code}
 Lines of Code: 2.852
 
 Python: 2451
@@ -151,6 +152,8 @@ Python: 2451
 C++: 209
 
 others (config and build-setup files): 192
+
+\subsection{Testing}
 
 Test Coverage: 95\%
 
@@ -282,15 +285,9 @@ The accuracy was set down to a more realistic value \\
 
 \hline
 
-Trying to enter different commands without setting the name flag, the program crashes &
-There is no default value for the name, so no default value was set &
+Trying to enter a command without setting the name flag results a program crashes &
+There is no default value for the name &
 We added a method that sets a default name as a combination of a defaut name from the config file and the current date and time \\
-
-\hline
-
-The collector prints his own warnings &
-numpy prints his own warnings in the regularity calculator &
-Suppressed numpy warnings \\
 
 \hline
 

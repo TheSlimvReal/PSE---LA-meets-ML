@@ -14,5 +14,4 @@ class Loader:
             matrix_file = h5py.File(path, 'r')
         except Exception:
             raise IOException("The path is not correct.")
-
         return matrix_file

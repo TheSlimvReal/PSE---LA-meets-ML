@@ -19,5 +19,7 @@ cp ../../wiki/* .
 github-wiki-sidebar --silent
 # commit and push changes of the wiki
 git add .
+# the environment variable TRAVIS_COMMIT will be available during runtime on the travis build
 git commit -m "Deploy wiki with commit: ${TRAVIS_COMMIT}"
+# the GH_REPO_TOKEN will also be available during runtime and grants the permissions to push on the git repo
 git push --force "https://${GH_REPO_TOKEN}@github.com/TheSlimvReal/PSE---LA-meets-ML.wiki.git"

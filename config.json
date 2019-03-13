@@ -8,8 +8,7 @@
   "label": {
     "name": "labeled_matrices_",
     "saving_path": "data/LabeledMatrices/",
-    "name": "labeled_matrices",
-    "path": "data/UnlabeledMatrices/100k_to_label.hdf5"
+    "path": "data/UnlabeledMatrices/unlabeled_matrices.hdf5"
   },
   "train": {
     "name": "trained_net_",

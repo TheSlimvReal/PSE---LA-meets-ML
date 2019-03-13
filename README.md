@@ -20,7 +20,7 @@ classify -p <path> -n <network>
 ```
 In the python shell. The path in this case is the full path to an hdf5 file, containing one matrix. You may specify to use your own neural network but this is not required. The result will be for example:
 ```bash
-Matrix 0, predicted solver Cgs
+Matrix 1, predicted solver Cgs
 ```
 If you want to collect your own matrices from the suite sparse collection, type
 ```bash

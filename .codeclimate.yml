@@ -1,8 +1,9 @@
 #   This file holds the configuration for the automated code checks on CodeClimate
 version: "2"
 plugins:
+#   Add the pep8 code check tool that is especially designed for checking python code
     pep8:
         enabled: true
+#   Exclude test folder because this code should be checked for good code style
 exclude_patterns:
-    - "**/documentation/"
     - "**/test/"

@@ -132,7 +132,7 @@ Markus G\"{o}tz
 
 \section{Overview}
 
-In this last section of our project, we wanted to get our project ready for usage by others. 
+In this last section of our project, we wanted to get our project ready for usage by others.
 Therefore we first took a look at all the things we wanted to get finished before the project is being closed.
 After we got a list of tasks together, we created issues on \gls{github} together with a detailed descriptions on what needs to be done.
 This didn't just include bugs, but we also wanted to increase test coverage, remove code issues and set up some necessary things like a Wiki and documentation.
@@ -144,6 +144,7 @@ For these bugs we either created a issue or directly fixed them and wrote them i
 
 \section{Statistics}
 
+\subsection{Code}
 Lines of Code: 2.852
 
 Python: 2451
@@ -152,7 +153,9 @@ C++: 209
 
 others (config and build-setup files): 192
 
-Test Coverage: 95\%
+\subsection{Testing}
+
+Test Coverage: 96\%
 
 Number of tests: 63
 
@@ -282,15 +285,9 @@ The accuracy was set down to a more realistic value \\
 
 \hline
 
-Trying to enter different commands without setting the name flag, the program crashes &
-There is no default value for the name, so no default value was set &
+Trying to enter a command without setting the name flag results a program crashes &
+There is no default value for the name &
 We added a method that sets a default name as a combination of a defaut name from the config file and the current date and time \\
-
-\hline
-
-The collector prints his own warnings &
-numpy prints his own warnings in the regularity calculator &
-Suppressed numpy warnings \\
 
 \hline
 

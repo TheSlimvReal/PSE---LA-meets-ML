@@ -11,7 +11,7 @@ def test_classify_throws_error_if_matrix_is_irregular(mocked_validator, mocked_c
     Classifier.set_output_service(CLIOutputService(mocked_cli))
     mocked_validator.side_effect = [False]
     CLIOutputService(mocked_cli)
-    Classifier.start("modules/test/unittest/shared/data/classify_test_matrix.hdf5", "network")
+    Classifier.start("modules/test/unittest/shared/data/one_labeled_matrix.hdf5", "network")
     mocked_cli.assert_has_calls([call.print("IllegalArgumentException: The matrix is not regular")])
 
 
@@ -20,13 +20,13 @@ def test_classify_throws_error_if_matrix_is_irregular(mocked_validator, mocked_c
 @patch("keras.models.load_model")
 @patch("modules.view.command_line_interface.CommandLineInterface")
 def test_matrix_is_classified_with_cg_as_result(mocked_cli, mocked_keras, mocked_validator, mocked_np):
-    Classifier.set_output_service(mocked_cli)
+    Classifier.set_output_service(CLIOutputService(mocked_cli))
     mocked_validator.side_effect = [True]
     CLIOutputService(mocked_cli)
-    matrix_path = "modules/test/unittest/shared/data/classify_test_matrix.hdf5"
-    mocked_np.side_effect = "Cg"
+    matrix_path = "modules/test/unittest/shared/data/one_labeled_matrix.hdf5"
+    mocked_np.side_effect = [[1]]
     Classifier.start(matrix_path, "")
-    mocked_cli.assert_has_calls([call.print_error("matrix: 1, predicted solver: Cg")])
+    mocked_cli.assert_has_calls([call.print("matrix: 1, predicted solver: Cg")])
 
 
 @patch("numpy.argmax")
@@ -34,10 +34,13 @@ def test_matrix_is_classified_with_cg_as_result(mocked_cli, mocked_keras, mocked
 @patch("keras.models.load_model")
 @patch("modules.view.command_line_interface.CommandLineInterface")
 def test_two_matrices_are_classified(mocked_cli, mocked_keras, mocked_validator, mocked_np):
-    Classifier.set_output_service(mocked_cli)
-    mocked_validator.side_effect = [True]
+    Classifier.set_output_service(CLIOutputService(mocked_cli))
+    mocked_validator.side_effect = [True, True]
     CLIOutputService(mocked_cli)
-    matrix_path = "modules/test/unittest/shared/data/classify_test_matrices.hdf5"
-    mocked_np.side_effect = "Cg"
-    # Classifier.start(matrix_path, "")
-    mocked_cli.assert_has_calls(["matrix: 1, predicted solver: Cg", "matrix: 2, predicted solver: Cg"])
+    matrix_path = "modules/test/unittest/shared/data/two_labeled_matrices.hdf5"
+    mocked_np.side_effect = [[1, 1]]
+    Classifier.start(matrix_path, "")
+    mocked_cli.assert_has_calls([
+        call.print("matrix: 1, predicted solver: Cg"),
+        call.print("matrix: 2, predicted solver: Cg")
+    ])

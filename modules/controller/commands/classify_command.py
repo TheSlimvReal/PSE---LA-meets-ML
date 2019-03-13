@@ -20,8 +20,7 @@ class ClassifyCommand(Command):
         }
 
         self.help_arguments = (
-            "-p <path> Path to the matrix the user wants to classify [default: data/MatrixToClassify]",
-            "-n <network> Path to the trained neural networks, if not set, uses the neural network shipped"
+            "-n <network> (optional) Path to the trained neural networks, if not set, uses the neural network shipped"
             "with the program [default: data/NeuralNetwork/]",
         )
 

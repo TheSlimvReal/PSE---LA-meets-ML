@@ -28,9 +28,10 @@ class LabelCommand(Command):
         }
 
         self.help_arguments = (
-            "-p <path> Absolute path to the matrices in the local storage the user wants to have labeled "
-            "[default: data/UnlabeledMatrices/unlabeled_matrices]",
-            "-n <name> Name under which the labeled matrices will be saved [default: current date and time]",
+            "-p <path> (optional) Absolute path to the matrices in the local storage the user wants to have labeled "
+            "[default: data/UnlabeledMatrices/default_unlabeled.hdf5]",
+            "-n <name> (optional) Name under which the labeled matrices will be saved "
+            "[default: \"labeled_matrices_\" + current date and time]",
             "-s <saving path> Path where the labeled matrices will be saved "
             "[default: data/LabeledMatrices/] ",
         )

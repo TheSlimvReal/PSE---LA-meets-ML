@@ -22,10 +22,11 @@ class CollectCommand(Command):
         }
 
         self.help_arguments = (
-            "-a <amount> Absolute amount of matrices the user wants to generate [default: 100]",
-            "-n <name> Name under which the matrices will be saved [default: current date and time]",
-            "-s <size> Absolute size the generated square matrices should have. [default: 128]",
-            "-p <path> Path where the created/downloaded matrices will be saved "
+            "-a <amount> (optional) Absolute amount of matrices the user wants to generate [default: 100]",
+            "-n <name> (optional) Name under which the matrices will be saved "
+            "[default: \"unlabeled_matrix_\" + current date and time]",
+            "-s <size> (optional) Absolute size the generated square matrices should have. [default: 128]",
+            "-p <path> (optional) Path where the created/downloaded matrices will be saved "
             "[default: data/UnlabeledMatrices/]",
         )
 

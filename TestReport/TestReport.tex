@@ -10,13 +10,12 @@
 \usepackage{hyperref}       % detailed hyperlink/pdf configuration
 \hypersetup{                % ‘texdoc hyperref‘ for options
 pdftitle={PSE : LAMeetsML},%
-%bookmarks=true,%
+bookmarks=true,%
 }
 \usepackage{csquotes}       % provides \enquote{} macro for "quotes"
 \usepackage[nonumberlist, acronym]{glossaries} % provides glossary commands
 \usepackage{enumitem}
 \usepackage{lscape}
-\usepackage{caption}
 %\usepackage{placeins}
 \usepackage[section]{placeins}
 
@@ -141,6 +140,7 @@ After we created this issues, everybody could assign himself the issues he wante
 While doing so we also discovered some bugs.
 For these bugs we either created a issue or directly fixed them and wrote them into the bugs-report-table.
 
+\newpage
 
 \section{Statistics}
 
@@ -175,7 +175,7 @@ The second step is that we generate a code documentation that is generated and u
 
 \newpage
 
-\includepdf[angle=90, scale=0.9]{build_process.pdf}
+\includepdf[angle=90, scale=0.8]{build_process.pdf}
 
 \section{Code Documentation}
 
@@ -200,6 +200,7 @@ All the contents of this folder together with the generated sidebar are then cop
 
 After this is done, the new wiki entries can be found on \gls{github}.
 
+\newpage
 
 \section{Bugs}
 \begin{tabular}{|p{4.5cm}|p{4.5cm}|p{4.5cm}|}
@@ -255,6 +256,18 @@ We added the regularity check to the classifier and a failure is reported to the
 Trying to open a not existing file in the loader results in a crash &
 The errors when opening a file where not caught properly &
 The loader now catches all errors and raises a IOException that can be caught when using the loader \\
+
+\hline
+
+Using the \gls{ssget} module prints unwanted messages to the command line &
+The \gls{ssget} tool has some command line output itself that is printed to the command line &
+The standard and error output off \gls{ssget} are now redirected to null so they do not write to standard out \\
+
+\hline
+
+The labeling module was performing unexpected &
+The accuracy to which the solvers try to solve the matrices was to high &
+The accuracy was set down to a more realistic value \\
 
 \hline
 

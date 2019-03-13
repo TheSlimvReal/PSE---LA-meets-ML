@@ -13,3 +13,31 @@ def test_classify_throws_error_if_matrix_is_irregular(mocked_validator, mocked_c
     CLIOutputService(mocked_cli)
     Classifier.start("modules/test/unittest/model/classify_module/TestMatrices/test_classifier.hdf5", "network")
     mocked_cli.has_calls("IllegalArgumentException: The matrix is not regular")
+
+
+@patch("numpy.argmax")
+@patch("modules.shared.regularity_calculator.RegularityCalculator.is_regular")
+@patch("keras.models.load_model")
+@patch("modules.view.command_line_interface.CommandLineInterface")
+def test_matrix_is_classified_with_cg_as_result(mocked_cli, mocked_keras, mocked_validator, mocked_np):
+    Classifier.set_output_service(mocked_cli)
+    mocked_validator.side_effect = [True]
+    CLIOutputService(mocked_cli)
+    matrix_path = "modules/test/unittest/shared/data/classify_test_matrix.hdf5"
+    mocked_np.side_effect = "Cg"
+    Classifier.start(matrix_path, "")
+    mocked_cli.has_calls("matrix: 1, predicted solver: Cg")
+
+
+@patch("numpy.argmax")
+@patch("modules.shared.regularity_calculator.RegularityCalculator.is_regular")
+@patch("keras.models.load_model")
+@patch("modules.view.command_line_interface.CommandLineInterface")
+def test_two_matrices_are_classified(mocked_cli, mocked_keras, mocked_validator, mocked_np):
+    Classifier.set_output_service(mocked_cli)
+    mocked_validator.side_effect = [True]
+    CLIOutputService(mocked_cli)
+    matrix_path = "modules/test/unittest/shared/data/classify_test_matrices.hdf5"
+    mocked_np.side_effect = "Cg"
+    Classifier.start(matrix_path, "")
+    mocked_cli.has_calls(["matrix: 1, predicted solver: Cg", "matrix: 2, predicted solver: Cg"])

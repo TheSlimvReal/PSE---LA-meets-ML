@@ -68,6 +68,11 @@ class TrainingModule:
         matrices = np.array(dataset['dense_matrices'])
         labels = np.array(dataset['label_vectors'])
 
+        randomize = np.arange(len(matrices))
+        np.random.shuffle(randomize)
+        matrices = matrices[randomize]
+        labels = labels[randomize]
+
         index = int(training_test_split * len(matrices))
 
         train_matrices = np.expand_dims(matrices[:index], axis=3)

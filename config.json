@@ -12,8 +12,8 @@
   },
   "train": {
     "name": "trained_net_",
-    "path": "data/LabeledMatrices/",
-    "saving_path": "data/TrainedNetwork",
+    "path": "data/LabeledMatrices/default_labeled_balanced.hdf5",
+    "saving_path": "data/TrainedNetwork/",
     "train_split": 0.8,
 
 
@@ -23,13 +23,13 @@
     "final_activation": "softmax",
     "dropout": 0.1,
 
-    "batch_size": 25,
+    "batch_size": 100,
     "learning_rate": 0.001,
     "loss": "categorical_crossentropy",
-    "epochs": 5
+    "epochs": 500
 
   },
   "classify": {
-    "network_path": "data/NeuralNetwork/"
+    "network_path": "data/NeuralNetwork/default_trained_network.hdf5"
   }
 }

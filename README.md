@@ -12,7 +12,6 @@ git clone https://github.com/TheSlimvReal/PSE---LA-meets-ML
 ```
 If you however want to access our other functionality (including collecting, labeling and training, explained below) you will have to execute the program on a Linux device. Furthermore you will have to install a c++ compiler and cuda as well as the Ginkgo library (https://github.com/ginkgo-project/ginkgo) and ssget (https://github.com/ginkgo-project/ssget). The paths all of those programs have to be specified in our configuration file. 
 ## Usage
-Inline-style: 
 ![alt text](https://raw.githubusercontent.com/TheSlimvReal/PSE---LA-meets-ML/master/Specification%20Sheet/images/workflow.JPG "Workflow")
 Our main component is the classifier. Simply start our program by running run.py and insert 
 ```bash

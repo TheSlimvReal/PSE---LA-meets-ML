@@ -17,9 +17,9 @@ class SSGet:
     #   @return matrix that has been downloaded
     @staticmethod
     def get_matrix(size: int) -> np.ndarray:
-        downloaded_matrix = SSGet.__download_matrix(1)
+        downloaded_matrix = SSGet.__download_matrix()
         while downloaded_matrix == []:
-            downloaded_matrix = SSGet.__download_matrix(1)
+            downloaded_matrix = SSGet.__download_matrix()
         seed = randint(0, downloaded_matrix.shape[0] - size)
         return SSGet.__cut_matrix(seed, downloaded_matrix, size)
 
@@ -38,10 +38,10 @@ class SSGet:
         SSGet.__real_square_matrices_ids = open('modules/model/collector_module/matrix_ids.csv', 'r').read().split("\n")
 
     @staticmethod
-    def __download_matrix(size: int) -> np.ndarray:
+    def __download_matrix() -> np.ndarray:
         matrix_id = random.choice(SSGet.__real_square_matrices_ids)
         download_command = "ssget -e -i " + matrix_id + " -t mat 2>/dev/null"
-        path = os.popen(download_command).read().strip()    # just an example
+        path = os.popen(download_command).read().strip()
         if SSGet.__load(path) == []:
             return []
         else:

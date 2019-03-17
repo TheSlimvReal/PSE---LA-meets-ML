@@ -16,7 +16,6 @@ bookmarks=true,%
 \usepackage[nonumberlist, acronym]{glossaries} % provides glossary commands
 \usepackage{enumitem}
 \usepackage{lscape}
-\usepackage{caption}
 %\usepackage{placeins}
 \usepackage[section]{placeins}
 
@@ -133,7 +132,7 @@ Markus G\"{o}tz
 
 \section{Overview}
 
-In this last section of our project, we wanted to get our project ready for usage by others. 
+In this last section of our project, we wanted to get our project ready for usage by others.
 Therefore we first took a look at all the things we wanted to get finished before the project is being closed.
 After we got a list of tasks together, we created issues on \gls{github} together with a detailed descriptions on what needs to be done.
 This didn't just include bugs, but we also wanted to increase test coverage, remove code issues and set up some necessary things like a Wiki and documentation.
@@ -143,20 +142,26 @@ For these bugs we either created a issue or directly fixed them and wrote them i
 
 \newpage
 
-\section{Stats}
+\section{Statistics}
 
-Lines of Code:
+\subsection{Code}
+Lines of Code: 2.852
 
-Python:
-C++:
+Python: 2451
 
-others:
+C++: 209
 
-Test Coverage:	
+others (config and build-setup files): 192
 
-Number of \glspl{unittest}:
+\subsection{Testing}
 
-Number of \glspl{integrationtest}:
+Test Coverage: 96\%
+
+Number of tests: 63
+
+Number of \glspl{unittest}: 51
+
+Number of \glspl{integrationtest}: 12
 
 \newpage
 
@@ -171,7 +176,7 @@ Added to that, you can get a complete overview on the
 
 After a successful merge to the master, we also introduced two new deployment steps.
 The first is that the wiki pages on GitHub are build again in case a change happened on this files.
-The second step is that we generate a code documentation is generated and uploaded to \gls{githubpages}.
+The second step is that we generate a code documentation that is generated and uploaded to \gls{githubpages}.
 
 \newpage
 
@@ -200,7 +205,6 @@ All the contents of this folder together with the generated sidebar are then cop
 
 After this is done, the new wiki entries can be found on \gls{github}.
 
-\newpage
 
 \section{Bugs}
 \begin{tabular}{|p{4.5cm}|p{4.5cm}|p{4.5cm}|}
@@ -247,7 +251,7 @@ Added extra check to prevent the invalid operation and displaying error message 
 
 \hline
 
-Passing a not regular matrix to the classifier causes in unexpected behavior &
+Passing a not regular matrix to the classifier causes unexpected behavior &
 The regularity was not checked on the received matrix in the classifier &
 We added the regularity check to the classifier and a failure is reported to the screen is this check fails \\
 
@@ -268,6 +272,22 @@ The standard and error output off \gls{ssget} are now redirected to null so they
 The labeling module was performing unexpected &
 The accuracy to which the solvers try to solve the matrices was to high &
 The accuracy was set down to a more realistic value \\
+
+\hline
+
+\end{tabular}
+
+\begin{tabular}{|p{4.5cm}|p{4.5cm}|p{4.5cm}|}
+
+\hline
+
+ Fault Symptom  & Reason & Fix  \\
+
+\hline
+
+Trying to enter a command without setting the name flag results in a program crash &
+There is no default value for the name &
+We added a method that sets a default name as a combination of a defaut name from the config file and the current date and time \\
 
 \hline
 

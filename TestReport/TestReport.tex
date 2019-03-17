@@ -133,10 +133,14 @@ Markus G\"{o}tz
 \section{Overview}
 
 In this last section of our project, we wanted to get our project ready for usage by others.
-Therefore we first took a look at all the things we wanted to get finished before the project is being closed.
+Therefore we first took a look at all the things we wanted to get finished 
+before the project is completed.
 After we got a list of tasks together, we created issues on \gls{github} together with a detailed descriptions on what needs to be done.
-This didn't just include bugs, but we also wanted to increase test coverage, remove code issues and set up some necessary things like a Wiki and documentation.
-After we created this issues, everybody could assign himself the issues he wanted to take care of.
+This did not include just bugs, but we also wanted to increase test coverage, 
+remove code issues and set up some necessary things like a Wiki and 
+documentation.
+After we created these issues, everybody could assign himself the issues he 
+wanted to take care of.
 While doing so we also discovered some bugs.
 For these bugs we either created a issue or directly fixed them and wrote them into the bugs-report-table.
 
@@ -169,12 +173,14 @@ Number of \glspl{integrationtest}: 12
 
 To ensure a high quality on our code, we increased the building process of our code.
 
-When pushing a branch, not just the test are ran on \gls{travis}, but also we generate a coverage report that will be sent to \gls{codeclimate}.
+When pushing a branch, not only the test are run on \gls{travis}, but also is a 
+coverage report generated that is sent to \gls{codeclimate}.
 This way you get a small overview on each pull request about the current coverage and the coverage on the newly committed lines.
-Added to that, you can get a complete overview on the
+In addition, you can get a complete overview on the
 \href{https://codeclimate.com/github/TheSlimvReal/PSE---LA-meets-ML}{CodeClimate Webpage}.
 
-After a successful merge to the master, we also introduced two new deployment steps.
+We also introduced two new deployment steps that are initiated after a 
+successful merge.
 The first is that the wiki pages on GitHub are build again in case a change happened on this files.
 The second step is that we generate a code documentation that is generated and uploaded to \gls{githubpages}.
 
@@ -184,22 +190,28 @@ The second step is that we generate a code documentation that is generated and u
 
 \section{Code Documentation}
 
-In the first phases we already decided to comment our code with the \gls{doxygen}-Syntax.
-In the implementation phase we took good care in documenting our code properly.
+In the first phases, we already decided to comment our code with the 
+\gls{doxygen}-Syntax.
+In the implementation phase, we took good care in documenting our code properly.
 The problem now was that everyone would have to generate this documentation for himself, which is a lot of work.
 
-To easy things up, we added a deployment step, which generates this documentation and deploys it to \gls{githubpages}.
+To simplify this, we added a deployment step, which generates this 
+documentation and deploys it on \gls{githubpages}.
 
-This way everybody can have a look at the latest version of the documentation only be opening a link.
+This way, everybody can access the latest version of the documentation 
+by only opening a link.
 
 \newpage
 
 \section{Wiki}
 
-We already collected some documentations for working with our project in the previous phases and decided to make them available in the \gls{github} wiki.
+Already in the previous phases, we collected some information documenting the 
+workflow we establish in our project.
+So we decided to make this information available in the \gls{github} wiki.
 Because the \gls{github} wiki holds its own \gls{git} structure and we wanted to keep all our files in one place, we decided to integrate the wiki in our build process.
 
-Therefore we created a folder in the projects root which holds all the wiki's entries in markdown files together with an configuration file.
+Therefore we created a folder in the projects root which holds all the wiki's 
+entries in markdown files together with a configuration file.
 This configuration file is used to dynamically generate a sidebar that holds a navigation for the wiki entries.
 All the contents of this folder together with the generated sidebar are then copied to the wiki's git.
 
@@ -300,27 +312,39 @@ We added a method that sets a default name as a combination of a defaut name fro
 Even though we already had some \glspl{unittest} after the implementation phase, it was not that easy to get the coverage as high as it is now.
 
 
-Where it was quite easy to write tests against the view and the controller, we had a hard time doing the same for the modules.
-This was because we had a lot of dependencies to other libraries or even environments that we could not automate.
+While it was quite easy to write tests for the view and the controller, we 
+had a hard time doing the same for the modules.
+This was because we had a lot of dependencies to other libraries, or even 
+environments, that we could not automate.
 One example is that we can only use the labeling module on a system where \gls{ginkgo} is properly installed.
-Theoretically it would be possible to install this in the build process of \gls{travis} but our supervisors decided that this would be taking to much time and is not necessary.
+Theoretically, it would be possible to install this in the build process of 
+\gls{travis} but our supervisors decided that this would be taking too much 
+time 
+and is not necessary.
 If we now wanted to test the labeling module, we always had to mock the \gls{ginkgo} library.
-Similar problems we had in the collector which had the dependency to the \gls{ssget} library.
+We encountered similar problems with the collector, which has the dependency to 
+the \gls{ssget} library.
 This library was easier to set up and was also installed in the build process, so it is possible to write tests against it, but you still end up with more integration tests than unit tests.
 Another problem concerning the testing was the fact, that most of the modules directly access the memory instead of returning something.
-This way you could not just assert something of the returning object but you had to mock the file system and assert calls to this.
+This way you could not just assert something of the returning object, but you 
+had to mock the file system and assert calls to this.
 
 
-Finally the last big problem is the whole structure of the machine learning it self.
-That is, because a big problems of the neural networks is the fact, that you don't have any guaranty on how well it will perform.
+Finally the last big problem is the whole structure of machine learning itself.
+That is, because a big problems of the neural networks is the fact, that you do 
+not have any guarantee on how well it will perform.
 There is always a big improbability factor in the learning and the classification process.
 Knowing that, it is difficult to test the process of learning and classification because it will not always perform as expected.
 You could only assert that the results will be in a certain range, which you would have to define with some heuristics.
 If you now have this heuristics, the next problem comes up.
-To get a good result on the training process you need to use a big data set which will result in very slow test suites which in turn will result in a generally slower workflow.
+To get a good result on the training process, you need to use a big data set 
+which will result in very slow test suites which in turn will result in a 
+generally slower workflow.
 
 
-This reasons together show the big difficulty of using normal testing and development methods with new technologies like the neural networks.
+Together, these aspects make it challenging to use the standard testing and 
+development tools for neural network technology. 
+
 
 \newpage
 

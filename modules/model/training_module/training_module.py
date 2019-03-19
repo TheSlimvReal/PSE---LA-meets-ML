@@ -118,7 +118,7 @@ class TrainingModule:
         output_size = 32
         kernel_size = 3
         new_output_size = 0
-
+        
         if TrainingModule.__num_conv_layers != 0:
             model.add(Conv2D(output_size, (kernel_size, kernel_size), input_shape=(128, 128, 1)))
             model.add(Activation(TrainingModule.__layer_activation))
@@ -137,9 +137,9 @@ class TrainingModule:
             for i in range(1, TrainingModule.__num_dense_layers - 1):
                 model.add(Dense(int((new_output_size * 4) / i)))
                 model.add(Activation(TrainingModule.__layer_activation))
-
+                
         model.add(Dropout(TrainingModule.__dropout))
-
+        
         model.add(Dense(TrainingModule.__num_classes))
         model.add(Activation(TrainingModule.__final_activation))
 

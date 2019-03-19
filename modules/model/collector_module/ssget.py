@@ -5,6 +5,7 @@ import os
 import random
 import numpy as np
 import csv
+import scipy
 
 
 ##  This class handles the communication with the suit sparse matrix collection using the ssget tool
@@ -66,6 +67,7 @@ class SSGet:
         # breadth first search to find matrix data structure
         while len(todo) != 0:
             current = todo.pop(0)
+
             if SSGet.__is_matrix(current):
                 # found matrix, set return value and escape loop
                 found = current

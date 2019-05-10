@@ -49,78 +49,80 @@ class LabelingModule:
 
     @staticmethod
     def __label_dataset(dataset):
-
-        print("through")
         hdf5_matrices = dataset[LabelingModule.MATRIX_KEY]
         np_matrices = np.array(hdf5_matrices, dtype=np.float64)
 
+        result_dict = []
         matrices = []
-        labels = []
-        times = []
 
         observable: Observable = Observable()
         LabelingModule.__output_service.print_stream("Labeling matrices %s/" + str(len(np_matrices)), observable)
 
         for num, matrix in enumerate(np_matrices):
             csr_matrix = scipy.sparse.csr_matrix(matrix)
+            matrices.append(csr_matrix)
+
             matrix_name = "matrix_{}".format(num)
             save_path = LabelingModule.MTX_TMP_FOLDER + matrix_name
             scipy.io.mmwrite(save_path, csr_matrix)
-            json_file = LabelingModule.RESULTS_FOLDER + matrix_name + ".json"
-            result_dict = [{
+            result_dict.append({
                 "filename": os.getcwd() + "/" + save_path + ".mtx",
                 "optimal": {
                     "spmv": "csr"
                 }
-            }]
-            with open(json_file, 'w') as fp:
-                json.dump(result_dict, fp)
-
-            command = ['cp', json_file, json_file + '.imd']
-            subprocess.run(command)
-
-            command = [
-                LabelingModule.GINKGO_PATH + LabelingModule.SOLVER_PATH,
-                '--double_buffer="' + json_file + '.bkp2"',
-                '--executor="cuda"',
-                '--solvers="cg,bicgstab,cgs,fcg"',
-                '--max-iters=1000',
-                '--rel_res_goal=1e-6',
-                '<',
-                '"' + json_file + '.imd"',
-                '>',
-                '"' + json_file + '"'
-            ]
-            command_string = " ".join(command)
-            subprocess.Popen(command_string, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT).wait()
-
-            matrices.append(csr_matrix)
-            label, time = LabelingModule.get_time_and_label(json_file)
-            labels.append(label)
-            times.append(time)
-
+            })
             observable.next(str(num + 1))
-
         observable.complete()
 
+        json_file = LabelingModule.RESULTS_FOLDER + "results.json"
+        with open(json_file, 'w') as fp:
+            json.dump(result_dict, fp)
+
+        command = ['cp', json_file, json_file + '.imd']
+        subprocess.run(command)
+
+        LabelingModule.__output_service.print_line("The Labeling starts now, this may take a while")
+
+        command = [
+            LabelingModule.GINKGO_PATH + LabelingModule.SOLVER_PATH,
+            '--double_buffer="' + json_file + '.bkp2"',
+            '--executor="cuda"',
+            '--solvers="cg,bicgstab,cgs,fcg"',
+            '--max-iters=1000',
+            '--rel_res_goal=1e-6',
+            '<',
+            '"' + json_file + '.imd"',
+            '>',
+            '"' + json_file + '"'
+        ]
+        command_string = " ".join(command)
+        subprocess.Popen(command_string, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT).wait()
+        LabelingModule.__output_service.print_line("Finished labeling, saving matrices to memory")
+
+        labels, times = LabelingModule.get_time_and_label(json_file)
         labeled_dataset = [matrices, labels, times]
-        print("dataset", labeled_dataset)
+
         return labeled_dataset
 
     @staticmethod
     def get_time_and_label(path: str):
         results_file = open(path)
         results_json = json.load(results_file)
-        solvers = results_json[0]['solver']
-        times = [math.inf] * len(LabelingModule.SOLVER_MAP)
-        for solver in solvers:
-            if solvers[solver]['completed'] is True:
-                times[LabelingModule.SOLVER_MAP[solver]] = solvers[solver]['apply']['time']
-        label = [0] * len(LabelingModule.SOLVER_MAP)
-        if min(times) is not math.nan:
-            label[times.index(min(times))] = 1
 
-        return label, times
+        times = []
+        labels = []
+
+        for i in range(len(results_json)):
+            solvers = results_json[i]['solver']
+            times_vec = [math.inf] * len(LabelingModule.SOLVER_MAP)
+            for solver in solvers:
+                if solvers[solver]['completed'] is True:
+                    times_vec[LabelingModule.SOLVER_MAP[solver]] = solvers[solver]['apply']['time']
+            label_vec = [0] * len(LabelingModule.SOLVER_MAP)
+            if min(times_vec) is not math.nan:
+                label_vec[times_vec.index(min(times_vec))] = 1
+
+        return labels, times
 
     ##  sets the static output service
     #

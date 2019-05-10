@@ -41,9 +41,8 @@ class LabelCommand(Command):
 
     def execute(self):
         super().execute()
-        LabelingModule.generate_matrix_files("data/matrices.hdf5")
-        # cl.start(
-        #     path=self.arguments.get(Key.PATH),
-        #     saving_name=self.arguments.get(Key.NAME),
-        #     saving_path=self.arguments.get(Key.SAVING_PATH)
-        # )
+        LabelingModule.start(
+            path=self.arguments.get(Key.PATH),
+            saving_name=self.arguments.get(Key.NAME),
+            saving_path=self.arguments.get(Key.SAVING_PATH)
+        )

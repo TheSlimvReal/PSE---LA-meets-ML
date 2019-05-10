@@ -11,6 +11,8 @@ class LabelingModule:
     MATRIX_KEY = "dense_matrices"
     MTX_TMP_FOLDER = "data/MtxTmpFolder/"
     RESULTS_FOLDER = "data/results/"
+    GINKGO_PATH = "$HOME/"
+    SOLVER_PATH = "ginkgo/build/benchmark/solver/solver"
 
     @staticmethod
     def generate_matrix_files(path: str):
@@ -24,9 +26,23 @@ class LabelingModule:
             save_path = LabelingModule.MTX_TMP_FOLDER + matrix_name
             scipy.io.mmwrite(save_path, csr_matrix)
             json_file = LabelingModule.RESULTS_FOLDER + matrix_name + ".json"
-            result_dict = {
+            result_dict = [{
                 "filename": os.getcwd() + "/" + save_path + ".mtx",
-                "problem": "regular_matrix"
-            }
+                "optimal": {
+                    "spmv": "csr"
+                }
+            }]
             with open(json_file, 'w') as fp:
                 json.dump(result_dict, fp)
+
+            command = 'cp "' + json_file + '" "' + json_file + '.imd"'
+            os.popen(command)
+
+            command = LabelingModule.GINKGO_PATH + LabelingModule.SOLVER_PATH
+            command += ' --double_buffer="' + json_file + '.bkp2"'
+            command += ' --executor="cuda"'
+            command += ' --solvers="cg,bicgstab,cgs,fcg"'
+            command += ' --max-iters=1000'
+            command += ' --rel_res_goal=1e-6'
+            command += ' <"' + json_file + '.imd" >"' + json_file + '"'
+            os.popen(command)

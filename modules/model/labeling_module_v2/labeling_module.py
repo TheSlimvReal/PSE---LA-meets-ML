@@ -56,7 +56,7 @@ class LabelingModule:
         matrices = []
 
         observable: Observable = Observable()
-        LabelingModule.__output_service.print_stream("Labeling matrices %s/" + str(len(np_matrices)), observable)
+        LabelingModule.__output_service.print_stream("Preparing matrices %s/" + str(len(np_matrices)), observable)
 
         for num, matrix in enumerate(np_matrices):
             csr_matrix = scipy.sparse.csr_matrix(matrix)
@@ -78,6 +78,15 @@ class LabelingModule:
         with open(json_file, 'w') as fp:
             json.dump(result_dict, fp)
 
+        LabelingModule.start_solver_computation(json_file)
+
+        labels, times = LabelingModule.get_time_and_label(json_file)
+        labeled_dataset = [matrices, labels, times]
+
+        return labeled_dataset
+
+    @staticmethod
+    def start_solver_computation(json_file: str):
         command = ['cp', json_file, json_file + '.imd']
         subprocess.run(command)
 
@@ -99,10 +108,6 @@ class LabelingModule:
         subprocess.Popen(command_string, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT).wait()
         LabelingModule.__output_service.print_line("Finished labeling, saving matrices to memory")
 
-        labels, times = LabelingModule.get_time_and_label(json_file)
-        labeled_dataset = [matrices, labels, times]
-
-        return labeled_dataset
 
     @staticmethod
     def get_time_and_label(path: str):

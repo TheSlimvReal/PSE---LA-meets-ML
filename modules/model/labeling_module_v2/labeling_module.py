@@ -4,6 +4,7 @@ import scipy.sparse
 import scipy.io
 import json
 import os
+import subprocess
 
 
 class LabelingModule:
@@ -11,7 +12,7 @@ class LabelingModule:
     MATRIX_KEY = "dense_matrices"
     MTX_TMP_FOLDER = "data/MtxTmpFolder/"
     RESULTS_FOLDER = "data/results/"
-    GINKGO_PATH = "$HOME/"
+    GINKGO_PATH = os.environ["HOME"] + "/"
     SOLVER_PATH = "ginkgo/build/benchmark/solver/solver"
 
     @staticmethod
@@ -35,14 +36,20 @@ class LabelingModule:
             with open(json_file, 'w') as fp:
                 json.dump(result_dict, fp)
 
-            command = 'cp "' + json_file + '" "' + json_file + '.imd"'
-            os.popen(command)
+            command = ['cp', json_file, json_file + '.imd']
+            subprocess.run(command)
 
-            command = LabelingModule.GINKGO_PATH + LabelingModule.SOLVER_PATH
-            command += ' --double_buffer="' + json_file + '.bkp2"'
-            command += ' --executor="cuda"'
-            command += ' --solvers="cg,bicgstab,cgs,fcg"'
-            command += ' --max-iters=1000'
-            command += ' --rel_res_goal=1e-6'
-            command += ' <"' + json_file + '.imd" >"' + json_file + '"'
-            os.popen(command)
+            command = [
+                LabelingModule.GINKGO_PATH + LabelingModule.SOLVER_PATH,
+                '--double_buffer="' + json_file + '.bkp2"',
+                '--executor="cuda"',
+                '--solvers="cg,bicgstab,cgs,fcg"',
+                '--max-iters=1000',
+                '--rel_res_goal=1e-6',
+                '<',
+                '"' + json_file + '.imd"',
+                '>',
+                '"' + json_file + '"'
+            ]
+            command_string = " ".join(command)
+            subprocess.Popen(command_string, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT).wait()

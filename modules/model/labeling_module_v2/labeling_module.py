@@ -1,6 +1,5 @@
 import math
 
-import h5py
 import numpy as np
 import scipy.sparse
 import scipy.io
@@ -23,7 +22,7 @@ class LabelingModule:
     GINKGO_PATH = os.environ["HOME"] + "/"
     SOLVER_PATH = "ginkgo/build/benchmark/solver/solver"
 
-    SOLVER_MAP = {"cg": 0, "bicgstab": 1, "cgs": 2, "fcg": 3}
+    SOLVER_MAP = {"bicgstab": 0, "cg": 1, "cgs": 2, "fcg": 3}
 
     __output_service: OutputService = OutputService()
 
@@ -50,7 +49,6 @@ class LabelingModule:
     @staticmethod
     def __label_dataset(dataset):
 
-        print("through")
         hdf5_matrices = dataset[LabelingModule.MATRIX_KEY]
         np_matrices = np.array(hdf5_matrices, dtype=np.float64)
 
@@ -66,36 +64,13 @@ class LabelingModule:
             matrix_name = "matrix_{}".format(num)
             save_path = LabelingModule.MTX_TMP_FOLDER + matrix_name
             scipy.io.mmwrite(save_path, csr_matrix)
-            json_file = LabelingModule.RESULTS_FOLDER + matrix_name + ".json"
-            result_dict = [{
-                "filename": os.getcwd() + "/" + save_path + ".mtx",
-                "optimal": {
-                    "spmv": "csr"
-                }
-            }]
-            with open(json_file, 'w') as fp:
-                json.dump(result_dict, fp)
 
-            command = ['cp', json_file, json_file + '.imd']
-            subprocess.run(command)
+            json_file = LabelingModule.create_json_file(matrix_name, save_path)
 
-            command = [
-                LabelingModule.GINKGO_PATH + LabelingModule.SOLVER_PATH,
-                '--double_buffer="' + json_file + '.bkp2"',
-                '--executor="cuda"',
-                '--solvers="cg,bicgstab,cgs,fcg"',
-                '--max-iters=1000',
-                '--rel_res_goal=1e-6',
-                '<',
-                '"' + json_file + '.imd"',
-                '>',
-                '"' + json_file + '"'
-            ]
-            command_string = " ".join(command)
-            subprocess.Popen(command_string, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT).wait()
+            LabelingModule.execute_benchmarks(json_file)
 
-            matrices.append(csr_matrix)
             label, time = LabelingModule.get_time_and_label(json_file)
+            matrices.append(csr_matrix)
             labels.append(label)
             times.append(time)
 
@@ -104,8 +79,40 @@ class LabelingModule:
         observable.complete()
 
         labeled_dataset = [matrices, labels, times]
-        print("dataset", labeled_dataset)
         return labeled_dataset
+
+    @staticmethod
+    def create_json_file(matrix_name: str, save_path: str):
+        json_file = LabelingModule.RESULTS_FOLDER + matrix_name + ".json"
+        result_dict = [{
+            "filename": os.getcwd() + "/" + save_path + ".mtx",
+            "optimal": {
+                "spmv": "csr"
+            }
+        }]
+        with open(json_file, 'w') as fp:
+            json.dump(result_dict, fp)
+        return json_file
+
+    @staticmethod
+    def execute_benchmarks(json_file: str):
+        command = ['cp', json_file, json_file + '.imd']
+        subprocess.run(command)
+
+        command = [
+            LabelingModule.GINKGO_PATH + LabelingModule.SOLVER_PATH,
+            '--double_buffer="' + json_file + '.bkp2"',
+            '--executor="cuda"',
+            '--solvers="bicgstab,cg,cgs,fcg"',
+            '--max-iters=1000',
+            '--rel_res_goal=1e-6',
+            '<',
+            '"' + json_file + '.imd"',
+            '>',
+            '"' + json_file + '"'
+        ]
+        command_string = " ".join(command)
+        subprocess.Popen(command_string, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT).wait()
 
     @staticmethod
     def get_time_and_label(path: str):

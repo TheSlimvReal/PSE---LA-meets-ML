@@ -16,3 +16,5 @@ If there are no errors during while running the command, you can start using the
 
 To ensure everything works correctly go to the path `ginkgo/build/benchmark/reults/K80/cuda/SuiteSparse/HB/` and have a
 look at the some of the files in there.
+
+For more information contact the [Ginkgo Team](https://github.com/ginkgo-project/ginkgo).

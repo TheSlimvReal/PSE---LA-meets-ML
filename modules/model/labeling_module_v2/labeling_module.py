@@ -43,6 +43,7 @@ class LabelingModule:
             return
         labeled_dataset = LabelingModule.__label_dataset(hdf5_file)
         Saver.save(labeled_dataset, saving_name, saving_path, True)
+        LabelingModule.clean_results_folder()
         LabelingModule.__output_service.print_line(
             "Finished labeling matrices. Saved at " + saving_path + " under " + saving_name)
 
@@ -128,6 +129,16 @@ class LabelingModule:
             label[times.index(min(times))] = 1
 
         return label, times
+
+    @staticmethod
+    def clean_results_folder():
+        for file in os.listdir(LabelingModule.RESULTS_FOLDER):
+            file_path = os.path.join(LabelingModule.RESULTS_FOLDER, file)
+            try:
+                if os.path.isfile(file_path):
+                    os.unlink(file_path)
+            except Exception as e:
+                LabelingModule.__output_service.prints_error(IOException(str(e)))
 
     ##  sets the static output service
     #

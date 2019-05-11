@@ -74,7 +74,7 @@ class LabelingModule:
                 label, time = LabelingModule.get_time_and_label(json_file)
             except JSONDecodeError:
                 LabelingModule.__output_service.print_error(IOException(
-                    "\nFailed to calculate labels for matrix #{}\n".format(num)
+                    "\nFailed to calculate labels for matrix #{}\n".format(num + 1)
                 ))
                 continue
 

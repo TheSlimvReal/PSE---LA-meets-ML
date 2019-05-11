@@ -1,4 +1,5 @@
 import math
+from json import JSONDecodeError
 
 import numpy as np
 import scipy.sparse
@@ -69,8 +70,14 @@ class LabelingModule:
             json_file = LabelingModule.create_json_file(matrix_name, save_path)
 
             LabelingModule.execute_benchmarks(json_file)
+            try:
+                label, time = LabelingModule.get_time_and_label(json_file)
+            except JSONDecodeError:
+                LabelingModule.__output_service.print_error(IOException(
+                    "\nFailed to calculate labels for matrix #{}\n".format(num)
+                ))
+                continue
 
-            label, time = LabelingModule.get_time_and_label(json_file)
             matrices.append(csr_matrix)
             labels.append(label)
             times.append(time)

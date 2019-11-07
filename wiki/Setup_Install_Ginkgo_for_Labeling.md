@@ -10,7 +10,7 @@ chmod +x install_ginkgo_benchmarks.sh
 ./install_ginkgo_benchmarks.sh
 ```
 
-If there are no errors during while running the command, you can start using the labeling module.
+If there are no errors while running the command, you can start using the labeling module.
 
 ## Debugging
 

@@ -8,6 +8,9 @@ from modules.model.labeling_module import cl
 #
 #   this command will be created when entering label in the terminal
 #   @extends Command to use its parsing logic
+from modules.model.labeling_module_v2.labeling_module import LabelingModule
+
+
 class LabelCommand(Command):
 
     def __init__(self):
@@ -38,7 +41,7 @@ class LabelCommand(Command):
 
     def execute(self):
         super().execute()
-        cl.start(
+        LabelingModule.start(
             path=self.arguments.get(Key.PATH),
             saving_name=self.arguments.get(Key.NAME),
             saving_path=self.arguments.get(Key.SAVING_PATH)

@@ -6,7 +6,7 @@ from modules.controller.commands.quit_command import QuitCommand
 from modules.exception.exceptions import IllegalArgumentException, MyException, InvalidConfigException
 from modules.model.classification_module.classification_module import Classifier
 from modules.model.collector_module.collector import Collector
-from modules.model.labeling_module.labeling_module import LabelingModule
+from modules.model.labeling_module_v2.labeling_module import LabelingModule
 from modules.model.training_module.training_module import TrainingModule
 from modules.shared.configurations import Configurations
 from modules.view.cli_output_service import CLIOutputService
